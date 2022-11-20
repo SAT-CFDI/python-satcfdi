@@ -1,0 +1,3 @@
+.. include:: ../../CONTRIBUTING.rst
+
+

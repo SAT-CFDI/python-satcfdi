@@ -1,0 +1,104 @@
+<h5>Ubicaciones</h5>
+<table>
+	<thead>
+		<tr>
+			<th>Tipo Ubicación</th>
+			<th>ID Ubicación</th>
+			<th>RFC</th>
+			<th>Fecha Salida/Llegada</th>
+			<th>Domicilio</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for r in iterate(c.Ubicaciones) %}
+		<tr>
+			<td>{{ r.TipoUbicacion }}</td>
+			<td>{{ r.IDUbicacion }}</td>
+			<td>{{ r.RFCRemitenteDestinatario }}</td>
+			<td>{{ r.FechaHoraSalidaLlegada }}</td>
+			<td>{{ r.Domicilio | address }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<br>
+<h5>Mercancias</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 20%">Cantidad Transportada</th>
+			<th>Descripción</th>
+			<th>Material Peligroso</th>
+			<th>Embalaje</th>
+			<th>Cantidad</th>
+			<th>Peso En Kg</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for r in iterate(c.Mercancias.Mercancia) %}
+		<tr>
+			<td>
+			{% for t in iterate(r.CantidadTransporta) %}
+			{% if not loop.first %}<br>{% endif %}{{ t | simple }}
+			{% endfor %}
+			</td>
+			<td>
+				{{ r.Descripcion }}
+				<div class="ci"><b>Clave SAT:</b> {{ r.BienesTransp }}</div>
+			</td>
+			<td>
+				{{ r.MaterialPeligroso }}
+				<div class="ci">{{ r.CveMaterialPeligroso }}</div>
+			</td>
+			<td>{{ r.Embalaje }}</td>
+			<td class="r">
+				{{ r.Cantidad }}
+				<div class="ci">{{ r.ClaveUnidad }}</div>
+			</td>
+			<td class="r">{{ r.PesoEnKg }}</td>
+		</tr>
+		{% endfor %}
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="rbt">
+				{{ c.Mercancias.NumTotalMercancias }}
+				<div class="ci">{{ c.Mercancias.UnidadPeso }}</div>
+			</td>
+			<td class="rbt">{{ c.Mercancias.PesoBrutoTotal }}</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+{% for mk,mv in c.Mercancias.items() if mk in ('Autotransporte', 'TransporteMaritimo', 'TransporteAereo', 'TransporteFerroviario') %}
+<h5>{{ mk }}</h5>
+{{ mv | dump }}
+<br>
+{% endfor %}
+<h5>Figura de Transporte</h5>
+<table>
+	<thead>
+		<tr>
+			<th>Tipo Figura</th>
+			<th>Nombre</th>
+			<th>RFC</th>
+			<th>No. Licencia</th>
+			<th>Domicilio</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for r in iterate(c.FiguraTransporte) %}
+		<tr>
+			<td>{{ r.TipoFigura | desc }}</td>
+			<td>{{ r.NombreFigura }}</td>
+			<td>{{ r.RFCFigura }}</td>
+			<td>{{ r.NumLicencia }}</td>
+			<td>{{ r.Domicilio | address }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<br>
+{{ c | simple('TranspInternac', 'TotalDistRec') }}

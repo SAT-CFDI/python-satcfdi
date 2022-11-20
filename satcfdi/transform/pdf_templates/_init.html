@@ -1,0 +1,21 @@
+{% macro complements(parent, c) %}
+{% if c %}
+	{% for k, c in iterate_complements(c) %}
+		<h4>{{ k | trans }}</h4>
+		{% include k + '.html' %}
+		{% if not loop.last %}<div><br></div>{% endif %}
+	{% endfor %}
+{% endif %}
+{% endmacro %}
+<html>
+<head>
+	<title>CFDI</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+		{% include '_style.css' %}
+	</style>
+</head>
+<body>
+	{% include k + '.html' %}
+</body>
+</html>

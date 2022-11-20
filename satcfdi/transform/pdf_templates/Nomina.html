@@ -1,0 +1,177 @@
+<table>
+	<tr>
+		<th style="width: 20%">Tipo Nómina</th>
+		<th style="width: 40%">Emisor</th>
+		<th style="width: 40%">Receptor</th>
+	</tr>
+	<tr>
+		<td class="cen">{{ c.TipoNomina | desc }}</td>
+		<td rowspan="13">
+			{{ c.Emisor | simple }}
+		</td>
+		<td rowspan="13">
+			{{ c.Receptor | simple }}
+		</td>
+	</tr>
+	<tr>
+		<th>Fecha Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>{{ c.FechaPago }}</td>
+	</tr>
+	<tr>
+		<th>No. de Días Pagados</th>
+	</tr>
+	<tr class="cen">
+		<td>{{ c.NumDiasPagados }}</td>
+	</tr>
+	<tr>
+		<th>Fecha Inicial de Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>{{ c.FechaInicialPago }}</td>
+	</tr>
+	<tr>
+		<th>Fecha Final de Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>{{ c.FechaFinalPago }}</td>
+	</tr>
+</table>
+{% if c.Percepciones %}
+<br>
+<h5>Percepciones</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 35%;">Tipo de Percepción</th>
+			<th style="width: 11%;">Clave</th>
+			<th>Concepto</th>
+			<th style="width: 11%;">Importe Gravado</th>
+			<th style="width: 11%;">Importe Exento</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for r in iterate(c.Percepciones.Percepcion) %}
+		<tr>
+			<td>{{ r.TipoPercepcion | desc }}</td>
+			<td>{{ r.Clave }}</td>
+			<td>{{ r.Concepto }}</td>
+			<td class="r">{{ r.ImporteGravado }}</td>
+			<td class="r">{{ r.ImporteExento }}</td>
+		</tr>
+		{% endfor %}
+		<tr>
+			<td></td>
+			<td></td>
+			<td class="rbt"><b>Total</b></td>
+			<td class="rbt">{{ c.Percepciones.TotalGravado }}</td>
+			<td class="rbt">{{ c.Percepciones.TotalExento }}</td>
+		</tr>
+	</tbody>
+</table>
+<table class="tot">
+	<tr class="r">
+		<td><b>Total Sueldos</b></td>
+		<td>{{ c.Percepciones.TotalSueldos }}</td>
+	</tr>
+</table>
+{% endif %}
+{% if c.Incapacidades %}
+<br>
+<h5>Incapacidades</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 56%;">Tipo de Incapacidad</th>
+			<th style="width: 22%;">Días de Incapacidad</th>
+			<th style="width: 22%;">Importe Monetario</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for r in iterate(c.Incapacidades) %}
+		<tr>
+			<td>{{ r.TipoIncapacidad | desc }}</td>
+			<td class="r">{{ r.DiasIncapacidad }}</td>
+			<td class="r">{{ r.ImporteMonetario }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+{% if c.Deducciones %}
+<br>
+<h5>Deducciones</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 35%;">Tipo de Deducción</th>
+			<th style="width: 11%;">Clave</th>
+			<th>Concepto</th>
+			<th style="width: 11%;">Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for r in iterate(c.Deducciones.Deduccion) %}
+		<tr>
+			<td>{{ r.TipoDeduccion | desc }}</td>
+			<td>{{ r.Clave }}</td>
+			<td>{{ r.Concepto }}</td>
+			<td class="r">{{ r.Importe }}</td>
+		</tr>
+		{% endfor %}
+		<tr>
+			<td></td>
+			<td></td>
+			<td class="rbt"><b>Total</b></td>
+			<td class="rbt">{{ c.TotalDeducciones }}</td>
+		</tr>
+	</tbody>
+</table>
+<table class="tot">
+	{% if c.Deducciones.TotalOtrasDeducciones %}
+	<tr class="r">
+		<td><b>Total Otras Deucciones</b></td>
+		<td>{{ c.Deducciones.TotalOtrasDeducciones }}</td>
+	</tr>
+	{% endif %}
+	{% if c.Deducciones.TotalImpuestosRetenidos %}
+	<tr class="r">
+		<td><b>Total Impuesto Retenidos</b></td>
+		<td>{{ c.Deducciones.TotalImpuestosRetenidos }}</td>
+	</tr>
+	{% endif %}
+</table>
+{% endif %}
+{% if c.OtrosPagos %}
+<br>
+<h5>Otros Pagos</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 35%;">Tipo de Otro Pago</th>
+			<th style="width: 11%;">Clave</th>
+			<th>Concepto</th>
+			<th style="width: 11%;">Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for r in iterate(c.OtrosPagos) %}
+		<tr>
+			<td>{{ r.TipoOtroPago | desc }}</td>
+			<td>{{ r.Clave }}</td>
+			<td>{{ r.Concepto }}</td>
+			<td class="r">{{ r.Importe }}</td>
+		</tr>
+		{% endfor %}
+		{% if c.TotalOtrosPagos %}
+		<tr>
+			<td></td>
+			<td></td>
+			<td class="rbt"><b>Total</b></td>
+			<td class="rbt">{{ c.TotalOtrosPagos }}</td>
+		</tr>
+		{% endif %}
+	</tbody>
+</table>
+{% endif %}

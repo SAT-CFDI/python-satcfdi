@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A valid XML document for CFD v4.0 schema with random nonsense values for testing -->
+<!-- Comments to https://www.cryptosys.net/contact/ -->
+
+<!-- MINIMUM REQUIRED FIELDS -->
+<cfdi:Comprobante
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+    xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 cfdv40.xsd"
+    Version="4.0" Fecha="2021-12-07T23:59:59"
+    NoCertificado="30001000000300023708" Sello="" Certificado=""
+    Moneda="MXN" SubTotal="1000" Total="1500"
+    TipoDeComprobante="I" FormaPago="02"
+    LugarExpedicion="45079"  Exportacion="03">
+    <cfdi:Emisor Rfc=" AAA010101AAA" RegimenFiscal="622" Nombre="Esta es una demostración" />
+    <cfdi:Receptor Rfc="BASJ600902KL9" UsoCFDI="G03"  Nombre="Juanito Bananas De la Sierra"  DomicilioFiscalReceptor="99999" RegimenFiscalReceptor="630" />
+    <cfdi:Conceptos>
+        <cfdi:Concepto ClaveProdServ="01010101" ClaveUnidad="C81" Cantidad="1.5"
+    Descripcion="ACERO" ValorUnitario="1500000" Importe="2250000"  ObjetoImp="01" />
+    </cfdi:Conceptos>
+</cfdi:Comprobante>

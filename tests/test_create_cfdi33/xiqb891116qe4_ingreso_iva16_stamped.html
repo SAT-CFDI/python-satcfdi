@@ -1,0 +1,374 @@
+<html>
+<head>
+	<title>CFDI</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+@page {
+	@bottom-left{
+		content: "Comprobante" " versión: " "3.3";
+		font:7.47pt Arial;
+	}
+	@bottom-center{
+		content: "Este documento es una representación impresa de un CFDI";
+		font:7.47pt Arial;
+	}
+	@bottom-right{
+		content: "Página " counter(page) " de " counter(pages);
+		font:7.47pt Arial;
+	}
+}
+body {
+	font-family: Arial;
+	font-size: 9pt;
+	width: 100%;
+}
+h3 {
+	margin-top:-10px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#333;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h4 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#555;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h5 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 8.6pt;
+	background-color:#777;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	padding-left: 10px;
+	text-align: left;
+	color: white;
+	letter-spacing: 2px;
+	font-weight: bold;
+}
+
+.h {
+	font-size: 9.89pt;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.c {
+	font-size: 8.6pt;
+}
+.ci {
+	font-size: 7.47pt;
+}
+.cii {
+	font-size: 6.5pt;
+}
+.ciii {
+	font-size: 5.65pt;
+}
+
+table {
+	font-size: 8.6pt;
+	width: 100%;
+	border-collapse: collapse;
+	border: none;
+	border-spacing: 0;
+}
+table table {
+	font-size: 7.47pt;
+}
+table table table {
+	font-size: 6.5pt;
+}
+table table table table {
+	font-size: 5.65pt;
+}
+
+table th {
+	background-color:#e0e0e0;
+}
+table table th {
+	background-color:#e8e8e8;
+}
+table table table th {
+	background-color:#f0f0f0;
+}
+table table table table th {
+	background-color:#f8f8f8;
+}
+
+.htd {
+	text-align: right;
+	width: 1px;
+	white-space: nowrap;
+	font-weight: bold;
+}
+
+.nb {
+	break-inside: avoid;
+}
+.cen {
+	text-align: center;
+}
+.r {
+	text-align: right;
+}
+.rbt {
+	text-align: right;
+	border-top: 1px solid black;
+}
+
+th {
+	padding: 1px;
+	vertical-align: center;
+	text-align: center;
+	border-right: 2px solid white;
+}
+th:last-child {
+	border-right: 0px solid white;
+}
+
+td {
+	vertical-align: top;
+	padding-right: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+tr:last-child td {
+	padding-bottom: none;
+}
+td:last-child {
+	padding-right: none;
+}
+
+tr {
+	break-inside: avoid;
+}
+
+.tot {
+	margin-left: 50%;
+	width: 50%;
+}
+table.tot {
+	margin-top: 1px;
+	break-inside: avoid;
+}
+table.tot tr:first-child {
+	border-top: 1px solid;
+}
+
+hr {
+	border: none;
+	height: 1px;
+	background-color: black;
+	break-after: avoid;
+}
+ul {
+	margin: 0;
+}	</style>
+</head>
+<body>
+<h3>CFDI de I</h3>
+<table>
+	<tr>
+		<th style="width: 10%">Serie</th>
+		<th style="width: 10%">Folio</th>
+		<th style="width: 40%">Emisor</th>
+		<th style="width: 40%">Receptor</th>
+	</tr>
+	<tr>
+		<td class="cen">A</td>
+		<td class="cen">123456</td>
+		<td rowspan="13">
+			<div class="h cen"><b>BERENICE XIMO QUEZADA</b></div>
+			<div><b>RFC: </b>XIQB891116QE4</div><div><b>Régimen Fiscal: </b>606</div>
+			<div><b>C.P.: </b>&nbsp;</div>
+			<div><b>No. Certificado: </b>30001000000400002311</div>
+		</td>
+		<td rowspan="13">
+			<div class="h cen"><b>KIJ, S.A DE C.V.</b></div>
+			<div><b>RFC: </b>KIJ0906199R1</div>
+		</td>
+	</tr>
+	<tr>
+	  	<th colspan="2">Fecha de Emisión</th>
+	</tr>
+	<tr>
+		<td colspan="2" class="cen">2020-01-01 22:40:38</td>
+	</tr>
+</table>
+<table style="margin-top: 2px">
+	<tr>
+		<th style="width: 20%">Moneda</th>
+		<th style="width: 26.67%">Método de Pago</th>
+		<th style="width: 26.67%">Forma de Pago</th>
+		<th style="width: 26.67%">Uso CFDI</th>
+	</tr>
+	<tr class="cen">
+		<td>MXN</td>
+		<td>PPD</td>
+		<td>None</td>
+		<td>G03</td>
+	</tr>
+	<tr>
+		<th>Tipo de Cambio</th>
+		<th>Exportación</th>
+		<th colspan="2">Condiciones de Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>None</td>
+		<td>01</td>
+		<td colspan="2">None</td>
+	</tr>
+</table>
+<br>
+<h5>Conceptos</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 55%;">Descripción</th>
+			<th style="width: 12%;">Cantidad</th>
+			<th style="width: 11%;">Valor Unitario</th>
+			<th style="width: 11%;">Descuento</th>
+			<th style="width: 11%;">Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				SERVICIOS DE FACTURACION
+				<div class="ci">
+					<div><b>Clave SAT: </b>10101702</div><div><b>Cuenta Predial: </b>1234567890</div><div><b>Objeto de Impuesto: </b>02</div>
+					
+				</div>
+			</td>
+			<td class="r">
+				1.00
+				<div class="ci">E48</div>
+				<div class="cii">None</div>
+			</td>
+			<td class="r">
+				15,390.30
+			</td>
+			<td class="r">
+				None
+			</td>
+			<td class="r">
+				15,390.30
+			</td>
+		</tr>
+		<tr style="break-before: avoid;">
+			<td colspan="5" style="padding-left: 5%; padding-right: 45%;">
+				<table class="r" >
+					<tr>
+						<th style="width: 20%; background-color:white;"></th>
+						<th style="width: 20%;">Base</th>
+						<th style="width: 20%;">Impuesto</th>
+						<th style="width: 20%;">Tasa o Cuota</th>
+						<th style="width: 20%;">Importe</th>
+					</tr>
+					<tr>
+						<td>+ <b>Translados</b></td>
+						<td>15,390.30</td>
+						<td>002</td>
+						<td>16.0000%</td>
+						<td>2,462.45</td>
+					</tr>
+					<tr>
+						<td>- <b>Retenciones</b></td>
+						<td>15,390.30</td>
+						<td>001</td>
+						<td>10.0000%</td>
+						<td>1,539.03</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>15,390.30</td>
+						<td>002</td>
+						<td>10.6667%</td>
+						<td>1,641.64</td>
+					</tr>
+					<tr></tr>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<table class="tot">
+	<tr class="r">
+		<td><b>Subtotal</b></td>
+		<td></td>
+		<td></td>
+		<td>15,390.30</td>
+	</tr>
+	<tr class="r">
+		<td>
+			+ <b>Translados</b>
+		</td>
+		<td>002</td>
+		<td>16.0000%</td>
+		<td>2,462.45</td>
+	</tr>
+	<tr class="r">
+		<td>
+			- <b>Retenciones</b>
+		</td>
+		<td>001</td>
+		<td></td>
+		<td>1,539.03</td>
+	</tr>
+	<tr class="r">
+		<td>
+		</td>
+		<td>002</td>
+		<td></td>
+		<td>1,641.64</td>
+	</tr>
+	<tr class="r h">
+		<td>
+			<b>Total</b>
+		</td>
+		<td></td>
+		<td></td>
+		<td>14,672.08</td>
+	</tr>
+</table><div><br></div>
+		<h4>Timbre Fiscal Digital</h4>
+<table class="nb" style="margin-top: 4px">
+	<tr>
+		<td rowspan="4">
+			<img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAQkAAAEJAQAAAACvE+/JAAAELklEQVR4nM2ZQc7jNhaEv2caoHf0DWgg52gpF8khsgygRArUQB9jjtKScxHqAAGoHQ3oV2VB/1lmZpWhNjYgLQoPxXpVRQBigSGWPhN1hiP6BaJWHQBc+K/Pv/YJXjoifXaJLszSqllaAC3hiFJuDO7CEDHNotecikmJPg/Rn+GIWFtw6yf++33YWO8fD7/s9mCN1+3ltun/geWfH78wxNLhpCUcERjw0pwwtTfdyl2djKILs7yyUyEcaFV73L28zK7c/sgfDz9vrwdPfnmEdZvijX3azO5NwUWS5M8gFYKSVx4oloeI5VGSpqbgvoVMSlpwAog6GZNOiIXQGNyFUX6p0OZUTMenuOUBnc3BDRP+DJLW7FLpNauesjMckb4tMlywTak8d3vYj+H1uOnOdoOvm7nsUvl3sfyvT5/HpDMclA6X6BiiP4NE1xoZTkb5t+4e+DU7+TMoFdOs0relu/D2YbOk7FR6HWjNRK8MvrmjtkoJk+SlCQhTXWilz1CsraOGVx7QgqvT1ZqHqJMhFsuj/NLWdC88ccLyLwbhV7Pf+Aomn8L3ONGaxbnwJf5qdDi9+juxwJhuz/2ADrbC3tR0KR1Opc+jitVIcUS/aoIaiBrjLl2Y8MpQwCUtYU46cdLJmOgaWxPV6gJRC8T6b9URCww0tyaqXvVS8gsu+SXMqb6AATWmDDXoFMtDrOGnCxJd3XQu6WyMDMUyAGP6O6tFvzAmfwK+NbhYHgVhFpaHWNNEh1OxPIrmPIN9dgpaJfk1O1VunAzRNxZ+Lny5uwT7tN3Yr9AxEBa+pZfLLr0urZEBqCMuprco0NXejOaWMKXP1d0kLWEC0xH9Gapa4BvrGdCqzwwBA5gknWFOXjporRYB05ywTKTXXO15DfNdOGjNM1y07K9HIWgFIHy3a9x786nYdsX/3liLg2Unv2pO/sSlqmtrJhbLY2rNnuOliXffJP1tdobolV17SRj77EHembjKgwThiM0tYa9MxCSVXhNawgF9rm1Zc8pw2fuoRLdfN57ADb7Gst6HTQtON8W2yFAIE/XSZwlHLH12ogPoJbXWkUGfR/k1j6obYs1DrL3eglN7HVmvCf8uHw/8GY5YwKmY5tQad9FS+7AjekmpWCaWLqhuuuaU4e2+wiy/hINCDT/UO6DmyFBMSrWOXsIRSxemiOUx+TMc7dlz/3H/6PfLPnHr87d0e+7HVr7EK7vbrltz9lyfqxc6nLyqUZ8ARtFYA3kxM3uopndN8OTb6r/fh1jg49HaUbv6wscPsL8eReZ+otsHsM0ft+VHl6x/NgX3fSds1ZZNVQ/ebj1Xv9Yg3A4nf9ZOGnTWLDSqtTVxrT/P8LP5P/Ldyi1M/+EZ/vxBANa1RgbpiFoz6ASKZZd0hql6dK1tTReAWOP6gkteeXzn+DMc+LUt7v4FLmkgGL+6zacAAAAASUVORK5CYII=" alt="QR Code" style="max-width: 120px;"/>
+		</td>
+		<td style="white-space: nowrap;"><b>Folio Fiscal:</b></td>
+		<td style="white-space: nowrap;">6d7434a6-e3f2-47ad-9e4c-08849946afa0</td>
+		<td style="white-space: nowrap;"><b>Fecha de Certificación:</b></td>
+		<td style="white-space: nowrap;">2020-01-11 00:00:00</td>
+	</tr>
+	<tr>
+		<td style="white-space: nowrap;"><b>RFC del PAC:</b></td>
+		<td style="white-space: nowrap;">SAT970701NN3</td>
+		<td style="white-space: nowrap;"><b>No. Certificado SAT:</b></td>
+		<td style="white-space: nowrap;">30001000000400002311</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<div class="ciii">
+				<b>Sello del CFDI: </b> O&#8203;e&#8203;V&#8203;Z&#8203;v&#8203;H&#8203;3&#8203;S&#8203;N&#8203;o&#8203;C&#8203;w&#8203;o&#8203;x&#8203;C&#8203;b&#8203;B&#8203;K&#8203;X&#8203;A&#8203;w&#8203;V&#8203;f&#8203;K&#8203;c&#8203;E&#8203;Z&#8203;m&#8203;i&#8203;L&#8203;z&#8203;4&#8203;1&#8203;t&#8203;I&#8203;X&#8203;U&#8203;2&#8203;0&#8203;h&#8203;e&#8203;f&#8203;5&#8203;r&#8203;U&#8203;5&#8203;q&#8203;8&#8203;x&#8203;P&#8203;C&#8203;E&#8203;R&#8203;r&#8203;S&#8203;r&#8203;Y&#8203;e&#8203;k&#8203;A&#8203;6&#8203;h&#8203;l&#8203;m&#8203;N&#8203;P&#8203;r&#8203;+&#8203;+&#8203;G&#8203;8&#8203;w&#8203;V&#8203;t&#8203;g&#8203;s&#8203;x&#8203;F&#8203;W&#8203;8&#8203;f&#8203;w&#8203;V&#8203;1&#8203;3&#8203;N&#8203;p&#8203;3&#8203;n&#8203;K&#8203;B&#8203;x&#8203;k&#8203;9&#8203;8&#8203;+&#8203;O&#8203;O&#8203;A&#8203;f&#8203;1&#8203;S&#8203;k&#8203;h&#8203;G&#8203;k&#8203;r&#8203;j&#8203;L&#8203;r&#8203;U&#8203;R&#8203;j&#8203;L&#8203;x&#8203;Q&#8203;z&#8203;V&#8203;y&#8203;u&#8203;K&#8203;9&#8203;V&#8203;T&#8203;9&#8203;q&#8203;p&#8203;n&#8203;M&#8203;Z&#8203;p&#8203;3&#8203;U&#8203;7&#8203;R&#8203;1&#8203;J&#8203;E&#8203;t&#8203;z&#8203;m&#8203;P&#8203;f&#8203;w&#8203;h&#8203;P&#8203;q&#8203;7&#8203;+&#8203;b&#8203;6&#8203;Z&#8203;/&#8203;e&#8203;f&#8203;e&#8203;x&#8203;8&#8203;e&#8203;L&#8203;n&#8203;M&#8203;G&#8203;T&#8203;s&#8203;R&#8203;n&#8203;U&#8203;r&#8203;G&#8203;X&#8203;t&#8203;H&#8203;+&#8203;u&#8203;w&#8203;5&#8203;K&#8203;r&#8203;/&#8203;D&#8203;4&#8203;T&#8203;Z&#8203;k&#8203;h&#8203;l&#8203;1&#8203;M&#8203;o&#8203;A&#8203;/&#8203;5&#8203;W&#8203;1&#8203;5&#8203;t&#8203;j&#8203;X&#8203;0&#8203;A&#8203;8&#8203;I&#8203;U&#8203;T&#8203;m&#8203;g&#8203;O&#8203;j&#8203;n&#8203;k&#8203;Y&#8203;n&#8203;k&#8203;N&#8203;L&#8203;y&#8203;h&#8203;k&#8203;m&#8203;6&#8203;1&#8203;s&#8203;1&#8203;z&#8203;l&#8203;q&#8203;5&#8203;+&#8203;p&#8203;/&#8203;x&#8203;w&#8203;N&#8203;P&#8203;d&#8203;l&#8203;k&#8203;w&#8203;o&#8203;s&#8203;R&#8203;w&#8203;N&#8203;4&#8203;e&#8203;d&#8203;G&#8203;K&#8203;M&#8203;z&#8203;h&#8203;l&#8203;A&#8203;G&#8203;r&#8203;n&#8203;6&#8203;P&#8203;G&#8203;F&#8203;D&#8203;5&#8203;r&#8203;E&#8203;Q&#8203;R&#8203;/&#8203;n&#8203;q&#8203;+&#8203;v&#8203;p&#8203;b&#8203;1&#8203;8&#8203;O&#8203;e&#8203;r&#8203;r&#8203;k&#8203;w&#8203;5&#8203;x&#8203;S&#8203;y&#8203;l&#8203;0&#8203;I&#8203;I&#8203;M&#8203;N&#8203;C&#8203;V&#8203;E&#8203;n&#8203;X&#8203;0&#8203;L&#8203;W&#8203;K&#8203;o&#8203;J&#8203;t&#8203;W&#8203;f&#8203;+&#8203;9&#8203;D&#8203;r&#8203;V&#8203;V&#8203;3&#8203;2&#8203;E&#8203;Q&#8203;D&#8203;Y&#8203;9&#8203;r&#8203;N&#8203;7&#8203;7&#8203;j&#8203;S&#8203;C&#8203;J&#8203;E&#8203;P&#8203;y&#8203;1&#8203;T&#8203;k&#8203;7&#8203;a&#8203;E&#8203;J&#8203;k&#8203;i&#8203;W&#8203;b&#8203;w&#8203;=&#8203;=<br>
+				<b>Sello del SAT: </b> Q&#8203;+&#8203;6&#8203;s&#8203;W&#8203;R&#8203;c&#8203;l&#8203;U&#8203;c&#8203;z&#8203;8&#8203;E&#8203;i&#8203;0&#8203;S&#8203;4&#8203;R&#8203;W&#8203;p&#8203;W&#8203;H&#8203;z&#8203;M&#8203;+&#8203;x&#8203;O&#8203;T&#8203;X&#8203;Y&#8203;F&#8203;G&#8203;y&#8203;u&#8203;n&#8203;e&#8203;r&#8203;z&#8203;t&#8203;9&#8203;+&#8203;K&#8203;7&#8203;g&#8203;L&#8203;o&#8203;k&#8203;i&#8203;A&#8203;a&#8203;P&#8203;V&#8203;k&#8203;H&#8203;G&#8203;j&#8203;R&#8203;R&#8203;5&#8203;F&#8203;f&#8203;r&#8203;L&#8203;Y&#8203;V&#8203;y&#8203;K&#8203;P&#8203;V&#8203;R&#8203;P&#8203;c&#8203;q&#8203;K&#8203;0&#8203;S&#8203;v&#8203;V&#8203;j&#8203;m&#8203;U&#8203;w&#8203;W&#8203;z&#8203;n&#8203;p&#8203;S&#8203;b&#8203;5&#8203;p&#8203;1&#8203;1&#8203;A&#8203;T&#8203;+&#8203;4&#8203;Z&#8203;2&#8203;2&#8203;1&#8203;S&#8203;W&#8203;x&#8203;b&#8203;1&#8203;1&#8203;t&#8203;U&#8203;Z&#8203;K&#8203;b&#8203;y&#8203;6&#8203;N&#8203;6&#8203;0&#8203;u&#8203;4&#8203;I&#8203;m&#8203;r&#8203;k&#8203;m&#8203;y&#8203;A&#8203;A&#8203;G&#8203;q&#8203;S&#8203;h&#8203;P&#8203;O&#8203;1&#8203;J&#8203;f&#8203;7&#8203;9&#8203;p&#8203;s&#8203;K&#8203;p&#8203;M&#8203;l&#8203;n&#8203;I&#8203;s&#8203;2&#8203;A&#8203;Y&#8203;C&#8203;3&#8203;b&#8203;l&#8203;7&#8203;a&#8203;8&#8203;m&#8203;V&#8203;D&#8203;R&#8203;k&#8203;z&#8203;h&#8203;K&#8203;D&#8203;3&#8203;e&#8203;1&#8203;g&#8203;r&#8203;u&#8203;I&#8203;o&#8203;q&#8203;L&#8203;S&#8203;U&#8203;Y&#8203;E&#8203;R&#8203;3&#8203;a&#8203;u&#8203;d&#8203;s&#8203;+&#8203;L&#8203;O&#8203;C&#8203;w&#8203;w&#8203;c&#8203;t&#8203;R&#8203;Z&#8203;D&#8203;K&#8203;3&#8203;l&#8203;k&#8203;j&#8203;8&#8203;L&#8203;i&#8203;v&#8203;s&#8203;/&#8203;y&#8203;Q&#8203;g&#8203;G&#8203;U&#8203;K&#8203;d&#8203;f&#8203;N&#8203;a&#8203;S&#8203;X&#8203;i&#8203;y&#8203;e&#8203;v&#8203;n&#8203;+&#8203;L&#8203;M&#8203;1&#8203;0&#8203;s&#8203;i&#8203;b&#8203;R&#8203;4&#8203;B&#8203;M&#8203;W&#8203;2&#8203;u&#8203;5&#8203;a&#8203;i&#8203;x&#8203;9&#8203;N&#8203;B&#8203;3&#8203;D&#8203;s&#8203;5&#8203;Y&#8203;h&#8203;y&#8203;1&#8203;3&#8203;g&#8203;O&#8203;s&#8203;b&#8203;M&#8203;o&#8203;Q&#8203;H&#8203;a&#8203;J&#8203;0&#8203;4&#8203;S&#8203;Q&#8203;3&#8203;h&#8203;8&#8203;S&#8203;w&#8203;D&#8203;B&#8203;c&#8203;g&#8203;4&#8203;a&#8203;m&#8203;z&#8203;M&#8203;S&#8203;A&#8203;Y&#8203;A&#8203;W&#8203;G&#8203;h&#8203;1&#8203;0&#8203;U&#8203;0&#8203;2&#8203;R&#8203;I&#8203;U&#8203;A&#8203;o&#8203;1&#8203;o&#8203;V&#8203;p&#8203;w&#8203;c&#8203;x&#8203;G&#8203;y&#8203;D&#8203;p&#8203;V&#8203;N&#8203;b&#8203;0&#8203;k&#8203;t&#8203;y&#8203;g&#8203;k&#8203;8&#8203;P&#8203;H&#8203;s&#8203;E&#8203;F&#8203;8&#8203;8&#8203;g&#8203;r&#8203;c&#8203;l&#8203;F&#8203;k&#8203;h&#8203;m&#8203;v&#8203;9&#8203;G&#8203;h&#8203;S&#8203;Q&#8203;=&#8203;=<br>
+				<b>Cadena Original del Timbre Fiscal: </b> |&#8203;|&#8203;1&#8203;.&#8203;1&#8203;|&#8203;6&#8203;d&#8203;7&#8203;4&#8203;3&#8203;4&#8203;a&#8203;6&#8203;-&#8203;e&#8203;3&#8203;f&#8203;2&#8203;-&#8203;4&#8203;7&#8203;a&#8203;d&#8203;-&#8203;9&#8203;e&#8203;4&#8203;c&#8203;-&#8203;0&#8203;8&#8203;8&#8203;4&#8203;9&#8203;9&#8203;4&#8203;6&#8203;a&#8203;f&#8203;a&#8203;0&#8203;|&#8203;2&#8203;0&#8203;2&#8203;0&#8203;-&#8203;0&#8203;1&#8203;-&#8203;1&#8203;1&#8203;T&#8203;0&#8203;0&#8203;:&#8203;0&#8203;0&#8203;:&#8203;0&#8203;0&#8203;|&#8203;S&#8203;A&#8203;T&#8203;9&#8203;7&#8203;0&#8203;7&#8203;0&#8203;1&#8203;N&#8203;N&#8203;3&#8203;|&#8203;O&#8203;e&#8203;V&#8203;Z&#8203;v&#8203;H&#8203;3&#8203;S&#8203;N&#8203;o&#8203;C&#8203;w&#8203;o&#8203;x&#8203;C&#8203;b&#8203;B&#8203;K&#8203;X&#8203;A&#8203;w&#8203;V&#8203;f&#8203;K&#8203;c&#8203;E&#8203;Z&#8203;m&#8203;i&#8203;L&#8203;z&#8203;4&#8203;1&#8203;t&#8203;I&#8203;X&#8203;U&#8203;2&#8203;0&#8203;h&#8203;e&#8203;f&#8203;5&#8203;r&#8203;U&#8203;5&#8203;q&#8203;8&#8203;x&#8203;P&#8203;C&#8203;E&#8203;R&#8203;r&#8203;S&#8203;r&#8203;Y&#8203;e&#8203;k&#8203;A&#8203;6&#8203;h&#8203;l&#8203;m&#8203;N&#8203;P&#8203;r&#8203;+&#8203;+&#8203;G&#8203;8&#8203;w&#8203;V&#8203;t&#8203;g&#8203;s&#8203;x&#8203;F&#8203;W&#8203;8&#8203;f&#8203;w&#8203;V&#8203;1&#8203;3&#8203;N&#8203;p&#8203;3&#8203;n&#8203;K&#8203;B&#8203;x&#8203;k&#8203;9&#8203;8&#8203;+&#8203;O&#8203;O&#8203;A&#8203;f&#8203;1&#8203;S&#8203;k&#8203;h&#8203;G&#8203;k&#8203;r&#8203;j&#8203;L&#8203;r&#8203;U&#8203;R&#8203;j&#8203;L&#8203;x&#8203;Q&#8203;z&#8203;V&#8203;y&#8203;u&#8203;K&#8203;9&#8203;V&#8203;T&#8203;9&#8203;q&#8203;p&#8203;n&#8203;M&#8203;Z&#8203;p&#8203;3&#8203;U&#8203;7&#8203;R&#8203;1&#8203;J&#8203;E&#8203;t&#8203;z&#8203;m&#8203;P&#8203;f&#8203;w&#8203;h&#8203;P&#8203;q&#8203;7&#8203;+&#8203;b&#8203;6&#8203;Z&#8203;/&#8203;e&#8203;f&#8203;e&#8203;x&#8203;8&#8203;e&#8203;L&#8203;n&#8203;M&#8203;G&#8203;T&#8203;s&#8203;R&#8203;n&#8203;U&#8203;r&#8203;G&#8203;X&#8203;t&#8203;H&#8203;+&#8203;u&#8203;w&#8203;5&#8203;K&#8203;r&#8203;/&#8203;D&#8203;4&#8203;T&#8203;Z&#8203;k&#8203;h&#8203;l&#8203;1&#8203;M&#8203;o&#8203;A&#8203;/&#8203;5&#8203;W&#8203;1&#8203;5&#8203;t&#8203;j&#8203;X&#8203;0&#8203;A&#8203;8&#8203;I&#8203;U&#8203;T&#8203;m&#8203;g&#8203;O&#8203;j&#8203;n&#8203;k&#8203;Y&#8203;n&#8203;k&#8203;N&#8203;L&#8203;y&#8203;h&#8203;k&#8203;m&#8203;6&#8203;1&#8203;s&#8203;1&#8203;z&#8203;l&#8203;q&#8203;5&#8203;+&#8203;p&#8203;/&#8203;x&#8203;w&#8203;N&#8203;P&#8203;d&#8203;l&#8203;k&#8203;w&#8203;o&#8203;s&#8203;R&#8203;w&#8203;N&#8203;4&#8203;e&#8203;d&#8203;G&#8203;K&#8203;M&#8203;z&#8203;h&#8203;l&#8203;A&#8203;G&#8203;r&#8203;n&#8203;6&#8203;P&#8203;G&#8203;F&#8203;D&#8203;5&#8203;r&#8203;E&#8203;Q&#8203;R&#8203;/&#8203;n&#8203;q&#8203;+&#8203;v&#8203;p&#8203;b&#8203;1&#8203;8&#8203;O&#8203;e&#8203;r&#8203;r&#8203;k&#8203;w&#8203;5&#8203;x&#8203;S&#8203;y&#8203;l&#8203;0&#8203;I&#8203;I&#8203;M&#8203;N&#8203;C&#8203;V&#8203;E&#8203;n&#8203;X&#8203;0&#8203;L&#8203;W&#8203;K&#8203;o&#8203;J&#8203;t&#8203;W&#8203;f&#8203;+&#8203;9&#8203;D&#8203;r&#8203;V&#8203;V&#8203;3&#8203;2&#8203;E&#8203;Q&#8203;D&#8203;Y&#8203;9&#8203;r&#8203;N&#8203;7&#8203;7&#8203;j&#8203;S&#8203;C&#8203;J&#8203;E&#8203;P&#8203;y&#8203;1&#8203;T&#8203;k&#8203;7&#8203;a&#8203;E&#8203;J&#8203;k&#8203;i&#8203;W&#8203;b&#8203;w&#8203;=&#8203;=&#8203;|&#8203;3&#8203;0&#8203;0&#8203;0&#8203;1&#8203;0&#8203;0&#8203;0&#8203;0&#8203;0&#8203;0&#8203;4&#8203;0&#8203;0&#8203;0&#8203;0&#8203;2&#8203;3&#8203;1&#8203;1&#8203;|&#8203;|
+			</div>
+		</td>
+	</tr>
+</table></body>
+</html>

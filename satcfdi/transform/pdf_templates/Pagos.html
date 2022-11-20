@@ -1,0 +1,176 @@
+<table>
+	<thead>
+		<tr>
+			<th>Fecha de Pago</th>
+			<th>Forma de Pago</th>
+			<th>Moneda</th>
+			<th>Tipo de cambio</th>
+			<th>Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for pago in iterate(c.Pago) %}
+		<tr class="cen">
+			<td>{{ pago.FechaPago }}</td>
+			<td>{{ pago.FormaDePagoP | desc }}</td>
+			<td>{{ pago.MonedaP | desc }}</td>
+			<td>{{ pago.TipoCambioP }}</td>
+			<td class="r">{{ pago.Monto }}</td>
+		</tr>
+		{% if pago.DoctoRelacionado %}
+		<tr style="break-before: avoid;">
+			<td colspan="5" style="padding-left: 30px; padding-right: 30px;">
+				<table >
+					<tr>
+						<th>Serie</th>
+						<th>Folio</th>
+						<th>Id Documento</th>
+<!--							<th>Método de Pago</th>-->
+						<th>Parcialidad</th>
+						<th>Saldo Anterior</th>
+						<th>Importe Pagado</th>
+						<th>Saldo Insoluto</th>
+					</tr>
+					{% for doc in iterate(pago.DoctoRelacionado) %}
+					<tr class="cen">
+						<td>{{ doc.Serie }}</td>
+						<td>{{ doc.Folio }}</td>
+						<td>{{ doc.IdDocumento }}</td>
+<!--							<td>{{ doc.MetodoDePagoDR | desc }}</td>-->
+						<td class="r">{{ doc.NumParcialidad }}</td>
+						<td class="r">{{ doc.ImpSaldoAnt }}</td>
+						<td class="r">{{ doc.ImpPagado }}</td>
+						<td class="r">{{ doc.ImpSaldoInsoluto }}</td>
+					</tr>
+					{% if doc.ImpuestosDR %}
+					<tr>
+						<td colspan="4">
+							<table class="r">
+								<tr>
+									<th style="background-color:white;"></th>
+									<th>Base</th>
+									<th>Impuesto</th>
+									<th>Tasa o Cuota</th>
+									<th>Importe</th>
+								</tr>
+								{% if doc.ImpuestosDR.TrasladosDR %}
+								{% for v in iterate(doc.ImpuestosDR.TrasladosDR) %}
+								<tr>
+									<td>{% if loop.first %}<b>Traslados</b>{% endif %}</td>
+									<td>{{ v.BaseDR }}</td>
+									<td>{{ v.ImpuestoDR | desc }}</td>
+									<td>{{ tasa_cuota( v.TipoFactorDR, v.TasaOCuotaDR) }}</td>
+									<td>{{ v.ImporteDR }}</td>
+								</tr>
+								{% endfor %}
+								{% endif %}
+								{% if doc.ImpuestosDR.RetencionesDR %}
+								{% for v in iterate(doc.ImpuestosDR.RetencionesDR) %}
+								<tr>
+									<td>{% if loop.first %}<b>Retenciones</b>{% endif %}</td>
+									<td>{{ v.BaseDR }}</td>
+									<td>{{ v.ImpuestoDR | desc }}</td>
+									<td>{{ tasa_cuota( v.TipoFactorDR, v.TasaOCuotaDR) }}</td>
+									<td>{{ v.ImporteDR }}</td>
+								</tr>
+								{% endfor %}
+								{% endif %}
+							</table>
+						</td>
+					</tr>
+					{% endif %}
+					{% endfor %}
+					{% endif %}
+				</table>
+				{% if pago.ImpuestosP %}
+				<table class="tot">
+					{% if pago.ImpuestosP.TrasladosP %}
+					{% for v in iterate(pago.ImpuestosP.TrasladosP) %}
+					<tr class="r">
+						<td>
+							{% if loop.first %}
+							<b>Traslados</b>
+							{% endif %}
+						</td>
+						<td>{{ v.ImpuestoP | desc }}</td>
+						<td>{{ tasa_cuota( v.TipoFactorP, v.TasaOCuotaP) }}</td>
+						<td>{{ v.ImporteP }}</td>
+					</tr>
+					{% endfor %}
+					{% endif %}
+					{% if pago.ImpuestosP.RetencionesP %}
+					{% for v in iterate(pago.ImpuestosP.RetencionesP) %}
+					<tr class="r">
+						<td>
+							{% if loop.first %}
+							<b>Retenciones</b>
+							{% endif %}
+						</td>
+						<td>{{ v.ImpuestoP | desc }}</td>
+						<td></td>
+						<td>{{ v.ImporteP }}</td>
+					</tr>
+					{% endfor %}
+					{% endif %}
+				</table>
+			</td>
+		</tr>
+		{% endif %}
+		{% if pago.TipoCadPago %}
+		<tr style="break-before: avoid;">
+			<td colspan="5" style="padding-left: 30px; padding-right: 30px;">
+				<table>
+					<tr></tr>
+					<tr>
+						<td style="white-space: nowrap;"><b>Tipo Cadena de Pago: </b></td>
+						<td>{{ pago.TipoCadPago | desc }}</td>
+						<td style="white-space: nowrap;"><b>No. Certificado Pago: </b></td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<div class="ciii">
+								<b>Sello de Pago: </b> {{ pago.SelloPago | baa }}<br>
+								<b>Cadena de Pago: </b> {{ pago.CadPago | baa }}<br>
+								<b>Certificado de Pago: </b> {{ pago.CertPago | baa }}<br>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</tbody>
+</table>
+{% if c.Totales %}
+<table class="tot">
+	{% for r in [
+		('16.0000%', c.Totales.TotalTrasladosImpuestoIVA16),
+		('8.0000%', c.Totales.TotalTrasladosImpuestoIVA8),
+		('0.0000%', c.Totales.TotalTrasladosImpuestoIVA0),
+		('Exento', c.Totales.TotalTrasladosBaseIVAExento)] if r[1] %}
+	<tr class="r">
+		<td><b>{% if loop.first %}Totales Traslados MXN{% endif %}</b></td>
+		<td>IVA</td>
+		<td>{{ r[0] }}</td>
+		<td>{{ r[1] }}</td>
+	</tr>
+	{% endfor %}
+	{% for r in [('IVA', c.Totales.TotalRetencionesIVA), ('ISR', c.Totales.TotalRetencionesISR), ('IEPS', c.Totales.TotalRetencionesIEPS)] if r[1] %}
+	<tr class="r">
+		<td><b>{% if loop.first %}Totales Retenciónes MXN{% endif %}</b></td>
+		<td>{{ r[0] }}</td>
+		<td></td>
+		<td>{{ r[1] }}</td>
+	</tr>
+	{% endfor %}
+	<tr class="r">
+		<td>
+			<b>Monto Total Pagado MXN</b>
+		</td>
+		<td></td>
+		<td></td>
+		<td>{{ c.Totales.MontoTotalPagos }}</td>
+	</tr>
+</table>
+{% endif %}

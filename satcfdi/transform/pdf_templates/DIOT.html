@@ -1,0 +1,18 @@
+{% set c = c.to_dict() %}
+<h2>Declaración Informativa de Operaciones con Terceros</h2>
+<h4>Datos de Identificacion</h4>
+{{ c.DatosIdentificacion | dump }}
+<br>
+
+<h4>Datos de Generales</h4>
+{{ c.DatosGenerales | dump }}
+<br>
+
+<h4>Informacion de Identificacion del Proveedor o Tercero</h4>
+{% for c in c.Proveedores %}
+	{{ c | dump }}
+	<br>
+{% endfor %}
+
+<h4>Totales</h4>
+{{ c.Totales | dump }}

@@ -1,0 +1,11 @@
+{
+  "method": "post",
+  "url": "https://services.test.sw.com.mx/relations/EKU9003173C9/362efe1f-c0b4-47dd-9979-91d068a2bc75",
+  "headers": {
+    "Cache-Control": "no-cache",
+    "Authorization": "Bearer token",
+    "User-Agent": "this is a test"
+  },
+  "json": null,
+  "files": null
+}

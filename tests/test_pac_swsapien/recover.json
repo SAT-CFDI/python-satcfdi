@@ -1,0 +1,11 @@
+{
+  "method": "get",
+  "url": "https://api.test.sw.com.mx/datawarehouse/v1/live/ab21a13a-7385-4493-bec1-52cfb53ec9a7",
+  "headers": {
+    "Cache-Control": "no-cache",
+    "Authorization": "Bearer token",
+    "User-Agent": "this is a test"
+  },
+  "json": null,
+  "files": null
+}

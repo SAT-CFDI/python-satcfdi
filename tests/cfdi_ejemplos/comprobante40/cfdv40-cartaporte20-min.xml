@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cfdi:Comprobante
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+    xmlns:cartaporte20="http://www.sat.gob.mx/CartaPorte20"
+    xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 cfdv40.xsd
+    http://www.sat.gob.mx/CartaPorte20
+    http://www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte20.xsd"
+    Version="4.0" Fecha="2021-12-08T23:59:59"
+    Moneda="XXX" SubTotal="0" Total="0"
+    TipoDeComprobante="P" FormaPago="02"
+    Exportacion="03" LugarExpedicion="99999"
+    NoCertificado="30001000000300023708" Sello="" Certificado="">
+    <cfdi:Emisor Rfc=" AAA010101AAA" RegimenFiscal="622" Nombre="Esta es una demostración" />
+    <cfdi:Receptor Rfc="BASJ600902KL9" UsoCFDI="P01"  Nombre="Juanito Bananas De la Sierra"  DomicilioFiscalReceptor="99999" RegimenFiscalReceptor="630" />
+    <cfdi:Conceptos>
+      <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Descripcion"
+      ValorUnitario="0" Importe="0" ObjetoImp="01" />
+    </cfdi:Conceptos>
+  <cfdi:Complemento>
+    <cartaporte20:CartaPorte Version="2.0" TranspInternac="Sí">
+      <cartaporte20:Ubicaciones>
+        <cartaporte20:Ubicacion TipoUbicacion="Origen" FechaHoraSalidaLlegada="2021-11-01T01:23:59" RFCRemitenteDestinatario="AAA010101AAA" >
+          <cartaporte20:Domicilio Calle="Hola" Estado="Mexico City" Pais="MEX" CodigoPostal="11850" />
+        </cartaporte20:Ubicacion>
+        <cartaporte20:Ubicacion  TipoUbicacion="Destino" FechaHoraSalidaLlegada="2021-11-01T01:23:59" RFCRemitenteDestinatario="BASJ600902KL9">
+          <cartaporte20:Domicilio Calle="Hola" Estado="Estado" Pais="ZZZ" CodigoPostal="123456" />
+        </cartaporte20:Ubicacion>
+      </cartaporte20:Ubicaciones>
+      <cartaporte20:Mercancias PesoBrutoTotal="100.123" UnidadPeso="SM3" NumTotalMercancias="1">
+        <cartaporte20:Mercancia BienesTransp="60141405"  Descripcion="Descripcion" Cantidad="1.000001" PesoEnKg="1.123" ClaveUnidad="ZZ" />
+      </cartaporte20:Mercancias>
+    </cartaporte20:CartaPorte>
+  </cfdi:Complemento>
+</cfdi:Comprobante>

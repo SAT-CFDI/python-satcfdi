@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/inm inm.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/inm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201407</mes_reportado>
+        <sujeto_obligado>
+            <clave_sujeto_obligado>OGA751212G56</clave_sujeto_obligado>
+            <clave_actividad>INM</clave_actividad>
+        </sujeto_obligado>
+        <aviso>
+            <referencia_aviso>REF15454FG454</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>521</tipo_alerta>
+            </alerta>
+            <persona_aviso>
+                <tipo_persona>
+                    <persona_moral>
+                        <denominacion_razon>LA MORALISTA</denominacion_razon>
+                        <fecha_constitucion>20051212</fecha_constitucion>
+                        <pais_nacionalidad>MX</pais_nacionalidad>
+                        <giro_mercantil>1119000</giro_mercantil>
+                        <representante_apoderado>
+                            <nombre>JUAN</nombre>
+                            <apellido_paterno>GOMEZ</apellido_paterno>
+                            <apellido_materno>PEREZ</apellido_materno>
+                            <fecha_nacimiento>19801212</fecha_nacimiento>
+                            <rfc>GOPJ801212R45</rfc>
+                        </representante_apoderado>
+                    </persona_moral>
+                </tipo_persona>
+                <tipo_domicilio>
+                    <nacional>
+                        <colonia>GUADALUPE INN</colonia>
+                        <calle>REVOLUCION</calle>
+                        <numero_exterior>458</numero_exterior>
+                        <codigo_postal>01020</codigo_postal>
+                    </nacional>
+                </tipo_domicilio>
+                <telefono>
+                    <numero_telefono>5515485454</numero_telefono>
+                </telefono>
+            </persona_aviso>
+            <dueno_beneficiario>
+                <tipo_persona>
+                    <persona_fisica>
+                        <nombre>PEDRO</nombre>
+                        <apellido_paterno>LOPEZ</apellido_paterno>
+                        <apellido_materno>X</apellido_materno>
+                        <fecha_nacimiento>19890516</fecha_nacimiento>
+                        <pais_nacionalidad>AD</pais_nacionalidad>
+                    </persona_fisica>
+                </tipo_persona>
+            </dueno_beneficiario>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <fecha_operacion>20140101</fecha_operacion>
+                    <tipo_operacion>501</tipo_operacion>
+                    <figura_cliente>2</figura_cliente>
+                    <figura_so>3</figura_so>
+                    <datos_contraparte>
+                        <tipo_persona>
+                            <persona_fisica>
+                                <nombre>JOSE </nombre>
+                                <apellido_paterno>RODRIGUEZ</apellido_paterno>
+                                <apellido_materno>SOL</apellido_materno>
+                                <fecha_nacimiento>19780522</fecha_nacimiento>
+                                <pais_nacionalidad>DE</pais_nacionalidad>
+                            </persona_fisica>
+                        </tipo_persona>
+                    </datos_contraparte>
+                    <caracteristicas_inmueble>
+                        <tipo_inmueble>1</tipo_inmueble>
+                        <valor_pactado>5820000.12</valor_pactado>
+                        <colonia>EL PARAISO</colonia>
+                        <calle>SDFSDFSDF</calle>
+                        <numero_exterior>W2</numero_exterior>
+                        <codigo_postal>09230</codigo_postal>
+                        <dimension_terreno>3434.00</dimension_terreno>
+                        <dimension_construido>43434.00</dimension_construido>
+                        <folio_real>343434</folio_real>
+                    </caracteristicas_inmueble>
+                    <contrato_instrumento_publico>
+                        <datos_instrumento_publico>
+                            <numero_instrumento_publico>555</numero_instrumento_publico>
+                            <fecha_instrumento_publico>20140102</fecha_instrumento_publico>
+                            <notario_instrumento_publico>4455</notario_instrumento_publico>
+                            <entidad_instrumento_publico>4</entidad_instrumento_publico>
+                            <valor_avaluo_catastral>11121321.00</valor_avaluo_catastral>
+                        </datos_instrumento_publico>
+                    </contrato_instrumento_publico>
+                    <datos_liquidacion>
+                        <fecha_pago>20140101</fecha_pago>
+                        <forma_pago>2</forma_pago>
+                        <instrumento_monetario>1</instrumento_monetario>
+                        <moneda>2</moneda>
+                        <monto_operacion>234234344.00</monto_operacion>
+                    </datos_liquidacion>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>
+

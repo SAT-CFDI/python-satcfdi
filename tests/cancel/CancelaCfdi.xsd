@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 (x64) (http://www.altova.com) by SAT (SAT) -->
+<xsd:schema xmlns:Cancelacion="http://www.sat.gob.mx/sitio_internet/cfd" xmlns:signature="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.sat.gob.mx/sitio_internet/cfd" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
+	<xsd:element name="Cancelacion">
+		<xsd:annotation>
+			<xsd:documentation>Elemento raíz para realizar una solicitud de cancelación de CFDI.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Folios" maxOccurs="10000">
+					<xsd:annotation>
+						<xsd:documentation>Colección de folios fiscales (UUID) a ser cancelados.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Folio">
+								<xsd:annotation>
+									<xsd:documentation>Folio fiscal (UUID) a ser cancelado.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:attribute name="UUID" use="required">
+										<xsd:annotation>
+											<xsd:documentation>UUID generado en la operación de timbrado del comprobante solicitado.</xsd:documentation>
+										</xsd:annotation>
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:pattern value="[a-f0-9A-F]{8}-[a-f0-9A-F]{4}-[a-f0-9A-F]{4}-[a-f0-9A-F]{4}-[a-f0-9A-F]{12}"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute name="Motivo" use="required">
+										<xsd:annotation>
+											<xsd:documentation>Clave del motivo de cancelación del comprobante.</xsd:documentation>
+										</xsd:annotation>
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="01"/>
+												<xsd:enumeration value="02"/>
+												<xsd:enumeration value="03"/>
+												<xsd:enumeration value="04"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute name="FolioSustitucion" use="optional">
+										<xsd:annotation>
+											<xsd:documentation>Atributo condicional que representa al UUID que sustituye al folio fiscal cancelado. Es requerido cuando la clave del motivo de cancelación es 01.</xsd:documentation>
+										</xsd:annotation>
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:pattern value="[a-f0-9A-F]{8}-[a-f0-9A-F]{4}-[a-f0-9A-F]{4}-[a-f0-9A-F]{4}-[a-f0-9A-F]{12}"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="signature:Signature"/>
+			</xsd:sequence>
+			<xsd:attribute name="RfcEmisor" use="required">
+				<xsd:annotation>
+					<xsd:documentation>Atributo requerido para expresar el RFC del emisor del (os) CFDI a cancelar.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string"/>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="Fecha" use="required">
+				<xsd:annotation>
+					<xsd:documentation>Atributo requerido para expresar la fecha de la operación.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:dateTime"/>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:pago20="http://www.sat.gob.mx/Pagos20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="4.0" Serie="A" Folio="123456" Fecha="2020-01-01T22:40:38" Sello="p78XEYNfPGab0Mi+z2c6XuL1oWSwTlMtoAVn2PnjIa1e7Ei8Ymoyg/wBdxO/P5F5ENrwyu6fw0aJHtEqLsrUNezLi4lbRbWP6ZfNZSqQObyp7rMkEYQplVnDqxJwMOrYW7gf5vizplNM9wP+yT/oUGKHBjhZoCo1kE6BsTWly046CGVdIi9p1k7WM8hzp/KV7hP9yBeRpdMMFfWCaxDuw3+GwPwN2Q1A9Io3x2Fx2EXk5dhMWxGf96+eCECODfmasFKPB53udAzZVxl7mtjh6JEUNxgFplLx0EINx7P9VuzJrX0W2ll/STTCYGK6kqTP19s7deJICO1JS8Iz/mDqLw==" NoCertificado="30001000000400002460" Certificado="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" SubTotal="0" Moneda="XXX" Total="0" TipoDeComprobante="P" Exportacion="01" LugarExpedicion="56820" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd">
+  <cfdi:Emisor Rfc="H&amp;E951128469" Nombre="HERRERIA &amp; ELECTRICOS" RegimenFiscal="606"/>
+  <cfdi:Receptor Rfc="KIJ0906199R1" Nombre="KIJ, S.A DE C.V." DomicilioFiscalReceptor="59820" RegimenFiscalReceptor="601" UsoCFDI="CP01"/>
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Pago" ValorUnitario="0" Importe="0" ObjetoImp="01"/>
+  </cfdi:Conceptos>
+  <cfdi:Complemento>
+    <pago20:Pagos Version="2.0">
+      <pago20:Totales TotalTrasladosBaseIVA16="2797.52" TotalTrasladosImpuestoIVA16="447.60" MontoTotalPagos="3245.12"/>
+      <pago20:Pago FechaPago="2020-01-02T22:40:38" FormaDePagoP="03" MonedaP="MXN" TipoCambioP="1" Monto="3245.12">
+        <pago20:DoctoRelacionado IdDocumento="6d7434a6-e3f2-47ad-9e4c-08849946afa0" Serie="A" Folio="123456" MonedaDR="MXN" EquivalenciaDR="1" NumParcialidad="2" ImpSaldoAnt="5000.43" ImpPagado="3245.12" ImpSaldoInsoluto="1755.31" ObjetoImpDR="02">
+          <pago20:ImpuestosDR>
+            <pago20:TrasladosDR>
+              <pago20:TrasladoDR BaseDR="2797.52" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.160000" ImporteDR="447.60"/>
+            </pago20:TrasladosDR>
+          </pago20:ImpuestosDR>
+        </pago20:DoctoRelacionado>
+        <pago20:ImpuestosP>
+          <pago20:TrasladosP>
+            <pago20:TrasladoP BaseP="2797.52" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.160000" ImporteP="447.60"/>
+          </pago20:TrasladosP>
+        </pago20:ImpuestosP>
+      </pago20:Pago>
+    </pago20:Pagos>
+  </cfdi:Complemento>
+</cfdi:Comprobante>

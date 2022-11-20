@@ -1,0 +1,6 @@
+{
+  "url": "https://siat.sat.gob.mx/app/qr/faces/pages/mobile/validadorqr.jsf?D1=10&D2=1&D3=ID_CIF_RFC",
+  "headers": {
+    "User-Agent": "this is a test"
+  }
+}

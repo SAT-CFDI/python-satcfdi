@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fes:archivo xmlns:fes="http://www.uif.shcp.gob.mx/recepcion/fes">
+  <fes:informe>
+    <fes:mes_reportado>201510</fes:mes_reportado>
+    <fes:tribunal_dependencia>
+      <fes:clave_tribunal_dependencia>TRT890505DR4</fes:clave_tribunal_dependencia>
+      <fes:clave_actividad>FES</fes:clave_actividad>
+    </fes:tribunal_dependencia>
+    <fes:aviso>
+      <fes:referencia_aviso>REF987</fes:referencia_aviso>
+      <fes:prioridad>1</fes:prioridad>
+      <fes:alerta>
+        <fes:tipo_alerta>100</fes:tipo_alerta>
+      </fes:alerta>
+      <fes:detalle_operaciones>
+        <fes:datos_operacion>
+          <fes:fecha_operacion>20151001</fes:fecha_operacion>
+          <fes:tipo_actividad>
+            <fes:constitucion_personas_morales>
+              <fes:autoridad>
+                <fes:tipo_autoridad>
+                  <fes:administrativo>
+                    <fes:organo>ORG ADMIN</fes:organo>
+                    <fes:cargo>CARGO AUT</fes:cargo>
+                    <fes:instrumento_publico_oficio>INST PUB</fes:instrumento_publico_oficio>
+                  </fes:administrativo>
+                </fes:tipo_autoridad>
+                <fes:domicilio_oficina>
+                  <fes:nacional>
+                    <fes:colonia>EL PIPILA INFONAVIT</fes:colonia>
+                    <fes:calle>CALLE</fes:calle>
+                    <fes:numero_exterior>1000</fes:numero_exterior>
+                    <fes:codigo_postal>58000</fes:codigo_postal>
+                  </fes:nacional>
+                </fes:domicilio_oficina>
+              </fes:autoridad>
+              <fes:persona_solicita>
+                <fes:nombre>JOSE</fes:nombre>
+                <fes:apellido_paterno>TORRES</fes:apellido_paterno>
+                <fes:apellido_materno>PEREZ</fes:apellido_materno>
+                <fes:fecha_nacimiento>19980808</fes:fecha_nacimiento>
+                <fes:pais_nacionalidad>ES</fes:pais_nacionalidad>
+              </fes:persona_solicita>
+              <fes:persona_moral_constitucion>
+                <fes:tipo_persona_moral>99</fes:tipo_persona_moral>
+                <fes:tipo_persona_moral_otra>OTRO TIPO PERSONA MORAL</fes:tipo_persona_moral_otra>
+                <fes:denominacion_razon>RAZON SOCIAL</fes:denominacion_razon>
+                <fes:giro_mercantil>1000000</fes:giro_mercantil>
+                <fes:folio_mercantil>FOLIOOO</fes:folio_mercantil>
+                <fes:numero_total_acciones>15.00</fes:numero_total_acciones>
+                <fes:entidad_federativa>4</fes:entidad_federativa>
+                <fes:consejo_vigilancia>SI</fes:consejo_vigilancia>
+                <fes:motivo_constitucion>1</fes:motivo_constitucion>
+                <fes:instrumento_publico>INSTPUB12456</fes:instrumento_publico>
+                <fes:datos_accionista>
+                  <fes:cargo_accionista>1</fes:cargo_accionista>
+                  <fes:tipo_persona>
+                    <fes:persona_fisica>
+                      <fes:nombre>MARTIN</fes:nombre>
+                      <fes:apellido_paterno>SALAS</fes:apellido_paterno>
+                      <fes:apellido_materno>XXXX</fes:apellido_materno>
+                      <fes:fecha_nacimiento>19960505</fes:fecha_nacimiento>
+                      <fes:pais_nacionalidad>SB</fes:pais_nacionalidad>
+                    </fes:persona_fisica>
+                  </fes:tipo_persona>
+                  <fes:numero_acciones>85.00</fes:numero_acciones>
+                </fes:datos_accionista>
+                <fes:datos_accionista>
+                  <fes:cargo_accionista>2</fes:cargo_accionista>
+                  <fes:tipo_persona>
+                    <fes:persona_moral>
+                      <fes:denominacion_razon>DENOMINACION SA</fes:denominacion_razon>
+                      <fes:fecha_constitucion>19880808</fes:fecha_constitucion>
+                      <fes:pais_nacionalidad>AD</fes:pais_nacionalidad>
+                    </fes:persona_moral>
+                  </fes:tipo_persona>
+                  <fes:numero_acciones>51.00</fes:numero_acciones>
+                </fes:datos_accionista>
+                <fes:datos_accionista>
+                  <fes:cargo_accionista>3</fes:cargo_accionista>
+                  <fes:tipo_persona>
+                    <fes:fideicomiso>
+                      <fes:denominacion_razon>RAZON SA</fes:denominacion_razon>
+                      <fes:rfc>DRE850404DE3</fes:rfc>
+                    </fes:fideicomiso>
+                  </fes:tipo_persona>
+                  <fes:numero_acciones>67.00</fes:numero_acciones>
+                </fes:datos_accionista>
+                <fes:capital_social>
+                  <fes:capital_fijo>18700000.00</fes:capital_fijo>
+                  <fes:capital_variable>17000.00</fes:capital_variable>
+                </fes:capital_social>
+              </fes:persona_moral_constitucion>
+            </fes:constitucion_personas_morales>
+          </fes:tipo_actividad>
+        </fes:datos_operacion>
+      </fes:detalle_operaciones>
+    </fes:aviso>
+  </fes:informe>
+</fes:archivo>

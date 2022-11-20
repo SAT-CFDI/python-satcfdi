@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/fep fep.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/fep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201401</mes_reportado>
+        <sujeto_obligado>
+            <clave_sujeto_obligado>CAOM820309AM3</clave_sujeto_obligado>
+            <clave_actividad>FEP</clave_actividad>
+        </sujeto_obligado>
+        <aviso>
+            <referencia_aviso>AAA111</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>100</tipo_alerta>
+            </alerta>
+            <persona_aviso>
+                <nombre>MAR</nombre>
+                <apellido_paterno>CAS</apellido_paterno>
+                <apellido_materno>OLI</apellido_materno>
+                <fecha_nacimiento>19820309</fecha_nacimiento>
+            </persona_aviso>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <instrumento_publico>1234568790</instrumento_publico>
+                    <fecha_operacion>20140101</fecha_operacion>
+                    <tipo_actividad>
+                        <avaluo>
+                            <tipo_bien>1</tipo_bien>
+                            <valor_avaluo>580000.98</valor_avaluo>
+                            <datos_propietario>
+                                <propietario_solicita>NO</propietario_solicita>
+                                <tipo_persona>
+                                    <persona_fisica>
+                                        <nombre>MAR</nombre>
+                                        <apellido_paterno>CAS</apellido_paterno>
+                                        <apellido_materno>OLI</apellido_materno>
+                                        <fecha_nacimiento>19820903</fecha_nacimiento>
+                                        <pais_nacionalidad>AF</pais_nacionalidad>
+                                    </persona_fisica>
+                                </tipo_persona>
+                            </datos_propietario>
+                        </avaluo>
+                    </tipo_actividad>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>
+

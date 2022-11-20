@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/mpc mpc.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/mpc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201407</mes_reportado>
+        <sujeto_obligado>
+            <clave_sujeto_obligado>OGA751212G56</clave_sujeto_obligado>
+            <clave_actividad>MPC</clave_actividad>
+        </sujeto_obligado>
+        <aviso>
+            <referencia_aviso>REF15454FG454</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>521</tipo_alerta>
+            </alerta>
+            <persona_aviso>
+                <tipo_persona>
+                    <persona_moral>
+                        <denominacion_razon>LA MORALISTA</denominacion_razon>
+                        <fecha_constitucion>20051212</fecha_constitucion>
+                        <pais_nacionalidad>MX</pais_nacionalidad>
+                        <giro_mercantil>1119000</giro_mercantil>
+                        <representante_apoderado>
+                            <nombre>JUAN</nombre>
+                            <apellido_paterno>GOMEZ</apellido_paterno>
+                            <apellido_materno>PEREZ</apellido_materno>
+                            <fecha_nacimiento>19801212</fecha_nacimiento>
+                            <rfc>GOPJ801212R45</rfc>
+                        </representante_apoderado>
+                    </persona_moral>
+                </tipo_persona>
+                <tipo_domicilio>
+                    <nacional>
+                        <colonia>GUADALUPE INN</colonia>
+                        <calle>REVOLUCION</calle>
+                        <numero_exterior>458</numero_exterior>
+                        <codigo_postal>01020</codigo_postal>
+                    </nacional>
+                </tipo_domicilio>
+                <telefono>
+                    <numero_telefono>5515485454</numero_telefono>
+                </telefono>
+            </persona_aviso>
+            <dueno_beneficiario>
+                <tipo_persona>
+                    <persona_fisica>
+                        <nombre>PEDRO</nombre>
+                        <apellido_paterno>LOPEZ</apellido_paterno>
+                        <apellido_materno>X</apellido_materno>
+                        <fecha_nacimiento>19890516</fecha_nacimiento>
+                        <pais_nacionalidad>AD</pais_nacionalidad>
+                    </persona_fisica>
+                </tipo_persona>
+            </dueno_beneficiario>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <fecha_operacion>20140101</fecha_operacion>
+                    <codigo_postal>09230</codigo_postal>
+                    <tipo_operacion>402</tipo_operacion>
+                    <datos_garantia>
+                        <tipo_garantia>2</tipo_garantia>
+                        <datos_bien_mutuo>
+                            <datos_inmueble>
+                                <tipo_inmueble>1</tipo_inmueble>
+                                <valor_referencia>55555555.00</valor_referencia>
+                                <codigo_postal>09230</codigo_postal>
+                                <folio_real>211561</folio_real>
+                            </datos_inmueble>
+                        </datos_bien_mutuo>
+                        <tipo_persona>
+                            <persona_fisica>
+                                <nombre>JOSE </nombre>
+                                <apellido_paterno>RODRIGUEZ </apellido_paterno>
+                                <apellido_materno>SOLANO</apellido_materno>
+                                <fecha_nacimiento>19780522</fecha_nacimiento>
+                            </persona_fisica>
+                        </tipo_persona>
+                    </datos_garantia>
+                    <datos_liquidacion>
+                        <fecha_disposicion>20140101</fecha_disposicion>
+                        <instrumento_monetario>1</instrumento_monetario>
+                        <moneda>2</moneda>
+                        <monto_operacion>234234344.00</monto_operacion>
+                    </datos_liquidacion>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CancelaCFD xmlns="http://cancelacfd.sat.gob.mx">
+    <Cancelacion 
+        xsi:schemaLocation="http://cancelacfd.sat.gob.mx CancelaCfdi.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        Fecha="@!TIMESTAMP!@" RfcEmisor="AA010101AAA">
+        <Folios>
+            <Folio UUID="E3BA5811-FD07-4B9C-84B4-B146D7560575" Motivo="01"
+                FolioSustitucion="20D816A0-BA64-4DF4-BE87-AA55E62F992F"/>
+        </Folios>
+        <Folios>
+            <Folio UUID="29880559-5057-4871-9572-A222FD10BD97" Motivo="02"/>
+        </Folios>
+        <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <SignedInfo>
+                <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+                <Reference URI="">
+                    <Transforms>
+                        <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    </Transforms>
+                    <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                    <DigestValue>@!DIGVAL!@</DigestValue>
+                </Reference>
+            </SignedInfo>
+            <SignatureValue>@!SIGVAL!@</SignatureValue>
+            <KeyInfo>
+                <KeyValue>@!RSAKEYVALUE!@</KeyValue>
+                <X509Data>
+                    <X509IssuerSerial>
+                        <X509IssuerName>@!ISSUERNAME!@</X509IssuerName>
+                        <X509SerialNumber>@!SERIALNUMBER!@</X509SerialNumber>
+                    </X509IssuerSerial>
+                    <X509Certificate>@!CERTIFICATE!@</X509Certificate>
+                </X509Data>
+            </KeyInfo>
+        </Signature>
+    </Cancelacion>
+</CancelaCFD>

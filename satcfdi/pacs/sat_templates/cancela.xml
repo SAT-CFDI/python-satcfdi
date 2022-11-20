@@ -1,0 +1,11 @@
+<Cancelacion xmlns="http://cancelacfd.sat.gob.mx"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             Fecha="2021-12-26T18:15:28"
+             RfcEmisor="EKU9003173C9">
+	<Folios>
+		<Folio UUID="fe4e71b0-8959-4fb9-8091-f5ac4fb0fef8"
+		       Motivo="02"
+		       FolioSustitucion=""/>
+	</Folios>
+</Cancelacion>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A valid XML document for CFD v3.3 schema with nonsense values for testing -->
+<!-- Comments to http://www.cryptosys.net/contact/ -->
+<!-- Corrected to make valid according to business rules in Guia_comple_pagos.pdf.
+        - FormaPago not needed when this complemento is used.
+        - Impuestos section also not needed
+        - Some attributes updated
+-->
+
+<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+                  xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd"
+                  Version="3.3"
+                  Fecha="2017-09-14T01:02:03"
+                  NoCertificado="40001000000300000337" Sello="" Certificado=""
+                  Moneda="XXX"
+                  SubTotal="0"
+                  Total="0"
+                  TipoDeComprobante="P"
+                  LugarExpedicion="45079">
+    <cfdi:Emisor Rfc="AAA010101AAA"
+                 RegimenFiscal="622"/>
+    <cfdi:Receptor Rfc="AAA010101AAA"
+                   UsoCFDI="P01"/>
+    <cfdi:Conceptos>
+        <cfdi:Concepto ClaveProdServ="84111506"
+                       ClaveUnidad="ACT"
+                       Cantidad="1"
+                       Descripcion="Pago"
+                       ValorUnitario="0"
+                       Importe="0"/>
+    </cfdi:Conceptos>
+    <cfdi:Complemento>
+    <!-- MINIMUM REQUIRED FIELDS -->
+      <pago10:Pagos xmlns:pago10="http://www.sat.gob.mx/Pagos"
+                    xsi:schemaLocation="http://www.sat.gob.mx/Pagos http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos10.xsd"
+                    Version="1.0">
+        <pago10:Pago MonedaP="ZWL"
+                     TipoCambioP="1"
+                     FechaPago="2017-09-13T01:02:59"
+                     Monto="10.12"
+                     FormaDePagoP="02">
+        </pago10:Pago>
+      </pago10:Pagos>
+    </cfdi:Complemento>
+</cfdi:Comprobante>

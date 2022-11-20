@@ -1,0 +1,7 @@
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+    <Body>
+        <tem:Consulta>
+            <tem:expresionImpresa/>
+        </tem:Consulta>
+    </Body>
+</Envelope>

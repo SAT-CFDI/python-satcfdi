@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/ari ari.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/ari" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<informe>
+<mes_reportado>202210</mes_reportado>
+<sujeto_obligado>
+<clave_sujeto_obligado>OGA751212G56</clave_sujeto_obligado>
+<clave_actividad>ARI</clave_actividad>
+</sujeto_obligado>
+</informe>
+</archivo>
+

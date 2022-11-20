@@ -1,0 +1,16 @@
+<h5>CFDI Relacionados</h5>
+<table>
+	<tr></tr>
+	{% for v in iterate(c) %}
+	<tr>
+		<td><b>Tipo de Relación: </b>{{ v.TipoRelacion | desc }}</td>
+		<td>
+			<ul>
+			{% for r in iterate(v.CfdiRelacionado) %}
+				<li><b>UUID: </b>{{ r }}</li>
+			{% endfor %}
+			</ul>
+		</td>
+	</tr>
+	{% endfor %}
+</table>

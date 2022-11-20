@@ -1,0 +1,128 @@
+import os.path
+from datetime import datetime
+from decimal import Decimal
+from unittest import mock
+
+from satcfdi import __version__, CFDI
+from satcfdi.pacs import Environment
+from satcfdi.pacs import TaxpayerStatus
+from satcfdi.pacs.sat import _CFDISolicitaDescarga, _CFDIAutenticacion
+from satcfdi.pacs.sat import SAT
+from satcfdi.pacs.sat import _get_listado_69b
+from tests.utils import get_signer, verify_result
+
+module = 'satcfdi'
+current_dir = os.path.dirname(__file__)
+
+
+def test_pac_sat():
+    sat_service = SAT(environment=Environment.TEST)
+
+    with mock.patch(f'requests.post') as mk:
+        mk.return_value.ok = True
+        mk.return_value.content = (
+            b'<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><ConsultaResponse xmlns="http://tempuri.org/"><ConsultaResult '
+            b'xmlns:a="http://schemas.datacontract.org/2004/07/Sat.Cfdi.Negocio.ConsultaCfdi.Servicio" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><a:CodigoEstatus>S - '
+            b'Comprobante obtenido satisfactoriamente.</a:CodigoEstatus><a:EsCancelable>No '
+            b'cancelable</a:EsCancelable><a:Estado>Vigente</a:Estado><a:EstatusCancelacion/><a:ValidacionEFOS>200</a:ValidacionEFOS></ConsultaResult></ConsultaResponse></s:Body'
+            b'></s:Envelope> '
+        )
+
+        cfdi = CFDI({
+            "Emisor": {
+                "Rfc": 'RFC_EMISOR'
+            },
+            "Receptor": {
+                "Rfc": 'RFC_RECEPTOR'
+            },
+            "Total": Decimal('123456.00'),
+            "Complemento": {
+                "TimbreFiscalDigital": {
+                    "UUID": "6114cfd0-87d2-45b8-99b1-7c19475c9cda"
+                }
+            }
+        })
+        # res = sat_service.consulta(
+        #     rfc_emisor='RFC_EMISOR',
+        #     rfc_receptor='RFC_RECEPTOR',
+        #     total='123,456.00',
+        #     uuid="6114cfd0-87d2-45b8-99b1-7c19475c9cda"
+        # )
+        res = sat_service.status(
+            cfdi
+        )
+
+        assert mk.called
+        print(mk.call_args.kwargs)
+        assert mk.call_args.kwargs == {
+            'url': 'https://pruebacfdiconsultaqr.cloudapp.net/ConsultaCFDIService.svc',
+            'data': '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/"><Body><tem:Consulta><tem:expresionImpresa><![CDATA[?re=RFC_EMISOR&rr=RFC_RECEPTOR&tt=123456.00&id=6114cfd0-87d2-45b8-99b1-7c19475c9cda]]></tem:expresionImpresa></tem:Consulta></Body></Envelope>',
+            'headers': {
+                'Content-type': 'text/xml;charset="utf-8"',
+                'Accept': 'text/xml',
+                'Cache-Control': 'no-cache',
+                'SOAPAction': 'http://tempuri.org/IConsultaCFDIService/Consulta',
+                'User-Agent': __version__.__user_agent__,
+            },
+            'verify': False
+        }
+
+    assert res == {'CodigoEstatus': 'S - Comprobante obtenido satisfactoriamente.', 'EsCancelable': 'No cancelable', 'Estado': 'Vigente', 'EstatusCancelacion': None,
+                   'ValidacionEFOS': '200'}
+
+
+def test_listado69b():
+    listado = _get_listado_69b()
+    assert "SAT970701NN3" not in listado
+    assert len(listado) > 12000
+    values = [e.value for e in TaxpayerStatus]
+
+    assert all(x in values for x in listado.values())
+    assert listado['AAL081211JP0'] == TaxpayerStatus.DEFINITIVO.value
+
+
+def test_sat_list_69b():
+    sat_service = SAT(environment=Environment.TEST)
+    res = sat_service.list_69b('AAL081211JP0')
+    assert res == TaxpayerStatus.DEFINITIVO
+
+
+def test_sat_service_authentication():
+    signer = get_signer('xiqb891116qe4')
+
+    with mock.patch(f'{module}.pacs.sat.datetime') as m:
+        m.utcnow = mock.Mock(return_value=datetime(2022, 1, 1))
+
+        req = _CFDIAutenticacion(signer=signer)
+        res = req.get_payload()
+
+        verify = verify_result(data=res, filename="test_sat_service_authentication.xml")
+        assert verify
+
+
+def test_sat_service_solicitud():
+    signer = get_signer('xiqb891116qe4')
+
+    with mock.patch(f'{module}.pacs.sat.datetime') as m:
+        m.utcnow = mock.Mock(return_value=datetime(2022, 1, 1))
+
+        req = _CFDISolicitaDescarga(
+            signer=signer,
+            arguments={
+                'FechaFinal': 'FechaFinal',
+                'FechaInicial': 'FechaInicial',
+                'RfcEmisor': "RfcEmisor",
+                'RfcSolicitante': "RfcSolicitante",
+                'TipoSolicitud': "TipoSolicitud",
+                'TipoComprobante': "TipoComprobante",
+                'EstadoComprobante': "EstadoComprobante",
+                'RfcACuentaTerceros': "RfcACuentaTerceros",
+                'Complemento': "Complemento",
+                'UUID': "UUID",
+            }
+
+        )
+        res = req.get_payload()
+
+        verify = verify_result(data=res, filename="test_sat_service_solicitud.xml")
+        assert verify

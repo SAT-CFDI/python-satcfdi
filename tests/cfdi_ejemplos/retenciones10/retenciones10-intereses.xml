@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<retenciones:Retenciones DescRetenc="Intereses" CveRetenc="16" FechaExp="2015-02-24T11:02:46-06:00"
+    Cert="MIIEdDCCA1ygAwIBAgIUMjAwMDEwMDAwMDAxMDAwMDU4NjcwDQYJKoZIhvcNAQEFBQAwggFvMRgwFgYDVQQDDA9BLkMuIGRlIHBydWViYXMxLzAtBgNVBAoMJlNlcnZpY2lvIGRlIEFkbWluaXN0cmFjacOzbiBUcmlidXRhcmlhMTgwNgYDVQQLDC9BZG1pbmlzdHJhY2nDs24gZGUgU2VndXJpZGFkIGRlIGxhIEluZm9ybWFjacOzbjEpMCcGCSqGSIb3DQEJARYaYXNpc25ldEBwcnVlYmFzLnNhdC5nb2IubXgxJjAkBgNVBAkMHUF2LiBIaWRhbGdvIDc3LCBDb2wuIEd1ZXJyZXJvMQ4wDAYDVQQRDAUwNjMwMDELMAkGA1UEBhMCTVgxGTAXBgNVBAgMEERpc3RyaXRvIEZlZGVyYWwxEjAQBgNVBAcMCUNveW9hY8OhbjEVMBMGA1UELRMMU0FUOTcwNzAxTk4zMTIwMAYJKoZIhvcNAQkCDCNSZXNwb25zYWJsZTogSMOpY3RvciBPcm5lbGFzIEFyY2lnYTAeFw0xMjA3MjcxNzAyMDBaFw0xNjA3MjcxNzAyMDBaMIHbMSkwJwYDVQQDEyBBQ0NFTSBTRVJWSUNJT1MgRU1QUkVTQVJJQUxFUyBTQzEpMCcGA1UEKRMgQUNDRU0gU0VSVklDSU9TIEVNUFJFU0FSSUFMRVMgU0MxKTAnBgNVBAoTIEFDQ0VNIFNFUlZJQ0lPUyBFTVBSRVNBUklBTEVTIFNDMSUwIwYDVQQtExxBQUEwMTAxMDFBQUEgLyBIRUdUNzYxMDAzNFMyMR4wHAYDVQQFExUgLyBIRUdUNzYxMDAzTURGUk5OMDkxETAPBgNVBAsTCFVuaWRhZCAxMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC2TTQSPONBOVxpXv9wLYo8jezBrb34i/tLx8jGdtyy27BcesOav2c1NS/Gdv10u9SkWtwdy34uRAVe7H0a3VMRLHAkvp2qMCHaZc4T8k47Jtb9wrOEh/XFS8LgT4y5OQYo6civfXXdlvxWU/gdM/e6I2lg6FGorP8H4GPAJ/qCNwIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQUFAAOCAQEATxMecTpMbdhSHo6KVUg4QVF4Op2IBhiMaOrtrXBdJgzGotUFcJgdBCMjtTZXSlq1S4DG1jr8p4NzQlzxsdTxaB8nSKJ4KEMgIT7E62xRUj15jI49qFz7f2uMttZLNThipunsN/NF1XtvESMTDwQFvas/Ugig6qwEfSZc0MDxMpKLEkEePmQwtZD+zXFSMVa6hmOu4M+FzGiRXbj4YJXn9Myjd8xbL/c+9UIcrYoZskxDvMxc6/6M3rNNDY3OFhBK+V/sPMzWWGt8S1yjmtPfXgFs1t65AZ2hcTwTAuHrKwDatJ1ZPfa482ZBROAAX1waz7WwXp0gso7sDCm2/yUVww=="
+    NumCert="20001000000100005867"
+    Sello="rStNlILt6ZNmxcQW4d3X7ve5lXKYPdQJyxD5hAiTNQYrddgvKqqSSyDHhxIdThLZqaesDY08ZVhW4dRS2XlBizptCvRRJi+6qnqNXaepIyxGfU/2qxeLQCNFStC094Hqr+NZzyVEN1ZCPYSpDlkTvYGUE20bhFVyejYsS0jqUcY="
+    FolioInt="TEST00006" Version="1.0"
+    xsi:schemaLocation="http://www.sat.gob.mx/esquemas/retencionpago/1 http://www.sat.gob.mx/esquemas/retencionpago/1/retencionpagov1.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/intereses http://www.sat.gob.mx/esquemas/retencionpago/1/intereses/intereses.xsd"
+    xmlns:intereses="http://www.sat.gob.mx/esquemas/retencionpago/1/intereses"
+    xmlns:retenciones="http://www.sat.gob.mx/esquemas/retencionpago/1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <retenciones:Emisor CURPE="AAAA010101HNLMNLD2"
+        NomDenRazSocE="Empresa DEMO para Rentenciones S de TST" RFCEmisor="AAA010101AAA"/>
+    <retenciones:Receptor Nacionalidad="Nacional">
+        <retenciones:Nacional CURPR="VAHE820926HNLLRD02" NomDenRazSocR="PÚBLICO EN GENERAL S DE TST"
+            RFCRecep="XAXX010101000"/>
+    </retenciones:Receptor>
+    <retenciones:Periodo Ejerc="2014" MesFin="6" MesIni="6"/>
+    <retenciones:Totales montoTotRet="3500.00" montoTotExent="1000.00" montoTotGrav="13000.00"
+        montoTotOperacion="14000.00">
+        <retenciones:ImpRetenidos TipoPagoRet="Pago definitivo" montoRet="500.00" Impuesto="01"
+            BaseRet="1000.00"/>
+        <retenciones:ImpRetenidos TipoPagoRet="Pago provisional" montoRet="500.00" Impuesto="02"
+            BaseRet="1000.00"/>
+    </retenciones:Totales>
+    <retenciones:Complemento>
+        <intereses:Intereses Perdida="613.10" MontIntReal="4278.16" MontIntNominal="4891.26"
+            OperFinancDerivad="SI" RetiroAORESRetInt="SI" SistFinanciero="SI" Version="1.0"/>
+        <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital"
+            xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigital.xsd"
+            selloSAT="XW9yKrtG0XtLU7uSnHmzqnUgb1Sn+N96dlP8WZQE3eAcw26WFxpNZ26TOokWfxR9oyUJnF1tn7gmqVLRp0qOHNnUTdMQJVzS2DDgXOJ0u+0pb6tAgadIDsP6Lkbp0LaL3uyhJf43Mcij+4qM2l14akCMkMGlodFS20i1I5sxZFI="
+            noCertificadoSAT="20001000000300003693"
+            selloCFD="rStNlILt6ZNmxcQW4d3X7ve5lXKYPdQJyxD5hAiTNQYrddgvKqqSSyDHhxIdThLZqaesDY08ZVhW4dRS2XlBizptCvRRJi+6qnqNXaepIyxGfU/2qxeLQCNFStC094Hqr+NZzyVEN1ZCPYSpDlkTvYGUE20bhFVyejYsS0jqUcY="
+            FechaTimbrado="2015-02-24T11:02:46" UUID="f3a703de-0f27-498f-bc36-b60bbf0d60f7"
+            version="1.0"/>
+    </retenciones:Complemento>
+    <retenciones:Addenda/>
+</retenciones:Retenciones>

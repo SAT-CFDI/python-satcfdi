@@ -1,0 +1,411 @@
+<html>
+<head>
+	<title>CFDI</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+@page {
+	@bottom-left{
+		content: "Comprobante" " versión: " "4.0";
+		font:7.47pt Arial;
+	}
+	@bottom-center{
+		content: "Este documento es una representación impresa de un CFDI";
+		font:7.47pt Arial;
+	}
+	@bottom-right{
+		content: "Página " counter(page) " de " counter(pages);
+		font:7.47pt Arial;
+	}
+}
+body {
+	font-family: Arial;
+	font-size: 9pt;
+	width: 100%;
+}
+h3 {
+	margin-top:-10px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#333;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h4 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#555;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h5 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 8.6pt;
+	background-color:#777;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	padding-left: 10px;
+	text-align: left;
+	color: white;
+	letter-spacing: 2px;
+	font-weight: bold;
+}
+
+.h {
+	font-size: 9.89pt;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.c {
+	font-size: 8.6pt;
+}
+.ci {
+	font-size: 7.47pt;
+}
+.cii {
+	font-size: 6.5pt;
+}
+.ciii {
+	font-size: 5.65pt;
+}
+
+table {
+	font-size: 8.6pt;
+	width: 100%;
+	border-collapse: collapse;
+	border: none;
+	border-spacing: 0;
+}
+table table {
+	font-size: 7.47pt;
+}
+table table table {
+	font-size: 6.5pt;
+}
+table table table table {
+	font-size: 5.65pt;
+}
+
+table th {
+	background-color:#e0e0e0;
+}
+table table th {
+	background-color:#e8e8e8;
+}
+table table table th {
+	background-color:#f0f0f0;
+}
+table table table table th {
+	background-color:#f8f8f8;
+}
+
+.htd {
+	text-align: right;
+	width: 1px;
+	white-space: nowrap;
+	font-weight: bold;
+}
+
+.nb {
+	break-inside: avoid;
+}
+.cen {
+	text-align: center;
+}
+.r {
+	text-align: right;
+}
+.rbt {
+	text-align: right;
+	border-top: 1px solid black;
+}
+
+th {
+	padding: 1px;
+	vertical-align: center;
+	text-align: center;
+	border-right: 2px solid white;
+}
+th:last-child {
+	border-right: 0px solid white;
+}
+
+td {
+	vertical-align: top;
+	padding-right: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+tr:last-child td {
+	padding-bottom: none;
+}
+td:last-child {
+	padding-right: none;
+}
+
+tr {
+	break-inside: avoid;
+}
+
+.tot {
+	margin-left: 50%;
+	width: 50%;
+}
+table.tot {
+	margin-top: 1px;
+	break-inside: avoid;
+}
+table.tot tr:first-child {
+	border-top: 1px solid;
+}
+
+hr {
+	border: none;
+	height: 1px;
+	background-color: black;
+	break-after: avoid;
+}
+ul {
+	margin: 0;
+}	</style>
+</head>
+<body>
+<h3>CFDI de Pago</h3>
+<table>
+	<tr>
+		<th style="width: 10%">Serie</th>
+		<th style="width: 10%">Folio</th>
+		<th style="width: 40%">Emisor</th>
+		<th style="width: 40%">Receptor</th>
+	</tr>
+	<tr>
+		<td class="cen">&nbsp;</td>
+		<td class="cen">&nbsp;</td>
+		<td rowspan="13">
+			<div class="h cen"><b>Esta es una demostración</b></div>
+			<div><b>RFC: </b> AAA010101AAA</div><div><b>Régimen Fiscal: </b>622 - Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras</div>
+			<div><b>C.P.: </b>99999</div>
+			<div><b>No. Certificado: </b>30001000000300023708</div>
+		</td>
+		<td rowspan="13">
+			<div class="h cen"><b>Juanito Bananas De la Sierra</b></div>
+			<div><b>RFC: </b>BASJ600902KL9</div><div><b>Régimen Fiscal: </b>630 - Enajenación de acciones en bolsa de valores</div><div><b>C.P.: </b>99999</div>
+		</td>
+	</tr>
+	<tr>
+	  	<th colspan="2">Fecha de Emisión</th>
+	</tr>
+	<tr>
+		<td colspan="2" class="cen">2021-12-08 23:59:59</td>
+	</tr>
+</table>
+<table style="margin-top: 2px">
+	<tr>
+		<th style="width: 20%">Moneda</th>
+		<th style="width: 26.67%">Método de Pago</th>
+		<th style="width: 26.67%">Forma de Pago</th>
+		<th style="width: 26.67%">Uso CFDI</th>
+	</tr>
+	<tr class="cen">
+		<td>XXX</td>
+		<td>&nbsp;</td>
+		<td>Cheque nominativo</td>
+		<td>Por definir</td>
+	</tr>
+	<tr>
+		<th>Tipo de Cambio</th>
+		<th>Exportación</th>
+		<th colspan="2">Condiciones de Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>&nbsp;</td>
+		<td>Temporal</td>
+		<td colspan="2">&nbsp;</td>
+	</tr>
+</table>
+<br>
+<h5>Conceptos</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 55%;">Descripción</th>
+			<th style="width: 12%;">Cantidad</th>
+			<th style="width: 11%;">Valor Unitario</th>
+			<th style="width: 11%;">Descuento</th>
+			<th style="width: 11%;">Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				Descripcion
+				<div class="ci">
+					<div><b>Clave SAT: </b>84111506 - Servicios de facturación</div><div><b>Objeto de Impuesto: </b>01 - No objeto de impuesto</div>
+					
+				</div>
+			</td>
+			<td class="r">
+				1.00
+				<div class="ci">ACT - Actividad</div>
+				<div class="cii">&nbsp;</div>
+			</td>
+			<td class="r">
+				0.00
+			</td>
+			<td class="r">
+				&nbsp;
+			</td>
+			<td class="r">
+				0.00
+			</td>
+		</tr>
+	</tbody>
+</table>
+<table class="tot">
+	<tr class="r">
+		<td><b>Subtotal</b></td>
+		<td></td>
+		<td></td>
+		<td>0.00</td>
+	</tr>
+	<tr class="r h">
+		<td>
+			<b>Total</b>
+		</td>
+		<td></td>
+		<td></td>
+		<td>0.00</td>
+	</tr>
+</table><h5>CFDI Relacionados</h5>
+<table>
+	<tr></tr>
+	<tr>
+		<td><b>Tipo de Relación: </b>Factura generada por pagos diferidos</td>
+		<td>
+			<ul>
+				<li><b>UUID: </b>F4F09AEF-57F2-4BE0-A828-87D1A80ED61C</li>
+			</ul>
+		</td>
+	</tr>
+</table><div><br></div>
+		<h4>Carta Porte</h4>
+<h5>Ubicaciones</h5>
+<table>
+	<thead>
+		<tr>
+			<th>Tipo Ubicación</th>
+			<th>ID Ubicación</th>
+			<th>RFC</th>
+			<th>Fecha Salida/Llegada</th>
+			<th>Domicilio</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Origen</td>
+			<td>OR123456</td>
+			<td>AAA010101AAA</td>
+			<td>2021-11-01 01:23:59</td>
+			<td>Calle #2, int. #1, Colonia<br>Referencia<br>Localidad<br>Municipio, Mexico City 11850<br>México</td>
+		</tr>
+		<tr>
+			<td>Destino</td>
+			<td>DE234567</td>
+			<td>BASJ600902KL9</td>
+			<td>2021-11-01 01:23:59</td>
+			<td>Calle #2, int. #1, Colonia<br>Referencia<br>Localidad<br>Municipio, Estado 123456<br>Países no declarados</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<h5>Mercancias</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 20%">Cantidad Transportada</th>
+			<th>Descripción</th>
+			<th>Material Peligroso</th>
+			<th>Embalaje</th>
+			<th>Cantidad</th>
+			<th>Peso En Kg</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+<div><b>Cantidad: </b>1.000001</div><div><b>ID Origen: </b>OR123456</div><div><b>ID Destino: </b>DE654321</div><div><b>Claves Transporte: </b>05 - Ducto</div>
+			</td>
+			<td>
+				Descripcion
+				<div class="ci"><b>Clave SAT:</b> 60141405 - Kits o materiales para juegos de simulación</div>
+			</td>
+			<td>
+				No
+				<div class="ci">M0005 - MUNICIONES INCENDIARIAS con o sin carga dispersora, carga expulsora o carga propulsora (Producto o material explosivo)</div>
+			</td>
+			<td>Z01 - No aplica</td>
+			<td class="r">
+				1.000001
+				<div class="ci">ZZ - Mutuamente definido</div>
+			</td>
+			<td class="r">1.123</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="rbt">
+				1
+				<div class="ci">SM3 - Metro cúbico estándar</div>
+			</td>
+			<td class="rbt">100.123</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<h5>Autotransporte</h5>
+<table><tr><td class='htd'>Identificación Vehicular:</td><td><table><tr><td class='htd'>Configuración Vehicular:</td><td>C2 - Camión Unitario (2 llantas en el eje delantero y 4 llantas en el eje trasero)</td></tr><tr><td class='htd'>Placa:</td><td>123ABC</td></tr><tr><td class='htd'>Año Modelo:</td><td>2021</td></tr></table></td></tr><tr><td class='htd'>Seguros:</td><td><table><tr><td class='htd'>Aseguradora de Responsabilidad Civil:</td><td>AseguraRespCivil</td></tr><tr><td class='htd'>Póliza Responsabilidad Civil:</td><td>PolizaRespCivil</td></tr><tr><td class='htd'>Aseguradora Medio Ambiente:</td><td>AseguraMedAmbiente</td></tr><tr><td class='htd'>Póliza Medio Ambiente:</td><td>PolizaMedAmbiente</td></tr><tr><td class='htd'>Aseguradora de Carga:</td><td>AseguraCarga</td></tr><tr><td class='htd'>Póliza Carga:</td><td>PolizaCarga</td></tr><tr><td class='htd'>Prima Seguro:</td><td>12.123456</td></tr></table></td></tr><tr><td class='htd'>Remolques:</td><td><table><thead><tr><th>Subtipo de Remolque</th><th>Placa</th></tr></thead><tbody><tr><td>CTR032 - Volteo Desmontable</td><td>Placa</td></tr></tbody></table></td></tr><tr><td class='htd'>Permiso SCT:</td><td>TPAF01 - Autotransporte Federal de carga general</td></tr><tr><td class='htd'>No. de Permiso SCT:</td><td>6789</td></tr></table>
+<br>
+<h5>TransporteMaritimo</h5>
+<table><tr><td class='htd'>Contenedor:</td><td><table><thead><tr><th>Matricula Contenedor</th><th>Tipo Contenedor</th><th>No. Precinto</th></tr></thead><tbody><tr><td>ABC45678901</td><td>CM009 - Contenedor flat racks</td><td>123456</td></tr></tbody></table></td></tr><tr><td class='htd'>Permiso SCT:</td><td>TPAF03 - Autotransporte Federal de Carga Especializada de materiales y residuos peligrosos</td></tr><tr><td class='htd'>No. de Permiso SCT:</td><td>567</td></tr><tr><td class='htd'>Nombre Aseguradora:</td><td>2367</td></tr><tr><td class='htd'>No. Póliza Seguro:</td><td>631</td></tr><tr><td class='htd'>Tipo Embarcación:</td><td>B15 - Extraordinaria especialización</td></tr><tr><td class='htd'>Matricula:</td><td>ABC3456</td></tr><tr><td class='htd'>Número OMI:</td><td>IMO1234567</td></tr><tr><td class='htd'>Año Embarcación:</td><td>2021</td></tr><tr><td class='htd'>Nombre de Embarcación:</td><td>789</td></tr><tr><td class='htd'>Nacionalidad de Embarcación:</td><td>ZZZ - Países no declarados</td></tr><tr><td class='htd'>Unidades de Arqueo Bruto:</td><td>23.456</td></tr><tr><td class='htd'>Tipo Carga:</td><td>PYD - Petróleo y Derivados</td></tr><tr><td class='htd'>No. Certificación ITC:</td><td>NumCertITC</td></tr><tr><td class='htd'>Eslora:</td><td>678.00</td></tr><tr><td class='htd'>Manga:</td><td>12.00</td></tr><tr><td class='htd'>Calado:</td><td>876.00</td></tr><tr><td class='htd'>Línea Naviera:</td><td>LineaNaviera</td></tr><tr><td class='htd'>Nombre Agente Naviero:</td><td>NombreAgenteNaviero</td></tr><tr><td class='htd'>No. Autorización Naviero:</td><td>SCT418/021/2021</td></tr><tr><td class='htd'>No. Viaje:</td><td>78</td></tr><tr><td class='htd'>No. de Conocimiento Embarcación:</td><td>789</td></tr></table>
+<br>
+<h5>TransporteAereo</h5>
+<table><tr><td class='htd'>Permiso SCT:</td><td>TPTA04 - Permiso para el servicio nacional e internacional no regular de taxi aéreo</td></tr><tr><td class='htd'>No. de Permiso SCT:</td><td>NumPermisoSCT</td></tr><tr><td class='htd'>Matricula Aeronave:</td><td>A123456</td></tr><tr><td class='htd'>Nombre Aseguradora:</td><td>NombreAseg</td></tr><tr><td class='htd'>No. Póliza Seguro:</td><td>345</td></tr><tr><td class='htd'>Número Guía:</td><td>12345678901234</td></tr><tr><td class='htd'>Lugar Contrato:</td><td>LugarContrato</td></tr><tr><td class='htd'>Código Transportista:</td><td>CA156 - Mexicanas; Volaris (Concesionaria Vuela Cia De Aviación)</td></tr><tr><td class='htd'>RFC Embarcador:</td><td>AAA010101AAA</td></tr><tr><td class='htd'>No. Reg Id Tributaria Embarcación:</td><td>NumRegIdTribEmbarc</td></tr><tr><td class='htd'>Residencia Fiscal Embarcación:</td><td>ZZZ - Países no declarados</td></tr><tr><td class='htd'>Nombre Embarcador:</td><td>NombreEmbarcador</td></tr></table>
+<br>
+<h5>TransporteFerroviario</h5>
+<table><tr><td class='htd'>Derechos de Paso:</td><td><table><thead><tr><th>Tipo de Derecho de Paso</th><th>Kilometraje Pagado</th></tr></thead><tbody><tr><td>CDP119 - TEMP-2; Santa Fé (Km. V454+600); Jalapa (V-338+600); Recibe; Vía férrea del Noreste (actualmente Kansas City Southern de México, S.A. de C.V.)</td><td>12.30</td></tr></tbody></table></td></tr><tr><td class='htd'>Carro:</td><td><table><thead><tr><th>Contenedor</th><th>Tipo de Carro</th><th>Matricula Carro</th><th>Guia de Carro</th><th>Toneladas Netas Carro</th></tr></thead><tbody><tr><td><table><thead><tr><th>Tipo Contenedor</th><th>Peso Contenedor Vacío</th><th>Peso Neto Mercancía</th></tr></thead><tbody><tr><td>TC05 - 53&#x27;; Contenedor de 16.1 Mts de longitud</td><td>10.00</td><td>10.001</td></tr></tbody></table></td><td>TC05 - Plataforma Intermodal</td><td>MatriculaCarro</td><td>GuiaCarro</td><td>12.001</td></tr></tbody></table></td></tr><tr><td class='htd'>Tipo De Servicio:</td><td>TS04 - Tren unitario Intermodal</td></tr><tr><td class='htd'>Tipo De Trafico:</td><td>TT04 - Tráfico interlineal en tránsito</td></tr><tr><td class='htd'>Nombre Aseguradora:</td><td>NombreAseg</td></tr><tr><td class='htd'>No. Póliza Seguro:</td><td>NumPolizaSeguro</td></tr></table>
+<br>
+<h5>Figura de Transporte</h5>
+<table>
+	<thead>
+		<tr>
+			<th>Tipo Figura</th>
+			<th>Nombre</th>
+			<th>RFC</th>
+			<th>No. Licencia</th>
+			<th>Domicilio</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Notificado</td>
+			<td>3456</td>
+			<td>BASJ600902KL9</td>
+			<td>12345678</td>
+			<td>Calle #2, int. #1, Colonia<br>Referencia<br>Localidad<br>Municipio, Estado 123456<br>Países no declarados</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<div><b>Transporte Internacional: </b>Sí</div><div><b>Total Distancia Recorrida: </b>123.90</div></body>
+</html>

@@ -1,0 +1,64 @@
+<h5>Conceptos</h5>
+<table>
+	<thead>
+		<tr>
+			<th>Identificador</th>
+			<th>Fecha</th>
+			<th>RFC</th>
+			<th>Clave Estación</th>
+			<th>Cantidad</th>
+			<th>Nombre del Combustible</th>
+			<th>Folio de Operación</th>
+			<th>Valor Unitario</th>
+			<th>Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for r in iterate(c.Conceptos) %}
+		<tr>
+			<td>{{ r.identificador }}</td>
+			<td>{{ r.fecha }}</td>
+			<td>{{ r.rfc }}</td>
+			<td>{{ r.claveEstacion }}</td>
+			<td>{{ r.cantidad }}</td>
+			<td>{{ r.nombreCombustible }}</td>
+			<td>{{ r.folioOperacion }}</td>
+			<td class="r">{{ r.valorUnitario }}</td>
+			<td class="r">{{ r.importe }}</td>
+		</tr>
+		{% if r.Determinados %}
+		<tr style="break-before: avoid;">
+			<td colspan="9" style="padding-left: 5%; padding-right: 65%;">
+				<table class="r" >
+					<tr>
+						<th style="width: 20%;">Impuesto</th>
+						<th style="width: 20%;">Tasa</th>
+						<th style="width: 20%;">Importe</th>
+					</tr>
+					{% for r in iterate(r.Determinados) %}
+					<tr>
+						<td>{{ r.impuesto }}</td>
+						<td>{{ r.tasa }}</td>
+						<td>{{ r.importe }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="rbt"><b>Total</b></td>
+			<td class="rbt">{{ c.total }}</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+{{ c | simple('tipoOperacion', 'numeroDeCuenta') }}

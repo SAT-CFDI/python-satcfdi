@@ -1,0 +1,31 @@
+<table class="nb" style="margin-top: 4px">
+	<tr>
+		<td rowspan="4">
+			<img src="data:image/png;base64, {{ parent.verifica_url | qr_image }}" alt="QR Code" style="max-width: 120px;"/>
+		</td>
+		<td style="white-space: nowrap;"><b>Folio Fiscal:</b></td>
+		<td style="white-space: nowrap;">{{ c.UUID }}</td>
+		<td style="white-space: nowrap;"><b>Fecha de Certificación:</b></td>
+		<td style="white-space: nowrap;">{{ c.FechaTimbrado }}</td>
+	</tr>
+	<tr>
+		{% if c.Version == "1.1" %}
+		<td style="white-space: nowrap;"><b>RFC del PAC:</b></td>
+		<td style="white-space: nowrap;">{{ c.RfcProvCertif }}</td>
+		<td style="white-space: nowrap;"><b>No. Certificado SAT:</b></td>
+		<td style="white-space: nowrap;">{{ c.NoCertificadoSAT }}</td>
+		{% else %}
+		<td style="white-space: nowrap;"><b>No. Certificado SAT:</b></td>
+		<td style="white-space: nowrap;">{{ c.NoCertificadoSAT }}</td>
+		{% endif %}
+	</tr>
+	<tr>
+		<td colspan="4">
+			<div class="ciii">
+				<b>Sello del CFDI: </b> {{ c.SelloCFD | baa }}<br>
+				<b>Sello del SAT: </b> {{ c.SelloSAT | baa }}<br>
+				<b>Cadena Original del Timbre Fiscal: </b> {{ c.cadena_original() | baa }}
+			</div>
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,32 @@
+<h2>Informe</h2>
+{% for c in c.Informe %}
+	<h4>Mes Reportado</h4>
+	{{ c.MesReportado | dump }}
+	<br>
+	<br>
+	<h4>Sujeto Obligado</h4>
+	{{ c.SujetoObligado | dump }}
+	<br>
+	<h4>Avisos</h4>
+	{% for c in c.Aviso %}
+		{{ c | simple('ReferenciaAviso', 'Modificatorio', 'Prioridad', 'Alerta') }}
+		<br>
+		<h5>Persona Aviso</h5>
+		{% for c in c.PersonaAviso %}
+			<div><b>Tipo Persona</b></div>
+			{{ c.TipoPersona | dump }}
+			<div><b>Domicilio</b></div>
+			{{ c.TipoDomicilio | dump }}
+			{{ c.Telefono | dump }}
+		{% endfor %}
+		<div><b>Dueno Beneficiario: </b>{{ c.DuenoBeneficiario | dump }}</div>
+		<br>
+		<h5>Detalle Operaciones</h5>
+		{% if c.DetalleOperaciones %}
+			{% for c in c.DetalleOperaciones.DatosOperacion %}
+				{{ c | dump }}
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+	<br>
+{% endfor %}

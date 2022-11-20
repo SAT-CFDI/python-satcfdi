@@ -1,0 +1,337 @@
+<html>
+<head>
+	<title>CFDI</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+@page {
+	@bottom-left{
+		content: "Comprobante" " versión: " "3.2";
+		font:7.47pt Arial;
+	}
+	@bottom-center{
+		content: "Este documento es una representación impresa de un CFDI";
+		font:7.47pt Arial;
+	}
+	@bottom-right{
+		content: "Página " counter(page) " de " counter(pages);
+		font:7.47pt Arial;
+	}
+}
+body {
+	font-family: Arial;
+	font-size: 9pt;
+	width: 100%;
+}
+h3 {
+	margin-top:-10px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#333;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h4 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#555;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h5 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 8.6pt;
+	background-color:#777;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	padding-left: 10px;
+	text-align: left;
+	color: white;
+	letter-spacing: 2px;
+	font-weight: bold;
+}
+
+.h {
+	font-size: 9.89pt;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.c {
+	font-size: 8.6pt;
+}
+.ci {
+	font-size: 7.47pt;
+}
+.cii {
+	font-size: 6.5pt;
+}
+.ciii {
+	font-size: 5.65pt;
+}
+
+table {
+	font-size: 8.6pt;
+	width: 100%;
+	border-collapse: collapse;
+	border: none;
+	border-spacing: 0;
+}
+table table {
+	font-size: 7.47pt;
+}
+table table table {
+	font-size: 6.5pt;
+}
+table table table table {
+	font-size: 5.65pt;
+}
+
+table th {
+	background-color:#e0e0e0;
+}
+table table th {
+	background-color:#e8e8e8;
+}
+table table table th {
+	background-color:#f0f0f0;
+}
+table table table table th {
+	background-color:#f8f8f8;
+}
+
+.htd {
+	text-align: right;
+	width: 1px;
+	white-space: nowrap;
+	font-weight: bold;
+}
+
+.nb {
+	break-inside: avoid;
+}
+.cen {
+	text-align: center;
+}
+.r {
+	text-align: right;
+}
+.rbt {
+	text-align: right;
+	border-top: 1px solid black;
+}
+
+th {
+	padding: 1px;
+	vertical-align: center;
+	text-align: center;
+	border-right: 2px solid white;
+}
+th:last-child {
+	border-right: 0px solid white;
+}
+
+td {
+	vertical-align: top;
+	padding-right: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+tr:last-child td {
+	padding-bottom: none;
+}
+td:last-child {
+	padding-right: none;
+}
+
+tr {
+	break-inside: avoid;
+}
+
+.tot {
+	margin-left: 50%;
+	width: 50%;
+}
+table.tot {
+	margin-top: 1px;
+	break-inside: avoid;
+}
+table.tot tr:first-child {
+	border-top: 1px solid;
+}
+
+hr {
+	border: none;
+	height: 1px;
+	background-color: black;
+	break-after: avoid;
+}
+ul {
+	margin: 0;
+}	</style>
+</head>
+<body>
+<h3>CFDI de ingreso</h3>
+<table>
+	<tr>
+		<th style="width: 10%">Serie</th>
+		<th style="width: 10%">Folio</th>
+		<th style="width: 40%">Emisor</th>
+		<th style="width: 40%">Receptor</th>
+	</tr>
+	<tr>
+		<td class="cen">C</td>
+		<td class="cen">38</td>
+		<td rowspan="13">
+			<div class="h cen"><b>Empresa de Pruebas SA</b></div>
+			<div><b>RFC: </b>AAA010101AAA</div><div><b>Régimen Fiscal: </b><ul><li>Regimen General de Ley Personas Morales de Prueba</li></ul></div>
+			<div><b>C.P.: </b>&nbsp;</div>
+			<div><b>No. Certificado: </b>20001000000100005867</div>
+		</td>
+		<td rowspan="13">
+			<div class="h cen"><b>Exportadora de Ganado HOLSTEIN S.A.</b></div>
+			<div><b>RFC: </b>E&amp;Ñ831019M53</div>
+		</td>
+	</tr>
+	<tr>
+	  	<th colspan="2">Fecha de Emisión</th>
+	</tr>
+	<tr>
+		<td colspan="2" class="cen">2015-02-18 11:49:20</td>
+	</tr>
+</table>
+<table style="margin-top: 2px">
+	<tr>
+		<th style="width: 20%">Moneda</th>
+		<th style="width: 26.67%">Método de Pago</th>
+		<th style="width: 26.67%">Forma de Pago</th>
+		<th style="width: 26.67%">Uso CFDI</th>
+	</tr>
+	<tr class="cen">
+		<td>Pesos</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<th>Tipo de Cambio</th>
+		<th>Exportación</th>
+		<th colspan="2">Condiciones de Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td colspan="2">&nbsp;</td>
+	</tr>
+</table>
+<br>
+<h5>Conceptos</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 55%;">Descripción</th>
+			<th style="width: 12%;">Cantidad</th>
+			<th style="width: 11%;">Valor Unitario</th>
+			<th style="width: 11%;">Descuento</th>
+			<th style="width: 11%;">Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				Módulo de embarque serie A-6743-Ñ
+				<div class="ci">
+					
+					
+				</div>
+			</td>
+			<td class="r">
+				1.00
+				<div class="ci">&nbsp;</div>
+				<div class="cii">LTE</div>
+			</td>
+			<td class="r">
+				35,000.00
+			</td>
+			<td class="r">
+				&nbsp;
+			</td>
+			<td class="r">
+				35,000.00
+			</td>
+		</tr>
+	</tbody>
+</table>
+<table class="tot">
+	<tr class="r">
+		<td><b>Subtotal</b></td>
+		<td></td>
+		<td></td>
+		<td>35,000.00</td>
+	</tr>
+	<tr class="r">
+		<td>
+			+ <b>Translados</b>
+		</td>
+		<td>IVA</td>
+		<td>&nbsp;</td>
+		<td>5,600.00</td>
+	</tr>
+	<tr class="r">
+		<td>
+			- <b>Retenciones</b>
+		</td>
+		<td>ISR</td>
+		<td></td>
+		<td>0.00</td>
+	</tr>
+	<tr class="r">
+		<td>
+		</td>
+		<td>IVA</td>
+		<td></td>
+		<td>0.00</td>
+	</tr>
+	<tr class="r h">
+		<td>
+			<b>Total</b>
+		</td>
+		<td></td>
+		<td></td>
+		<td>40,600.00</td>
+	</tr>
+</table><div><br></div>
+		<h4>Timbre Fiscal Digital</h4>
+<table class="nb" style="margin-top: 4px">
+	<tr>
+		<td rowspan="4">
+			<img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAQkAAAEJAQAAAACvE+/JAAAELUlEQVR4nM2aQa7cNhBEH0cf6NlxDB+AA+QAOYFF+07ZGJAh5esDPpYl3yI7zgGCcHYcQKPKgkqWSVYOuZAggItCo7q7uloAhBIzFKc5FQApd7JVGwAn/vX8sCuYtAWtuVM9i59VYEzgtyDlpuCeWN3EGT/d3Im32+PT7Ys7x/yMtgPu1FZ0X+rrw+X3n8r5km/2fKdb0Ltf0qP7Y/qxWP7zlcenmyVTfkZ3urvr2WVufvHT/4Hln49JWzBpVol5lCmP0uI3tKpB7j6ce4Hv98fVv/K88p3n9exuUzhzn27OXZqCiyQJvAR+TqY8oIUBYJSkqSm4tkDQzphszZ0AgiQlSRu4xuAWl8ek3U8U/EaJeUC7lwp+Tlrb4i6SNorLnWpX6/2s4vIQtPstENuK7on18jWh8Ljat0vNstu59y+4Ln9NRY2lGr2fQnFS0ppHaZUk5U4l5gFbGqu7RM2y3U/Q+wlb6FRi5YakvT24W6ip5vKYStQWtDAE2wHwTXEX2xkl5TGVmDsRMxClRO+VtDcGt7hMsMpYzcnWPATtDKG4TGguulo1C6ctaPEbtkCNri1eyZqLbs8QKuaoOUmapf2YMJqru7WDSRmKk5JJW8BJyRa6VJqDu+YBKXeJni7V1rvTpQKdmiODKY/J9soIiagpEHVoBlxjmqG4PED8uzIsfk4AVUVqaS26i59TiXkI9H4KRG3BdkbZzpia62raAZwmbGdMwJikTNCaaU/v0jPKlLtUej+FOk3sdAmXR9G3Ft01DwGXR9mau/o49C5DsOaGHx1Iky10dRKuHaLJ6JYewGlO9VGPnygA7RWynk62Zjg8PD8Fk2rJxZqrDGuuwoHiJJnyADBQekaV1ipDcZpli5dMkkrvN8Ar0fuJ0rfVJk5+4bMr7ubc/cQbfs1vocTbSygug702Rgbb6aTdb8F2v0HURok18yasNZ/BlAesjr6ahasNbQim3InGyIAWLwGj6Omqn2OrJmqNaExAvjw++ueL1o/Pq63398H1EH4704nvP7/fHiffFBlO9PdZ7lOGe7x8dnqFY2CDAd9a3S0uQ4l5VHHaQom5S6VnTMRDrbcE92TfwiwUnEOXN+xbeEQ/y13t18vz2pzpZLvfgtY8Jlv8Vj8L/GVItqYZwM/SKiXisQYM2r1URWVr3KXn2KeU3kta6FJx1Yuc1ZzeLa4qBUkLhBK1BVvzsbW0xjY/VJP8cPxnUcWYr7SlPY9MknC5S8VpC6Y8HGu2o9O1FV2AUJymUHo/1zGorgEbndVqTMdq6NaZOGqWLYwiNsZdO5zyUbbQJYBwLK+guVntuPLdv1CitlB6hhsfLm+4E530vLQIl/sX56Jzzl69yV75HCVtuI+NpVr9W0R5FDGPqfR+rv3NFj+rud0EQKCHUHq6dPwgwJi0+w1b26oMfwI86ExI5EqLYgAAAABJRU5ErkJggg==" alt="QR Code" style="max-width: 120px;"/>
+		</td>
+		<td style="white-space: nowrap;"><b>Folio Fiscal:</b></td>
+		<td style="white-space: nowrap;">e403f396-6a57-4625-adb4-bb436b00789f</td>
+		<td style="white-space: nowrap;"><b>Fecha de Certificación:</b></td>
+		<td style="white-space: nowrap;">2015-02-17 11:49:20</td>
+	</tr>
+	<tr>
+		<td style="white-space: nowrap;"><b>No. Certificado SAT:</b></td>
+		<td style="white-space: nowrap;">20001000000100005761</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<div class="ciii">
+				<b>Sello del CFDI: </b> M&#8203;M&#8203;a&#8203;k&#8203;X&#8203;8&#8203;Q&#8203;1&#8203;R&#8203;y&#8203;e&#8203;d&#8203;j&#8203;o&#8203;N&#8203;E&#8203;Q&#8203;d&#8203;H&#8203;N&#8203;6&#8203;4&#8203;D&#8203;g&#8203;p&#8203;Z&#8203;e&#8203;s&#8203;m&#8203;k&#8203;c&#8203;P&#8203;S&#8203;y&#8203;e&#8203;2&#8203;T&#8203;b&#8203;+&#8203;n&#8203;E&#8203;L&#8203;q&#8203;F&#8203;N&#8203;N&#8203;z&#8203;I&#8203;T&#8203;T&#8203;i&#8203;c&#8203;y&#8203;c&#8203;7&#8203;W&#8203;R&#8203;c&#8203;r&#8203;/&#8203;g&#8203;j&#8203;4&#8203;U&#8203;Q&#8203;X&#8203;1&#8203;f&#8203;f&#8203;h&#8203;B&#8203;u&#8203;W&#8203;m&#8203;O&#8203;9&#8203;5&#8203;9&#8203;4&#8203;5&#8203;3&#8203;o&#8203;4&#8203;p&#8203;k&#8203;M&#8203;O&#8203;9&#8203;o&#8203;m&#8203;i&#8203;p&#8203;2&#8203;D&#8203;i&#8203;M&#8203;0&#8203;U&#8203;d&#8203;2&#8203;K&#8203;i&#8203;t&#8203;U&#8203;5&#8203;8&#8203;+&#8203;P&#8203;4&#8203;y&#8203;R&#8203;y&#8203;x&#8203;d&#8203;j&#8203;h&#8203;m&#8203;a&#8203;R&#8203;S&#8203;9&#8203;Q&#8203;S&#8203;s&#8203;U&#8203;S&#8203;p&#8203;c&#8203;K&#8203;I&#8203;r&#8203;L&#8203;B&#8203;4&#8203;v&#8203;i&#8203;S&#8203;J&#8203;9&#8203;G&#8203;D&#8203;3&#8203;2&#8203;p&#8203;J&#8203;Y&#8203;n&#8203;x&#8203;m&#8203;p&#8203;x&#8203;Y&#8203;i&#8203;8&#8203;+&#8203;G&#8203;O&#8203;+&#8203;n&#8203;3&#8203;H&#8203;v&#8203;I&#8203;A&#8203;M&#8203;H&#8203;e&#8203;g&#8203;a&#8203;+&#8203;A&#8203;=<br>
+				<b>Sello del SAT: </b> H&#8203;Z&#8203;c&#8203;D&#8203;Z&#8203;/&#8203;W&#8203;0&#8203;o&#8203;b&#8203;h&#8203;9&#8203;p&#8203;z&#8203;d&#8203;6&#8203;X&#8203;G&#8203;S&#8203;X&#8203;f&#8203;A&#8203;E&#8203;E&#8203;z&#8203;C&#8203;p&#8203;1&#8203;b&#8203;Y&#8203;L&#8203;Y&#8203;H&#8203;m&#8203;p&#8203;t&#8203;B&#8203;R&#8203;Z&#8203;L&#8203;h&#8203;Y&#8203;G&#8203;g&#8203;y&#8203;o&#8203;/&#8203;n&#8203;Y&#8203;e&#8203;g&#8203;L&#8203;p&#8203;v&#8203;1&#8203;U&#8203;L&#8203;s&#8203;h&#8203;K&#8203;A&#8203;2&#8203;W&#8203;i&#8203;F&#8203;n&#8203;f&#8203;9&#8203;O&#8203;p&#8203;i&#8203;e&#8203;m&#8203;B&#8203;Q&#8203;9&#8203;q&#8203;0&#8203;Z&#8203;/&#8203;T&#8203;o&#8203;8&#8203;Q&#8203;F&#8203;I&#8203;N&#8203;H&#8203;1&#8203;J&#8203;q&#8203;T&#8203;B&#8203;t&#8203;E&#8203;u&#8203;0&#8203;l&#8203;o&#8203;+&#8203;8&#8203;N&#8203;W&#8203;D&#8203;B&#8203;i&#8203;6&#8203;Z&#8203;w&#8203;c&#8203;2&#8203;V&#8203;s&#8203;R&#8203;3&#8203;u&#8203;Y&#8203;E&#8203;6&#8203;Z&#8203;m&#8203;Z&#8203;K&#8203;d&#8203;Q&#8203;S&#8203;7&#8203;L&#8203;t&#8203;S&#8203;t&#8203;6&#8203;u&#8203;S&#8203;q&#8203;C&#8203;i&#8203;e&#8203;j&#8203;X&#8203;D&#8203;q&#8203;I&#8203;V&#8203;5&#8203;7&#8203;E&#8203;k&#8203;J&#8203;y&#8203;3&#8203;L&#8203;E&#8203;6&#8203;J&#8203;n&#8203;T&#8203;B&#8203;s&#8203;b&#8203;Q&#8203;7&#8203;G&#8203;m&#8203;S&#8203;T&#8203;1&#8203;W&#8203;x&#8203;/&#8203;M&#8203;=<br>
+				<b>Cadena Original del Timbre Fiscal: </b> |&#8203;|&#8203;1&#8203;.&#8203;0&#8203;|&#8203;e&#8203;4&#8203;0&#8203;3&#8203;f&#8203;3&#8203;9&#8203;6&#8203;-&#8203;6&#8203;a&#8203;5&#8203;7&#8203;-&#8203;4&#8203;6&#8203;2&#8203;5&#8203;-&#8203;a&#8203;d&#8203;b&#8203;4&#8203;-&#8203;b&#8203;b&#8203;4&#8203;3&#8203;6&#8203;b&#8203;0&#8203;0&#8203;7&#8203;8&#8203;9&#8203;f&#8203;|&#8203;2&#8203;0&#8203;1&#8203;5&#8203;-&#8203;0&#8203;2&#8203;-&#8203;1&#8203;7&#8203;T&#8203;1&#8203;1&#8203;:&#8203;4&#8203;9&#8203;:&#8203;2&#8203;0&#8203;|&#8203;M&#8203;M&#8203;a&#8203;k&#8203;X&#8203;8&#8203;Q&#8203;1&#8203;R&#8203;y&#8203;e&#8203;d&#8203;j&#8203;o&#8203;N&#8203;E&#8203;Q&#8203;d&#8203;H&#8203;N&#8203;6&#8203;4&#8203;D&#8203;g&#8203;p&#8203;Z&#8203;e&#8203;s&#8203;m&#8203;k&#8203;c&#8203;P&#8203;S&#8203;y&#8203;e&#8203;2&#8203;T&#8203;b&#8203;+&#8203;n&#8203;E&#8203;L&#8203;q&#8203;F&#8203;N&#8203;N&#8203;z&#8203;I&#8203;T&#8203;T&#8203;i&#8203;c&#8203;y&#8203;c&#8203;7&#8203;W&#8203;R&#8203;c&#8203;r&#8203;/&#8203;g&#8203;j&#8203;4&#8203;U&#8203;Q&#8203;X&#8203;1&#8203;f&#8203;f&#8203;h&#8203;B&#8203;u&#8203;W&#8203;m&#8203;O&#8203;9&#8203;5&#8203;9&#8203;4&#8203;5&#8203;3&#8203;o&#8203;4&#8203;p&#8203;k&#8203;M&#8203;O&#8203;9&#8203;o&#8203;m&#8203;i&#8203;p&#8203;2&#8203;D&#8203;i&#8203;M&#8203;0&#8203;U&#8203;d&#8203;2&#8203;K&#8203;i&#8203;t&#8203;U&#8203;5&#8203;8&#8203;+&#8203;P&#8203;4&#8203;y&#8203;R&#8203;y&#8203;x&#8203;d&#8203;j&#8203;h&#8203;m&#8203;a&#8203;R&#8203;S&#8203;9&#8203;Q&#8203;S&#8203;s&#8203;U&#8203;S&#8203;p&#8203;c&#8203;K&#8203;I&#8203;r&#8203;L&#8203;B&#8203;4&#8203;v&#8203;i&#8203;S&#8203;J&#8203;9&#8203;G&#8203;D&#8203;3&#8203;2&#8203;p&#8203;J&#8203;Y&#8203;n&#8203;x&#8203;m&#8203;p&#8203;x&#8203;Y&#8203;i&#8203;8&#8203;+&#8203;G&#8203;O&#8203;+&#8203;n&#8203;3&#8203;H&#8203;v&#8203;I&#8203;A&#8203;M&#8203;H&#8203;e&#8203;g&#8203;a&#8203;+&#8203;A&#8203;=&#8203;|&#8203;2&#8203;0&#8203;0&#8203;0&#8203;1&#8203;0&#8203;0&#8203;0&#8203;0&#8203;0&#8203;0&#8203;1&#8203;0&#8203;0&#8203;0&#8203;0&#8203;5&#8203;7&#8203;6&#8203;1&#8203;|&#8203;|
+			</div>
+		</td>
+	</tr>
+</table></body>
+</html>

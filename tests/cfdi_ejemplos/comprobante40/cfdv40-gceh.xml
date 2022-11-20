@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cfdi:Comprobante
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+    xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 cfdv40.xsd"
+    Version="4.0" Fecha="2021-12-08T23:59:59"
+    Moneda="XXX" SubTotal="0" Total="0"
+    TipoDeComprobante="P" FormaPago="02"
+    Exportacion="03" LugarExpedicion="99999"
+    NoCertificado="30001000000300023708" Sello="" Certificado="">
+    <cfdi:CfdiRelacionados TipoRelacion="09">
+        <cfdi:CfdiRelacionado UUID="F4F09AEF-57F2-4BE0-A828-87D1A80ED61C" />
+    </cfdi:CfdiRelacionados>
+    <cfdi:Emisor Rfc=" AAA010101AAA" RegimenFiscal="622" Nombre="Esta es una demostración" />
+    <cfdi:Receptor Rfc="BASJ600902KL9" UsoCFDI="P01"  Nombre="Juanito Bananas De la Sierra"  DomicilioFiscalReceptor="99999" RegimenFiscalReceptor="630" />
+    <cfdi:Conceptos>
+      <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Descripcion"
+      ValorUnitario="0" Importe="0" ObjetoImp="01" />
+    </cfdi:Conceptos>
+  <cfdi:Complemento>
+    <!-- ALL NODES COMPLETED -->
+    <gceh:GastosHidrocarburos xmlns:gceh="http://www.sat.gob.mx/GastosHidrocarburos10"
+        xsi:schemaLocation="http://www.sat.gob.mx/GastosHidrocarburos10 http://www.sat.gob.mx/sitio_internet/cfd/GastosHidrocarburos10/GastosHidrocarburos10.xsd"
+        NumeroContrato="12345678" Version="1.0" AreaContractual="abcdefg">
+        <gceh:Erogacion MontocuErogacion="100.999" TipoErogacion="Inversión" Porcentaje="99.999">
+            <gceh:DocumentoRelacionado ClavePedimentoVinculado="CT" NumeroPedimentoVinculado="12  34  5678  1234567" MontoTotalIVA="99.001"
+            FechaFolioFiscalVinculado="2018-10-22" MontoIVAPedimento="90.000001" MontoRetencionOtrosImpuestos="9.001" MontoRetencionIVA="0.123"
+            RFCProveedor="AAA010101AAA" Mes="10" MontoTotalErogaciones="0.123" MontoRetencionISR="123" ClavePagoPedimentoVinculado="22"
+            OtrosImpuestosPagadosPedimento="1.0" FolioFiscalVinculado="C892EBD7-83DA-4233-98A4-3e44db9e85a4" OrigenErogacion="Extranjero" />
+            <gceh:Actividades ActividadRelacionada="05">
+                <gceh:SubActividades SubActividadRelacionada="039">
+                    <gceh:Tareas TareaRelacionada="0155" />
+                </gceh:SubActividades>
+            </gceh:Actividades>
+            <gceh:CentroCostos Campo="Campo">
+                <gceh:Yacimientos Yacimiento="Yacimiento">
+                    <gceh:Pozos Pozo="Pozo" />
+                </gceh:Yacimientos>
+            </gceh:CentroCostos>
+        </gceh:Erogacion>
+        <gceh:Erogacion MontocuErogacion="1001.999" TipoErogacion="Inversión" Porcentaje="0.001">
+            <gceh:DocumentoRelacionado ClavePedimentoVinculado="CT" NumeroPedimentoVinculado="12  34  5678  1234890" MontoTotalIVA="99.001"
+            FechaFolioFiscalVinculado="2018-10-22" MontoIVAPedimento="90.000001" MontoRetencionOtrosImpuestos="9.001" MontoRetencionIVA="0.001"
+            RFCProveedor="AAA010101AAA" Mes="10" MontoTotalErogaciones="0.001" MontoRetencionISR="123" ClavePagoPedimentoVinculado="22"
+            OtrosImpuestosPagadosPedimento="1.0" FolioFiscalVinculado="a83a8330-1511-4b1b-959a-5771D8861206" OrigenErogacion="Nacional" />
+        </gceh:Erogacion>
+    </gceh:GastosHidrocarburos>
+  </cfdi:Complemento>
+</cfdi:Comprobante>

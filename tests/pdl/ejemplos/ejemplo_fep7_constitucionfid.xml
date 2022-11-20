@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/fep fep.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/fep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201312</mes_reportado>
+        <sujeto_obligado>
+            <clave_sujeto_obligado>GOG630101AAA</clave_sujeto_obligado>
+            <clave_actividad>FEP</clave_actividad>
+        </sujeto_obligado>
+        <aviso>
+            <referencia_aviso>AAAA</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>9999</tipo_alerta>
+                <descripcion_alerta>AAAA</descripcion_alerta>
+            </alerta>
+            <persona_aviso>
+                <nombre>C</nombre>
+                <apellido_paterno>C</apellido_paterno>
+                <apellido_materno>C</apellido_materno>
+                <fecha_nacimiento>19801212</fecha_nacimiento>
+            </persona_aviso>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <instrumento_publico>A</instrumento_publico>
+                    <fecha_operacion>20131212</fecha_operacion>
+                    <tipo_actividad>
+                        <constitucion_modificacion_fideicomiso>
+                            <tipo_movimiento>4</tipo_movimiento>
+                            <tipo_fideicomiso>1</tipo_fideicomiso>
+                            <descripcion>DESCRIPCION CONSTITUCION MODIFICACION FIDEICOMISO</descripcion>
+                            <identificador_fideicomiso>1A</identificador_fideicomiso>
+                            <denominacion_razon>FID</denominacion_razon>
+                            <monto_patrimonio>5900000.40</monto_patrimonio>
+                            <datos_fideicomitente>
+                                <tipo_movimiento_fideicomitente>1</tipo_movimiento_fideicomitente>
+                                <tipo_persona>
+                                    <persona_fisica>
+                                        <nombre>C</nombre>
+                                        <apellido_paterno>C</apellido_paterno>
+                                        <apellido_materno>C</apellido_materno>
+                                        <fecha_nacimiento>19901212</fecha_nacimiento>
+                                        <pais_nacionalidad>AF</pais_nacionalidad>
+                                        <actividad_economica>0300004</actividad_economica>
+                                    </persona_fisica>
+                                </tipo_persona>
+                                <datos_tipo_patrimonio>
+                                    <patrimonio_monetario>
+                                        <moneda>1</moneda>
+                                        <monto_operacion>10000000.00</monto_operacion>
+                                    </patrimonio_monetario>
+                                </datos_tipo_patrimonio>
+                                <datos_tipo_patrimonio>
+                                    <patrimonio_otro_bien>
+                                        <descripcion>DESC OTRO BIEN</descripcion>
+                                        <valor_bien>2000000.00</valor_bien>
+                                    </patrimonio_otro_bien>
+                                </datos_tipo_patrimonio>
+                            </datos_fideicomitente>
+                            <datos_fideicomisarios>
+                                <datos_fideicomisarios_determinados>NO</datos_fideicomisarios_determinados>
+                                <tipo_persona>
+                                    <tipo_movimiento_fideicomisario>1</tipo_movimiento_fideicomisario>
+                                    <persona_fisica>
+                                        <nombre>C</nombre>
+                                        <apellido_paterno>C</apellido_paterno>
+                                        <apellido_materno>C</apellido_materno>
+                                        <fecha_nacimiento>19981212</fecha_nacimiento>
+                                        <pais_nacionalidad>AD</pais_nacionalidad>
+                                        <actividad_economica>1300003</actividad_economica>
+                                    </persona_fisica>
+                                </tipo_persona>
+                            </datos_fideicomisarios>
+                            <datos_miembro_comite_tecnico>
+                                <comite_tecnico>SI</comite_tecnico>
+                                <modificacion_comite_tecnico>NO</modificacion_comite_tecnico>
+                            </datos_miembro_comite_tecnico>
+                        </constitucion_modificacion_fideicomiso>
+                    </tipo_actividad>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>
+

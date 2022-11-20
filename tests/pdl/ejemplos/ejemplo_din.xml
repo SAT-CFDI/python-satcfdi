@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/din din.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/din" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<informe>
+		<mes_reportado>201612</mes_reportado>
+		<sujeto_obligado>
+			<clave_sujeto_obligado>XXXX890505DF4</clave_sujeto_obligado>
+			<clave_actividad>DIN</clave_actividad>
+		</sujeto_obligado>
+		<aviso>
+			<referencia_aviso>REF1</referencia_aviso>
+			<prioridad>1</prioridad>
+			<alerta>
+				<tipo_alerta>100</tipo_alerta>
+			</alerta>
+			<detalle_operaciones>
+				<datos_operacion>
+					<tipo_operacion>1601</tipo_operacion>
+					<desarrollos_inmobiliarios>
+						<datos_desarrollo>
+							<objeto_aviso_anterior>NO</objeto_aviso_anterior>
+							<modificacion>NO</modificacion>
+							<entidad_federativa>9</entidad_federativa>
+							<registro_licencia>REG2016-1</registro_licencia>
+							<caracteristicas_desarrollo>
+								<codigo_postal>02000</codigo_postal>
+								<colonia>COLONIA</colonia>
+								<calle>CALLE</calle>
+								<tipo_desarrollo>5</tipo_desarrollo>
+								<monto_desarrollo>150000.00</monto_desarrollo>
+								<unidades_comercializadas>10.00</unidades_comercializadas>
+								<costo_unidad>1500.00</costo_unidad>
+								<otras_empresas>NO</otras_empresas>
+							</caracteristicas_desarrollo>
+						</datos_desarrollo>
+					</desarrollos_inmobiliarios>
+					<aportaciones>
+						<fecha_aportacion>20161205</fecha_aportacion>
+						<tipo_aportacion>
+							<recursos_propios>
+								<datos_aportacion>
+									<aportacion_numerario>
+										<instrumento_monetario>1</instrumento_monetario>
+										<moneda>1</moneda>
+										<monto_aportacion>16000.00</monto_aportacion>
+										<aportacion_fideicomiso>NO</aportacion_fideicomiso>
+										<nombre_institucion>INSTITUCION</nombre_institucion>
+									</aportacion_numerario>
+								</datos_aportacion>
+							</recursos_propios>
+						</tipo_aportacion>
+					</aportaciones>
+				</datos_operacion>
+			</detalle_operaciones>
+		</aviso>
+	</informe>
+
+</archivo>

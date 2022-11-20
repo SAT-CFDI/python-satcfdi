@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<archivo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/bli bli.xsd"
+         xmlns="http://www.uif.shcp.gob.mx/recepcion/bli">
+    <informe>
+        <mes_reportado>201310</mes_reportado>
+        <sujeto_obligado>
+            <clave_sujeto_obligado>ROBN781212HX5</clave_sujeto_obligado>
+            <clave_actividad>BLI</clave_actividad>
+        </sujeto_obligado>
+        <aviso>
+            <referencia_aviso>CARLOS1</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>111</tipo_alerta>
+            </alerta>
+            <persona_aviso>
+                <tipo_persona>
+                    <persona_moral>
+                        <denominacion_razon>LA PATITA SA</denominacion_razon>
+                        <fecha_constitucion>19890215</fecha_constitucion>
+                        <rfc>LAP890215AAA</rfc>
+                        <pais_nacionalidad>MX</pais_nacionalidad>
+                        <giro_mercantil>6999174</giro_mercantil>
+                        <representante_apoderado>
+                            <nombre>JOSE CARLOS</nombre>
+                            <apellido_paterno>PEREZ</apellido_paterno>
+                            <apellido_materno>DE LA RIVA</apellido_materno>
+                            <fecha_nacimiento>19401220</fecha_nacimiento>
+                            <rfc>PERJ401220AAA</rfc>
+                            <curp>PERJ401220HDFRLS01</curp>
+                        </representante_apoderado>
+                    </persona_moral>
+                </tipo_persona>
+                <tipo_domicilio>
+                    <extranjero>
+                        <pais>IL</pais>
+                        <estado_provincia>JERUSALEN</estado_provincia>
+                        <ciudad_poblacion>JERUSALEN</ciudad_poblacion>
+                        <colonia>NORTE</colonia>
+                        <calle>CALLE</calle>
+                        <numero_exterior>12</numero_exterior>
+                        <numero_interior>1</numero_interior>
+                        <codigo_postal>53454</codigo_postal>
+                    </extranjero>
+                </tipo_domicilio>
+                <telefono>
+                    <clave_pais>IL</clave_pais>
+                    <numero_telefono>031212121212</numero_telefono>
+                    <correo_electronico>BBBB@BBB.COM</correo_electronico>
+                </telefono>
+            </persona_aviso>
+            <dueno_beneficiario>
+                <tipo_persona>
+                    <persona_fisica>
+                        <nombre>BERNARDO</nombre>
+                        <apellido_paterno>BIDART</apellido_paterno>
+                        <apellido_materno>BARCENAS</apellido_materno>
+                        <fecha_nacimiento>19771213</fecha_nacimiento>
+                        <rfc>BIBB771213AAA</rfc>
+                        <curp>BIBB771213HDFDRR01</curp>
+                        <pais_nacionalidad>MX</pais_nacionalidad>
+                    </persona_fisica>
+                </tipo_persona>
+            </dueno_beneficiario>
+            <detalle_operaciones>
+                <datos_operacion> <!-- Una o mas veces -->
+                    <fecha_operacion>20131025</fecha_operacion>
+                    <codigo_postal>05480</codigo_postal>
+                    <tipo_operacion>901</tipo_operacion>
+                    <tipo_bien>
+                        <datos_inmueble> <!-- Obligatorio si el tipo de bien es un Inmueble-->
+                            <tipo_inmueble>10</tipo_inmueble>
+                            <codigo_postal>02100</codigo_postal>
+                            <datos_parte_blindada>
+                                <parte_blindada>2</parte_blindada>
+                                <nivel_blindaje>6</nivel_blindaje>
+                            </datos_parte_blindada>
+                        </datos_inmueble>
+                    </tipo_bien>
+                    <datos_liquidacion>
+                        <fecha_pago>20090909</fecha_pago>
+                        <instrumento_monetario>11</instrumento_monetario>
+                        <moneda>3</moneda>
+                        <monto_operacion>258000.58</monto_operacion>
+                    </datos_liquidacion>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>

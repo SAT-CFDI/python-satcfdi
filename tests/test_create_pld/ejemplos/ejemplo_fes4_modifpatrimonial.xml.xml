@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fes:archivo xmlns:fes="http://www.uif.shcp.gob.mx/recepcion/fes">
+  <fes:informe>
+    <fes:mes_reportado>201509</fes:mes_reportado>
+    <fes:tribunal_dependencia>
+      <fes:clave_tribunal_dependencia>RET890505SR4</fes:clave_tribunal_dependencia>
+      <fes:clave_actividad>FES</fes:clave_actividad>
+    </fes:tribunal_dependencia>
+    <fes:aviso>
+      <fes:referencia_aviso>REF777</fes:referencia_aviso>
+      <fes:prioridad>1</fes:prioridad>
+      <fes:alerta>
+        <fes:tipo_alerta>100</fes:tipo_alerta>
+      </fes:alerta>
+      <fes:detalle_operaciones>
+        <fes:datos_operacion>
+          <fes:fecha_operacion>20150921</fes:fecha_operacion>
+          <fes:tipo_actividad>
+            <fes:modificacion_patrimonial>
+              <fes:autoridad>
+                <fes:tipo_autoridad>
+                  <fes:jurisdiccional>
+                    <fes:organo>ORG JUR 1</fes:organo>
+                    <fes:tipo_juicio>JUICIO 1</fes:tipo_juicio>
+                    <fes:materia>MATERIA 1</fes:materia>
+                    <fes:expediente>EXP. 1 </fes:expediente>
+                  </fes:jurisdiccional>
+                </fes:tipo_autoridad>
+              </fes:autoridad>
+              <fes:persona_moral_modifica>
+                <fes:denominacion_razon>DENOMINACION</fes:denominacion_razon>
+                <fes:fecha_constitucion>20090909</fes:fecha_constitucion>
+                <fes:pais_nacionalidad>KY</fes:pais_nacionalidad>
+                <fes:giro_mercantil>4850007</fes:giro_mercantil>
+                <fes:numero_total_acciones>855.00</fes:numero_total_acciones>
+                <fes:motivo_modificacion>3</fes:motivo_modificacion>
+              </fes:persona_moral_modifica>
+              <fes:datos_modificacion>
+                <fes:tipo_modificacion_capital_fijo>1</fes:tipo_modificacion_capital_fijo>
+                <fes:inicial_capital_fijo>18000.00</fes:inicial_capital_fijo>
+                <fes:final_capital_fijo>20000.00</fes:final_capital_fijo>
+                <fes:tipo_modificacion_capital_variable>3</fes:tipo_modificacion_capital_variable>
+                <fes:inicial_capital_variable>25000.00</fes:inicial_capital_variable>
+                <fes:final_capital_variable>25000.00</fes:final_capital_variable>
+                <fes:datos_accionista>
+                  <fes:tipo_persona>
+                    <fes:persona_fisica>
+                      <fes:nombre>JOSE</fes:nombre>
+                      <fes:apellido_paterno>HERNANDEZ</fes:apellido_paterno>
+                      <fes:apellido_materno>XXXX</fes:apellido_materno>
+                      <fes:fecha_nacimiento>19990505</fes:fecha_nacimiento>
+                      <fes:pais_nacionalidad>GP</fes:pais_nacionalidad>
+                    </fes:persona_fisica>
+                  </fes:tipo_persona>
+                  <fes:numero_acciones>40.00</fes:numero_acciones>
+                </fes:datos_accionista>
+                <fes:datos_accionista>
+                  <fes:tipo_persona>
+                    <fes:persona_moral>
+                      <fes:denominacion_razon>RAZON SOCIAL X</fes:denominacion_razon>
+                      <fes:rfc>RFE8905054ER</fes:rfc>
+                      <fes:pais_nacionalidad>JP</fes:pais_nacionalidad>
+                    </fes:persona_moral>
+                  </fes:tipo_persona>
+                  <fes:numero_acciones>50.00</fes:numero_acciones>
+                </fes:datos_accionista>
+                <fes:datos_accionista>
+                  <fes:tipo_persona>
+                    <fes:fideicomiso>
+                      <fes:denominacion_razon>RAZON SOCIAL S.A. DE C.V.</fes:denominacion_razon>
+                      <fes:identificador_fideicomiso>IDENT.FID.</fes:identificador_fideicomiso>
+                    </fes:fideicomiso>
+                  </fes:tipo_persona>
+                  <fes:numero_acciones>60.00</fes:numero_acciones>
+                </fes:datos_accionista>
+              </fes:datos_modificacion>
+            </fes:modificacion_patrimonial>
+          </fes:tipo_actividad>
+        </fes:datos_operacion>
+      </fes:detalle_operaciones>
+    </fes:aviso>
+  </fes:informe>
+</fes:archivo>

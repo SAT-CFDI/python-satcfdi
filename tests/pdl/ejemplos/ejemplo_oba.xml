@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/oba oba.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/oba" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201405</mes_reportado>
+        <sujeto_obligado>
+            <clave_sujeto_obligado>OCA891212T67</clave_sujeto_obligado>
+            <clave_actividad>OBA</clave_actividad>
+        </sujeto_obligado>
+        <aviso>
+            <referencia_aviso>REF454R54R</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>705</tipo_alerta>
+            </alerta>
+            <persona_aviso>
+                <tipo_persona>
+                    <persona_fisica>
+                        <nombre>BENITO</nombre>
+                        <apellido_paterno>PEREZ</apellido_paterno>
+                        <apellido_materno>GALDOS</apellido_materno>
+                        <fecha_nacimiento>19561015</fecha_nacimiento>
+                        <pais_nacionalidad>BO</pais_nacionalidad>
+                        <actividad_economica>1119000</actividad_economica>
+                    </persona_fisica>
+                </tipo_persona>
+                <tipo_domicilio>
+                    <nacional>
+                        <colonia>GUADALUPE INN</colonia>
+                        <calle>REVO</calle>
+                        <numero_exterior>4848</numero_exterior>
+                        <codigo_postal>01020</codigo_postal>
+                    </nacional>
+                </tipo_domicilio>
+            </persona_aviso>
+            <dueno_beneficiario>
+                <tipo_persona>
+                    <persona_fisica>
+                        <nombre>JUANITA</nombre>
+                        <apellido_paterno>BANANAN</apellido_paterno>
+                        <apellido_materno>URRUTIA</apellido_materno>
+                        <fecha_nacimiento>19900816</fecha_nacimiento>
+                        <pais_nacionalidad>SE</pais_nacionalidad>
+                    </persona_fisica>
+                </tipo_persona>
+            </dueno_beneficiario>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <fecha_operacion>20140714</fecha_operacion>
+                    <codigo_postal>01030</codigo_postal>
+                    <tipo_operacion>702</tipo_operacion>
+                    <datos_objeto>
+                        <tipo_objeto>1</tipo_objeto>
+                        <descripcion>UN PICASSO</descripcion>
+                    </datos_objeto>
+                    <datos_objeto>
+                        <tipo_objeto>2</tipo_objeto>
+                        <descripcion>DAVID</descripcion>
+                        <numero_registro>456545RR5R6</numero_registro>
+                        <valor_referencia>98575456.00</valor_referencia>
+                    </datos_objeto>
+                    <datos_objeto>
+                        <tipo_objeto>5</tipo_objeto>
+                        <descripcion>SALMA NATURAL</descripcion>
+                        <valor_referencia>100.00</valor_referencia>
+                    </datos_objeto>
+                    <datos_objeto>
+                        <tipo_objeto>8</tipo_objeto>
+                        <descripcion>VOCHITO 1RA EDICION ALEMAN</descripcion>
+                        <numero_registro>654653443</numero_registro>
+                    </datos_objeto>
+                    <datos_liquidacion>
+                        <fecha_pago>20140701</fecha_pago>
+                        <forma_pago>1</forma_pago>
+                        <instrumento_monetario>1</instrumento_monetario>
+                        <moneda>2</moneda>
+                        <monto_operacion>1508596.00</monto_operacion>
+                    </datos_liquidacion>
+                    <datos_liquidacion>
+                        <fecha_pago>20140702</fecha_pago>
+                        <forma_pago>1</forma_pago>
+                        <instrumento_monetario>2</instrumento_monetario>
+                        <moneda>3</moneda>
+                        <monto_operacion>8598484.00</monto_operacion>
+                    </datos_liquidacion>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>
+

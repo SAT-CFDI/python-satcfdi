@@ -1,0 +1,38 @@
+<h5>Conceptos</h5>
+<table>
+	<thead>
+		<tr>
+			<th>Identificador</th>
+			<th>Fecha</th>
+			<th>RFC</th>
+			<th>CURP</th>
+			<th>Nombre</th>
+			<th>No. Seguridad Social</th>
+			<th>Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for r in iterate(c.Conceptos) %}
+		<tr>
+			<td>{{ r.identificador }}</td>
+			<td>{{ r.fecha }}</td>
+			<td>{{ r.rfc }}</td>
+			<td>{{ r.curp }}</td>
+			<td>{{ r.nombre }}</td>
+			<td>{{ r.numSeguridadSocial }}</td>
+			<td class="r">{{ r.importe }}</td>
+		</tr>
+		{% endfor %}
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="rbt"><b>Total</b></td>
+			<td class="rbt">{{ c.total }}</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+{{ c | simple('tipoOperacion', 'numeroDeCuenta') }}

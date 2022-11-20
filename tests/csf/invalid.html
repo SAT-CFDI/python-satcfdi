@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" /><!DOCTYPE html>
+<html><head><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1" /><title>Validador QR</title><link type="text/css" rel="stylesheet" href="/app/qr/faces/javax.faces.resource/mobile.css;jsessionid=eBqijXuF3rY87E5X6X6ozYjHu_1dZk6UjPb8aoy4zXSKCP-NnxFb!1073046804?ln=primefaces-mobile" /><script type="text/javascript" src="/app/qr/faces/javax.faces.resource/jquery/jquery.js;jsessionid=eBqijXuF3rY87E5X6X6ozYjHu_1dZk6UjPb8aoy4zXSKCP-NnxFb!1073046804?ln=primefaces"></script><script type="text/javascript">$(document).bind('mobileinit', function(){$.mobile.ajaxEnabled = false;$.mobile.linkBindingEnabled = false;$.mobile.hashListeningEnabled = false;$.mobile.pushStateEnabled = false;});</script><script type="text/javascript" src="/app/qr/faces/javax.faces.resource/mobile.js;jsessionid=eBqijXuF3rY87E5X6X6ozYjHu_1dZk6UjPb8aoy4zXSKCP-NnxFb!1073046804?ln=primefaces-mobile"></script><script type="text/javascript" src="/app/qr/faces/javax.faces.resource/primefaces.js;jsessionid=eBqijXuF3rY87E5X6X6ozYjHu_1dZk6UjPb8aoy4zXSKCP-NnxFb!1073046804?ln=primefaces"></script><script type="text/javascript" src="/app/qr/faces/javax.faces.resource/primefaces-mobile.js;jsessionid=eBqijXuF3rY87E5X6X6ozYjHu_1dZk6UjPb8aoy4zXSKCP-NnxFb!1073046804?ln=primefaces-mobile"></script>
+<link type="text/css" rel="stylesheet" href="/app/qr/faces/javax.faces.resource/primefaces.css;jsessionid=eBqijXuF3rY87E5X6X6ozYjHu_1dZk6UjPb8aoy4zXSKCP-NnxFb!1073046804?ln=primefaces" />
+
+</head><body>
+        <link href="../../css/prueba.css" rel="stylesheet" type="text/css" />
+        <link href="../../css/validacionCIF.css" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css" />
+        <center><img id="j_idt4" src="/app/qr/images/HACIENDA-SAT.jpg;jsessionid=eBqijXuF3rY87E5X6X6ozYjHu_1dZk6UjPb8aoy4zXSKCP-NnxFb!1073046804" alt="" width="320px" />
+        </center>
+		<script language="javascript" type="text/javascript">
+		    window.onload = function getUbicacion(){
+                console.log("entrando::::");
+				var requiereUbicacion = $("#ubicacionForm\\:iptRequiereUbicacion").val();
+        		console.log("Requiere ubicacion ???? " + requiereUbicacion);
+                if(requiereUbicacion === "1"){
+                    console.log('El servicio pertenece a Marbetes');
+                    getVars();
+                }
+            };
+                    
+            function getVars(){
+                console.log('este es un mensaje de inicio de ubicacion ::::');
+                if ("geolocation" in navigator){ 
+                    navigator.geolocation.getCurrentPosition(onSuccessGeolocating,onErrorGeolocating,{
+                        enableHighAccuracy: true,
+                        maximumAge:         5000
+                    });
+                }else{
+                    console.log("El Navegador no pudo acceder a la geolocalizacion!, Se mandan datos nulos");
+                    var ubicacion = "0,0";
+                    setHiddenValue(ubicacion);
+                }
+            };
+    
+	        function onSuccessGeolocating(position){
+                var longitud = position.coords.longitude;
+                var latitud = position.coords.latitude;
+                var ubicacion = latitud +","+longitud;
+			    console.log("Datos de ubicacion :: "+ubicacion);
+                setHiddenValue(ubicacion);
+            };
+                        
+			function onErrorGeolocating(error){
+                var ubicacion = "0,0";
+                switch(error.code){
+                    case error.PERMISSION_DENIED:
+                        console.log('ERROR: Se nego el acceso a la geolocalizacion!');
+                        setHiddenValue(ubicacion);
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        console.log("ERROR: Hay un problema para obtener la posicion del dispositivo!");                                   
+                        setHiddenValue(ubicacion);
+                        break;
+                    case error.TIMEOUT:
+                        console.log("ERROR: La aplicacion agoto el tiempo de espera para obtener la posicion del dispositivo!");
+                        setHiddenValue(ubicacion);
+                        break;
+                    default:
+                        console.log("ERROR: Problema desconocido!");
+                        setHiddenValue(ubicacion);
+                        break;
+                }
+            };
+			
+            function setHiddenValue(ubicacion){
+                console.log('Entrando  setHiddenValue');
+                $("#ubicacionForm\\:iptUbicacion").val(ubicacion);
+				$("#ubicacionForm\\:iptUbicacion").change();
+            };
+		</script><div id="pageContent" data-role="content">
+<form id="ubicacionForm" name="ubicacionForm" method="post" action="/app/qr/faces/pages/mobile/validadorqr.jsf;jsessionid=eBqijXuF3rY87E5X6X6ozYjHu_1dZk6UjPb8aoy4zXSKCP-NnxFb!1073046804" class="ui-content" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="ubicacionForm" value="ubicacionForm" />
+<input id="ubicacionForm:iptRequiereUbicacion" name="ubicacionForm:iptRequiereUbicacion" type="hidden" /><script id="ubicacionForm:iptRequiereUbicacion_s" type="text/javascript">PrimeFaces.cw('InputText','widget_ubicacionForm_iptRequiereUbicacion',{id:'ubicacionForm:iptRequiereUbicacion'});</script><input id="ubicacionForm:iptUbicacion" name="ubicacionForm:iptUbicacion" type="hidden" /><script id="ubicacionForm:iptUbicacion_s" type="text/javascript">PrimeFaces.cw('InputText','widget_ubicacionForm_iptUbicacion',{id:'ubicacionForm:iptUbicacion',behaviors:{change:function(event) {PrimeFaces.ab({source:'ubicacionForm:iptUbicacion',event:'change',process:'ubicacionForm',update:'ubicacionForm'}, arguments[1]);}}});</script><fieldset id="ubicacionForm:j_idt6" class="ui-fieldset ui-widget ui-widget-content ui-corner-all"><div class="ui-fieldset-content"><div id="ubicacionForm:panelMensajes" class="ui-grid-null prueba"><div class="ui-block-a"><ul id="ubicacionForm:j_idt7" data-role="listview" data-inset="data-inset"><li><div id="ubicacionForm:j_idt7:msgs" class="ui-messages ui-widget" aria-live="polite"><div class="ui-messages-info ui-corner-all"><span class="ui-messages-info-icon"></span><ul><li><span class="ui-messages-info-summary"></span><span class="ui-messages-info-detail">No se encontró información de la cédula de identificación fiscal para los datos proporcionados</span></li></ul></div></div></li></ul></div></div></div></fieldset><script id="ubicacionForm:j_idt6_s" type="text/javascript">PrimeFaces.cw('Fieldset','widget_ubicacionForm_j_idt6',{id:'ubicacionForm:j_idt6'});</script><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="196149200292063689:-5015699332931853173" autocomplete="off" />
+</form></div></body></html>

@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/spr spr.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/spr" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<informe>
+		<mes_reportado>202108</mes_reportado>
+		<sujeto_obligado>
+			<clave_sujeto_obligado>RSOB470613HT5</clave_sujeto_obligado>
+			<ocupacion>
+				<tipo_ocupacion>4</tipo_ocupacion>
+			</ocupacion>
+			<clave_actividad>SPR</clave_actividad>
+		</sujeto_obligado>
+		<aviso>
+			<referencia_aviso>ID1526F0037</referencia_aviso>
+			<prioridad>1</prioridad>
+			<alerta>
+				<tipo_alerta>9999</tipo_alerta>
+				<descripcion_alerta>DESCRIPCION DE LA ALERTA QUE NO SE ENCUENTRA EN EL CATALOGO</descripcion_alerta>
+			</alerta>
+			<persona_aviso>
+				<tipo_persona>
+					<persona_fisica>
+						<nombre>JOSE IGNACIO</nombre>
+						<apellido_paterno>ANGELES</apellido_paterno>
+						<apellido_materno>SALCEDO</apellido_materno>
+						<fecha_nacimiento>19780921</fecha_nacimiento>
+						<rfc>ANSJ780921BH3</rfc>
+						<curp>ANSJ780921HNEPSD75</curp>
+						<pais_nacionalidad>FO</pais_nacionalidad>
+						<actividad_economica>4330100</actividad_economica>
+					</persona_fisica>
+				</tipo_persona>
+				<tipo_domicilio>
+					<nacional>
+						<colonia>EX HACIENDA DE ABAJO</colonia>
+						<calle>CALLE 01</calle>
+						<numero_exterior>NUM EXT 01</numero_exterior>
+						<numero_interior>NUM INT 01</numero_interior>
+						<codigo_postal>46404</codigo_postal>
+					</nacional>
+				</tipo_domicilio>
+				<telefono>
+					<clave_pais>EC</clave_pais>
+					<numero_telefono>9876543210</numero_telefono>
+					<correo_electronico>ANGELES.JS@MAIL.COM</correo_electronico>
+				</telefono>
+			</persona_aviso>
+			<persona_aviso>
+				<tipo_persona>
+					<persona_moral>
+						<denominacion_razon>EMPRESA MEXICANA</denominacion_razon>
+						<fecha_constitucion>19790808</fecha_constitucion>
+						<rfc>DZZ790808XF3</rfc>
+						<pais_nacionalidad>MX</pais_nacionalidad>
+						<giro_mercantil>1100001</giro_mercantil>
+						<representante_apoderado>
+							<nombre>JUAN</nombre>
+							<apellido_paterno>FRANCIS</apellido_paterno>
+							<apellido_materno>CERVERA</apellido_materno>
+							<fecha_nacimiento>19800925</fecha_nacimiento>
+							<rfc>FRCJ800925JO1</rfc>
+							<curp>FRCJ800925HNEXXX84</curp>
+						</representante_apoderado>
+					</persona_moral>
+				</tipo_persona>
+				<tipo_domicilio>
+					<nacional>
+						<colonia>INFONAVIT HERMENEGILDO J. ALDANA</colonia>
+						<calle>CALLE 02</calle>
+						<numero_exterior>NUM EXT 02</numero_exterior>
+						<numero_interior>NUM INT 02</numero_interior>
+						<codigo_postal>72120</codigo_postal>
+					</nacional>
+				</tipo_domicilio>
+				<telefono>
+					<clave_pais>MX</clave_pais>
+					<numero_telefono>550102030405</numero_telefono>
+					<correo_electronico>EMPRESA_MEXICANA@MAIL.COM</correo_electronico>
+				</telefono>
+			</persona_aviso>
+			<persona_aviso>
+				<tipo_persona>
+					<fideicomiso>
+						<denominacion_razon>FID123</denominacion_razon>
+						<rfc>FQU850511UR8</rfc>
+						<identificador_fideicomiso>F-930655</identificador_fideicomiso>
+						<apoderado_delegado>
+							<nombre>JOSE LUIS</nombre>
+							<apellido_paterno>HERNANDEZ</apellido_paterno>
+							<apellido_materno>GARCIA</apellido_materno>
+							<fecha_nacimiento>19920807</fecha_nacimiento>
+							<rfc>HEGJ920807XB3</rfc>
+							<curp>HEGJ920807HNEXXX17</curp>
+						</apoderado_delegado>
+						<apoderado_delegado>
+							<nombre>JOSE</nombre>
+							<apellido_paterno>GONZALEZ</apellido_paterno>
+							<apellido_materno>FRANCO</apellido_materno>
+							<fecha_nacimiento>19611227</fecha_nacimiento>
+							<rfc>GOFJ611227SZ1</rfc>
+							<curp>GOFJ611227HNEXXX65</curp>
+						</apoderado_delegado>
+					</fideicomiso>
+				</tipo_persona>
+			</persona_aviso>
+			<persona_aviso>
+				<tipo_persona>
+					<persona_fisica>
+						<nombre>ROBERTO AUGUSTO</nombre>
+						<apellido_paterno>MARTINEZ</apellido_paterno>
+						<apellido_materno>CASTAÑO</apellido_materno>
+						<fecha_nacimiento>19930306</fecha_nacimiento>
+						<rfc>MACR930306GP1</rfc>
+						<curp>MACR930306MNEMDP78</curp>
+						<pais_nacionalidad>PS</pais_nacionalidad>
+						<actividad_economica>6430300</actividad_economica>
+						<representante_apoderado>
+							<nombre>EDUARDO</nombre>
+							<apellido_paterno>GUITART</apellido_paterno>
+							<apellido_materno>VARGAS</apellido_materno>
+							<fecha_nacimiento>19640914</fecha_nacimiento>
+							<rfc>GUVE640914HI4</rfc>
+							<curp>GUVE640914MNEXXX44</curp>
+						</representante_apoderado>
+					</persona_fisica>
+				</tipo_persona>
+				<tipo_domicilio>
+					<extranjero>
+						<pais>AG</pais>
+						<estado_provincia>ESTADO 04</estado_provincia>
+						<ciudad_poblacion>CUIDAD 04</ciudad_poblacion>
+						<colonia>COLONIA 04</colonia>
+						<calle>CALLE 04</calle>
+						<numero_exterior>NUM EXT 04</numero_exterior>
+						<numero_interior>NUM INT 04</numero_interior>
+						<codigo_postal>CP-EXT-04</codigo_postal>
+					</extranjero>
+				</tipo_domicilio>
+				<telefono>
+					<clave_pais>AR</clave_pais>
+					<numero_telefono>001122334455</numero_telefono>
+					<correo_electronico>MARTINEZ_RC@MAIL.COM</correo_electronico>
+				</telefono>
+			</persona_aviso>
+			<dueno_beneficiario>
+				<tipo_persona>
+					<persona_fisica>
+						<nombre>LETICIA DEL CARMEN</nombre>
+						<apellido_paterno>AVIÑA</apellido_paterno>
+						<apellido_materno>LLORENTE</apellido_materno>
+						<fecha_nacimiento>19851010</fecha_nacimiento>
+						<rfc>AVLL851010TG2</rfc>
+						<curp>AVLL851010MNEMDA63</curp>
+						<pais_nacionalidad>SO</pais_nacionalidad>
+					</persona_fisica>
+				</tipo_persona>
+			</dueno_beneficiario>
+			<dueno_beneficiario>
+				<tipo_persona>
+					<persona_moral>
+						<denominacion_razon>EMPRESA BENEFICIARIA</denominacion_razon>
+						<fecha_constitucion>19541005</fecha_constitucion>
+						<rfc>TKP541005IQ1</rfc>
+						<pais_nacionalidad>SA</pais_nacionalidad>
+					</persona_moral>
+				</tipo_persona>
+			</dueno_beneficiario>
+			<dueno_beneficiario>
+				<tipo_persona>
+					<fideicomiso>
+						<denominacion_razon>FID 456</denominacion_razon>
+						<rfc>HWN540401JE3</rfc>
+						<identificador_fideicomiso>F-981269</identificador_fideicomiso>
+					</fideicomiso>
+				</tipo_persona>
+			</dueno_beneficiario>
+			<detalle_operaciones>
+				<datos_operacion>
+					<fecha_operacion>20210809</fecha_operacion>
+					<tipo_actividad>
+						<compra_venta_entidades_mercantiles>
+							<tipo_operacion>1</tipo_operacion>
+							<datos_sociedad_mercantil>
+								<denominacion_razon>EMPRESA A01</denominacion_razon>
+								<giro_mercantil>4310006</giro_mercantil>
+								<fecha_constitucion>19510725</fecha_constitucion>
+								<rfc>EEX510725NA7</rfc>
+								<pais_nacionalidad>BO</pais_nacionalidad>
+								<folio_mercantil>FOL-297</folio_mercantil>
+								<acciones_adquiridas>53.00</acciones_adquiridas>
+								<acciones_totales>879.00</acciones_totales>
+								<datos_contraparte>
+									<persona_fisica>
+										<nombre>ANTONIO RAFAEL</nombre>
+										<apellido_paterno>FEREZ</apellido_paterno>
+										<apellido_materno>ARAUZ</apellido_materno>
+										<fecha_nacimiento>19731013</fecha_nacimiento>
+										<rfc>FEAA731013MF4</rfc>
+										<curp>FEAA731013HNELTL76</curp>
+										<pais_nacionalidad>PG</pais_nacionalidad>
+									</persona_fisica>
+								</datos_contraparte>
+							</datos_sociedad_mercantil>
+							<datos_sociedad_mercantil>
+								<denominacion_razon>EMPRESA B63</denominacion_razon>
+								<giro_mercantil>4320006</giro_mercantil>
+								<fecha_constitucion>19621001</fecha_constitucion>
+								<rfc>QSQ621001KS5</rfc>
+								<pais_nacionalidad>BA</pais_nacionalidad>
+								<folio_mercantil>FOL-212</folio_mercantil>
+								<acciones_adquiridas>9.00</acciones_adquiridas>
+								<acciones_totales>461.00</acciones_totales>
+								<datos_contraparte>
+									<persona_moral>
+										<denominacion_razon>EMPRESA CONTRAPARTE</denominacion_razon>
+										<fecha_constitucion>19930205</fecha_constitucion>
+										<rfc>EMY930205FR4</rfc>
+										<pais_nacionalidad>MO</pais_nacionalidad>
+									</persona_moral>
+								</datos_contraparte>
+							</datos_sociedad_mercantil>
+							<datos_sociedad_mercantil>
+								<denominacion_razon>EMPRESA D78</denominacion_razon>
+								<giro_mercantil>4330006</giro_mercantil>
+								<fecha_constitucion>19691207</fecha_constitucion>
+								<rfc>JEF691207NR9</rfc>
+								<pais_nacionalidad>BW</pais_nacionalidad>
+								<folio_mercantil>FOL-742</folio_mercantil>
+								<acciones_adquiridas>63.00</acciones_adquiridas>
+								<acciones_totales>319.00</acciones_totales>
+								<datos_contraparte>
+									<fideicomiso>
+										<denominacion_razon>FIDEICOMISO CONTRAPARTE</denominacion_razon>
+										<rfc>OOC710713WF7</rfc>
+										<identificador_fideicomiso>F-43711</identificador_fideicomiso>
+									</fideicomiso>
+								</datos_contraparte>
+							</datos_sociedad_mercantil>
+						</compra_venta_entidades_mercantiles>
+					</tipo_actividad>
+					<datos_operacion_financiera>
+						<fecha_pago>20210801</fecha_pago>
+						<instrumento_monetario>1</instrumento_monetario>
+						<moneda>1</moneda>
+						<monto_operacion>63990361.00</monto_operacion>
+					</datos_operacion_financiera>
+					<datos_operacion_financiera>
+						<fecha_pago>20210801</fecha_pago>
+						<instrumento_monetario>8</instrumento_monetario>
+						<moneda>2</moneda>
+						<monto_operacion>53930461.00</monto_operacion>
+					</datos_operacion_financiera>
+					<datos_operacion_financiera>
+						<fecha_pago>20210805</fecha_pago>
+						<instrumento_monetario>13</instrumento_monetario>
+						<moneda>176</moneda>
+						<monto_operacion>54458675.00</monto_operacion>
+					</datos_operacion_financiera>
+					<datos_operacion_financiera>
+						<fecha_pago>20210805</fecha_pago>
+						<instrumento_monetario>14</instrumento_monetario>
+						<moneda>175</moneda>
+						<monto_operacion>35293536.00</monto_operacion>
+					</datos_operacion_financiera>
+					<datos_operacion_financiera>
+						<fecha_pago>20210805</fecha_pago>
+						<instrumento_monetario>15</instrumento_monetario>
+						<moneda>178</moneda>
+						<monto_operacion>98424600.00</monto_operacion>
+					</datos_operacion_financiera>
+					<datos_operacion_financiera>
+						<fecha_pago>20210812</fecha_pago>
+						<instrumento_monetario>16</instrumento_monetario>
+						<activo_virtual>
+							<tipo_activo_virtual>1001</tipo_activo_virtual>
+							<cantidad_activo_virtual>0.00523</cantidad_activo_virtual>
+						</activo_virtual>
+						<monto_operacion>78529379.00</monto_operacion>
+					</datos_operacion_financiera>
+					<datos_operacion_financiera>
+						<fecha_pago>20210812</fecha_pago>
+						<instrumento_monetario>16</instrumento_monetario>
+						<activo_virtual>
+							<tipo_activo_virtual>1022</tipo_activo_virtual>
+							<cantidad_activo_virtual>12.34</cantidad_activo_virtual>
+						</activo_virtual>
+						<monto_operacion>73578123.00</monto_operacion>
+					</datos_operacion_financiera>
+					<datos_operacion_financiera>
+						<fecha_pago>20210812</fecha_pago>
+						<instrumento_monetario>16</instrumento_monetario>
+						<activo_virtual>
+							<tipo_activo_virtual>999999</tipo_activo_virtual>
+							<descripcion_activo_virtual>ULTRA COIN MASTER</descripcion_activo_virtual>
+							<cantidad_activo_virtual>1234567890.0123456789</cantidad_activo_virtual>
+						</activo_virtual>
+						<monto_operacion>32519370.00</monto_operacion>
+					</datos_operacion_financiera>
+				</datos_operacion>
+			</detalle_operaciones>
+		</aviso>
+	</informe>
+</archivo>

@@ -1,0 +1,11 @@
+{
+  "method": "get",
+  "url": "https://services.test.sw.com.mx/pendings/EKU9003173C9",
+  "headers": {
+    "Cache-Control": "no-cache",
+    "Authorization": "Bearer token",
+    "User-Agent": "this is a test"
+  },
+  "json": null,
+  "files": null
+}

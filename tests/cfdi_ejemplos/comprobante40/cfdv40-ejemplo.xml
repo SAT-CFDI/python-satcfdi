@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A valid XML document for CFD v4.0 schema with random nonsense values for testing -->
+<!-- Comments to https://www.cryptosys.net/contact/ -->
+
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 cfdv40.xsd"
+    Version="4.0" LugarExpedicion="99999" MetodoPago="PPD" Confirmacion="A1234" Moneda="MXN"
+    Descuento="0.00" Folio="123ABC" TipoCambio="1.0" Serie="A" Exportacion="03"
+    TipoDeComprobante="P" FormaPago="99" CondicionesDePago="CONDICIONES"
+    Fecha="2021-12-07T23:59:59" SubTotal="1000" Total="1500"
+    NoCertificado="30001000000300023708"  Certificado=""  Sello="">
+    <cfdi:InformacionGlobal Meses="18" Año="2021" Periodicidad="05" />
+    <cfdi:CfdiRelacionados TipoRelacion="09">
+        <cfdi:CfdiRelacionado UUID="ED1752FE-E865-4FF2-BFE1-0F552E770DC9" />
+    </cfdi:CfdiRelacionados>
+    <cfdi:Emisor FacAtrAdquirente="0123456789" Nombre="Esta es una demostración" RegimenFiscal="630" Rfc="AAA010101AAA" />
+    <cfdi:Receptor ResidenciaFiscal="MEX" DomicilioFiscalReceptor="99999" RegimenFiscalReceptor="630" Nombre="Juanito Bananas De la Sierra" NumRegIdTrib="0000000000000" Rfc="BASJ600902KL9" UsoCFDI="S01" />
+    <cfdi:Conceptos>
+        <cfdi:Concepto  ObjetoImp="01" ClaveProdServ="01010101" ClaveUnidad="C81" NoIdentificacion="00001" Cantidad="1.5"
+        Unidad="TONELADA" Descripcion="ACERO" ValorUnitario="1500000" Importe="2250000">
+            <cfdi:Impuestos>
+                <cfdi:Traslados>
+                    <cfdi:Traslado Base="2250000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="360000"/>
+                </cfdi:Traslados>
+                <cfdi:Retenciones>
+                    <cfdi:Retencion Base="2250000" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.300000" Importe="247500"/>
+                </cfdi:Retenciones>
+            </cfdi:Impuestos>
+            <cfdi:CuentaPredial Numero="51888"/>
+        </cfdi:Concepto>
+        <cfdi:Concepto  ObjetoImp="02" ClaveProdServ="95141904" ClaveUnidad="WEE" NoIdentificacion="00002" Cantidad="1.6"
+        Unidad="TONELADA" Descripcion="ALUMINIO" ValorUnitario="1500" Importe="2400">
+            <cfdi:Impuestos>
+                <cfdi:Traslados>
+                    <cfdi:Traslado Base="2400" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="384"/>
+                </cfdi:Traslados>
+                <cfdi:Retenciones>
+                    <cfdi:Retencion Base="2400" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.300000" Importe="264"/>
+                </cfdi:Retenciones>
+            </cfdi:Impuestos>
+            <cfdi:ACuentaTerceros RegimenFiscalACuentaTerceros="630" NombreACuentaTerceros="NombreACuentaTerceros" DomicilioFiscalACuentaTerceros="99999" RfcACuentaTerceros="AAA010101AAA" />
+            <cfdi:InformacionAduanera NumeroPedimento="15  48  4567  6001234"/>
+        </cfdi:Concepto>
+        <cfdi:Concepto  ObjetoImp="03" ClaveProdServ="84101604" ClaveUnidad="G66" NoIdentificacion="00003" Cantidad="1.7"
+        Unidad="TONELADA" Descripcion="ZAMAC" ValorUnitario="10000" Importe="17000" Descuento="0">
+            <cfdi:Impuestos>
+                <cfdi:Traslados>
+                    <cfdi:Traslado Base="17000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="2720" />
+                </cfdi:Traslados>
+                <cfdi:Retenciones>
+                    <cfdi:Retencion Base="17000" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.300000" Importe="1870" />
+                </cfdi:Retenciones>
+            </cfdi:Impuestos>
+            <cfdi:Parte ClaveProdServ="25201513" NoIdentificacion="055155" Cantidad="1.0" Descripcion="PARTE EJEMPLO" Unidad="UNIDAD" ValorUnitario="1.00" Importe="1.00">
+                <cfdi:InformacionAduanera NumeroPedimento="15  48  4567  6001235" />
+            </cfdi:Parte>
+        </cfdi:Concepto>
+    </cfdi:Conceptos>
+    <cfdi:Impuestos TotalImpuestosRetenidos="247500" TotalImpuestosTrasladados="360000">
+        <cfdi:Retenciones>
+            <cfdi:Retencion Impuesto="001" Importe="247000"/>
+            <cfdi:Retencion Impuesto="003" Importe="500"/>
+        </cfdi:Retenciones>
+        <cfdi:Traslados>
+            <cfdi:Traslado Base="1.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="360000"/>
+        </cfdi:Traslados>
+    </cfdi:Impuestos>
+    <cfdi:Complemento></cfdi:Complemento>
+</cfdi:Comprobante>

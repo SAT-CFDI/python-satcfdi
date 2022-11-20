@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/fep fep.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/fep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201407</mes_reportado>
+        <sujeto_obligado>
+            <clave_sujeto_obligado>OGA751212G56</clave_sujeto_obligado>
+            <clave_actividad>FEP</clave_actividad>
+        </sujeto_obligado>
+        <aviso>
+            <referencia_aviso>201406</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>521</tipo_alerta>
+            </alerta>
+            <persona_aviso>
+                <nombre>JOSE</nombre>
+                <apellido_paterno>RODRIGUEZ</apellido_paterno>
+                <apellido_materno>SOLANOI</apellido_materno>
+                <fecha_nacimiento>19780522</fecha_nacimiento>
+            </persona_aviso>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <instrumento_publico>234234</instrumento_publico>
+                    <fecha_operacion>20140101</fecha_operacion>
+                    <tipo_actividad>
+                        <modificacion_patrimonial>
+                            <persona_moral_modifica>
+                                <denominacion_razon>CHOCOLATEAZTECA</denominacion_razon>
+                                <fecha_constitucion>20000811</fecha_constitucion>
+                                <rfc>CHO000811KJL</rfc>
+                                <pais_nacionalidad>MX</pais_nacionalidad>
+                                <giro_mercantil>5231100</giro_mercantil>
+                                <numero_total_acciones>12334.55</numero_total_acciones>
+                                <motivo_modificacion>3</motivo_modificacion>
+                                <instrumento_publico>4500</instrumento_publico>
+                            </persona_moral_modifica>
+                            <datos_modificacion>
+                                <tipo_modificacion_capital_fijo>2</tipo_modificacion_capital_fijo>
+                                <inicial_capital_fijo>12300.55</inicial_capital_fijo>
+                                <final_capital_fijo>11560.25</final_capital_fijo>
+                                <tipo_modificacion_capital_variable>2</tipo_modificacion_capital_variable>
+                                <inicial_capital_variable>10056.00</inicial_capital_variable>
+                                <final_capital_variable>100567.34</final_capital_variable>
+                                <datos_accionista>
+                                    <tipo_persona>
+                                        <persona_fisica>
+                                            <nombre>ALMA</nombre>
+                                            <apellido_paterno>SALAS</apellido_paterno>
+                                            <apellido_materno>VILLA</apellido_materno>
+                                            <fecha_nacimiento>19771015</fecha_nacimiento>
+                                            <pais_nacionalidad>MX</pais_nacionalidad>
+                                        </persona_fisica>
+                                    </tipo_persona>
+                                    <numero_acciones>50.00</numero_acciones>
+                                </datos_accionista>
+                            </datos_modificacion>
+                        </modificacion_patrimonial>
+                    </tipo_actividad>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>
+

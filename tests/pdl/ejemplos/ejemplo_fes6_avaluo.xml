@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/fes fes.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/fes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201509</mes_reportado>
+        <tribunal_dependencia>
+            <clave_tribunal_dependencia>WSE890606QW2</clave_tribunal_dependencia>
+            <clave_actividad>FES</clave_actividad>
+        </tribunal_dependencia>
+        <aviso>
+            <referencia_aviso>REF20</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>1268</tipo_alerta>
+            </alerta>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <fecha_operacion>20150912</fecha_operacion>
+                    <tipo_actividad>
+                        <avaluo>
+                            <organo>ORGADMIN1</organo>
+                            <cargo>CARGO AUTORIDAD</cargo>
+                            <expediente_oficio>OFIC. 1 / 2015</expediente_oficio>
+                            <persona_solicita>
+                                <nombre>JORGE</nombre>
+                                <apellido_paterno>XXXX</apellido_paterno>
+                                <apellido_materno>MARTINEZ</apellido_materno>
+                                <fecha_nacimiento>19910101</fecha_nacimiento>
+                                <pais_nacionalidad>AO</pais_nacionalidad>
+                            </persona_solicita>
+                            <tipo_bien>1</tipo_bien>
+                            <valor_avaluo>1800000.00</valor_avaluo>
+                            <datos_propietario>
+                                <propietario_solicita>NO</propietario_solicita>
+                                <dato_propietario>
+                                    <tipo_persona>
+                                        <persona_moral>
+                                            <denominacion_razon>RAZON SOCIAL S.A. DE C.V.</denominacion_razon>
+                                            <fecha_constitucion>19990101</fecha_constitucion>
+                                            <pais_nacionalidad>AO</pais_nacionalidad>
+                                        </persona_moral>
+                                    </tipo_persona>
+                                </dato_propietario>
+                                <dato_propietario>
+                                    <tipo_persona>
+                                        <fideicomiso>
+                                            <denominacion_razon>DENOMINACION</denominacion_razon>
+                                            <rfc>WER780505DR5</rfc>
+                                        </fideicomiso>
+                                    </tipo_persona>
+                                </dato_propietario>
+                                <dato_propietario>
+                                    <tipo_persona>
+                                        <persona_fisica>
+                                            <nombre>BAETRIZ</nombre>
+                                            <apellido_paterno>HERNANDEZ</apellido_paterno>
+                                            <apellido_materno>XXXXXX</apellido_materno>
+                                            <curp>DFRE890505HAGDRL09</curp>
+                                            <pais_nacionalidad>PH</pais_nacionalidad>
+                                        </persona_fisica>
+                                    </tipo_persona>
+                                </dato_propietario>
+                            </datos_propietario>
+                        </avaluo>
+                    </tipo_actividad>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>

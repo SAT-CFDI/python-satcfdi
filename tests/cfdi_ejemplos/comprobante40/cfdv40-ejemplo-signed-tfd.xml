@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- A valid XML document for CFD v4.0 schema with random nonsense values for testing --><!-- Comments to https://www.cryptosys.net/contact/ --><cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 cfdv40.xsd" Version="4.0" LugarExpedicion="99999" MetodoPago="PPD" Confirmacion="A1234" Moneda="MXN" Descuento="0.00" Folio="123ABC" TipoCambio="1.0" Serie="A" Exportacion="03" TipoDeComprobante="P" FormaPago="99" CondicionesDePago="CONDICIONES" Fecha="2021-12-07T23:59:59" SubTotal="1000" Total="1500" NoCertificado="30001000000300023708" Certificado="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" Sello="Gnm1yXaIig5hr1dJ+88gjLY5usQxXP2s+zdmlLl4iokWENaUUlhpG/crkUFEzcJfdq1FbBxV/d/GN50MGuw2fP5f6MkRYz75UKaKfzubUak+SCkDzYot5jZRkO6hXKe4+KAfaulP7wa8Q7oSW5ccivppLnikme0CS3KtGBrQHU/q3pjNrw+jMvsnpUc1tx91REqMWrzMTZ2D6UkGdqn8i/0mLRU2vT8vPaNg/Hr2jpVVAgQmPtfvnfnORCWSm/5qZg9Tli7nTRRVwupF4o9ajH2/Is7LoCsIgZUg3wCHkZCjaKk2mJoK7FyMTsPXRRSGhoYgwi1kNHs1aY4RHNwe5w==">
+    <cfdi:InformacionGlobal Meses="18" Año="2021" Periodicidad="05"></cfdi:InformacionGlobal>
+    <cfdi:CfdiRelacionados TipoRelacion="09">
+        <cfdi:CfdiRelacionado UUID="ED1752FE-E865-4FF2-BFE1-0F552E770DC9"></cfdi:CfdiRelacionado>
+    </cfdi:CfdiRelacionados>
+    <cfdi:Emisor FacAtrAdquirente="0123456789" Nombre="Esta es una demostración" RegimenFiscal="630" Rfc="AAA010101AAA"></cfdi:Emisor>
+    <cfdi:Receptor ResidenciaFiscal="MEX" DomicilioFiscalReceptor="99999" RegimenFiscalReceptor="630" Nombre="Juanito Bananas De la Sierra" NumRegIdTrib="0000000000000" Rfc="BASJ600902KL9" UsoCFDI="S01"></cfdi:Receptor>
+    <cfdi:Conceptos>
+        <cfdi:Concepto ObjetoImp="01" ClaveProdServ="01010101" ClaveUnidad="C81" NoIdentificacion="00001" Cantidad="1.5" Unidad="TONELADA" Descripcion="ACERO" ValorUnitario="1500000" Importe="2250000">
+            <cfdi:Impuestos>
+                <cfdi:Traslados>
+                    <cfdi:Traslado Base="2250000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="360000"></cfdi:Traslado>
+                </cfdi:Traslados>
+                <cfdi:Retenciones>
+                    <cfdi:Retencion Base="2250000" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.300000" Importe="247500"></cfdi:Retencion>
+                </cfdi:Retenciones>
+            </cfdi:Impuestos>
+            <cfdi:CuentaPredial Numero="51888"></cfdi:CuentaPredial>
+        </cfdi:Concepto>
+        <cfdi:Concepto ObjetoImp="02" ClaveProdServ="95141904" ClaveUnidad="WEE" NoIdentificacion="00002" Cantidad="1.6" Unidad="TONELADA" Descripcion="ALUMINIO" ValorUnitario="1500" Importe="2400">
+            <cfdi:Impuestos>
+                <cfdi:Traslados>
+                    <cfdi:Traslado Base="2400" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="384"></cfdi:Traslado>
+                </cfdi:Traslados>
+                <cfdi:Retenciones>
+                    <cfdi:Retencion Base="2400" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.300000" Importe="264"></cfdi:Retencion>
+                </cfdi:Retenciones>
+            </cfdi:Impuestos>
+            <cfdi:ACuentaTerceros RegimenFiscalACuentaTerceros="630" NombreACuentaTerceros="NombreACuentaTerceros" DomicilioFiscalACuentaTerceros="99999" RfcACuentaTerceros="AAA010101AAA"></cfdi:ACuentaTerceros>
+            <cfdi:InformacionAduanera NumeroPedimento="15  48  4567  6001234"></cfdi:InformacionAduanera>
+        </cfdi:Concepto>
+        <cfdi:Concepto ObjetoImp="03" ClaveProdServ="84101604" ClaveUnidad="G66" NoIdentificacion="00003" Cantidad="1.7" Unidad="TONELADA" Descripcion="ZAMAC" ValorUnitario="10000" Importe="17000" Descuento="0">
+            <cfdi:Impuestos>
+                <cfdi:Traslados>
+                    <cfdi:Traslado Base="17000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="2720"></cfdi:Traslado>
+                </cfdi:Traslados>
+                <cfdi:Retenciones>
+                    <cfdi:Retencion Base="17000" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.300000" Importe="1870"></cfdi:Retencion>
+                </cfdi:Retenciones>
+            </cfdi:Impuestos>
+            <cfdi:Parte ClaveProdServ="25201513" NoIdentificacion="055155" Cantidad="1.0" Descripcion="PARTE EJEMPLO" Unidad="UNIDAD" ValorUnitario="1.00" Importe="1.00">
+                <cfdi:InformacionAduanera NumeroPedimento="15  48  4567  6001235"></cfdi:InformacionAduanera>
+            </cfdi:Parte>
+        </cfdi:Concepto>
+    </cfdi:Conceptos>
+    <cfdi:Impuestos TotalImpuestosRetenidos="247500" TotalImpuestosTrasladados="360000">
+        <cfdi:Retenciones>
+            <cfdi:Retencion Impuesto="001" Importe="247000"></cfdi:Retencion>
+            <cfdi:Retencion Impuesto="003" Importe="500"></cfdi:Retencion>
+        </cfdi:Retenciones>
+        <cfdi:Traslados>
+            <cfdi:Traslado Base="1.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="360000"></cfdi:Traslado>
+        </cfdi:Traslados>
+    </cfdi:Impuestos>
+    <cfdi:Complemento><tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="499e9a70-36ac-448a-bbd9-f3f52102e4be" FechaTimbrado="2021-12-19T21:19:11" RfcProvCertif="PUT211201AX4" SelloCFD="Gnm1yXaIig5hr1dJ+88gjLY5usQxXP2s+zdmlLl4iokWENaUUlhpG/crkUFEzcJfdq1FbBxV/d/GN50MGuw2fP5f6MkRYz75UKaKfzubUak+SCkDzYot5jZRkO6hXKe4+KAfaulP7wa8Q7oSW5ccivppLnikme0CS3KtGBrQHU/q3pjNrw+jMvsnpUc1tx91REqMWrzMTZ2D6UkGdqn8i/0mLRU2vT8vPaNg/Hr2jpVVAgQmPtfvnfnORCWSm/5qZg9Tli7nTRRVwupF4o9ajH2/Is7LoCsIgZUg3wCHkZCjaKk2mJoK7FyMTsPXRRSGhoYgwi1kNHs1aY4RHNwe5w==" NoCertificadoSAT="30001000000300023699" SelloSAT="HMfYv7KqRFwXB2mNCZSpVMKu2lPWALFP90zLahg0X85/c9U74SEJ7Y98v2ALvEyl4r9LrGsgJv8z3vDx4w/xET57kvJNtfDEOb4/qeKclXDUAdSOIXnJ6h5F6RyTAgsyrmOf1A0Ez3aGihfX1zdKpfICchWUyOA0L88/WUOSBLI31nT35ZckDXfIvy7YfPZDPnoy5VVyFjeL1os7lvQ0L4H+MetiEf7eyx9vggYnisTfuv1izfRPAnvkdyOcgrJ/wkqvGx0u+BIMFvSrqHskBl/D4gMj0M+3PDxce1FGmzkz29iPql5mNJas3xpHx6z0eTPvLBlbq+9E0fI0ao+IPA==" /></cfdi:Complemento>
+</cfdi:Comprobante>

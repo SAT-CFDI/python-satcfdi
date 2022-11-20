@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- NB local schemaLocation for retencionpago2.xsd -->
+<retenciones:Retenciones
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:retenciones="http://www.sat.gob.mx/esquemas/retencionpago/2"
+    xsi:schemaLocation="http://www.sat.gob.mx/esquemas/retencionpago/2 retencionpago2.xsd"
+    Version="2.0"
+    CveRetenc="01" LugarExpRetenc="99999" FechaExp="2021-12-12T12:45:29"
+    NoCertificado="30001000000300023708" Certificado="" Sello="">
+    <retenciones:Emisor RegimenFiscalE="630" NomDenRazSocE="PERSONA FÍSICA DE PRUEBA" RfcE="AAAA010101AAA"/>
+    <retenciones:Receptor NacionalidadR="Extranjero">
+        <retenciones:Extranjero NomDenRazSocR="PERSONA FISICA NACIONAL DE PRUEBA" />
+    </retenciones:Receptor>
+    <retenciones:Periodo Ejercicio="2027" MesFin="12" MesIni="01"/>
+    <retenciones:Totales  MontoTotOperacion="1.00" MontoTotGrav="1.00" MontoTotRet="1.00" ISRCorrespondiente="11.2"  MontoTotExent="1.00" >
+        <retenciones:ImpRetenidos TipoPagoRet="02" MontoRet="1.00"/>
+    </retenciones:Totales>
+    <retenciones:Complemento></retenciones:Complemento>
+</retenciones:Retenciones>

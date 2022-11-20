@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/fep fep.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/fep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201401</mes_reportado>
+        <sujeto_obligado>
+            <clave_sujeto_obligado>CAOM820309AM3</clave_sujeto_obligado>
+            <clave_actividad>FEP</clave_actividad>
+        </sujeto_obligado>
+        <aviso>
+            <referencia_aviso>AAA111</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>1201</tipo_alerta>
+            </alerta>
+            <persona_aviso>
+                <nombre>JOSE </nombre>
+                <apellido_paterno>RODRIOGUEZ</apellido_paterno>
+                <apellido_materno>SOLANO</apellido_materno>
+                <fecha_nacimiento>19780522</fecha_nacimiento>
+                <rfc>ROSM7805225M4</rfc>
+            </persona_aviso>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <instrumento_publico>4456</instrumento_publico>
+                    <fecha_operacion>20140101</fecha_operacion>
+                    <tipo_actividad>
+                        <cesion_derechos_fideicomitente_fideicomisario>
+                            <identificador_fideicomiso>44564</identificador_fideicomiso>
+                            <rfc>ROS7805225M4</rfc>
+                            <denominacion_razon>ASDASDASDASDD</denominacion_razon>
+                            <tipo_cesion>1</tipo_cesion>
+                            <datos_cedente>
+                                <tipo_persona>
+                                    <persona_fisica>
+                                        <nombre>C</nombre>
+                                        <apellido_paterno>C</apellido_paterno>
+                                        <apellido_materno>C</apellido_materno>
+                                        <fecha_nacimiento>19901212</fecha_nacimiento>
+                                        <pais_nacionalidad>AF</pais_nacionalidad>
+                                        <actividad_economica>0300004</actividad_economica>
+                                    </persona_fisica>
+                                </tipo_persona>
+                            </datos_cedente>
+                            <datos_cesionario>
+                                <tipo_persona>
+                                    <persona_fisica>
+                                        <nombre>C</nombre>
+                                        <apellido_paterno>C</apellido_paterno>
+                                        <apellido_materno>C</apellido_materno>
+                                        <fecha_nacimiento>19981212</fecha_nacimiento>
+                                        <pais_nacionalidad>AD</pais_nacionalidad>
+                                        <actividad_economica>1300003</actividad_economica>
+                                    </persona_fisica>
+                                </tipo_persona>
+                            </datos_cesionario>
+                            <datos_cesion>
+                                <monto_cesion>115621261.00</monto_cesion>
+                            </datos_cesion>
+                        </cesion_derechos_fideicomitente_fideicomisario>
+                    </tipo_actividad>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>
+

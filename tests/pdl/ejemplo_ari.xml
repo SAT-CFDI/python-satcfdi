@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/ari ari.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/ari" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201407</mes_reportado>
+        <sujeto_obligado>
+            <clave_sujeto_obligado>OGA751212G56</clave_sujeto_obligado>
+            <clave_actividad>ARI</clave_actividad>
+        </sujeto_obligado>
+        <aviso>
+            <referencia_aviso>REF15454FG454</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>100</tipo_alerta>
+            </alerta>
+            <persona_aviso>
+                <tipo_persona>
+                    <persona_fisica>
+                        <nombre>NEPOMUCENO</nombre>
+                        <apellido_paterno>ALMONTE</apellido_paterno>
+                        <apellido_materno>JUAREZ</apellido_materno>
+                        <fecha_nacimiento>19560816</fecha_nacimiento>
+                        <pais_nacionalidad>TG</pais_nacionalidad>
+                        <actividad_economica>3130100</actividad_economica>
+                    </persona_fisica>
+                </tipo_persona>
+                <tipo_domicilio>
+                    <extranjero>
+                        <pais>TG</pais>
+                        <estado_provincia>TOGUILLITA</estado_provincia>
+                        <ciudad_poblacion>TOGUIS</ciudad_poblacion>
+                        <colonia>NA</colonia>
+                        <calle>TOGA TOGA</calle>
+                        <numero_exterior>45</numero_exterior>
+                        <codigo_postal>12448</codigo_postal>
+                    </extranjero>
+                </tipo_domicilio>
+            </persona_aviso>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <fecha_operacion>20140701</fecha_operacion>
+                    <tipo_operacion>1501</tipo_operacion>
+                    <caracteristicas>
+                        <fecha_inicio>20140101</fecha_inicio>
+                        <fecha_termino>20150101</fecha_termino>
+                        <tipo_inmueble>3</tipo_inmueble>
+                        <valor_referencia>356825.12</valor_referencia>
+                        <colonia>6920</colonia>
+                        <calle>SAN SIMON TOLNAHUAC</calle>
+                        <numero_exterior>VIOLANTE</numero_exterior>
+                        <numero_interior>45</numero_interior>
+                        <codigo_postal>01058</codigo_postal>
+                        <folio_real>BG544-FRR-456B-FRR</folio_real>
+                    </caracteristicas>
+                    <datos_liquidacion>
+                        <fecha_pago>20140701</fecha_pago>
+                        <forma_pago>4</forma_pago>
+                        <instrumento_monetario>4</instrumento_monetario>
+                        <moneda>2</moneda>
+                        <monto_operacion>757897.55</monto_operacion>
+                    </datos_liquidacion>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>
+

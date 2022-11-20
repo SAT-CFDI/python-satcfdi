@@ -1,0 +1,41 @@
+build:
+  environment:
+    python:
+      version: 3.11.0
+
+      # Whether to setup a virtual environment in the repository root directory.
+      # Defaults to true if omitted.
+      virtualenv: true
+
+  nodes:
+    analysis:
+      project_setup:
+        override:
+        - 'true'
+      tests:
+        override:
+        - py-scrutinizer-run
+        - command: python -m pylint-run
+          use_website_config: true
+    tests:
+      project_setup:
+        override:
+        - command: pip install .[test]
+      tests:
+        override:
+        - command: coverage run -m pytest tests/
+          coverage:
+            file: '.coverage'
+            config_file: '.coveragerc'
+            format: 'py-cc'
+
+checks:
+  python:
+    code_rating: true
+    duplicate_code: true
+
+filter:
+  excluded_paths:
+    - 'tests/*'
+  dependency_paths:
+    - 'lib/*'

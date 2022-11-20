@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:can="http://cancelacfd.sat.gob.mx" xmlns:xd="http://www.w3.org/2000/09/xmldsig#">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<can:ProcesarRespuesta>
+			<can:solicitud Uuid="44FD3A0E-8ACE-4114-9362-6D53890132DA" RfcReceptor="WAF060924E06" RfcPacEnviaSolicitud="" RfcEmisor=""/>
+		</can:ProcesarRespuesta>
+	</soapenv:Body>
+</soapenv:Envelope>

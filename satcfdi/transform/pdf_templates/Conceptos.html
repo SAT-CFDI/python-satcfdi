@@ -1,0 +1,131 @@
+<h5>Conceptos</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 55%;">Descripción</th>
+			<th style="width: 12%;">Cantidad</th>
+			<th style="width: 11%;">Valor Unitario</th>
+			<th style="width: 11%;">Descuento</th>
+			<th style="width: 11%;">Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for c in iterate(c.Conceptos) %}
+		<tr>
+			<td>
+				{{ c.Descripcion }}
+				<div class="ci">
+					{{ c | simple('ClaveProdServ', 'NoIdentificacion', 'InformacionAduanera', 'CuentaPredial', 'Parte', 'instEducativas', 'ObjetoImp') }}
+					{{ complements(c.ComplementoConcepto) }}
+				</div>
+			</td>
+			<td class="r">
+				{{ c.Cantidad }}
+				<div class="ci">{{ c.ClaveUnidad }}</div>
+				<div class="cii">{{ c.Unidad }}</div>
+			</td>
+			<td class="r">
+				{{ c.ValorUnitario }}
+			</td>
+			<td class="r">
+				{{ c.Descuento }}
+			</td>
+			<td class="r">
+				{{ c.Importe }}
+			</td>
+		</tr>
+		{% if c.Impuestos %}
+		<tr style="break-before: avoid;">
+			<td colspan="5" style="padding-left: 5%; padding-right: 45%;">
+				<table class="r" >
+					<tr>
+						<th style="width: 20%; background-color:white;"></th>
+						<th style="width: 20%;">Base</th>
+						<th style="width: 20%;">Impuesto</th>
+						<th style="width: 20%;">Tasa o Cuota</th>
+						<th style="width: 20%;">Importe</th>
+					</tr>
+					{% if c.Impuestos.Traslados %}
+					{% for v in iterate(c.Impuestos.Traslados) %}
+					<tr>
+						<td>{% if loop.first %}+ <b>Translados</b>{% endif %}</td>
+						<td>{{ v.Base }}</td>
+						<td>{{ v.Impuesto | desc }}</td>
+						<td>{{ tasa_cuota( v.TipoFactor, v.TasaOCuota) }}</td>
+						<td>{{ v.Importe }}</td>
+					</tr>
+					{% endfor %}
+					{% endif %}
+					{% if c.Impuestos.Retenciones %}
+					{% for v in iterate(c.Impuestos.Retenciones) %}
+					<tr>
+						<td>{% if loop.first %}- <b>Retenciones</b>{% endif %}</td>
+						<td>{{ v.Base }}</td>
+						<td>{{ v.Impuesto | desc }}</td>
+						<td>{{ tasa_cuota( v.TipoFactor, v.TasaOCuota) }}</td>
+						<td>{{ v.Importe }}</td>
+					</tr>
+					{% endfor %}
+					<tr></tr>
+					{% endif %}
+				</table>
+			</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</tbody>
+</table>
+<table class="tot">
+	<tr class="r">
+		<td><b>Subtotal</b></td>
+		<td></td>
+		<td></td>
+		<td>{{ c.SubTotal }}</td>
+	</tr>
+	{% if c.Descuento %}
+	<tr class="r">
+		<td><b>Descuento</b></td>
+		<td></td>
+		<td></td>
+		<td>{{ c.Descuento }}</td>
+	</tr>
+	{% endif %}
+	{% if c.Impuestos %}
+	{% if c.Impuestos.Traslados %}
+	{% for v in iterate(c.Impuestos.Traslados) %}
+	<tr class="r">
+		<td>
+			{% if loop.first %}
+			+ <b>Translados</b>
+			{% endif %}
+		</td>
+		<td>{{ v.Impuesto | desc }}</td>
+		<td>{{ tasa_cuota( v.TipoFactor, v.TasaOCuota) }}</td>
+		<td>{{ v.Importe }}</td>
+	</tr>
+	{% endfor %}
+	{% endif %}
+	{% if c.Impuestos.Retenciones %}
+	{% for v in iterate(c.Impuestos.Retenciones) %}
+	<tr class="r">
+		<td>
+			{% if loop.first %}
+			- <b>Retenciones</b>
+			{% endif %}
+		</td>
+		<td>{{ v.Impuesto | desc }}</td>
+		<td></td>
+		<td>{{ v.Importe }}</td>
+	</tr>
+	{% endfor %}
+	{% endif %}
+	{% endif %}
+	<tr class="r h">
+		<td>
+			<b>Total</b>
+		</td>
+		<td></td>
+		<td></td>
+		<td>{{ c.Total }}</td>
+	</tr>
+</table>

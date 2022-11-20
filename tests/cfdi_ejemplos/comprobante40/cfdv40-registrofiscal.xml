@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cfdi:Comprobante
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+    xmlns:registrofiscal="http://www.sat.gob.mx/registrofiscal"
+    xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 cfdv40.xsd
+    http://www.sat.gob.mx/registrofiscal
+    http://www.sat.gob.mx/sitio_internet/cfd/cfdiregistrofiscal/cfdiregistrofiscal.xsd"
+    Version="4.0" Fecha="2021-12-08T23:59:59"
+    Moneda="XXX" SubTotal="0" Total="0"
+    TipoDeComprobante="P" FormaPago="02"
+    Exportacion="03" LugarExpedicion="99999"
+    NoCertificado="30001000000300023708" Sello="" Certificado="">
+    <cfdi:CfdiRelacionados TipoRelacion="09">
+        <cfdi:CfdiRelacionado UUID="F4F09AEF-57F2-4BE0-A828-87D1A80ED61C" />
+    </cfdi:CfdiRelacionados>
+    <cfdi:Emisor Rfc=" AAA010101AAA" RegimenFiscal="622" Nombre="Esta es una demostración" />
+    <cfdi:Receptor Rfc="BASJ600902KL9" UsoCFDI="P01"  Nombre="Juanito Bananas De la Sierra"  DomicilioFiscalReceptor="99999" RegimenFiscalReceptor="630" />
+    <cfdi:Conceptos>
+      <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Descripcion"
+      ValorUnitario="0" Importe="0" ObjetoImp="01" />
+    </cfdi:Conceptos>
+  <cfdi:Complemento>
+        <registrofiscal:CFDIRegistroFiscal Version="1.0" Folio="1234567890123456" />
+  </cfdi:Complemento>
+</cfdi:Comprobante>

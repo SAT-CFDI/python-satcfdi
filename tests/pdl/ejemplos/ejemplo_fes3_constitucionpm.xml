@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/fes fes.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/fes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201510</mes_reportado>
+        <tribunal_dependencia>
+            <clave_tribunal_dependencia>TRT890505DR4</clave_tribunal_dependencia>
+            <clave_actividad>FES</clave_actividad>
+        </tribunal_dependencia>
+        <aviso>
+            <referencia_aviso>REF987</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>100</tipo_alerta>
+            </alerta>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <fecha_operacion>20151001</fecha_operacion>
+                    <tipo_actividad>
+                        <constitucion_personas_morales>
+                            <autoridad>
+                                <tipo_autoridad>
+                                    <administrativo>
+                                        <organo>ORG ADMIN</organo>
+                                        <cargo>CARGO AUT</cargo>
+                                        <instrumento_publico_oficio>INST PUB</instrumento_publico_oficio>
+                                    </administrativo>
+                                </tipo_autoridad>
+                                <domicilio_oficina>
+                                    <nacional>
+                                        <colonia>EL PIPILA INFONAVIT</colonia>
+                                        <calle>CALLE</calle>
+                                        <numero_exterior>1000</numero_exterior>
+                                        <codigo_postal>58000</codigo_postal>
+                                    </nacional>
+                                </domicilio_oficina>
+                            </autoridad>
+                            <persona_solicita>
+                                <nombre>JOSE</nombre>
+                                <apellido_paterno>TORRES</apellido_paterno>
+                                <apellido_materno>PEREZ</apellido_materno>
+                                <fecha_nacimiento>19980808</fecha_nacimiento>
+                                <pais_nacionalidad>ES</pais_nacionalidad>
+                            </persona_solicita>
+                            <persona_moral_constitucion>
+                                <tipo_persona_moral>99</tipo_persona_moral>
+                                <tipo_persona_moral_otra>OTRO TIPO PERSONA MORAL</tipo_persona_moral_otra>
+                                <denominacion_razon>RAZON SOCIAL</denominacion_razon>
+                                <giro_mercantil>1000000</giro_mercantil>
+                                <folio_mercantil>FOLIOOO</folio_mercantil>
+                                <numero_total_acciones>15.00</numero_total_acciones>
+                                <entidad_federativa>4</entidad_federativa>
+                                <consejo_vigilancia>SI</consejo_vigilancia>
+                                <motivo_constitucion>1</motivo_constitucion>
+                                <instrumento_publico>INSTPUB12456</instrumento_publico>
+                                <datos_accionista>
+                                    <cargo_accionista>1</cargo_accionista>
+                                    <tipo_persona>
+                                        <persona_fisica>
+                                            <nombre>MARTIN</nombre>
+                                            <apellido_paterno>SALAS</apellido_paterno>
+                                            <apellido_materno>XXXX</apellido_materno>
+                                            <fecha_nacimiento>19960505</fecha_nacimiento>
+                                            <pais_nacionalidad>SB</pais_nacionalidad>
+                                        </persona_fisica>
+                                    </tipo_persona>
+                                    <numero_acciones>85.00</numero_acciones>
+                                </datos_accionista>
+                                <datos_accionista>
+                                    <cargo_accionista>2</cargo_accionista>
+                                    <tipo_persona>
+                                        <persona_moral>
+                                            <denominacion_razon>DENOMINACION SA</denominacion_razon>
+                                            <fecha_constitucion>19880808</fecha_constitucion>
+                                            <pais_nacionalidad>AD</pais_nacionalidad>
+                                        </persona_moral>
+                                    </tipo_persona>
+                                    <numero_acciones>51.00</numero_acciones>
+                                </datos_accionista>
+                                <datos_accionista>
+                                    <cargo_accionista>3</cargo_accionista>
+                                    <tipo_persona>
+                                        <fideicomiso>
+                                            <denominacion_razon>RAZON SA</denominacion_razon>
+                                            <rfc>DRE850404DE3</rfc>
+                                        </fideicomiso>
+                                    </tipo_persona>
+                                    <numero_acciones>67.00</numero_acciones>
+                                </datos_accionista>
+                                <capital_social>
+                                    <capital_fijo>18700000.00</capital_fijo>
+                                    <capital_variable>17000.00</capital_variable>
+                                </capital_social>
+                            </persona_moral_constitucion>
+                        </constitucion_personas_morales>
+                    </tipo_actividad>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>

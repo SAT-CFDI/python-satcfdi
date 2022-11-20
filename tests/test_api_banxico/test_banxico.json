@@ -1,0 +1,10 @@
+{
+  "method": "get",
+  "url": "https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF343410/datos/oportuno",
+  "headers": {
+    "Bmx-Token": "xxx",
+    "Accept": "application/json",
+    "User-Agent": "this is a test"
+  },
+  "params": {}
+}

@@ -1,0 +1,44 @@
+<h3>Constancia de Percepciones y Retenciones</h3>
+<table>
+	<tr>
+		<th style="width: 20%">Folio</th>
+		<th style="width: 40%">Emisor</th>
+		<th style="width: 40%">Receptor</th>
+	</tr>
+	<tr>
+		<td class="cen">{{ c.FolioInt }}</td>
+		<td rowspan="13">
+			<div class="h cen"><b>{{ c.Emisor.NomDenRazSocE }}</b></div>
+			<b>RFC: </b>{{ c.Emisor.RFCEmisor }}<br/>
+		</td>
+		<td rowspan="13">
+			{% if c.Receptor.Nacional %}
+			<div class="h cen"><b>{{ c.Receptor.Nacional.NomDenRazSocR }}</b></div>
+			<b>RFC: </b>{{ c.Receptor.Nacional.RFCRecep }}<br/>
+			{% else %}
+			<div class="h cen"><b>{{ c.Receptor.Extranjero.NomDenRazSocR }}</b></div>
+			<b>Número Registro Fiscal: </b>{{ c.Receptor.Extranjero.NumRegIdTrib }}<br/>
+			{% endif %}
+			<b>Nacionalidad: </b> {{ c.Receptor.Nacionalidad }}
+		</td>
+		</tr>
+	<tr>
+		<th>Fecha de Emisión</th>
+	</tr>
+	<tr>
+		<td class="cen">{{ c.FechaExp }}</td>
+	</tr>
+</table>
+<table style="margin-top: 2px">
+	<tr>
+		<th style="width: 20%">Clave de Retención</th>
+		<th>Periodo</th>
+	</tr>
+	<tr class="cen">
+		<td>{{ c.CveRetenc }}</td>
+		<td>{{ c.Periodo.MesIni | mes }} a {{ c.Periodo.MesFin | mes }} del {{ c.Periodo.Ejerc }}</td>
+	</tr>
+</table>
+<h5>Totales</h5>
+{{ c.Totales | dump }}
+{{ complements(c, c.Complemento) }}

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archivo xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/fes fes.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/fes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <informe>
+        <mes_reportado>201509</mes_reportado>
+        <tribunal_dependencia>
+            <clave_tribunal_dependencia>RET890505SR4</clave_tribunal_dependencia>
+            <clave_actividad>FES</clave_actividad>
+        </tribunal_dependencia>
+        <aviso>
+            <referencia_aviso>REF777</referencia_aviso>
+            <prioridad>1</prioridad>
+            <alerta>
+                <tipo_alerta>100</tipo_alerta>
+            </alerta>
+            <detalle_operaciones>
+                <datos_operacion>
+                    <fecha_operacion>20150921</fecha_operacion>
+                    <tipo_actividad>
+                        <modificacion_patrimonial>
+                            <autoridad>
+                                <tipo_autoridad>
+                                    <jurisdiccional>
+                                        <organo>ORG JUR 1</organo>
+                                        <tipo_juicio>JUICIO 1</tipo_juicio>
+                                        <materia>MATERIA 1</materia>
+                                        <expediente>EXP. 1 </expediente>
+                                    </jurisdiccional>
+                                </tipo_autoridad>
+                            </autoridad>
+                            <persona_moral_modifica>
+                                <denominacion_razon>DENOMINACION</denominacion_razon>
+                                <fecha_constitucion>20090909</fecha_constitucion>
+                                <pais_nacionalidad>KY</pais_nacionalidad>
+                                <giro_mercantil>4850007</giro_mercantil>
+                                <numero_total_acciones>855.00</numero_total_acciones>
+                                <motivo_modificacion>3</motivo_modificacion>
+                            </persona_moral_modifica>
+                            <datos_modificacion>
+                                <tipo_modificacion_capital_fijo>1</tipo_modificacion_capital_fijo>
+                                <inicial_capital_fijo>18000.00</inicial_capital_fijo>
+                                <final_capital_fijo>20000.00</final_capital_fijo>
+                                <tipo_modificacion_capital_variable>3</tipo_modificacion_capital_variable>
+                                <inicial_capital_variable>25000.00</inicial_capital_variable>
+                                <final_capital_variable>25000.00</final_capital_variable>
+                                <datos_accionista>
+                                    <tipo_persona>
+                                        <persona_fisica>
+                                            <nombre>JOSE</nombre>
+                                            <apellido_paterno>HERNANDEZ</apellido_paterno>
+                                            <apellido_materno>XXXX</apellido_materno>
+                                            <fecha_nacimiento>19990505</fecha_nacimiento>
+                                            <pais_nacionalidad>GP</pais_nacionalidad>
+                                        </persona_fisica>
+                                    </tipo_persona>
+                                    <numero_acciones>40.00</numero_acciones>
+                                </datos_accionista>
+                                <datos_accionista>
+                                    <tipo_persona>
+                                        <persona_moral>
+                                            <denominacion_razon>RAZON SOCIAL X</denominacion_razon>
+                                            <rfc>RFE8905054ER</rfc>
+                                            <pais_nacionalidad>JP</pais_nacionalidad>
+                                        </persona_moral>
+                                    </tipo_persona>
+                                    <numero_acciones>50.00</numero_acciones>
+                                </datos_accionista>
+                                <datos_accionista>
+                                    <tipo_persona>
+                                        <fideicomiso>
+                                            <denominacion_razon>RAZON SOCIAL S.A. DE C.V.</denominacion_razon>
+                                            <identificador_fideicomiso>IDENT.FID.</identificador_fideicomiso>
+                                        </fideicomiso>
+                                    </tipo_persona>
+                                    <numero_acciones>60.00</numero_acciones>
+                                </datos_accionista>
+                            </datos_modificacion>
+                        </modificacion_patrimonial>
+                    </tipo_actividad>
+                </datos_operacion>
+            </detalle_operaciones>
+        </aviso>
+    </informe>
+</archivo>
