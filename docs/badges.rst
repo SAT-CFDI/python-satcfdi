@@ -2,21 +2,21 @@
     :target: https://github.com/SAT-CFDI/python-satcfdi
     :alt: Source
 
-.. image:: https://readthedocs.org/projects/satcfdi/badge/?version=latest
-    :target: https://satcfdi.readthedocs.io/?badge=latest
+.. image:: https://readthedocs.org/projects/satcfdi/badge?version=latest
+    :target: https://satcfdi.readthedocs.io?badge=latest
     :alt: Documentation Status
 
-.. image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/python-3.10.yml/badge.svg
-    :target: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/python-3.10.yml
-    :alt: Python 3.10
-
-.. image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/python-3.11.yml/badge.svg
-    :target: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/python-3.11.yml
-    :alt: Python 3.11
+.. image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/tests.yml/badge.svg
+    :target: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/tests.yml
+    :alt: Tests
 
 .. image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/codeql.yml/badge.svg
     :target: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/codeql.yml
     :alt: CodeQL
+
+.. image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/publish.yml/badge.svg
+    :target: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/publish.yml
+    :alt: Publish
 
 .. image:: https://img.shields.io/github/v/release/SAT-CFDI/python-satcfdi.svg?logo=git&style=flat
     :target: https://github.com/SAT-CFDI/python-satcfdi/releases

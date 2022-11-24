@@ -83,7 +83,7 @@ ______________________
     res = sat.status(cfdi)
     print(res)
 
-Listado 69b
+Listado 69B
 ______________________
 
 .. code-block:: python
