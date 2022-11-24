@@ -1,6 +1,6 @@
-.. image:: https://img.shields.io/badge/source-SAT--CFDI/python--satcfdi-blue?logo=github&style=flat
-    :target: https://github.com/SAT-CFDI/python-satcfdi
-    :alt: Source
+.. image:: https://img.shields.io/github/commit-activity/m/SAT-CFDI/python-satcfdi
+    :target: https://github.com/badges/SAT-CFDI/python-satcfdi
+    :alt: Activity
 
 .. image:: https://readthedocs.org/projects/satcfdi/badge?version=latest
     :target: https://satcfdi.readthedocs.io?badge=latest
