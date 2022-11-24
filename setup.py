@@ -14,7 +14,7 @@ packages = setuptools.find_packages(
     exclude=["contrib", "docs", "tests"],
 )
 
-version = os.environ.get('RELEASE_VERSION', '1.0.0')
+version = os.environ.get('RELEASE_VERSION', about["__version__"])
 
 setuptools.setup(
     name=package,  # installation

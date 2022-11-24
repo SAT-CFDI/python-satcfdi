@@ -1,3 +1,5 @@
+from importlib.metadata import version, PackageNotFoundError
+
 __title__ = "SAT-CFDI"
 __package__ = "satcfdi"
 
@@ -12,4 +14,9 @@ __author__ = "satcfdi@outlook.com"
 __author_email__ = "satcfdi@outlook.com"
 __license__ = "MIT License"
 
-__user_agent__ = f"python-{__package__}"  # /{__version__}
+try:
+    __version__ = version(__package__)
+except PackageNotFoundError:
+    __version__ = "1.0.0"
+
+__user_agent__ = f"python-{__package__}/{__version__}"
