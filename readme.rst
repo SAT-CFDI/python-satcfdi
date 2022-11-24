@@ -60,7 +60,7 @@ ____________________
 * Facturación con PAC's
 * Descarga Masiva
 * Validación de CFDI's
-* Listado 69b
+* Listado 69B
 * Exportar CFDI's a Excel
 * Descarga de Constancia de Situación Fiscal
 * DIOT - Declaración Informativa de Operaciones con Terceros
