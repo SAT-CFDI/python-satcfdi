@@ -59,19 +59,23 @@ ________________________________________________________________________________
 Supported Features
 ____________________
 
-* Crear CFDI 3.3, 4.0 - Ingreso, Nomina, Pagos, Traslados y Complementos
-* Crear Retenciones 1.0, 2.0
+* CFDI 3.2, 3.3, 4.0 - Ingreso, Nomina, Pagos, Traslados y Complementos
+* Retenciones 1.0, 2.0
 * Contabilidad Electronica 1.3
-* Representación Impresa PDF y HTML
+* Representación Impresa PDF, HTML, JSON
 * Facturación con PAC's
+  * Comercio Digital
+  * Diverza
+  * Prodigia
+  * SW Sapien
 * Descarga Masiva
-* Validación de CFDI's
+* Validación de Comprobantes
 * Listado 69B
-* Exportar CFDI's a Excel
+* Exportar Comprobantes a Excel
 * Descarga de Constancia de Situación Fiscal
 * DIOT - Declaración Informativa de Operaciones con Terceros
-* Certifica - Generación de certificados
-* PLD (Prevención de Lavado de Dinero)
+* Certifica - Solicitud de Certificados, Renovación de Fiel
+* PLD - Prevención de Lavado de Dinero
 
 Installation
 ____________________
