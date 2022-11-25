@@ -13,6 +13,7 @@ ______________________
     
     # from string/bytes
     cfdi = CFDI.from_string(open('comprobante.xml', 'rb').read())
+    
 
 Export It
 ______________________
@@ -50,3 +51,5 @@ ______________________
     # .. or alternative
     with open("_stream_comprobante_.pdf", 'wb') as f:
         invoice.pdf_write(f)
+    
+

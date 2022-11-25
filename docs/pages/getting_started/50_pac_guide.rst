@@ -21,6 +21,7 @@ Pick your PAC
     
     # from satcfdi.pacs.swsapien import SWSapien
     # pac = SWSapien(token="$1234%", environment=Environment.TEST)
+    
 
 Stamp
 ______________________
@@ -33,6 +34,7 @@ ______________________
     
     with open('_stamped_.xml', 'wb') as f:
         f.write(doc.xml)
+    
 
 Recover Comprobantes
 ______________________
@@ -68,6 +70,7 @@ ______________________
         with open(f"{paquete_id}.zip", "wb") as f:
             f.write(p)
     
+    
 
 Status Comprobante
 ______________________
@@ -82,6 +85,7 @@ ______________________
     cfdi = CFDI.from_file('comprobante.xml')
     res = sat.status(cfdi)
     print(res)
+    
 
 Listado 69B
 ______________________
@@ -94,3 +98,4 @@ ______________________
     sat_service = SAT()
     res = sat_service.list_69b('AAL081211JP0')
     assert res == TaxpayerStatus.DEFINITIVO
+    

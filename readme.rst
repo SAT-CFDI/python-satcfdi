@@ -44,7 +44,9 @@
 
 .. image:: https://img.shields.io/discord/1045508868807073792?logo=discord&style=flat
     :target: https://discord.gg/6WA9QvZcRn
-    :alt: DiscordSAT-CFDI
+    :alt: Discord
+
+SAT-CFDI
 ==========================
 
 The best open-source python library to generate and process SAT's CFDI
@@ -144,9 +146,11 @@ ____________________
     # PDF
     invoice.pdf_write("my_invoice.pdf")
     
+    
 
 
 Contributing
 ____________________
 
 We value feedback and contributions from our community.
+

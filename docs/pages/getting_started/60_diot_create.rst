@@ -19,6 +19,7 @@ ____________________________________
     
     package = diot.generate_package()
     print(package)
+    
 
 Con Operaciones
 _____________________________________
@@ -106,3 +107,4 @@ _____________________________________
     print(package)
     
     diot.pdf_write('diot.pdf')
+    

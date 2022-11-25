@@ -7,3 +7,4 @@ ____________________________________________
 .. code-block:: sh
 
     satcfdi pdf mi_factura.xml
+
