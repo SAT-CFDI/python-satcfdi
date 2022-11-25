@@ -42,7 +42,9 @@
     :target: https://scrutinizer-ci.com/g/SAT-CFDI/python-satcfdi/code-structure/main/code-coverage/satcfdi/
     :alt: Code Coverage
 
-SAT-CFDI
+.. image:: https://img.shields.io/discord/1045508868807073792?logo=discord&style=flat
+    :target: https://discord.gg/6WA9QvZcRn
+    :alt: DiscordSAT-CFDI
 ==========================
 
 The best open-source python library to generate and process SAT's CFDI

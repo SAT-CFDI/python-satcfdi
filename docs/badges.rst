@@ -41,3 +41,7 @@
 .. image:: https://scrutinizer-ci.com/g/SAT-CFDI/python-satcfdi/badges/coverage.png?b=main
     :target: https://scrutinizer-ci.com/g/SAT-CFDI/python-satcfdi/code-structure/main/code-coverage/satcfdi/
     :alt: Code Coverage
+
+.. image:: https://img.shields.io/discord/1045508868807073792?logo=discord&style=flat
+    :target: https://discord.gg/6WA9QvZcRn
+    :alt: Discord
