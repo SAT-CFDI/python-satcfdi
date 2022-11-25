@@ -64,6 +64,7 @@ ____________________
 * Contabilidad Electronica 1.3
 * Representación Impresa PDF, HTML, JSON
 * Facturación con PAC's
+
   * Comercio Digital
   * Diverza
   * Prodigia
