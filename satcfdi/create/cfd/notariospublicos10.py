@@ -316,7 +316,7 @@ class NotariosPublicos(CFDI):
         
         :param desc_inmuebles: Nodo que contiene las descripciones del inmueble o inmuebles objeto del acto otorgado.
         :param datos_operacion: Nodo para definir los detalles de la operación.
-        :param datos_notario: 
+        :param datos_notario:
         :param datos_enajenante: Nodo para capturar los datos del enajenante o enajenantes, o en el caso de servidumbres de paso del propietario o poseedores o propietarios o poseedores del predio sirviente.
         :param datos_adquiriente: Nodo para capturar los datos del adquiriente, adquirientes o propietario, o propietarios o poseedores, en caso de servidumbres de paso.
         """

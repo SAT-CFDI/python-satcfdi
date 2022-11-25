@@ -12,8 +12,8 @@ class CuentaExtranjeraType(XElement):
     ): 
         """
         
-        :param numero_cuenta: 
-        :param nombre_banco: 
+        :param numero_cuenta:
+        :param nombre_banco:
         """
         
         super().__init__({
@@ -30,8 +30,8 @@ class CuentaNacionalType(XElement):
     ): 
         """
         
-        :param clabe_destino: 
-        :param clave_institucion_financiera: 
+        :param clabe_destino:
+        :param clave_institucion_financiera:
         """
         
         super().__init__({
@@ -48,8 +48,8 @@ class PaisCuentaType(XElement):
     ): 
         """
         
-        :param nacional: 
-        :param extranjero: 
+        :param nacional:
+        :param extranjero:
         """
         
         super().__init__({
@@ -65,7 +65,7 @@ class PersonaMoralBasicoType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
+        :param denominacion_razon:
         """
         
         super().__init__({
@@ -82,9 +82,9 @@ class PersonaFisicaBasicoType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
         """
         
         super().__init__({
@@ -102,8 +102,8 @@ class TipoPersonaBasicoType(XElement):
     ): 
         """
         
-        :param persona_fisica: 
-        :param persona_moral: 
+        :param persona_fisica:
+        :param persona_moral:
         """
         
         super().__init__({
@@ -120,8 +120,8 @@ class PersonaCuentaType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
-        :param nacionalidad_cuenta: 
+        :param tipo_persona:
+        :param nacionalidad_cuenta:
         """
         
         super().__init__({
@@ -138,8 +138,8 @@ class ActivoVirtualCompuestoType(XElement):
     ): 
         """
         
-        :param activo_virtual: 
-        :param monto_operacion_mn: 
+        :param activo_virtual:
+        :param monto_operacion_mn:
         """
         
         super().__init__({
@@ -158,10 +158,10 @@ class ActivoVirtualSimpleType(XElement):
     ): 
         """
         
-        :param activo_virtual_operado: 
-        :param tipo_cambio_mn: 
-        :param cantidad_activo_virtual: 
-        :param descripcion_activo_virtual: 
+        :param activo_virtual_operado:
+        :param tipo_cambio_mn:
+        :param cantidad_activo_virtual:
+        :param descripcion_activo_virtual:
         """
         
         super().__init__({
@@ -183,11 +183,11 @@ class DepositoType(XElement):
     ): 
         """
         
-        :param fecha_hora_operacion: 
-        :param instrumento_monetario: 
-        :param moneda_operacion: 
-        :param monto_operacion: 
-        :param datos_ordenante: 
+        :param fecha_hora_operacion:
+        :param instrumento_monetario:
+        :param moneda_operacion:
+        :param monto_operacion:
+        :param datos_ordenante:
         """
         
         super().__init__({
@@ -210,11 +210,11 @@ class RetiroType(XElement):
     ): 
         """
         
-        :param fecha_hora_operacion: 
-        :param instrumento_monetario: 
-        :param moneda_operacion: 
-        :param monto_operacion: 
-        :param datos_beneficiario: 
+        :param fecha_hora_operacion:
+        :param instrumento_monetario:
+        :param moneda_operacion:
+        :param monto_operacion:
+        :param datos_beneficiario:
         """
         
         super().__init__({
@@ -236,10 +236,10 @@ class RecepcionType(XElement):
     ): 
         """
         
-        :param fecha_hora_operacion: 
-        :param monto_operacion_mn: 
-        :param activo_virtual: 
-        :param hash_operacion: 
+        :param fecha_hora_operacion:
+        :param monto_operacion_mn:
+        :param activo_virtual:
+        :param hash_operacion:
         """
         
         super().__init__({
@@ -260,10 +260,10 @@ class EnvioType(XElement):
     ): 
         """
         
-        :param fecha_hora_operacion: 
-        :param monto_operacion_mn: 
-        :param activo_virtual: 
-        :param hash_operacion: 
+        :param fecha_hora_operacion:
+        :param monto_operacion_mn:
+        :param activo_virtual:
+        :param hash_operacion:
         """
         
         super().__init__({
@@ -284,10 +284,10 @@ class IntercambioType(XElement):
     ): 
         """
         
-        :param fecha_hora_operacion: 
-        :param activo_virtual_enviado: 
-        :param activo_virtual_recibido: 
-        :param hash_operacion: 
+        :param fecha_hora_operacion:
+        :param activo_virtual_enviado:
+        :param activo_virtual_recibido:
+        :param hash_operacion:
         """
         
         super().__init__({
@@ -309,11 +309,11 @@ class VentaType(XElement):
     ): 
         """
         
-        :param fecha_hora_operacion: 
-        :param moneda_operacion: 
-        :param monto_operacion: 
-        :param activo_virtual: 
-        :param hash_operacion: 
+        :param fecha_hora_operacion:
+        :param moneda_operacion:
+        :param monto_operacion:
+        :param activo_virtual:
+        :param hash_operacion:
         """
         
         super().__init__({
@@ -336,11 +336,11 @@ class CompraType(XElement):
     ): 
         """
         
-        :param fecha_hora_operacion: 
-        :param moneda_operacion: 
-        :param monto_operacion: 
-        :param activo_virtual: 
-        :param hash_operacion: 
+        :param fecha_hora_operacion:
+        :param moneda_operacion:
+        :param monto_operacion:
+        :param activo_virtual:
+        :param hash_operacion:
         """
         
         super().__init__({
@@ -359,7 +359,7 @@ class FondosDepositadosType(XElement):
     ): 
         """
         
-        :param deposito: 
+        :param deposito:
         """
         
         super().__init__({
@@ -374,7 +374,7 @@ class FondosRetiradosType(XElement):
     ): 
         """
         
-        :param retiro: 
+        :param retiro:
         """
         
         super().__init__({
@@ -390,8 +390,8 @@ class OperacionesFondosType(XElement):
     ): 
         """
         
-        :param fondos_retirados: 
-        :param fondos_depositados: 
+        :param fondos_retirados:
+        :param fondos_depositados:
         """
         
         super().__init__({
@@ -407,7 +407,7 @@ class TransferenciasRecibidasType(XElement):
     ): 
         """
         
-        :param recepcion: 
+        :param recepcion:
         """
         
         super().__init__({
@@ -422,7 +422,7 @@ class TransferenciasEnviadasType(XElement):
     ): 
         """
         
-        :param envio: 
+        :param envio:
         """
         
         super().__init__({
@@ -438,8 +438,8 @@ class OperacionesTransferenciaType(XElement):
     ): 
         """
         
-        :param transferencias_enviadas: 
-        :param transferencias_recibidas: 
+        :param transferencias_enviadas:
+        :param transferencias_recibidas:
         """
         
         super().__init__({
@@ -455,7 +455,7 @@ class OperacionesIntercambioType(XElement):
     ): 
         """
         
-        :param intercambio: 
+        :param intercambio:
         """
         
         super().__init__({
@@ -470,7 +470,7 @@ class OperacionesVentaType(XElement):
     ): 
         """
         
-        :param venta: 
+        :param venta:
         """
         
         super().__init__({
@@ -485,7 +485,7 @@ class OperacionesCompraType(XElement):
     ): 
         """
         
-        :param compra: 
+        :param compra:
         """
         
         super().__init__({
@@ -504,11 +504,11 @@ class DetalleOperacionesType(XElement):
     ): 
         """
         
-        :param operaciones_compra: 
-        :param operaciones_venta: 
-        :param operaciones_intercambio: 
-        :param operaciones_transferencia: 
-        :param operaciones_fondos: 
+        :param operaciones_compra:
+        :param operaciones_venta:
+        :param operaciones_intercambio:
+        :param operaciones_transferencia:
+        :param operaciones_fondos:
         """
         
         super().__init__({
@@ -529,9 +529,9 @@ class FideicomisoSimpleType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param rfc: 
-        :param identificador_fideicomiso: 
+        :param denominacion_razon:
+        :param rfc:
+        :param identificador_fideicomiso:
         """
         
         super().__init__({
@@ -551,10 +551,10 @@ class PersonaMoralSimpleType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param fecha_constitucion: 
-        :param rfc: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param fecha_constitucion:
+        :param rfc:
         """
         
         super().__init__({
@@ -578,13 +578,13 @@ class PersonaFisicaSimpleType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param pais_nacionalidad: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param pais_nacionalidad:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -607,9 +607,9 @@ class TipoPersonaSimpleType(XElement):
     ): 
         """
         
-        :param persona_fisica: 
-        :param persona_moral: 
-        :param fideicomiso: 
+        :param persona_fisica:
+        :param persona_moral:
+        :param fideicomiso:
         """
         
         super().__init__({
@@ -626,7 +626,7 @@ class DuenoBeneficiarioType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -643,9 +643,9 @@ class TelefonoType(XElement):
     ): 
         """
         
-        :param clave_pais: 
-        :param numero_telefono: 
-        :param correo_electronico: 
+        :param clave_pais:
+        :param numero_telefono:
+        :param correo_electronico:
         """
         
         super().__init__({
@@ -669,14 +669,14 @@ class ExtranjeroType(XElement):
     ): 
         """
         
-        :param pais: 
-        :param estado_provincia: 
-        :param ciudad_poblacion: 
-        :param colonia: 
-        :param calle: 
-        :param numero_exterior: 
-        :param codigo_postal: 
-        :param numero_interior: 
+        :param pais:
+        :param estado_provincia:
+        :param ciudad_poblacion:
+        :param colonia:
+        :param calle:
+        :param numero_exterior:
+        :param codigo_postal:
+        :param numero_interior:
         """
         
         super().__init__({
@@ -702,11 +702,11 @@ class NacionalType(XElement):
     ): 
         """
         
-        :param colonia: 
-        :param calle: 
-        :param numero_exterior: 
-        :param codigo_postal: 
-        :param numero_interior: 
+        :param colonia:
+        :param calle:
+        :param numero_exterior:
+        :param codigo_postal:
+        :param numero_interior:
         """
         
         super().__init__({
@@ -726,8 +726,8 @@ class TipoDomicilioType(XElement):
     ): 
         """
         
-        :param nacional: 
-        :param extranjero: 
+        :param nacional:
+        :param extranjero:
         """
         
         super().__init__({
@@ -744,8 +744,8 @@ class DocumentoIdentificacionType(XElement):
     ): 
         """
         
-        :param tipo_identificacion: 
-        :param numero_identificacion: 
+        :param tipo_identificacion:
+        :param numero_identificacion:
         """
         
         super().__init__({
@@ -767,13 +767,13 @@ class RepresentanteApoderadoType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param documento_identificacion: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param documento_identificacion:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -797,10 +797,10 @@ class FideicomisoType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param apoderado_delegado: 
-        :param rfc: 
-        :param identificador_fideicomiso: 
+        :param denominacion_razon:
+        :param apoderado_delegado:
+        :param rfc:
+        :param identificador_fideicomiso:
         """
         
         super().__init__({
@@ -823,12 +823,12 @@ class PersonaMoralType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param giro_mercantil: 
-        :param representante_apoderado: 
-        :param fecha_constitucion: 
-        :param rfc: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param giro_mercantil:
+        :param representante_apoderado:
+        :param fecha_constitucion:
+        :param rfc:
         """
         
         super().__init__({
@@ -856,15 +856,15 @@ class PersonaFisicaType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param pais_nacionalidad: 
-        :param actividad_economica: 
-        :param documento_identificacion: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param pais_nacionalidad:
+        :param actividad_economica:
+        :param documento_identificacion:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -889,9 +889,9 @@ class TipoPersonaType(XElement):
     ): 
         """
         
-        :param persona_fisica: 
-        :param persona_moral: 
-        :param fideicomiso: 
+        :param persona_fisica:
+        :param persona_moral:
+        :param fideicomiso:
         """
         
         super().__init__({
@@ -911,10 +911,10 @@ class DatosCuentaPlataformaType(XElement):
     ): 
         """
         
-        :param id_usuario: 
-        :param cuenta_relacionada: 
-        :param moneda_cuenta: 
-        :param clabe_interbancaria: 
+        :param id_usuario:
+        :param cuenta_relacionada:
+        :param moneda_cuenta:
+        :param clabe_interbancaria:
         """
         
         super().__init__({
@@ -935,10 +935,10 @@ class PersonaAvisoType(XElement):
     ): 
         """
         
-        :param datos_cuenta_plataforma: 
-        :param tipo_persona: 
-        :param tipo_domicilio: 
-        :param telefono: 
+        :param datos_cuenta_plataforma:
+        :param tipo_persona:
+        :param tipo_domicilio:
+        :param telefono:
         """
         
         super().__init__({
@@ -958,9 +958,9 @@ class OperacionesPersonaType(XElement):
     ): 
         """
         
-        :param persona_aviso: 
-        :param detalle_operaciones: 
-        :param dueno_beneficiario: 
+        :param persona_aviso:
+        :param detalle_operaciones:
+        :param dueno_beneficiario:
         """
         
         super().__init__({
@@ -978,8 +978,8 @@ class AlertaType(XElement):
     ): 
         """
         
-        :param tipo_alerta: 
-        :param descripcion_alerta: 
+        :param tipo_alerta:
+        :param descripcion_alerta:
         """
         
         super().__init__({
@@ -996,8 +996,8 @@ class ModificatorioType(XElement):
     ): 
         """
         
-        :param folio_modificacion: 
-        :param descripcion_modificacion: 
+        :param folio_modificacion:
+        :param descripcion_modificacion:
         """
         
         super().__init__({
@@ -1017,11 +1017,11 @@ class AvisoType(XElement):
     ): 
         """
         
-        :param referencia_aviso: 
-        :param prioridad: 
-        :param alerta: 
-        :param operaciones_persona: 
-        :param modificatorio: 
+        :param referencia_aviso:
+        :param prioridad:
+        :param alerta:
+        :param operaciones_persona:
+        :param modificatorio:
         """
         
         super().__init__({
@@ -1044,11 +1044,11 @@ class SujetoObligadoType(XElement):
     ): 
         """
         
-        :param clave_sujeto_obligado: 
-        :param clave_actividad: 
-        :param dominio_plataforma: 
-        :param clave_entidad_colegiada: 
-        :param exento: 
+        :param clave_sujeto_obligado:
+        :param clave_actividad:
+        :param dominio_plataforma:
+        :param clave_entidad_colegiada:
+        :param exento:
         """
         
         super().__init__({
@@ -1069,9 +1069,9 @@ class InformeType(XElement):
     ): 
         """
         
-        :param mes_reportado: 
-        :param sujeto_obligado: 
-        :param aviso: 
+        :param mes_reportado:
+        :param sujeto_obligado:
+        :param aviso:
         """
         
         super().__init__({
@@ -1088,7 +1088,7 @@ class ArchivoType(XElement):
     ): 
         """
         
-        :param informe: 
+        :param informe:
         """
         
         super().__init__({

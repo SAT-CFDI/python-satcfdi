@@ -12,8 +12,8 @@ class AlertaType(XElement):
     ): 
         """
         
-        :param tipo_alerta: 
-        :param descripcion_alerta: 
+        :param tipo_alerta:
+        :param descripcion_alerta:
         """
         
         super().__init__({
@@ -30,8 +30,8 @@ class TribunalType(XElement):
     ): 
         """
         
-        :param clave_tribunal_dependencia: 
-        :param clave_actividad: 
+        :param clave_tribunal_dependencia:
+        :param clave_actividad:
         """
         
         super().__init__({
@@ -47,7 +47,7 @@ class PropietarioType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -63,8 +63,8 @@ class DatosPropietarioType(XElement):
     ): 
         """
         
-        :param propietario_solicita: 
-        :param dato_propietario: 
+        :param propietario_solicita:
+        :param dato_propietario:
         """
         
         super().__init__({
@@ -81,8 +81,8 @@ class DatosLiquidacionType(XElement):
     ): 
         """
         
-        :param moneda: 
-        :param monto_operacion: 
+        :param moneda:
+        :param monto_operacion:
         """
         
         super().__init__({
@@ -100,9 +100,9 @@ class DatosGarantiaType(XElement):
     ): 
         """
         
-        :param tipo_garantia: 
-        :param datos_bien_garantia: 
-        :param tipo_persona: 
+        :param tipo_garantia:
+        :param datos_bien_garantia:
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -120,8 +120,8 @@ class BienGarantiaType(XElement):
     ): 
         """
         
-        :param datos_inmueble: 
-        :param datos_otro: 
+        :param datos_inmueble:
+        :param datos_otro:
         """
         
         super().__init__({
@@ -137,7 +137,7 @@ class GarantiaOtroType(XElement):
     ): 
         """
         
-        :param descripcion_garantia: 
+        :param descripcion_garantia:
         """
         
         super().__init__({
@@ -155,10 +155,10 @@ class GarantiaInmuebleType(XElement):
     ): 
         """
         
-        :param tipo_inmueble: 
-        :param valor_referencia: 
-        :param codigo_postal: 
-        :param folio_real: 
+        :param tipo_inmueble:
+        :param valor_referencia:
+        :param codigo_postal:
+        :param folio_real:
         """
         
         super().__init__({
@@ -178,9 +178,9 @@ class TipoGaranteType(XElement):
     ): 
         """
         
-        :param persona_fisica: 
-        :param persona_moral: 
-        :param fideicomiso: 
+        :param persona_fisica:
+        :param persona_moral:
+        :param fideicomiso:
         """
         
         super().__init__({
@@ -199,9 +199,9 @@ class GaranteFideicomisoType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param rfc: 
-        :param identificador_fideicomiso: 
+        :param denominacion_razon:
+        :param rfc:
+        :param identificador_fideicomiso:
         """
         
         super().__init__({
@@ -220,9 +220,9 @@ class GaranteMoralType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param fecha_constitucion: 
-        :param rfc: 
+        :param denominacion_razon:
+        :param fecha_constitucion:
+        :param rfc:
         """
         
         super().__init__({
@@ -244,12 +244,12 @@ class GaranteFisicaType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -269,7 +269,7 @@ class DatosDeudorType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -284,7 +284,7 @@ class DatosAcreedorType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -305,13 +305,13 @@ class DatosModificacionType(XElement):
     ): 
         """
         
-        :param tipo_modificacion_capital_fijo: 
-        :param inicial_capital_fijo: 
-        :param final_capital_fijo: 
-        :param tipo_modificacion_capital_variable: 
-        :param inicial_capital_variable: 
-        :param final_capital_variable: 
-        :param datos_accionista: 
+        :param tipo_modificacion_capital_fijo:
+        :param inicial_capital_fijo:
+        :param final_capital_fijo:
+        :param tipo_modificacion_capital_variable:
+        :param inicial_capital_variable:
+        :param final_capital_variable:
+        :param datos_accionista:
         """
         
         super().__init__({
@@ -339,14 +339,14 @@ class PersonaMoralModificaType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param giro_mercantil: 
-        :param numero_total_acciones: 
-        :param motivo_modificacion: 
-        :param fecha_constitucion: 
-        :param rfc: 
-        :param instrumento_publico: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param giro_mercantil:
+        :param numero_total_acciones:
+        :param motivo_modificacion:
+        :param fecha_constitucion:
+        :param rfc:
+        :param instrumento_publico:
         """
         
         super().__init__({
@@ -369,8 +369,8 @@ class DatosAccionista1Type(XElement):
     ): 
         """
         
-        :param tipo_persona: 
-        :param numero_acciones: 
+        :param tipo_persona:
+        :param numero_acciones:
         """
         
         super().__init__({
@@ -387,8 +387,8 @@ class CapitalSocialType(XElement):
     ): 
         """
         
-        :param capital_fijo: 
-        :param capital_variable: 
+        :param capital_fijo:
+        :param capital_variable:
         """
         
         super().__init__({
@@ -406,9 +406,9 @@ class DatosAccionistaType(XElement):
     ): 
         """
         
-        :param cargo_accionista: 
-        :param tipo_persona: 
-        :param numero_acciones: 
+        :param cargo_accionista:
+        :param tipo_persona:
+        :param numero_acciones:
         """
         
         super().__init__({
@@ -436,18 +436,18 @@ class PersonaMoralConstType(XElement):
     ): 
         """
         
-        :param tipo_persona_moral: 
-        :param denominacion_razon: 
-        :param giro_mercantil: 
-        :param numero_total_acciones: 
-        :param consejo_vigilancia: 
-        :param motivo_constitucion: 
-        :param datos_accionista: 
-        :param capital_social: 
-        :param tipo_persona_moral_otra: 
-        :param folio_mercantil: 
-        :param entidad_federativa: 
-        :param instrumento_publico: 
+        :param tipo_persona_moral:
+        :param denominacion_razon:
+        :param giro_mercantil:
+        :param numero_total_acciones:
+        :param consejo_vigilancia:
+        :param motivo_constitucion:
+        :param datos_accionista:
+        :param capital_social:
+        :param tipo_persona_moral_otra:
+        :param folio_mercantil:
+        :param entidad_federativa:
+        :param instrumento_publico:
         """
         
         super().__init__({
@@ -474,8 +474,8 @@ class Autoridad1Type(XElement):
     ): 
         """
         
-        :param tipo_autoridad: 
-        :param domicilio_oficina: 
+        :param tipo_autoridad:
+        :param domicilio_oficina:
         """
         
         super().__init__({
@@ -492,8 +492,8 @@ class TipoAutoridad1Type(XElement):
     ): 
         """
         
-        :param administrativo: 
-        :param jurisdiccional: 
+        :param administrativo:
+        :param jurisdiccional:
         """
         
         super().__init__({
@@ -510,8 +510,8 @@ class DatosApoderadoType(XElement):
     ): 
         """
         
-        :param tipo_poder: 
-        :param tipo_persona: 
+        :param tipo_poder:
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -527,7 +527,7 @@ class DatosPoderdanteType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -544,9 +544,9 @@ class TipoPersonaSimpleType(XElement):
     ): 
         """
         
-        :param persona_fisica: 
-        :param persona_moral: 
-        :param fideicomiso: 
+        :param persona_fisica:
+        :param persona_moral:
+        :param fideicomiso:
         """
         
         super().__init__({
@@ -564,8 +564,8 @@ class AutoridadType(XElement):
     ): 
         """
         
-        :param tipo_autoridad: 
-        :param domicilio_oficina: 
+        :param tipo_autoridad:
+        :param domicilio_oficina:
         """
         
         super().__init__({
@@ -582,8 +582,8 @@ class DomicilioOficinaType(XElement):
     ): 
         """
         
-        :param nacional: 
-        :param extranjero: 
+        :param nacional:
+        :param extranjero:
         """
         
         super().__init__({
@@ -600,8 +600,8 @@ class TipoAutoridadType(XElement):
     ): 
         """
         
-        :param administrativo: 
-        :param jurisdiccional: 
+        :param administrativo:
+        :param jurisdiccional:
         """
         
         super().__init__({
@@ -620,10 +620,10 @@ class JurisdiccionalType(XElement):
     ): 
         """
         
-        :param organo: 
-        :param tipo_juicio: 
-        :param materia: 
-        :param expediente: 
+        :param organo:
+        :param tipo_juicio:
+        :param materia:
+        :param expediente:
         """
         
         super().__init__({
@@ -643,9 +643,9 @@ class AdministrativoType(XElement):
     ): 
         """
         
-        :param organo: 
-        :param cargo: 
-        :param instrumento_publico: 
+        :param organo:
+        :param cargo:
+        :param instrumento_publico:
         """
         
         super().__init__({
@@ -664,9 +664,9 @@ class TelefonoType(XElement):
     ): 
         """
         
-        :param numero_telefono: 
-        :param clave_pais: 
-        :param correo_electronico: 
+        :param numero_telefono:
+        :param clave_pais:
+        :param correo_electronico:
         """
         
         super().__init__({
@@ -690,14 +690,14 @@ class ExtranjeroType(XElement):
     ): 
         """
         
-        :param pais: 
-        :param estado_provincia: 
-        :param ciudad_poblacion: 
-        :param colonia: 
-        :param calle: 
-        :param numero_exterior: 
-        :param codigo_postal: 
-        :param numero_interior: 
+        :param pais:
+        :param estado_provincia:
+        :param ciudad_poblacion:
+        :param colonia:
+        :param calle:
+        :param numero_exterior:
+        :param codigo_postal:
+        :param numero_interior:
         """
         
         super().__init__({
@@ -723,11 +723,11 @@ class NacionalType(XElement):
     ): 
         """
         
-        :param colonia: 
-        :param calle: 
-        :param numero_exterior: 
-        :param codigo_postal: 
-        :param numero_interior: 
+        :param colonia:
+        :param calle:
+        :param numero_exterior:
+        :param codigo_postal:
+        :param numero_interior:
         """
         
         super().__init__({
@@ -747,8 +747,8 @@ class TipoDomicilioType(XElement):
     ): 
         """
         
-        :param nacional: 
-        :param extranjero: 
+        :param nacional:
+        :param extranjero:
         """
         
         super().__init__({
@@ -768,11 +768,11 @@ class DatosPersonaActoType(XElement):
     ): 
         """
         
-        :param caracter: 
-        :param tipo_persona: 
-        :param caracter_otro: 
-        :param tipo_domicilio: 
-        :param telefono: 
+        :param caracter:
+        :param tipo_persona:
+        :param caracter_otro:
+        :param tipo_domicilio:
+        :param telefono:
         """
         
         super().__init__({
@@ -794,10 +794,10 @@ class FideicomisoType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param apoderado_delegado: 
-        :param rfc: 
-        :param identificador_fideicomiso: 
+        :param denominacion_razon:
+        :param apoderado_delegado:
+        :param rfc:
+        :param identificador_fideicomiso:
         """
         
         super().__init__({
@@ -819,11 +819,11 @@ class PersonaMoralType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param representante_apoderado: 
-        :param fecha_constitucion: 
-        :param rfc: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param representante_apoderado:
+        :param fecha_constitucion:
+        :param rfc:
         """
         
         super().__init__({
@@ -848,13 +848,13 @@ class PersonaFisicaType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param pais_nacionalidad: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param pais_nacionalidad:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -877,9 +877,9 @@ class TipoPersonaType(XElement):
     ): 
         """
         
-        :param persona_fisica: 
-        :param persona_moral: 
-        :param fideicomiso: 
+        :param persona_fisica:
+        :param persona_moral:
+        :param fideicomiso:
         """
         
         super().__init__({
@@ -896,7 +896,7 @@ class PersonasActoType(XElement):
     ): 
         """
         
-        :param datos_persona_acto: 
+        :param datos_persona_acto:
         """
         
         super().__init__({
@@ -920,16 +920,16 @@ class InmuebleType(XElement):
     ): 
         """
         
-        :param tipo_inmueble: 
-        :param valor_catastral: 
-        :param colonia: 
-        :param calle: 
-        :param numero_exterior: 
-        :param codigo_postal: 
-        :param dimension_terreno: 
-        :param dimension_construido: 
-        :param folio_real: 
-        :param numero_interior: 
+        :param tipo_inmueble:
+        :param valor_catastral:
+        :param colonia:
+        :param calle:
+        :param numero_exterior:
+        :param codigo_postal:
+        :param dimension_terreno:
+        :param dimension_construido:
+        :param folio_real:
+        :param numero_interior:
         """
         
         super().__init__({
@@ -953,7 +953,7 @@ class DatosInmueblesType(XElement):
     ): 
         """
         
-        :param caracteristicas_inmueble: 
+        :param caracteristicas_inmueble:
         """
         
         super().__init__({
@@ -975,14 +975,14 @@ class AvaluoType(XElement):
     ): 
         """
         
-        :param organo: 
-        :param cargo: 
-        :param expediente_oficio: 
-        :param persona_solicita: 
-        :param tipo_bien: 
-        :param valor_avaluo: 
-        :param datos_propietario: 
-        :param descripcion: 
+        :param organo:
+        :param cargo:
+        :param expediente_oficio:
+        :param persona_solicita:
+        :param tipo_bien:
+        :param valor_avaluo:
+        :param datos_propietario:
+        :param descripcion:
         """
         
         super().__init__({
@@ -1010,13 +1010,13 @@ class ContratoMutuoType(XElement):
     ): 
         """
         
-        :param autoridad: 
-        :param tipo_otorgamiento: 
-        :param persona_solicita: 
-        :param datos_acreedor: 
-        :param datos_deudor: 
-        :param datos_liquidacion: 
-        :param datos_garantia: 
+        :param autoridad:
+        :param tipo_otorgamiento:
+        :param persona_solicita:
+        :param datos_acreedor:
+        :param datos_deudor:
+        :param datos_liquidacion:
+        :param datos_garantia:
         """
         
         super().__init__({
@@ -1039,9 +1039,9 @@ class ModificacionPatrimonialType(XElement):
     ): 
         """
         
-        :param autoridad: 
-        :param persona_moral_modifica: 
-        :param datos_modificacion: 
+        :param autoridad:
+        :param persona_moral_modifica:
+        :param datos_modificacion:
         """
         
         super().__init__({
@@ -1060,9 +1060,9 @@ class ConstitucionPmType(XElement):
     ): 
         """
         
-        :param autoridad: 
-        :param persona_solicita: 
-        :param persona_moral_constitucion: 
+        :param autoridad:
+        :param persona_solicita:
+        :param persona_moral_constitucion:
         """
         
         super().__init__({
@@ -1082,10 +1082,10 @@ class OtorgamientoPoderType(XElement):
     ): 
         """
         
-        :param autoridad: 
-        :param persona_solicita: 
-        :param datos_poderdante: 
-        :param datos_apoderado: 
+        :param autoridad:
+        :param persona_solicita:
+        :param datos_poderdante:
+        :param datos_apoderado:
         """
         
         super().__init__({
@@ -1110,14 +1110,14 @@ class DerechosInmuebleType(XElement):
     ): 
         """
         
-        :param organo: 
-        :param tipo_juicio: 
-        :param materia: 
-        :param expediente: 
-        :param tipo_acto: 
-        :param datos_inmuebles: 
-        :param personas_acto: 
-        :param tipo_acto_otro: 
+        :param organo:
+        :param tipo_juicio:
+        :param materia:
+        :param expediente:
+        :param tipo_acto:
+        :param datos_inmuebles:
+        :param personas_acto:
+        :param tipo_acto_otro:
         """
         
         super().__init__({
@@ -1144,12 +1144,12 @@ class ActividadType(XElement):
     ): 
         """
         
-        :param derechos_inmuebles: 
-        :param otorgamiento_poder: 
-        :param constitucion_personas_morales: 
-        :param modificacion_patrimonial: 
-        :param contrato_mutuo_credito: 
-        :param avaluo: 
+        :param derechos_inmuebles:
+        :param otorgamiento_poder:
+        :param constitucion_personas_morales:
+        :param modificacion_patrimonial:
+        :param contrato_mutuo_credito:
+        :param avaluo:
         """
         
         super().__init__({
@@ -1173,11 +1173,11 @@ class AvisoType(XElement):
     ): 
         """
         
-        :param referencia_aviso: 
-        :param prioridad: 
-        :param alerta: 
-        :param detalle_operaciones: 
-        :param modificatorio: 
+        :param referencia_aviso:
+        :param prioridad:
+        :param alerta:
+        :param detalle_operaciones:
+        :param modificatorio:
         """
         
         super().__init__({
@@ -1197,8 +1197,8 @@ class ModificatorioType(XElement):
     ): 
         """
         
-        :param folio_modificacion: 
-        :param descripcion_modificacion: 
+        :param folio_modificacion:
+        :param descripcion_modificacion:
         """
         
         super().__init__({
@@ -1215,8 +1215,8 @@ class OperacionType(XElement):
     ): 
         """
         
-        :param fecha_operacion: 
-        :param tipo_actividad: 
+        :param fecha_operacion:
+        :param tipo_actividad:
         """
         
         super().__init__({
@@ -1232,7 +1232,7 @@ class OperacionesType(XElement):
     ): 
         """
         
-        :param datos_operacion: 
+        :param datos_operacion:
         """
         
         super().__init__({
@@ -1247,7 +1247,7 @@ class ArchivoType(XElement):
     ): 
         """
         
-        :param informe: 
+        :param informe:
         """
         
         super().__init__({
@@ -1265,10 +1265,10 @@ class InformeType(XElement):
     ): 
         """
         
-        :param mes_reportado: 
-        :param tribunal_dependencia: 
-        :param aviso: 
-        :param version: 
+        :param mes_reportado:
+        :param tribunal_dependencia:
+        :param aviso:
+        :param version:
         """
         
         super().__init__({
@@ -1291,12 +1291,12 @@ class RepresentanteApoderadoType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -1318,9 +1318,9 @@ class FideicomisoSimpleType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param rfc: 
-        :param identificador_fideicomiso: 
+        :param denominacion_razon:
+        :param rfc:
+        :param identificador_fideicomiso:
         """
         
         super().__init__({
@@ -1343,13 +1343,13 @@ class PersonaFisicaSimpleType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param pais_nacionalidad: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param pais_nacionalidad:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -1373,10 +1373,10 @@ class PersonaMoralSimpleType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param fecha_constitucion: 
-        :param rfc: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param fecha_constitucion:
+        :param rfc:
         """
         
         super().__init__({
@@ -1396,9 +1396,9 @@ class Administrativo1Type(XElement):
     ): 
         """
         
-        :param organo: 
-        :param cargo: 
-        :param instrumento_publico_oficio: 
+        :param organo:
+        :param cargo:
+        :param instrumento_publico_oficio:
         """
         
         super().__init__({

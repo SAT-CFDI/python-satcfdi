@@ -910,7 +910,7 @@ class InvoiceCreator(XElement):
         
         :param gln: Nodo opcional que especifica el número global de localización (GLN)de la ubicación del emisor de la factura
         :param alternate_party_identification: Nodo opcional que especifica la identificación secundaria del emisor de la factura
-        :param name_and_address: 
+        :param name_and_address:
         """
         
         super().__init__({

@@ -12,8 +12,8 @@ class DatosComiteTecnicoType(XElement):
     ): 
         """
         
-        :param comite_tecnico: 
-        :param modificacion_comite_tecnico: 
+        :param comite_tecnico:
+        :param modificacion_comite_tecnico:
         """
         
         super().__init__({
@@ -30,8 +30,8 @@ class DatosPropietarioType(XElement):
     ): 
         """
         
-        :param propietario_solicita: 
-        :param tipo_persona: 
+        :param propietario_solicita:
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -50,10 +50,10 @@ class AvaluoType(XElement):
     ): 
         """
         
-        :param tipo_bien: 
-        :param valor_avaluo: 
-        :param datos_propietario: 
-        :param descripcion: 
+        :param tipo_bien:
+        :param valor_avaluo:
+        :param datos_propietario:
+        :param descripcion:
         """
         
         super().__init__({
@@ -72,8 +72,8 @@ class DatosLiquidacionSimpleType(XElement):
     ): 
         """
         
-        :param moneda: 
-        :param monto_operacion: 
+        :param moneda:
+        :param monto_operacion:
         """
         
         super().__init__({
@@ -91,9 +91,9 @@ class PersonaMoralGaranteType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param fecha_constitucion: 
-        :param rfc: 
+        :param denominacion_razon:
+        :param fecha_constitucion:
+        :param rfc:
         """
         
         super().__init__({
@@ -115,12 +115,12 @@ class PersonaFisicaGaranteType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -142,9 +142,9 @@ class TipoPersonaGaranteType(XElement):
     ): 
         """
         
-        :param persona_fisica: 
-        :param persona_moral: 
-        :param fideicomiso: 
+        :param persona_fisica:
+        :param persona_moral:
+        :param fideicomiso:
         """
         
         super().__init__({
@@ -161,7 +161,7 @@ class DatosOtroType(XElement):
     ): 
         """
         
-        :param descripcion_garantia: 
+        :param descripcion_garantia:
         """
         
         super().__init__({
@@ -179,10 +179,10 @@ class DatosInmuebleType(XElement):
     ): 
         """
         
-        :param tipo_inmueble: 
-        :param valor_referencia: 
-        :param codigo_postal: 
-        :param folio_real: 
+        :param tipo_inmueble:
+        :param valor_referencia:
+        :param codigo_postal:
+        :param folio_real:
         """
         
         super().__init__({
@@ -201,8 +201,8 @@ class DatosBienMutuoType(XElement):
     ): 
         """
         
-        :param datos_inmueble: 
-        :param datos_otro: 
+        :param datos_inmueble:
+        :param datos_otro:
         """
         
         super().__init__({
@@ -220,9 +220,9 @@ class DatosGarantiaType(XElement):
     ): 
         """
         
-        :param tipo_garantia: 
-        :param datos_bien_mutuo: 
-        :param tipo_persona: 
+        :param tipo_garantia:
+        :param datos_bien_mutuo:
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -239,7 +239,7 @@ class DatosDeudorType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -254,7 +254,7 @@ class DatosAcreedorType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -273,11 +273,11 @@ class ContratoMutuoCredType(XElement):
     ): 
         """
         
-        :param tipo_otorgamiento: 
-        :param datos_acreedor: 
-        :param datos_deudor: 
-        :param datos_liquidacion: 
-        :param datos_garantia: 
+        :param tipo_otorgamiento:
+        :param datos_acreedor:
+        :param datos_deudor:
+        :param datos_liquidacion:
+        :param datos_garantia:
         """
         
         super().__init__({
@@ -296,7 +296,7 @@ class DatosCesionType(XElement):
     ): 
         """
         
-        :param monto_cesion: 
+        :param monto_cesion:
         """
         
         super().__init__({
@@ -311,7 +311,7 @@ class DatosCesionarioType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -326,7 +326,7 @@ class DatosCedenteType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -347,13 +347,13 @@ class CesionDerechosType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param tipo_cesion: 
-        :param datos_cedente: 
-        :param datos_cesionario: 
-        :param datos_cesion: 
-        :param identificador_fideicomiso: 
-        :param rfc: 
+        :param denominacion_razon:
+        :param tipo_cesion:
+        :param datos_cedente:
+        :param datos_cesionario:
+        :param datos_cesion:
+        :param identificador_fideicomiso:
+        :param rfc:
         """
         
         super().__init__({
@@ -375,8 +375,8 @@ class DatosFideicomisarioType(XElement):
     ): 
         """
         
-        :param datos_fideicomisarios_determinados: 
-        :param tipo_persona: 
+        :param datos_fideicomisarios_determinados:
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -393,8 +393,8 @@ class PatrimonioOtroBienType(XElement):
     ): 
         """
         
-        :param descripcion: 
-        :param valor_bien: 
+        :param descripcion:
+        :param valor_bien:
         """
         
         super().__init__({
@@ -413,10 +413,10 @@ class PatrimonioInmuebleType(XElement):
     ): 
         """
         
-        :param tipo_inmueble: 
-        :param codigo_postal: 
-        :param folio_real: 
-        :param importe_garantia: 
+        :param tipo_inmueble:
+        :param codigo_postal:
+        :param folio_real:
+        :param importe_garantia:
         """
         
         super().__init__({
@@ -435,8 +435,8 @@ class PatrimonioMonetariaType(XElement):
     ): 
         """
         
-        :param moneda: 
-        :param monto_operacion: 
+        :param moneda:
+        :param monto_operacion:
         """
         
         super().__init__({
@@ -454,9 +454,9 @@ class DatosTipoPatrimonioType(XElement):
     ): 
         """
         
-        :param patrimonio_monetario: 
-        :param patrimonio_inmueble: 
-        :param patrimonio_otro_bien: 
+        :param patrimonio_monetario:
+        :param patrimonio_inmueble:
+        :param patrimonio_otro_bien:
         """
         
         super().__init__({
@@ -475,9 +475,9 @@ class DatosFideicomitenteType(XElement):
     ): 
         """
         
-        :param tipo_movimiento_fideicomitente: 
-        :param tipo_persona: 
-        :param datos_tipo_patrimonio: 
+        :param tipo_movimiento_fideicomitente:
+        :param tipo_persona:
+        :param datos_tipo_patrimonio:
         """
         
         super().__init__({
@@ -503,16 +503,16 @@ class ConstModFideicomisoType(XElement):
     ): 
         """
         
-        :param tipo_movimiento: 
-        :param tipo_fideicomiso: 
-        :param denominacion_razon: 
-        :param monto_patrimonio: 
-        :param datos_fideicomitente: 
-        :param descripcion: 
-        :param rfc: 
-        :param identificador_fideicomiso: 
-        :param datos_fideicomisarios: 
-        :param datos_miembro_comite_tecnico: 
+        :param tipo_movimiento:
+        :param tipo_fideicomiso:
+        :param denominacion_razon:
+        :param monto_patrimonio:
+        :param datos_fideicomitente:
+        :param descripcion:
+        :param rfc:
+        :param identificador_fideicomiso:
+        :param datos_fideicomisarios:
+        :param datos_miembro_comite_tecnico:
         """
         
         super().__init__({
@@ -539,10 +539,10 @@ class DatosLiquidacionType(XElement):
     ): 
         """
         
-        :param fecha_pago: 
-        :param moneda: 
-        :param monto_operacion: 
-        :param instrumento_monetario: 
+        :param fecha_pago:
+        :param moneda:
+        :param monto_operacion:
+        :param instrumento_monetario:
         """
         
         super().__init__({
@@ -561,8 +561,8 @@ class DatosCompradorType(XElement):
     ): 
         """
         
-        :param numero_acciones_compradas: 
-        :param tipo_persona: 
+        :param numero_acciones_compradas:
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -579,8 +579,8 @@ class DatosVendedorType(XElement):
     ): 
         """
         
-        :param numero_acciones_vendidas: 
-        :param tipo_persona: 
+        :param numero_acciones_vendidas:
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -603,14 +603,14 @@ class PersonaMoralAccionesType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param valor_nominal: 
-        :param numero_acciones: 
-        :param datos_vendedor: 
-        :param datos_comprador: 
-        :param fecha_constitucion: 
-        :param rfc: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param valor_nominal:
+        :param numero_acciones:
+        :param datos_vendedor:
+        :param datos_comprador:
+        :param fecha_constitucion:
+        :param rfc:
         """
         
         super().__init__({
@@ -634,9 +634,9 @@ class CompraVentaAccionesType(XElement):
     ): 
         """
         
-        :param tipo_operacion: 
-        :param persona_moral_acciones: 
-        :param datos_liquidacion: 
+        :param tipo_operacion:
+        :param persona_moral_acciones:
+        :param datos_liquidacion:
         """
         
         super().__init__({
@@ -662,16 +662,16 @@ class EscindidaType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param giro_mercantil: 
-        :param capital_social_fijo: 
-        :param numero_total_acciones: 
-        :param datos_accionista: 
-        :param fecha_constitucion: 
-        :param rfc: 
-        :param capital_social_variable: 
-        :param folio_mercantil: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param giro_mercantil:
+        :param capital_social_fijo:
+        :param numero_total_acciones:
+        :param datos_accionista:
+        :param fecha_constitucion:
+        :param rfc:
+        :param capital_social_variable:
+        :param folio_mercantil:
         """
         
         super().__init__({
@@ -696,8 +696,8 @@ class DatosEscindidasType(XElement):
     ): 
         """
         
-        :param escindidas_determinadas: 
-        :param dato_escindida: 
+        :param escindidas_determinadas:
+        :param dato_escindida:
         """
         
         super().__init__({
@@ -722,16 +722,16 @@ class DatosEscindenteType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param giro_mercantil: 
-        :param capital_social_fijo: 
-        :param escindente_subsiste: 
-        :param fecha_constitucion: 
-        :param rfc: 
-        :param capital_social_variable: 
-        :param folio_mercantil: 
-        :param datos_accionista_escindente: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param giro_mercantil:
+        :param capital_social_fijo:
+        :param escindente_subsiste:
+        :param fecha_constitucion:
+        :param rfc:
+        :param capital_social_variable:
+        :param folio_mercantil:
+        :param datos_accionista_escindente:
         """
         
         super().__init__({
@@ -756,8 +756,8 @@ class EscisionType(XElement):
     ): 
         """
         
-        :param datos_escindente: 
-        :param datos_escindidas: 
+        :param datos_escindente:
+        :param datos_escindidas:
         """
         
         super().__init__({
@@ -782,16 +782,16 @@ class FusionanteType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param giro_mercantil: 
-        :param capital_social_fijo: 
-        :param numero_total_acciones: 
-        :param datos_accionista: 
-        :param fecha_constitucion: 
-        :param rfc: 
-        :param capital_social_variable: 
-        :param folio_mercantil: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param giro_mercantil:
+        :param capital_social_fijo:
+        :param numero_total_acciones:
+        :param datos_accionista:
+        :param fecha_constitucion:
+        :param rfc:
+        :param capital_social_variable:
+        :param folio_mercantil:
         """
         
         super().__init__({
@@ -816,8 +816,8 @@ class DatosFusionanteType(XElement):
     ): 
         """
         
-        :param fusionante_determinadas: 
-        :param fusionante: 
+        :param fusionante_determinadas:
+        :param fusionante:
         """
         
         super().__init__({
@@ -840,14 +840,14 @@ class DatosFusionadaType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param giro_mercantil: 
-        :param capital_social_fijo: 
-        :param fecha_constitucion: 
-        :param rfc: 
-        :param capital_social_variable: 
-        :param folio_mercantil: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param giro_mercantil:
+        :param capital_social_fijo:
+        :param fecha_constitucion:
+        :param rfc:
+        :param capital_social_variable:
+        :param folio_mercantil:
         """
         
         super().__init__({
@@ -869,7 +869,7 @@ class DatosFusionadasType(XElement):
     ): 
         """
         
-        :param datos_fusionada: 
+        :param datos_fusionada:
         """
         
         super().__init__({
@@ -886,9 +886,9 @@ class FusionType(XElement):
     ): 
         """
         
-        :param tipo_fusion: 
-        :param datos_fusionadas: 
-        :param datos_fusionante: 
+        :param tipo_fusion:
+        :param datos_fusionadas:
+        :param datos_fusionante:
         """
         
         super().__init__({
@@ -906,8 +906,8 @@ class DatosAccionista1Type(XElement):
     ): 
         """
         
-        :param tipo_persona: 
-        :param numero_acciones: 
+        :param tipo_persona:
+        :param numero_acciones:
         """
         
         super().__init__({
@@ -929,13 +929,13 @@ class DatosModificacionType(XElement):
     ): 
         """
         
-        :param tipo_modificacion_capital_fijo: 
-        :param inicial_capital_fijo: 
-        :param final_capital_fijo: 
-        :param tipo_modificacion_capital_variable: 
-        :param inicial_capital_variable: 
-        :param final_capital_variable: 
-        :param datos_accionista: 
+        :param tipo_modificacion_capital_fijo:
+        :param inicial_capital_fijo:
+        :param final_capital_fijo:
+        :param tipo_modificacion_capital_variable:
+        :param inicial_capital_variable:
+        :param final_capital_variable:
+        :param datos_accionista:
         """
         
         super().__init__({
@@ -963,14 +963,14 @@ class PersonaMoralModificaType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param giro_mercantil: 
-        :param numero_total_acciones: 
-        :param motivo_modificacion: 
-        :param fecha_constitucion: 
-        :param rfc: 
-        :param instrumento_publico: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param giro_mercantil:
+        :param numero_total_acciones:
+        :param motivo_modificacion:
+        :param fecha_constitucion:
+        :param rfc:
+        :param instrumento_publico:
         """
         
         super().__init__({
@@ -993,8 +993,8 @@ class ModificacionPatrimonialType(XElement):
     ): 
         """
         
-        :param persona_moral_modifica: 
-        :param datos_modificacion: 
+        :param persona_moral_modifica:
+        :param datos_modificacion:
         """
         
         super().__init__({
@@ -1011,8 +1011,8 @@ class CapitalSocialType(XElement):
     ): 
         """
         
-        :param capital_fijo: 
-        :param capital_variable: 
+        :param capital_fijo:
+        :param capital_variable:
         """
         
         super().__init__({
@@ -1030,9 +1030,9 @@ class DatosAccionistaType(XElement):
     ): 
         """
         
-        :param cargo_accionista: 
-        :param tipo_persona: 
-        :param numero_acciones: 
+        :param cargo_accionista:
+        :param tipo_persona:
+        :param numero_acciones:
         """
         
         super().__init__({
@@ -1060,18 +1060,18 @@ class ConstitucionPersonasMoralesType(XElement):
     ): 
         """
         
-        :param tipo_persona_moral: 
-        :param denominacion_razon: 
-        :param giro_mercantil: 
-        :param numero_total_acciones: 
-        :param entidad_federativa: 
-        :param consejo_vigilancia: 
-        :param motivo_constitucion: 
-        :param datos_accionista: 
-        :param capital_social: 
-        :param tipo_persona_moral_otra: 
-        :param folio_mercantil: 
-        :param instrumento_publico: 
+        :param tipo_persona_moral:
+        :param denominacion_razon:
+        :param giro_mercantil:
+        :param numero_total_acciones:
+        :param entidad_federativa:
+        :param consejo_vigilancia:
+        :param motivo_constitucion:
+        :param datos_accionista:
+        :param capital_social:
+        :param tipo_persona_moral_otra:
+        :param folio_mercantil:
+        :param instrumento_publico:
         """
         
         super().__init__({
@@ -1103,13 +1103,13 @@ class PersonaFisicaSimpleType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param pais_nacionalidad: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param pais_nacionalidad:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -1133,10 +1133,10 @@ class PersonaMoralSimpleType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param fecha_constitucion: 
-        :param rfc: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param fecha_constitucion:
+        :param rfc:
         """
         
         super().__init__({
@@ -1156,9 +1156,9 @@ class TipoPersonaSimpleType(XElement):
     ): 
         """
         
-        :param persona_fisica: 
-        :param persona_moral: 
-        :param fideicomiso: 
+        :param persona_fisica:
+        :param persona_moral:
+        :param fideicomiso:
         """
         
         super().__init__({
@@ -1177,9 +1177,9 @@ class FideicomisoType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param rfc: 
-        :param identificador_fideicomiso: 
+        :param denominacion_razon:
+        :param rfc:
+        :param identificador_fideicomiso:
         """
         
         super().__init__({
@@ -1200,11 +1200,11 @@ class PersonaMoralType(XElement):
     ): 
         """
         
-        :param denominacion_razon: 
-        :param pais_nacionalidad: 
-        :param giro_mercantil: 
-        :param fecha_constitucion: 
-        :param rfc: 
+        :param denominacion_razon:
+        :param pais_nacionalidad:
+        :param giro_mercantil:
+        :param fecha_constitucion:
+        :param rfc:
         """
         
         super().__init__({
@@ -1230,14 +1230,14 @@ class PersonaFisicaType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param pais_nacionalidad: 
-        :param actividad_economica: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param pais_nacionalidad:
+        :param actividad_economica:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -1261,9 +1261,9 @@ class TipoPersonaType(XElement):
     ): 
         """
         
-        :param persona_fisica: 
-        :param persona_moral: 
-        :param fideicomiso: 
+        :param persona_fisica:
+        :param persona_moral:
+        :param fideicomiso:
         """
         
         super().__init__({
@@ -1281,8 +1281,8 @@ class DatosApoderadoType(XElement):
     ): 
         """
         
-        :param tipo_poder: 
-        :param tipo_persona: 
+        :param tipo_poder:
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -1298,7 +1298,7 @@ class DatosPoderdanteType(XElement):
     ): 
         """
         
-        :param tipo_persona: 
+        :param tipo_persona:
         """
         
         super().__init__({
@@ -1314,8 +1314,8 @@ class OtorgamientoPoderType(XElement):
     ): 
         """
         
-        :param datos_poderdante: 
-        :param datos_apoderado: 
+        :param datos_poderdante:
+        :param datos_apoderado:
         """
         
         super().__init__({
@@ -1340,16 +1340,16 @@ class TipoActividadType(XElement):
     ): 
         """
         
-        :param otorgamiento_poder: 
-        :param constitucion_personas_morales: 
-        :param modificacion_patrimonial: 
-        :param fusion: 
-        :param escision: 
-        :param compra_venta_acciones: 
-        :param constitucion_modificacion_fideicomiso: 
-        :param cesion_derechos_fideicomitente_fideicomisario: 
-        :param contrato_mutuo_credito: 
-        :param avaluo: 
+        :param otorgamiento_poder:
+        :param constitucion_personas_morales:
+        :param modificacion_patrimonial:
+        :param fusion:
+        :param escision:
+        :param compra_venta_acciones:
+        :param constitucion_modificacion_fideicomiso:
+        :param cesion_derechos_fideicomitente_fideicomisario:
+        :param contrato_mutuo_credito:
+        :param avaluo:
         """
         
         super().__init__({
@@ -1375,9 +1375,9 @@ class DatosOperacionType(XElement):
     ): 
         """
         
-        :param instrumento_publico: 
-        :param fecha_operacion: 
-        :param tipo_actividad: 
+        :param instrumento_publico:
+        :param fecha_operacion:
+        :param tipo_actividad:
         """
         
         super().__init__({
@@ -1394,7 +1394,7 @@ class DetalleOperacionesType(XElement):
     ): 
         """
         
-        :param datos_operacion: 
+        :param datos_operacion:
         """
         
         super().__init__({
@@ -1414,12 +1414,12 @@ class PersonaAvisoType(XElement):
     ): 
         """
         
-        :param nombre: 
-        :param apellido_paterno: 
-        :param apellido_materno: 
-        :param fecha_nacimiento: 
-        :param rfc: 
-        :param curp: 
+        :param nombre:
+        :param apellido_paterno:
+        :param apellido_materno:
+        :param fecha_nacimiento:
+        :param rfc:
+        :param curp:
         """
         
         super().__init__({
@@ -1440,8 +1440,8 @@ class AlertaType(XElement):
     ): 
         """
         
-        :param tipo_alerta: 
-        :param descripcion_alerta: 
+        :param tipo_alerta:
+        :param descripcion_alerta:
         """
         
         super().__init__({
@@ -1458,8 +1458,8 @@ class ModificatorioType(XElement):
     ): 
         """
         
-        :param folio_modificacion: 
-        :param descripcion_modificacion: 
+        :param folio_modificacion:
+        :param descripcion_modificacion:
         """
         
         super().__init__({
@@ -1480,12 +1480,12 @@ class AvisoType(XElement):
     ): 
         """
         
-        :param referencia_aviso: 
-        :param prioridad: 
-        :param alerta: 
-        :param persona_aviso: 
-        :param detalle_operaciones: 
-        :param modificatorio: 
+        :param referencia_aviso:
+        :param prioridad:
+        :param alerta:
+        :param persona_aviso:
+        :param detalle_operaciones:
+        :param modificatorio:
         """
         
         super().__init__({
@@ -1508,10 +1508,10 @@ class SujetoObligadoType(XElement):
     ): 
         """
         
-        :param clave_sujeto_obligado: 
-        :param clave_actividad: 
-        :param clave_entidad_colegiada: 
-        :param exento: 
+        :param clave_sujeto_obligado:
+        :param clave_actividad:
+        :param clave_entidad_colegiada:
+        :param exento:
         """
         
         super().__init__({
@@ -1531,9 +1531,9 @@ class InformeType(XElement):
     ): 
         """
         
-        :param mes_reportado: 
-        :param sujeto_obligado: 
-        :param aviso: 
+        :param mes_reportado:
+        :param sujeto_obligado:
+        :param aviso:
         """
         
         super().__init__({
@@ -1550,7 +1550,7 @@ class ArchivoType(XElement):
     ): 
         """
         
-        :param informe: 
+        :param informe:
         """
         
         super().__init__({
@@ -1568,10 +1568,10 @@ class TipoPersona1Type(XElement):
     ): 
         """
         
-        :param tipo_movimiento_fideicomisario: 
-        :param persona_fisica: 
-        :param persona_moral: 
-        :param fideicomiso: 
+        :param tipo_movimiento_fideicomisario:
+        :param persona_fisica:
+        :param persona_moral:
+        :param fideicomiso:
         """
         
         super().__init__({

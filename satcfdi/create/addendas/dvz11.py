@@ -209,7 +209,7 @@ class Receptor(XElement):
         :param num_cliente: Atributo opcional para colocar la clave o número de cliente asignado al receptor por parte del emisor del documento.
         :param datos_contacto_r: Elemento opcional para agregar datos de contacto del receptor.
         :param domicilio_fiscal_r: Elemento opcional para especificar la información del domicilio del receptor.
-        :param destino: 
+        :param destino:
         """
         
         super().__init__({
@@ -398,8 +398,8 @@ class Diverza(CFDI):
         :param claves_descripcion: Nodo opcional para expresar las descripciones de los valores del Comprobante que tienen un catálogo oficial SAT relacionado.
         :param emisor: Nodo opcional para proporcionar información adicional relacionada al emisor.
         :param receptor: Nodo opcional para agregar información relacionada al receptor del documento.
-        :param conceptos: 
-        :param complemento: 
+        :param conceptos:
+        :param complemento:
         """
         
         super().__init__({
