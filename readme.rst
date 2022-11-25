@@ -59,7 +59,9 @@ ________________________________________________________________________________
 Supported Features
 ____________________
 
-* Crear CFDI - Ingreso, Nomina, Pagos, Traslados, Retenciones
+* Crear CFDI 3.3, 4.0 - Ingreso, Nomina, Pagos, Traslados y Complementos
+* Crear Retenciones 1.0, 2.0
+* Contabilidad Electronica 1.3
 * Representación Impresa PDF y HTML
 * Facturación con PAC's
 * Descarga Masiva
