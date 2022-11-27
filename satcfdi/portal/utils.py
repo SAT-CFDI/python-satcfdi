@@ -67,3 +67,11 @@ def get_post_form(res: Response, id=None):
     assert form.attrs['method'].upper() == "POST"
     return action_url(form.attrs.get('action'), res.url), data
 
+
+def request_ref_headers(url):
+    parts = urlparse(url)
+    return {
+        'origin': urlunparse((parts.scheme, parts.netloc, '', '', '', '')),
+        'referer': url
+    }
+
