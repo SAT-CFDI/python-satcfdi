@@ -79,9 +79,9 @@ ____________________
 * PLD - Prevención de Lavado de Dinero
 * Portal de Facturación SAT
 
-   * Validación de RFC
-   * Validación de Razón Social
-   * Validación de LCO
+  * Validación de RFC
+  * Validación de Razón Social
+  * Validación de LCO
 
 Installation
 ____________________
