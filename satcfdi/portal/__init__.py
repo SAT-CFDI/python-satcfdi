@@ -100,8 +100,8 @@ class SATPortal(PortalManager):
             allow_redirects=True
         )
         assert res.status_code == 200
-        action, data = get_post_form(res)
 
+        action, data = get_post_form(res)
         res = self.form_request(action, res.request.url, data)
         return res
 
