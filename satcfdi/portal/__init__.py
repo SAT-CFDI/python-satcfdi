@@ -161,17 +161,10 @@ class SATFacturaElectronica(PortalManager):
         if self._request_verification_token is None:
             self._reload_verification_token()
 
-        if method.upper() == 'POST':
-            headers = {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-            }
-        else:
-            headers = {}
-
         res = self.request(
             method=method,
             url=f'{self.BASE_URL}/{path}',
-            headers=headers | {
+            headers={
                 'Origin': self.BASE_URL,
                 'Authority': self.BASE_URL,
                 'Request-Context': self.REQUEST_CONTEXT,
