@@ -1,3 +1,4 @@
+import json
 import pickle
 from time import time
 from urllib.parse import urlparse, urlunparse
@@ -6,7 +7,7 @@ import requests
 import urllib3
 
 from .utils import get_post_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
-from .. import Signer, __version__
+from .. import Signer, __version__, ResponseError
 
 CONSTANCIA_URL = 'https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/IdcGeneraConstancia.jsf'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
@@ -30,52 +31,61 @@ def debug_response(res):
     print('-- RESPONSE DEBUG END --')
 
 
-class SATSession:
+class PortalManager(requests.Session):
+    def save_session(self, target):
+        pickle.dump(self.cookies, target)
+
+    def load_session(self, source):
+        self.cookies.update(pickle.load(source))
+
+    def form_request(self, action, referer_url, data):
+        ref_headers = request_ref_headers(referer_url)
+        res = self.post(
+            url=action,
+            headers=DEFAULT_HEADERS | ref_headers,
+            data=data
+        )
+        assert res.status_code == 200
+        return res
+
+
+class SATPortal(PortalManager):
     def __init__(self, signer: Signer):
+        super().__init__()
         urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
         self.signer = signer
-        self.session = requests.session()
 
     def login(self):
         LOGIN_URL = 'https://loginda.siat.sat.gob.mx/nidp/app/login?id=fiel'
 
-        res = self.session.get(
+        res = self.get(
             url=LOGIN_URL,
             headers=DEFAULT_HEADERS
         )
         assert res.status_code == 200
 
         action, data = get_post_form(res)
-        ref_headers = request_ref_headers(res.request.url)
-        res = self.session.post(
-            url=action,
-            headers=DEFAULT_HEADERS | ref_headers,
-            data=data
-        )
-        assert res.status_code == 200
+        res = self.form_request(action, res.request.url, data)
 
         action, data = get_post_form(res, id='certform')
-        ref_headers = request_ref_headers(res.request.url)
-        res = self.session.post(
-            url=action,
-            headers=DEFAULT_HEADERS | ref_headers,
-            data=data | {
+        res = self.form_request(
+            action,
+            res.request.url,
+            data | {
                 'token': generate_token(self.signer, code=data['guid']),
                 'fert': self.signer.certificate.get_notAfter()[2:].decode(),
             }
         )
-        assert res.status_code == 200
-
         return res
 
     def home_page(self):
-        return self.session.get(
+        return self.get(
             url='https://loginda.siat.sat.gob.mx/nidp/app?sid=0',
             headers=DEFAULT_HEADERS
         )
 
     def logout(self):
-        return self.session.get(
+        return self.get(
             url='https://loginda.siat.sat.gob.mx/nidp/app/logout',
             headers=DEFAULT_HEADERS | {
                 'referer': 'https://loginda.siat.sat.gob.mx/nidp/app?sid=0'
@@ -84,43 +94,31 @@ class SATSession:
         )
 
     def declaraciones_provisionales_login(self):
-        res = self.session.get(
+        res = self.get(
             url='https://ptscdecprov.clouda.sat.gob.mx',
             headers=DEFAULT_HEADERS,
             allow_redirects=True
         )
         assert res.status_code == 200
-
         action, data = get_post_form(res)
-        ref_headers = request_ref_headers(res.request.url)
-        res = self.session.post(
-            url=action,
-            headers=DEFAULT_HEADERS | ref_headers,
-            data=data
-        )
+
+        res = self.form_request(action, res.request.url, data)
         return res
 
-    def save_session(self, target):
-        pickle.dump(self.session.cookies, target)
 
-    def load_session(self, source):
-        self.session.cookies.update(pickle.load(source))
+class SATFacturaElectronica(PortalManager):
+    BASE_URL = 'https://portal.facturaelectronica.sat.gob.mx'
 
-
-class SATCfdiAUSession:
     def __init__(self, signer: Signer):
+        super().__init__()
         urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
         self.signer = signer
-        self.session = requests.session()
-
         self._ajax_id = random_ajax_id()
         self._request_verification_token = None
 
     def login(self):
-        LOGIN_URL = 'https://portal.facturaelectronica.sat.gob.mx'
-
-        res = self.session.get(
-            url=LOGIN_URL,
+        res = self.get(
+            url=self.BASE_URL,
             headers=DEFAULT_HEADERS
         )
         assert res.status_code == 200
@@ -132,66 +130,46 @@ class SATCfdiAUSession:
                 parts.scheme,
                 parts.netloc,
                 '/nidp/app/login',
-                None,
+                '',
                 parts.query.replace('id=SATUPCFDiCon', 'id=SATx509Custom'),
-                None
+                ''
             ))
-            ref_headers = request_ref_headers(res.request.url)
-            res = self.session.post(
-                url=action,
-                headers=DEFAULT_HEADERS | ref_headers,
-                data=data
-            )
-            assert res.status_code == 200
+
+            res = self.form_request(action, res.request.url, data)
 
             action, data = get_post_form(res, id='certform')
-            ref_headers = request_ref_headers(res.request.url)
-            res = self.session.post(
-                url=action,
-                headers=DEFAULT_HEADERS | ref_headers,
-                data=data | {
+            res = self.form_request(
+                action,
+                res.request.url,
+                data | {
                     'token': generate_token(self.signer, code=data['guid']),
                     'fert': self.signer.certificate.get_notAfter()[2:].decode(),
                 }
             )
-            assert res.status_code == 200
 
             action, data = get_post_form(res)
-            ref_headers = request_ref_headers(res.request.url)
-            res = self.session.post(
-                url=action,
-                headers=DEFAULT_HEADERS | ref_headers,
-                data=data
-            )
-            assert res.status_code == 200
-
+            res = self.form_request(action, res.request.url, data)
             action, data = get_post_form(res)
 
-        ref_headers = request_ref_headers(res.request.url)
-        res = self.session.post(
-            url=action,
-            headers=DEFAULT_HEADERS | ref_headers,
-            data=data
-        )
-        assert res.status_code == 200
+        res = self.form_request(action, res.request.url, data)
 
         self._request_verification_token = request_verification_token(res)
         self._ajax_id = random_ajax_id()
         return res
 
     def _reload_verification_token(self):
-        res = self.session.get(
-            url='https://portal.facturaelectronica.sat.gob.mx/Factura/GeneraFactura',
+        res = self.get(
+            url=f'{self.BASE_URL}/Factura/GeneraFactura',
             headers=DEFAULT_HEADERS,
             allow_redirects=False
         )
         self._request_verification_token = request_verification_token(res)
 
     def reactivate_session(self):
-        res = self.session.post(
-            url='https://portal.facturaelectronica.sat.gob.mx/Home/ReActiveSession',
+        res = self.post(
+            url=f'{self.BASE_URL}/Home/ReActiveSession',
             headers=DEFAULT_HEADERS | {
-                'Origin': 'https://portal.facturaelectronica.sat.gob.mx',
+                'Origin': f'{self.BASE_URL}',
                 'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
                 'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'
             },
@@ -199,76 +177,64 @@ class SATCfdiAUSession:
         )
         return res
 
-    def validate_legal_name(self, rfc, legal_name):
+    def _request(self, method, path, data=None, params=None):
         if self._request_verification_token is None:
             self._reload_verification_token()
 
-        res = self.session.post(
-            url='https://portal.facturaelectronica.sat.gob.mx/Clientes/ValidaRazonSocialRFC',
-            headers=DEFAULT_HEADERS | {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Origin': 'https://portal.facturaelectronica.sat.gob.mx',
-                'Authority': 'https://portal.facturaelectronica.sat.gob.mx',
+        if method.upper() == 'POST':
+            headers = {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
+        else:
+            headers = {}
+
+        res = self.request(
+            method=method,
+            url=f'{self.BASE_URL}/{path}',
+            headers=DEFAULT_HEADERS | headers | {
+                'Origin': self.BASE_URL,
+                'Authority': self.BASE_URL,
                 'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
                 '__RequestVerificationToken': self._request_verification_token,
                 'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'  # |pR4Px.o0yAS
             },
+            data=data,
+            params=params,
+            allow_redirects=False
+        )
+        if res.status_code == 200:
+            return res.json()
+        else:
+            raise ResponseError(res)
+
+    def validate_legal_name(self, rfc, legal_name):
+        res = self._request(
+            method='POST',
+            path='Clientes/ValidaRazonSocialRFC',
             data={
                 'rfcValidar': rfc.upper(),
                 'razonSocial': legal_name.upper(),
-            },
-            allow_redirects=False
-        )
-        assert res.status_code == 200
-        return res.json()
+            })
+        return res
 
     def exists_rfc(self, rfc):
-        if self._request_verification_token is None:
-            self._reload_verification_token()
-
-        res = self.session.post(
-            url='https://portal.facturaelectronica.sat.gob.mx/Clientes/ExisteLrfc',
-            headers=DEFAULT_HEADERS | {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Origin': 'https://portal.facturaelectronica.sat.gob.mx',
-                'Authority': 'https://portal.facturaelectronica.sat.gob.mx',
-                'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
-                '__RequestVerificationToken': self._request_verification_token,
-                'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'  # |pR4Px.o0yAS
-            },
+        res = self._request(
+            method='POST',
+            path='Clientes/ExisteLrfc',
             data={
                 'rfcValidar': rfc.upper()
-            },
-            allow_redirects=False
+            }
         )
-        assert res.status_code == 200
-        return res.json()
+        return res
 
     def validate_lco(self, rfc, aplica_region_fronteriza=False):
-        if self._request_verification_token is None:
-            self._reload_verification_token()
-
-        res = self.session.get(
-            url='https://portal.facturaelectronica.sat.gob.mx/Clientes/ValidaLco',
-            headers=DEFAULT_HEADERS | {
-                'Origin': 'https://portal.facturaelectronica.sat.gob.mx',
-                'Authority': 'https://portal.facturaelectronica.sat.gob.mx',
-                'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
-                '__RequestVerificationToken': self._request_verification_token,
-                'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'  # |pR4Px.o0yAS
-            },
+        res = self._request(
+            method='GET',
+            path='Clientes/ValidaLco',
             params={
                 'rfcValidar': rfc.upper(),
                 'aplicaRegionFronteriza': aplica_region_fronteriza,
                 "_": int(time() * 1000)
-            },
-            allow_redirects=False
+            }
         )
-        assert res.status_code == 200
-        return res.json()
-
-    def save_session(self, target):
-        pickle.dump(self.session.cookies, target)
-
-    def load_session(self, source):
-        self.session.cookies.update(pickle.load(source))
+        return json.loads(res)

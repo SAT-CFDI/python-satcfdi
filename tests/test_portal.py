@@ -1,7 +1,7 @@
 import os
 
 from satcfdi.portal.utils import generate_token, verify_token, action_url
-from satcfdi.portal import SATSession
+from satcfdi.portal import SATPortal
 from tests.utils import get_signer
 
 current_dir = os.path.dirname(__file__)
@@ -39,7 +39,7 @@ def test_action_url():
 
 def test_start_session():
     signer = get_signer('cacx7605101p8')
-    res = SATSession(signer)
+    res = SATPortal(signer)
 
     try:
         with open(session_file, 'rb') as f:
