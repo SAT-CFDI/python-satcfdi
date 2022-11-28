@@ -1,13 +1,12 @@
 import json
 import pickle
 from time import time
-from urllib.parse import urlparse, urlunparse
 
 import requests
 import urllib3
 
 from .utils import get_post_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
-from .. import Signer, __version__, ResponseError
+from .. import Signer, ResponseError
 
 CONSTANCIA_URL = 'https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/IdcGeneraConstancia.jsf'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
