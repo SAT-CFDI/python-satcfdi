@@ -126,16 +126,7 @@ class SATFacturaElectronica(PortalManager):
 
         action, data = get_post_form(res)
         if action.startswith('https://cfdiau.sat.gob.mx/'):
-            parts = urlparse(action)
-            action = urlunparse((
-                parts.scheme,
-                parts.netloc,
-                '/nidp/app/login',
-                '',
-                parts.query.replace('id=SATUPCFDiCon', 'id=SATx509Custom'),
-                ''
-            ))
-
+            action = action.replace('nidp/wsfed/ep?id=SATUPCFDiCon', 'nidp/app/login?id=SATx509Custom')
             res = self.form_request(action, res.request.url, data)
 
             action, data = get_post_form(res, id='certform')
