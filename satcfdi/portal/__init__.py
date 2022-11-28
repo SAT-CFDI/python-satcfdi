@@ -1,4 +1,5 @@
 import pickle
+from time import time
 from urllib.parse import urlparse, urlunparse
 
 import requests
@@ -199,7 +200,7 @@ class SATCfdiAUSession:
         )
         return res
 
-    def validate_rfc(self, rfc, razon_social):
+    def validate_razon_social(self, rfc, razon_social):
         if self._request_verification_token is None:
             self._reload_verification_token()
 
@@ -219,8 +220,53 @@ class SATCfdiAUSession:
             },
             allow_redirects=False
         )
-        # assert res.status_code == 200
-        return res
+        assert res.status_code == 200
+        return res.json()
+
+    def exists_lrfc(self, rfc):
+        if self._request_verification_token is None:
+            self._reload_verification_token()
+
+        res = self.session.post(
+            url='https://portal.facturaelectronica.sat.gob.mx/Clientes/ExisteLrfc',
+            headers=DEFAULT_HEADERS | {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'Origin': 'https://portal.facturaelectronica.sat.gob.mx',
+                'Authority': 'https://portal.facturaelectronica.sat.gob.mx',
+                'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
+                '__RequestVerificationToken': self._request_verification_token,
+                'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'  # |pR4Px.o0yAS
+            },
+            data={
+                'rfcValidar': rfc.upper()
+            },
+            allow_redirects=False
+        )
+        assert res.status_code == 200
+        return res.json()
+
+    def validate_lco(self, rfc, aplica_region_fronteriza=False):
+        if self._request_verification_token is None:
+            self._reload_verification_token()
+
+        res = self.session.post(
+            url='https://portal.facturaelectronica.sat.gob.mx/Clientes/ValidaLco',
+            headers=DEFAULT_HEADERS | {
+                'Origin': 'https://portal.facturaelectronica.sat.gob.mx',
+                'Authority': 'https://portal.facturaelectronica.sat.gob.mx',
+                'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
+                '__RequestVerificationToken': self._request_verification_token,
+                'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'  # |pR4Px.o0yAS
+            },
+            params={
+                'rfcValidar': rfc.upper(),
+                'aplicaRegionFronteriza': aplica_region_fronteriza,
+                "_": int(time() * 1000)
+            },
+            allow_redirects=False
+        )
+        assert res.status_code == 200
+        return res.json()
 
     def save_session(self, target):
         pickle.dump(self.session.cookies, target)
