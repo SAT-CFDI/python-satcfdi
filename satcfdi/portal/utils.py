@@ -1,4 +1,6 @@
 import base64
+import random
+import string
 from urllib.parse import urlparse, urlunparse
 
 from bs4 import BeautifulSoup
@@ -79,3 +81,7 @@ def request_ref_headers(url):
 def request_verification_token(res: Response):
     html = BeautifulSoup(res.text, 'html.parser')
     return html.find(name='input', attrs={'name': '__RequestVerificationToken'}).attrs['value']
+
+
+def random_ajax_id():
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5))

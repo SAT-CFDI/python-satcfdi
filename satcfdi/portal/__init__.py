@@ -4,7 +4,7 @@ from urllib.parse import urlparse, urlunparse
 import requests
 import urllib3
 
-from .utils import get_post_form, generate_token, request_ref_headers
+from .utils import get_post_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
 from .. import Signer, __version__
 
 CONSTANCIA_URL = 'https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/IdcGeneraConstancia.jsf'
@@ -112,6 +112,8 @@ class SATCfdiAUSession:
         self.signer = signer
         self.session = requests.session()
 
+        self.ajax_id = random_ajax_id()
+
     def login(self):
         LOGIN_URL = 'https://portal.facturaelectronica.sat.gob.mx'
 
@@ -175,6 +177,13 @@ class SATCfdiAUSession:
         return res
 
     def validate_rfc(self, rfc, razon_social):
+        res = self.session.get(
+            url='https://portal.facturaelectronica.sat.gob.mx/Factura/GeneraFactura',
+            headers=DEFAULT_HEADERS,
+            allow_redirects=False
+        )
+        token = request_verification_token(res)
+
         res = self.session.post(
             url='https://portal.facturaelectronica.sat.gob.mx/Clientes/ValidaRazonSocialRFC',
             headers=DEFAULT_HEADERS | {
@@ -182,8 +191,8 @@ class SATCfdiAUSession:
                 'Origin': 'https://portal.facturaelectronica.sat.gob.mx',
                 'Authority': 'https://portal.facturaelectronica.sat.gob.mx',
                 'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
-                '__RequestVerificationToken': 'WgrH1IBc4RmkP1nio9FvDmU8_0VcIigP0nMB-5itvd5925jWekvzSTkgmzHIGBYJ_lN3Agrc6aMvW3lv9MbnMh3r6pwpsLbS3gTYXnWbA3OaxiPUrEBWtr9YbhYKKZwjm-ST_c_hqF31Nxcjdwf8-Q2',
-                # 'Request-Id': '|pR4Px.YejFQ' |pR4Px.o0yAS
+                '__RequestVerificationToken': token,
+                'Request-Id': f'|{self.ajax_id}.{random_ajax_id()}'  # |pR4Px.o0yAS
             },
             data={
                 'rfcValidar': rfc.upper(),
