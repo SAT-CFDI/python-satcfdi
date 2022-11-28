@@ -112,7 +112,7 @@ class SATCfdiAUSession:
         self.signer = signer
         self.session = requests.session()
 
-        self._ajax_id = None
+        self._ajax_id = random_ajax_id()
         self._request_verification_token = None
 
     def login(self):
