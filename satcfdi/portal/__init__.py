@@ -200,7 +200,7 @@ class SATCfdiAUSession:
         )
         return res
 
-    def validate_razon_social(self, rfc, razon_social):
+    def validate_legal_name(self, rfc, legal_name):
         if self._request_verification_token is None:
             self._reload_verification_token()
 
@@ -216,14 +216,14 @@ class SATCfdiAUSession:
             },
             data={
                 'rfcValidar': rfc.upper(),
-                'razonSocial': razon_social.upper(),
+                'razonSocial': legal_name.upper(),
             },
             allow_redirects=False
         )
         assert res.status_code == 200
         return res.json()
 
-    def exists_lrfc(self, rfc):
+    def exists_rfc(self, rfc):
         if self._request_verification_token is None:
             self._reload_verification_token()
 
@@ -249,7 +249,7 @@ class SATCfdiAUSession:
         if self._request_verification_token is None:
             self._reload_verification_token()
 
-        res = self.session.post(
+        res = self.session.get(
             url='https://portal.facturaelectronica.sat.gob.mx/Clientes/ValidaLco',
             headers=DEFAULT_HEADERS | {
                 'Origin': 'https://portal.facturaelectronica.sat.gob.mx',
