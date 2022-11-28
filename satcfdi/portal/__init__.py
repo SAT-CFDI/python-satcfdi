@@ -19,17 +19,6 @@ DEFAULT_HEADERS = {
 }
 
 
-def debug_response(res):
-    print('-- RESPONSE DEBUG --')
-    print(res.status_code)
-    for k, v in res.request.headers.items():
-        print(k, v)
-    print(res.request.body)
-    print('results')
-    print(res.text)
-    print('-- RESPONSE DEBUG END --')
-
-
 class PortalManager(requests.Session):
     def save_session(self, target):
         pickle.dump(self.cookies, target)
@@ -234,6 +223,3 @@ class SATFacturaElectronica(PortalManager):
             }
         )
         return json.loads(res)
-
-# https://sc1-fi-pro-net-busqueda-avanzada-v3.azurewebsites.net/api/catalogos/tipos
-# https://sc1-fi-pro-net-busqueda-avanzada-v3.azurewebsites.net/api/unidades/tipo

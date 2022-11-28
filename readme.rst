@@ -77,6 +77,11 @@ ____________________
 * DIOT - Declaración Informativa de Operaciones con Terceros
 * Certifica - Solicitud de Certificados, Renovación de Fiel
 * PLD - Prevención de Lavado de Dinero
+* Portal de Facturación SAT
+
+   * Validación de RFC
+   * Validación de Razón Social
+   * Validación de LCO
 
 Installation
 ____________________
