@@ -1,4 +1,6 @@
 import base64
+import random
+import string
 from urllib.parse import urlparse, urlunparse
 
 from bs4 import BeautifulSoup
@@ -67,3 +69,19 @@ def get_post_form(res: Response, id=None):
     assert form.attrs['method'].upper() == "POST"
     return action_url(form.attrs.get('action'), res.url), data
 
+
+def request_ref_headers(url):
+    parts = urlparse(url)
+    return {
+        'origin': urlunparse((parts.scheme, parts.netloc, '', '', '', '')),
+        'referer': url
+    }
+
+
+def request_verification_token(res: Response):
+    html = BeautifulSoup(res.text, 'html.parser')
+    return html.find(name='input', attrs={'name': '__RequestVerificationToken'}).attrs['value']
+
+
+def random_ajax_id():
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5))

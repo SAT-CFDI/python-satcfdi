@@ -74,9 +74,14 @@ ____________________
 * Listado 69B
 * Exportar Comprobantes a Excel
 * Descarga de Constancia de Situación Fiscal
+* Portal SAT - Factura Electrónica
+
+  * Validación de RFC, Razón Social
+  * LCO - Lista de Contribuyentes Obligados
 * DIOT - Declaración Informativa de Operaciones con Terceros
 * Certifica - Solicitud de Certificados, Renovación de Fiel
 * PLD - Prevención de Lavado de Dinero
+
 
 Installation
 ____________________
