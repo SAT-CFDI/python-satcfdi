@@ -11,10 +11,10 @@ CONSTANCIA_URL = 'https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/IdcGeneraConstanc
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
 
 DEFAULT_HEADERS = {
-    'accept': 'text/html,application/xhtml+xml,application/xml',
-    'pragma': 'no-cache',
-    'cache-control': 'no-cache',
-    'user-agent': USER_AGENT
+    'Accept': 'text/html,application/xhtml+xml,application/xml',
+    'Pragma': 'no-cache',
+    'Cache-Control': 'no-cache',
+    'User-Agent': USER_AGENT
 }
 
 
@@ -178,15 +178,20 @@ class SATCfdiAUSession:
         res = self.session.post(
             url='https://portal.facturaelectronica.sat.gob.mx/Clientes/ValidaRazonSocialRFC',
             headers=DEFAULT_HEADERS | {
-                'origin': 'https://portal.facturaelectronica.sat.gob.mx',
-                'authority': 'https://portal.facturaelectronica.sat.gob.mx',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'Origin': 'https://portal.facturaelectronica.sat.gob.mx',
+                'Authority': 'https://portal.facturaelectronica.sat.gob.mx',
+                'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
+                '__RequestVerificationToken': 'WgrH1IBc4RmkP1nio9FvDmU8_0VcIigP0nMB-5itvd5925jWekvzSTkgmzHIGBYJ_lN3Agrc6aMvW3lv9MbnMh3r6pwpsLbS3gTYXnWbA3OaxiPUrEBWtr9YbhYKKZwjm-ST_c_hqF31Nxcjdwf8-Q2',
+                # 'Request-Id': '|pR4Px.YejFQ'
             },
             data={
                 'rfcValidar': rfc.upper(),
                 'razonSocial': razon_social.upper(),
-            }
+            },
+            allow_redirects=False
         )
-        assert res.status_code == 200
+        # assert res.status_code == 200
         return res
 
     def save_session(self, target):
