@@ -163,7 +163,10 @@ class SATFacturaElectronica(PortalManager):
             headers=DEFAULT_HEADERS,
             allow_redirects=False
         )
-        self._request_verification_token = request_verification_token(res)
+        if res.status_code == 200:
+            self._request_verification_token = request_verification_token(res)
+        else:
+            raise ValueError('Please Login Again')
 
     def reactivate_session(self):
         res = self.post(
