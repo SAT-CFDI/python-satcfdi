@@ -75,3 +75,7 @@ def request_ref_headers(url):
         'referer': url
     }
 
+
+def request_verification_token(res: Response):
+    html = BeautifulSoup(res.text, 'html.parser')
+    return html.find(name='input', attrs={'name': '__RequestVerificationToken'}).attrs['value']

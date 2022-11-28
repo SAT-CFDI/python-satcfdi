@@ -183,7 +183,7 @@ class SATCfdiAUSession:
                 'Authority': 'https://portal.facturaelectronica.sat.gob.mx',
                 'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
                 '__RequestVerificationToken': 'WgrH1IBc4RmkP1nio9FvDmU8_0VcIigP0nMB-5itvd5925jWekvzSTkgmzHIGBYJ_lN3Agrc6aMvW3lv9MbnMh3r6pwpsLbS3gTYXnWbA3OaxiPUrEBWtr9YbhYKKZwjm-ST_c_hqF31Nxcjdwf8-Q2',
-                # 'Request-Id': '|pR4Px.YejFQ'
+                # 'Request-Id': '|pR4Px.YejFQ' |pR4Px.o0yAS
             },
             data={
                 'rfcValidar': rfc.upper(),
