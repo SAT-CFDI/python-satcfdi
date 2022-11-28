@@ -20,6 +20,11 @@ DEFAULT_HEADERS = {
 
 
 class PortalManager(requests.Session):
+    def __init__(self, signer: Signer):
+        super().__init__()
+        urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
+        self.signer = signer
+
     def save_session(self, target):
         pickle.dump(self.cookies, target)
 
@@ -27,22 +32,27 @@ class PortalManager(requests.Session):
         self.cookies.update(pickle.load(source))
 
     def form_request(self, action, referer_url, data):
-        ref_headers = request_ref_headers(referer_url)
         res = self.post(
             url=action,
-            headers=DEFAULT_HEADERS | ref_headers,
+            headers=DEFAULT_HEADERS | request_ref_headers(referer_url),
             data=data
         )
         assert res.status_code == 200
         return res
 
+    def fiel_login(self, login_response):
+        action, data = get_post_form(login_response, id='certform')
+        return self.form_request(
+            action,
+            login_response.request.url,
+            data | {
+                'token': generate_token(self.signer, code=data['guid']),
+                'fert': self.signer.certificate.get_notAfter()[2:].decode(),
+            }
+        )
+
 
 class SATPortal(PortalManager):
-    def __init__(self, signer: Signer):
-        super().__init__()
-        urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
-        self.signer = signer
-
     def login(self):
         LOGIN_URL = 'https://loginda.siat.sat.gob.mx/nidp/app/login?id=fiel'
 
@@ -53,18 +63,9 @@ class SATPortal(PortalManager):
         assert res.status_code == 200
 
         action, data = get_post_form(res)
-        res = self.form_request(action, res.request.url, data)
-
-        action, data = get_post_form(res, id='certform')
-        res = self.form_request(
-            action,
-            res.request.url,
-            data | {
-                'token': generate_token(self.signer, code=data['guid']),
-                'fert': self.signer.certificate.get_notAfter()[2:].decode(),
-            }
+        return self.fiel_login(
+            login_response=self.form_request(action, res.request.url, data)
         )
-        return res
 
     def home_page(self):
         return self.get(
@@ -99,9 +100,7 @@ class SATFacturaElectronica(PortalManager):
     REQUEST_CONTEXT = 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7'
 
     def __init__(self, signer: Signer):
-        super().__init__()
-        urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
-        self.signer = signer
+        super().__init__(signer)
         self._ajax_id = random_ajax_id()
         self._request_verification_token = None
 
@@ -112,20 +111,20 @@ class SATFacturaElectronica(PortalManager):
         )
         assert res.status_code == 200
 
-        action, data = get_post_form(res)
+        try:
+            action, data = get_post_form(res)
+        except IndexError as ex:
+            raise ValueError("Login form not found, please try again") from ex
+
         if action.startswith('https://cfdiau.sat.gob.mx/'):
             assert 'nidp/wsfed/ep?id=SATUPCFDiCon' in action
-            action = action.replace('nidp/wsfed/ep?id=SATUPCFDiCon', 'nidp/app/login?id=SATx509Custom')
-            res = self.form_request(action, res.request.url, data)
 
-            action, data = get_post_form(res, id='certform')
-            res = self.form_request(
-                action,
-                res.request.url,
-                data | {
-                    'token': generate_token(self.signer, code=data['guid']),
-                    'fert': self.signer.certificate.get_notAfter()[2:].decode(),
-                }
+            res = self.fiel_login(
+                login_response=self.form_request(
+                    action.replace('nidp/wsfed/ep?id=SATUPCFDiCon', 'nidp/app/login?id=SATx509Custom'),
+                    res.request.url,
+                    data
+                )
             )
 
             action, data = get_post_form(res)
@@ -192,7 +191,7 @@ class SATFacturaElectronica(PortalManager):
         else:
             raise ResponseError(res)
 
-    def validate_legal_name(self, rfc, legal_name):
+    def legal_name_valid(self, rfc, legal_name):
         res = self._request(
             method='POST',
             path='Clientes/ValidaRazonSocialRFC',
@@ -200,9 +199,11 @@ class SATFacturaElectronica(PortalManager):
                 'rfcValidar': rfc.upper(),
                 'razonSocial': legal_name.upper(),
             })
-        return res
+        if not res['exitoso']:
+            raise ResponseError(res)
+        return res['resultado']
 
-    def validate_rfc(self, rfc):
+    def rfc_valid(self, rfc):
         res = self._request(
             method='POST',
             path='Clientes/ExisteLrfc',
@@ -210,7 +211,7 @@ class SATFacturaElectronica(PortalManager):
                 'rfcValidar': rfc.upper()
             }
         )
-        return res
+        return res['resultado']
 
     def lco_details(self, rfc, apply_border_region=True):
         res = self._request(
