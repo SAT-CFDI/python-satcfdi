@@ -45,7 +45,7 @@ class SATSession:
         assert res.status_code == 200
 
         action, data = get_post_form(res)
-        ref_headers = request_ref_headers(res)
+        ref_headers = request_ref_headers(res.request.url)
         res = self.session.post(
             url=action,
             headers=DEFAULT_HEADERS | ref_headers,
@@ -54,7 +54,7 @@ class SATSession:
         assert res.status_code == 200
 
         action, data = get_post_form(res, id='certform')
-        ref_headers = request_ref_headers(res)
+        ref_headers = request_ref_headers(res.request.url)
         res = self.session.post(
             url=action,
             headers=DEFAULT_HEADERS | ref_headers,
@@ -91,13 +91,10 @@ class SATSession:
         assert res.status_code == 200
 
         action, data = get_post_form(res)
+        ref_headers = request_ref_headers(res.request.url)
         res = self.session.post(
             url=action,
-            headers=DEFAULT_HEADERS | {
-                # 'content-type': 'application/x-www-form-urlencoded',
-                'origin': 'https://loginda.siat.sat.gob.mx',
-                'referer': 'https://loginda.siat.sat.gob.mx/',
-            },
+            headers=DEFAULT_HEADERS | ref_headers,
             data=data
         )
         return res
@@ -134,7 +131,7 @@ class SATCfdiAUSession:
             parts.query.replace('id=SATUPCFDiCon', 'id=SATx509Custom'),
             None
         ))
-        ref_headers = request_ref_headers(res)
+        ref_headers = request_ref_headers(res.request.url)
         res = self.session.post(
             url=action,
             headers=DEFAULT_HEADERS | ref_headers,
@@ -142,17 +139,26 @@ class SATCfdiAUSession:
         )
         assert res.status_code == 200
 
-        # action, data = get_post_form(res, id='certform')
-        # ref_headers = request_ref_headers(res)
-        # res = self.session.post(
-        #     url=action,
-        #     headers=DEFAULT_HEADERS | ref_headers,
-        #     data=data | {
-        #         'token': generate_token(self.signer, code=data['guid']),
-        #         'fert': self.signer.certificate.get_notAfter()[2:].decode(),
-        #     }
-        # )
-        # assert res.status_code == 200
+        action, data = get_post_form(res, id='certform')
+        ref_headers = request_ref_headers(res.request.url)
+        res = self.session.post(
+            url=action,
+            headers=DEFAULT_HEADERS | ref_headers,
+            data=data | {
+                'token': generate_token(self.signer, code=data['guid']),
+                'fert': self.signer.certificate.get_notAfter()[2:].decode(),
+            }
+        )
+        assert res.status_code == 200
+
+        action, data = get_post_form(res)
+        ref_headers = request_ref_headers(res.request.url)
+        res = self.session.post(
+            url=action,
+            headers=DEFAULT_HEADERS | ref_headers,
+            data=data
+        )
+        assert res.status_code == 200
 
         return res
 
