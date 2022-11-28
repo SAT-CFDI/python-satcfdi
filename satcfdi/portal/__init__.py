@@ -4,19 +4,10 @@ from time import time
 
 import requests
 import urllib3
+from requests.structures import CaseInsensitiveDict
 
-from .utils import get_post_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
+from .utils import get_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
 from .. import Signer, ResponseError
-
-CONSTANCIA_URL = 'https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/IdcGeneraConstancia.jsf'
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
-
-DEFAULT_HEADERS = {
-    'Accept': 'text/html,application/xhtml+xml,application/xml',
-    'Pragma': 'no-cache',
-    'Cache-Control': 'no-cache',
-    'User-Agent': USER_AGENT
-}
 
 
 class PortalManager(requests.Session):
@@ -25,24 +16,35 @@ class PortalManager(requests.Session):
         urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
         self.signer = signer
 
+        self.headers = CaseInsensitiveDict(
+            {
+                "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+                "Accept-Encoding": 'gzip, deflate, br',
+                "Accept": 'text/html,application/xhtml+xml,application/xml',
+                "Connection": "keep-alive",
+                'Pragma': 'no-cache',
+                'Cache-Control': 'no-cache',
+            }
+        )
+
     def save_session(self, target):
         pickle.dump(self.cookies, target)
 
     def load_session(self, source):
         self.cookies.update(pickle.load(source))
 
-    def form_request(self, action, referer_url, data):
+    def form(self, action, referer_url, data):
         res = self.post(
             url=action,
-            headers=DEFAULT_HEADERS | request_ref_headers(referer_url),
+            headers=request_ref_headers(referer_url),
             data=data
         )
         assert res.status_code == 200
         return res
 
     def fiel_login(self, login_response):
-        action, data = get_post_form(login_response, id='certform')
-        return self.form_request(
+        action, data = get_form(login_response, id='certform')
+        return self.form(
             action,
             login_response.request.url,
             data | {
@@ -53,31 +55,29 @@ class PortalManager(requests.Session):
 
 
 class SATPortal(PortalManager):
-    def login(self):
-        LOGIN_URL = 'https://loginda.siat.sat.gob.mx/nidp/app/login?id=fiel'
+    BASE_URL = 'https://loginda.siat.sat.gob.mx'
 
+    def login(self):
         res = self.get(
-            url=LOGIN_URL,
-            headers=DEFAULT_HEADERS
+            url=f'{self.BASE_URL}/nidp/app/login?id=fiel'
         )
         assert res.status_code == 200
+        action, data = get_form(res)
 
-        action, data = get_post_form(res)
         return self.fiel_login(
-            login_response=self.form_request(action, res.request.url, data)
+            login_response=self.form(action, res.request.url, data)
         )
 
     def home_page(self):
         return self.get(
-            url='https://loginda.siat.sat.gob.mx/nidp/app?sid=0',
-            headers=DEFAULT_HEADERS
+            url=f'{self.BASE_URL}/nidp/app?sid=0'
         )
 
     def logout(self):
         return self.get(
-            url='https://loginda.siat.sat.gob.mx/nidp/app/logout',
-            headers=DEFAULT_HEADERS | {
-                'referer': 'https://loginda.siat.sat.gob.mx/nidp/app?sid=0'
+            url=f'{self.BASE_URL}/nidp/app/logout',
+            headers={
+                'referer': f'{self.BASE_URL}/nidp/app?sid=0'
             },
             allow_redirects=False
         )
@@ -85,13 +85,12 @@ class SATPortal(PortalManager):
     def declaraciones_provisionales_login(self):
         res = self.get(
             url='https://ptscdecprov.clouda.sat.gob.mx',
-            headers=DEFAULT_HEADERS,
             allow_redirects=True
         )
         assert res.status_code == 200
 
-        action, data = get_post_form(res)
-        res = self.form_request(action, res.request.url, data)
+        action, data = get_form(res)
+        res = self.form(action, res.request.url, data)
         return res
 
 
@@ -106,13 +105,11 @@ class SATFacturaElectronica(PortalManager):
 
     def login(self):
         res = self.get(
-            url=self.BASE_URL,
-            headers=DEFAULT_HEADERS
+            url=self.BASE_URL
         )
         assert res.status_code == 200
-
         try:
-            action, data = get_post_form(res)
+            action, data = get_form(res)
         except IndexError as ex:
             raise ValueError("Login form not found, please try again") from ex
 
@@ -120,19 +117,19 @@ class SATFacturaElectronica(PortalManager):
             assert 'nidp/wsfed/ep?id=SATUPCFDiCon' in action
 
             res = self.fiel_login(
-                login_response=self.form_request(
+                login_response=self.form(
                     action.replace('nidp/wsfed/ep?id=SATUPCFDiCon', 'nidp/app/login?id=SATx509Custom'),
                     res.request.url,
                     data
                 )
             )
 
-            action, data = get_post_form(res)
-            res = self.form_request(action, res.request.url, data)
+            action, data = get_form(res)
+            res = self.form(action, res.request.url, data)
 
-            action, data = get_post_form(res)
+            action, data = get_form(res)
 
-        res = self.form_request(action, res.request.url, data)
+        res = self.form(action, res.request.url, data)
 
         self._request_verification_token = request_verification_token(res)
         self._ajax_id = random_ajax_id()
@@ -141,7 +138,6 @@ class SATFacturaElectronica(PortalManager):
     def _reload_verification_token(self):
         res = self.get(
             url=f'{self.BASE_URL}/Factura/GeneraFactura',
-            headers=DEFAULT_HEADERS,
             allow_redirects=False
         )
         if res.status_code == 200:
@@ -152,7 +148,7 @@ class SATFacturaElectronica(PortalManager):
     def reactivate_session(self):
         res = self.post(
             url=f'{self.BASE_URL}/Home/ReActiveSession',
-            headers=DEFAULT_HEADERS | {
+            headers={
                 'Origin': f'{self.BASE_URL}',
                 'Request-Context': self.REQUEST_CONTEXT,
                 'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'
@@ -175,7 +171,7 @@ class SATFacturaElectronica(PortalManager):
         res = self.request(
             method=method,
             url=f'{self.BASE_URL}/{path}',
-            headers=DEFAULT_HEADERS | headers | {
+            headers=headers | {
                 'Origin': self.BASE_URL,
                 'Authority': self.BASE_URL,
                 'Request-Context': self.REQUEST_CONTEXT,

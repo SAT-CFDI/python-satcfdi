@@ -53,7 +53,7 @@ def action_url(action: str | None, url: str):
     return action
 
 
-def get_post_form(res: Response, id=None):
+def get_form(res: Response, id=None):
     html = BeautifulSoup(res.text, 'html.parser')
     if id:
         form = html.find(id=id)
