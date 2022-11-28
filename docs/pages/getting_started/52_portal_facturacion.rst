@@ -33,7 +33,7 @@ ______________________
     )
     print(res)
     
-    # Validación LCO
+    # LCO Detalles
     res = sat_session.lco_details(rfc="XIQB891116QE4")
     print(res)
     
