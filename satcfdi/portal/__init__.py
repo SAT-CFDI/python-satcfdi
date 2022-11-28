@@ -127,47 +127,46 @@ class SATCfdiAUSession:
 
         action, data = get_post_form(res)
         if not action.startswith('https://cfdiau.sat.gob.mx/'):
-            assert False, 'Ya se tiene una session'
+            parts = urlparse(action)
+            action = urlunparse((
+                parts.scheme,
+                parts.netloc,
+                '/nidp/app/login',
+                None,
+                parts.query.replace('id=SATUPCFDiCon', 'id=SATx509Custom'),
+                None
+            ))
+            ref_headers = request_ref_headers(res.request.url)
+            res = self.session.post(
+                url=action,
+                headers=DEFAULT_HEADERS | ref_headers,
+                data=data
+            )
+            assert res.status_code == 200
 
-        parts = urlparse(action)
-        action = urlunparse((
-            parts.scheme,
-            parts.netloc,
-            '/nidp/app/login',
-            None,
-            parts.query.replace('id=SATUPCFDiCon', 'id=SATx509Custom'),
-            None
-        ))
-        ref_headers = request_ref_headers(res.request.url)
-        res = self.session.post(
-            url=action,
-            headers=DEFAULT_HEADERS | ref_headers,
-            data=data
-        )
-        assert res.status_code == 200
+            action, data = get_post_form(res, id='certform')
+            ref_headers = request_ref_headers(res.request.url)
+            res = self.session.post(
+                url=action,
+                headers=DEFAULT_HEADERS | ref_headers,
+                data=data | {
+                    'token': generate_token(self.signer, code=data['guid']),
+                    'fert': self.signer.certificate.get_notAfter()[2:].decode(),
+                }
+            )
+            assert res.status_code == 200
 
-        action, data = get_post_form(res, id='certform')
-        ref_headers = request_ref_headers(res.request.url)
-        res = self.session.post(
-            url=action,
-            headers=DEFAULT_HEADERS | ref_headers,
-            data=data | {
-                'token': generate_token(self.signer, code=data['guid']),
-                'fert': self.signer.certificate.get_notAfter()[2:].decode(),
-            }
-        )
-        assert res.status_code == 200
+            action, data = get_post_form(res)
+            ref_headers = request_ref_headers(res.request.url)
+            res = self.session.post(
+                url=action,
+                headers=DEFAULT_HEADERS | ref_headers,
+                data=data
+            )
+            assert res.status_code == 200
 
-        action, data = get_post_form(res)
-        ref_headers = request_ref_headers(res.request.url)
-        res = self.session.post(
-            url=action,
-            headers=DEFAULT_HEADERS | ref_headers,
-            data=data
-        )
-        assert res.status_code == 200
+            action, data = get_post_form(res)
 
-        action, data = get_post_form(res)
         ref_headers = request_ref_headers(res.request.url)
         res = self.session.post(
             url=action,
