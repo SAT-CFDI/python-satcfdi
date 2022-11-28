@@ -187,6 +187,18 @@ class SATCfdiAUSession:
         )
         self._request_verification_token = request_verification_token(res)
 
+    def reactivate_session(self):
+        res = self.session.post(
+            url='https://portal.facturaelectronica.sat.gob.mx/Home/ReActiveSession',
+            headers=DEFAULT_HEADERS | {
+                'Origin': 'https://portal.facturaelectronica.sat.gob.mx',
+                'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
+                'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'
+            },
+            allow_redirects=False
+        )
+        return res
+
     def validate_rfc(self, rfc, razon_social):
         res = self.session.post(
             url='https://portal.facturaelectronica.sat.gob.mx/Clientes/ValidaRazonSocialRFC',
