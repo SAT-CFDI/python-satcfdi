@@ -223,13 +223,13 @@ class SATFacturaElectronica(PortalManager):
         )
         return res
 
-    def validate_lco(self, rfc, aplica_region_fronteriza=False):
+    def validate_lco(self, rfc, apply_border_region=True):
         res = self._request(
             method='GET',
             path='Clientes/ValidaLco',
             params={
                 'rfcValidar': rfc.upper(),
-                'aplicaRegionFronteriza': aplica_region_fronteriza,
+                'aplicaRegionFronteriza': apply_border_region,
                 "_": int(time() * 1000)
             }
         )
