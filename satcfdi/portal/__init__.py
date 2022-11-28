@@ -202,7 +202,7 @@ class SATFacturaElectronica(PortalManager):
             })
         return res
 
-    def exists_rfc(self, rfc):
+    def validate_rfc(self, rfc):
         res = self._request(
             method='POST',
             path='Clientes/ExisteLrfc',
