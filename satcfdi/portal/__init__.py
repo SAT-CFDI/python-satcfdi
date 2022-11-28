@@ -211,6 +211,8 @@ class SATFacturaElectronica(PortalManager):
                 'rfcValidar': rfc.upper()
             }
         )
+        if not res['exitoso']:
+            raise ResponseError(res)
         return res['resultado']
 
     def lco_details(self, rfc, apply_border_region=True):
