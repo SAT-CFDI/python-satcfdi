@@ -149,7 +149,7 @@ class SATFacturaElectronica(PortalManager):
         res = self.post(
             url=f'{self.BASE_URL}/Home/ReActiveSession',
             headers={
-                'Origin': f'{self.BASE_URL}',
+                'Origin': self.BASE_URL,
                 'Request-Context': self.REQUEST_CONTEXT,
                 'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'
             },
