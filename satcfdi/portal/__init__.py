@@ -243,3 +243,6 @@ class SATFacturaElectronica(PortalManager):
             }
         )
         return json.loads(res)
+
+# https://sc1-fi-pro-net-busqueda-avanzada-v3.azurewebsites.net/api/catalogos/tipos
+# https://sc1-fi-pro-net-busqueda-avanzada-v3.azurewebsites.net/api/unidades/tipo
