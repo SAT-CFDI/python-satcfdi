@@ -1,0 +1,40 @@
+Portal SAT - Factura Electrónica
+================================================
+
+Validación
+______________________
+
+.. code-block:: python
+
+    from satcfdi import Signer
+    from satcfdi.portal import SATFacturaElectronica
+    
+    # Load Fiel
+    signer = Signer.load(
+        certificate=open('csd/xiqb891116qe4.cer', 'rb').read(),
+        key=open('csd/xiqb891116qe4.key', 'rb').read(),
+        password=open('csd/xiqb891116qe4.txt', 'r').read()
+    )
+    
+    sat_session = SATFacturaElectronica(signer)
+    sat_session.login()
+    
+    
+    # Validación RFC
+    res = sat_session.exists_rfc(
+        rfc='XIQB891116QE4'
+    )
+    print(res)
+    
+    # Validación Razón Social
+    res = sat_session.validate_legal_name(
+        rfc='XIQB891116QE4',
+        legal_name='KIJ, S.A DE C.V.'
+    )
+    print(res)
+    
+    # Validación LCO
+    res = sat_session.validate_lco(rfc="XIQB891116QE4", aplica_region_fronteriza=True)
+    print(res)
+    
+
