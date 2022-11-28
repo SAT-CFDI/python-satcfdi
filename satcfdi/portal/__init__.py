@@ -113,6 +113,7 @@ class SATCfdiAUSession:
         self.session = requests.session()
 
         self.ajax_id = random_ajax_id()
+        self._request_verification_token = None
 
     def login(self):
         LOGIN_URL = 'https://portal.facturaelectronica.sat.gob.mx'
@@ -175,6 +176,14 @@ class SATCfdiAUSession:
         assert res.status_code == 200
 
         return res
+
+    def load_verification_token(self):
+        res = self.session.get(
+            url='https://portal.facturaelectronica.sat.gob.mx/Factura/GeneraFactura',
+            headers=DEFAULT_HEADERS,
+            allow_redirects=False
+        )
+        self._request_verification_token = request_verification_token(res)
 
     def validate_rfc(self, rfc, razon_social):
         res = self.session.get(
