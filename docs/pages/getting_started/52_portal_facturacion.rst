@@ -21,20 +21,20 @@ ______________________
     
     
     # Validación RFC
-    res = sat_session.exists_rfc(
+    res = sat_session.rfc_valid(
         rfc='XIQB891116QE4'
     )
     print(res)
     
     # Validación Razón Social
-    res = sat_session.validate_legal_name(
+    res = sat_session.legal_name_valid(
         rfc='XIQB891116QE4',
         legal_name='KIJ, S.A DE C.V.'
     )
     print(res)
     
     # Validación LCO
-    res = sat_session.validate_lco(rfc="XIQB891116QE4", aplica_region_fronteriza=True)
+    res = sat_session.lco_details(rfc="XIQB891116QE4")
     print(res)
     
 
