@@ -126,7 +126,7 @@ class SATCfdiAUSession:
         assert res.status_code == 200
 
         action, data = get_post_form(res)
-        if not action.startswith('https://cfdiau.sat.gob.mx/'):
+        if action.startswith('https://cfdiau.sat.gob.mx/'):
             parts = urlparse(action)
             action = urlunparse((
                 parts.scheme,
