@@ -200,6 +200,9 @@ class SATCfdiAUSession:
         return res
 
     def validate_rfc(self, rfc, razon_social):
+        if self._request_verification_token is None:
+            self._reload_verification_token()
+
         res = self.session.post(
             url='https://portal.facturaelectronica.sat.gob.mx/Clientes/ValidaRazonSocialRFC',
             headers=DEFAULT_HEADERS | {
