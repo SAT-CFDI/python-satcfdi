@@ -108,6 +108,7 @@ class SATPortal(PortalManager):
 
 class SATFacturaElectronica(PortalManager):
     BASE_URL = 'https://portal.facturaelectronica.sat.gob.mx'
+    REQUEST_CONTEXT = 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7'
 
     def __init__(self, signer: Signer):
         super().__init__()
@@ -149,6 +150,7 @@ class SATFacturaElectronica(PortalManager):
 
             action, data = get_post_form(res)
             res = self.form_request(action, res.request.url, data)
+
             action, data = get_post_form(res)
 
         res = self.form_request(action, res.request.url, data)
@@ -173,7 +175,7 @@ class SATFacturaElectronica(PortalManager):
             url=f'{self.BASE_URL}/Home/ReActiveSession',
             headers=DEFAULT_HEADERS | {
                 'Origin': f'{self.BASE_URL}',
-                'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
+                'Request-Context': self.REQUEST_CONTEXT,
                 'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'
             },
             allow_redirects=False
@@ -197,7 +199,7 @@ class SATFacturaElectronica(PortalManager):
             headers=DEFAULT_HEADERS | headers | {
                 'Origin': self.BASE_URL,
                 'Authority': self.BASE_URL,
-                'Request-Context': 'appId=cid-v1:20ff76f4-0bca-495f-b7fd-09ca520e39f7',
+                'Request-Context': self.REQUEST_CONTEXT,
                 '__RequestVerificationToken': self._request_verification_token,
                 'Request-Id': f'|{self._ajax_id}.{random_ajax_id()}'  # |pR4Px.o0yAS
             },
