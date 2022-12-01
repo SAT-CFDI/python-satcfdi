@@ -1,6 +1,5 @@
 from decimal import Decimal
 from datetime import datetime, date, time
-from lxml.etree import QName
 from .helpers import Xint, impuesto_index, default_objectify, catalog_code
 from .. import NamespaceMismatchError
 from ..utils import ScalarMap
@@ -8513,11 +8512,11 @@ def signed_info0(cls, node):
         self['Id'] = a
     return self
 def canonicalization_method0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     self['Algorithm'] = node.attrib['Algorithm']
     return self
 def signature_method0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}HMACOutputLength')
     if el is not None:
         self['HMACOutputLength'] = Xint(el.text)
@@ -8544,18 +8543,18 @@ def transforms0(cls, node):
     self['Transform'] = transform0(cls, el)
     return self
 def transform0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}XPath')
     if el is not None:
         self['XPath'] = el.text
     self['Algorithm'] = node.attrib['Algorithm']
     return self
 def digest_method0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     self['Algorithm'] = node.attrib['Algorithm']
     return self
 def key_info0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}KeyName')
     if el is not None:
         self['KeyName'] = el.text
@@ -8581,7 +8580,7 @@ def key_info0(cls, node):
         self['Id'] = a
     return self
 def key_value0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}DSAKeyValue')
     if el is not None:
         self['DSAKeyValue'] = dsakey_value0(cls, el)
@@ -8599,7 +8598,7 @@ def retrieval_method0(cls, node):
         self['Type'] = a
     return self
 def x509data0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}X509IssuerSerial')
     if el is not None:
         self['X509IssuerSerial'] = x509issuer_serial0(cls, el)
@@ -8624,7 +8623,7 @@ def x509issuer_serial0(cls, node):
     self['X509SerialNumber'] = Xint(el.text)
     return self
 def pgpdata0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}PGPKeyID')
     self['PGPKeyID'] = el.text
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}PGPKeyPacket')
@@ -8634,12 +8633,12 @@ def pgpdata0(cls, node):
     self['PGPKeyPacket'] = el.text
     return self
 def spkid_ata0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}SPKISexp')
     self['SPKISexp'] = el.text
     return self
 def object0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     if (a := node.attrib.get('Id')) is not None:
         self['Id'] = a
     if (a := node.attrib.get('MimeType')) is not None:
@@ -8662,7 +8661,7 @@ def signature_properties_type0(cls, node):
         self['Id'] = a
     return self
 def signature_property0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     self['Target'] = node.attrib['Target']
     if (a := node.attrib.get('Id')) is not None:
         self['Id'] = a
@@ -9863,10 +9862,10 @@ def imp_retenidos0(cls, node):
     self['TipoPagoRet'] = node.attrib['TipoPagoRet']
     return self
 def complemento0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def addenda0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def sector_financiero0(cls, node):
     self = cls()
@@ -9974,10 +9973,10 @@ def imp_retenidos1(cls, node):
     self['TipoPagoRet'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_TipoPagoRet', node.attrib['TipoPagoRet'])
     return self
 def complemento1(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def addenda1(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def comprobante0(cls, node):
     self = cls()
@@ -10081,7 +10080,7 @@ def concepto1(cls, node):
 def cuenta_predial0(cls, node):
     return node.attrib['numero']
 def complemento_concepto0(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def parte0(cls, node):
     self = ScalarMap()
@@ -10124,10 +10123,10 @@ def traslado0(cls, node):
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
 def complemento2(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def addenda2(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def comprobante1(cls, node):
     self = cls()
@@ -10264,7 +10263,7 @@ def informacion_aduanera0(cls, node):
 def cuenta_predial1(cls, node):
     return node.attrib['Numero']
 def complemento_concepto1(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def parte1(cls, node):
     self = ScalarMap()
@@ -10311,10 +10310,10 @@ def traslado2(cls, node):
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
 def complemento3(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def addenda3(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def comprobante2(cls, node):
     self = cls()
@@ -10474,7 +10473,7 @@ def informacion_aduanera2(cls, node):
 def cuenta_predial2(cls, node):
     return node.attrib['Numero']
 def complemento_concepto2(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def parte2(cls, node):
     self = ScalarMap()
@@ -10524,10 +10523,10 @@ def traslado4(cls, node):
         self['Importe'] = Decimal(a)
     return self
 def complemento4(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def addenda4(cls, node):
-    self = {QName(n.tag).localname: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
+    self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
 def carta_porte0(cls, node):
     self = cls()
