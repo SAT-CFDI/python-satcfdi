@@ -1,11 +1,10 @@
-from lxml import etree
-from lxml.etree import QName
+from lxml.etree import Element, SubElement
 from .schemas import cfdi_schemas
 from .helpers import simple_element, SchemaCollector, fmt_decimal, strcode, iterate
 from .. import NamespaceMismatchError
 
 def ubicacion0(name, data):
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
     if (a := data.get('TaxID')) is not None:
         self.attrib['taxID'] = a
     if (a := data.get('CodigoSitio')) is not None:
@@ -28,7 +27,7 @@ def ubicacion0(name, data):
         self.attrib['codigoPostal'] = a
     return self
 def datos_contacto0(name, data):
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
     if (a := data.get('Telefono')) is not None:
         self.attrib['telefono'] = a
     if (a := data.get('EmailComercial')) is not None:
@@ -39,7 +38,7 @@ def datos_contacto0(name, data):
         self.attrib['web'] = a
     return self
 def extra0(name, data):
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
     if (a := data.get('Indicador')) is not None:
         self.attrib['indicador'] = a
     if (a := data.get('Atributo')) is not None:
@@ -52,13 +51,13 @@ def extra0(name, data):
         self.attrib['sufijo'] = a
     return self
 def archivo_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe0('informe', r))
     return self
 def informe0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}mes_reportado', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data['SujetoObligado']
@@ -69,7 +68,7 @@ def informe0(name, data):
             self.append(aviso0('aviso', r))
     return self
 def sujeto_obligado0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}clave_entidad_colegiada', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
@@ -82,7 +81,7 @@ def sujeto_obligado0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}exento', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     return self
 def aviso0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}referencia_aviso', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data.get('Modificatorio')
@@ -103,14 +102,14 @@ def aviso0(name, data):
     self.append(detalle_operaciones0('detalle_operaciones', el))
     return self
 def modificatorio0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}folio_modificacion', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}descripcion_modificacion', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     return self
 def alerta0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}tipo_alerta', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -118,7 +117,7 @@ def alerta0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}descripcion_alerta', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     return self
 def persona_aviso0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['TipoPersona']
     self.append(tipo_persona0('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -129,7 +128,7 @@ def persona_aviso0(name, data):
         self.append(telefono0('telefono', el))
     return self
 def tipo_persona0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica0('persona_fisica', el))
@@ -141,7 +140,7 @@ def tipo_persona0(name, data):
         self.append(fideicomiso0('fideicomiso', el))
     return self
 def persona_fisica0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}nombre', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data['ApellidoPaterno']
@@ -163,7 +162,7 @@ def persona_fisica0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}actividad_economica', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=strcode(el)))
     return self
 def persona_moral0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}denominacion_razon', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data.get('FechaConstitucion')
@@ -180,7 +179,7 @@ def persona_moral0(name, data):
     self.append(representante_apoderado0('representante_apoderado', el))
     return self
 def fideicomiso0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}denominacion_razon', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data.get('Rfc')
@@ -193,7 +192,7 @@ def fideicomiso0(name, data):
     self.append(representante_apoderado0('apoderado_delegado', el))
     return self
 def representante_apoderado0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}nombre', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data['ApellidoPaterno']
@@ -211,7 +210,7 @@ def representante_apoderado0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}curp', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     return self
 def tipo_domicilio0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional0('nacional', el))
@@ -220,7 +219,7 @@ def tipo_domicilio0(name, data):
         self.append(extranjero0('extranjero', el))
     return self
 def nacional0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}colonia', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data['Calle']
@@ -234,7 +233,7 @@ def nacional0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}codigo_postal', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     return self
 def extranjero0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}pais', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -254,7 +253,7 @@ def extranjero0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}codigo_postal', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     return self
 def telefono0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}clave_pais', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=strcode(el)))
@@ -266,12 +265,12 @@ def telefono0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}correo_electronico', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     return self
 def dueno_beneficiario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['TipoPersona']
     self.append(tipo_persona1('tipo_persona', el))
     return self
 def tipo_persona1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica1('persona_fisica', el))
@@ -283,7 +282,7 @@ def tipo_persona1(name, data):
         self.append(fideicomiso1('fideicomiso', el))
     return self
 def persona_fisica1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}nombre', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data['ApellidoPaterno']
@@ -304,7 +303,7 @@ def persona_fisica1(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}pais_nacionalidad', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=strcode(el)))
     return self
 def persona_moral1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}denominacion_razon', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data.get('FechaConstitucion')
@@ -318,7 +317,7 @@ def persona_moral1(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}pais_nacionalidad', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=strcode(el)))
     return self
 def fideicomiso1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}denominacion_razon', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     el = data.get('Rfc')
@@ -329,13 +328,13 @@ def fideicomiso1(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}identificador_fideicomiso', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     return self
 def detalle_operaciones0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion0('datos_operacion', r))
     return self
 def datos_operacion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}fecha_operacion', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el.strftime('%Y%m%d')))
     el = data['TipoOperacion']
@@ -348,7 +347,7 @@ def datos_operacion0(name, data):
         self.append(datos_liquidacion0('datos_liquidacion', r))
     return self
 def caracteristicas0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['FechaInicio']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}fecha_inicio', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el.strftime('%Y%m%d')))
     el = data['FechaTermino']
@@ -372,7 +371,7 @@ def caracteristicas0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}folio_real', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     return self
 def datos_liquidacion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/ari', name), nsmap=data.get('_nsmap') or {'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}fecha_pago', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el.strftime('%Y%m%d')))
     el = data['FormaPago']
@@ -385,13 +384,13 @@ def datos_liquidacion0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/ari}monto_operacion', nsmap={'ari': 'http://www.uif.shcp.gob.mx/recepcion/ari'}, text=el))
     return self
 def archivo_type1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe1('informe', r))
     return self
 def informe1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}mes_reportado', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['SujetoObligado']
@@ -402,7 +401,7 @@ def informe1(name, data):
             self.append(aviso1('aviso', r))
     return self
 def sujeto_obligado1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}clave_entidad_colegiada', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
@@ -417,7 +416,7 @@ def sujeto_obligado1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}dominio_plataforma', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def aviso1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}referencia_aviso', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['Prioridad']
@@ -431,14 +430,14 @@ def aviso1(name, data):
     self.append(operaciones_persona0('operaciones_persona', el))
     return self
 def modificatorio1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}folio_modificacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}descripcion_modificacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def alerta1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}tipo_alerta', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -446,7 +445,7 @@ def alerta1(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}descripcion_alerta', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def operaciones_persona0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['PersonaAviso']
     self.append(persona_aviso1('persona_aviso', el))
     el = data.get('DuenoBeneficiario')
@@ -457,7 +456,7 @@ def operaciones_persona0(name, data):
     self.append(detalle_operaciones1('detalle_operaciones', el))
     return self
 def persona_aviso1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['DatosCuentaPlataforma']
     self.append(datos_cuenta_plataforma0('datos_cuenta_plataforma', el))
     el = data['TipoPersona']
@@ -470,7 +469,7 @@ def persona_aviso1(name, data):
         self.append(telefono1('telefono', el))
     return self
 def datos_cuenta_plataforma0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['IdUsuario']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}id_usuario', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['CuentaRelacionada']
@@ -482,7 +481,7 @@ def datos_cuenta_plataforma0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}moneda_cuenta', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=str(el)))
     return self
 def tipo_persona2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica2('persona_fisica', el))
@@ -494,7 +493,7 @@ def tipo_persona2(name, data):
         self.append(fideicomiso2('fideicomiso', el))
     return self
 def persona_fisica2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}nombre', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['ApellidoPaterno']
@@ -518,7 +517,7 @@ def persona_fisica2(name, data):
     self.append(documento_identificacion0('documento_identificacion', el))
     return self
 def persona_moral2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}denominacion_razon', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data.get('FechaConstitucion')
@@ -535,7 +534,7 @@ def persona_moral2(name, data):
     self.append(representante_apoderado1('representante_apoderado', el))
     return self
 def fideicomiso2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}denominacion_razon', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data.get('Rfc')
@@ -548,7 +547,7 @@ def fideicomiso2(name, data):
     self.append(representante_apoderado1('apoderado_delegado', el))
     return self
 def representante_apoderado1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}nombre', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['ApellidoPaterno']
@@ -568,14 +567,14 @@ def representante_apoderado1(name, data):
     self.append(documento_identificacion0('documento_identificacion', el))
     return self
 def documento_identificacion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['TipoIdentificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}tipo_identificacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=str(el)))
     el = data['NumeroIdentificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}numero_identificacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def tipo_domicilio1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional1('nacional', el))
@@ -584,7 +583,7 @@ def tipo_domicilio1(name, data):
         self.append(extranjero1('extranjero', el))
     return self
 def nacional1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}colonia', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['Calle']
@@ -598,7 +597,7 @@ def nacional1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}codigo_postal', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def extranjero1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}pais', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -618,7 +617,7 @@ def extranjero1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}codigo_postal', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def telefono1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['ClavePais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}clave_pais', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=strcode(el)))
     el = data['NumeroTelefono']
@@ -627,12 +626,12 @@ def telefono1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}correo_electronico', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def dueno_beneficiario1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['TipoPersona']
     self.append(tipo_persona3('tipo_persona', el))
     return self
 def tipo_persona3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica3('persona_fisica', el))
@@ -644,7 +643,7 @@ def tipo_persona3(name, data):
         self.append(fideicomiso3('fideicomiso', el))
     return self
 def persona_fisica3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}nombre', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['ApellidoPaterno']
@@ -664,7 +663,7 @@ def persona_fisica3(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}pais_nacionalidad', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=strcode(el)))
     return self
 def persona_moral3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}denominacion_razon', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data.get('FechaConstitucion')
@@ -677,7 +676,7 @@ def persona_moral3(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}pais_nacionalidad', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=strcode(el)))
     return self
 def fideicomiso3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}denominacion_razon', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data.get('Rfc')
@@ -688,7 +687,7 @@ def fideicomiso3(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}identificador_fideicomiso', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def detalle_operaciones1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data.get('OperacionesCompra')
     if el is not None:
         self.append(operaciones_compra0('operaciones_compra', el))
@@ -706,25 +705,25 @@ def detalle_operaciones1(name, data):
         self.append(operaciones_fondos0('operaciones_fondos', el))
     return self
 def operaciones_compra0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Compra']
     for r in iterate(el):
         self.append(compra0('compra', r))
     return self
 def operaciones_venta0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Venta']
     for r in iterate(el):
         self.append(venta0('venta', r))
     return self
 def operaciones_intercambio0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Intercambio']
     for r in iterate(el):
         self.append(intercambio0('intercambio', r))
     return self
 def operaciones_transferencia0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data.get('TransferenciasEnviadas')
     if el is not None:
         self.append(transferencias_enviadas0('transferencias_enviadas', el))
@@ -733,19 +732,19 @@ def operaciones_transferencia0(name, data):
         self.append(transferencias_recibidas0('transferencias_recibidas', el))
     return self
 def transferencias_enviadas0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Envio']
     for r in iterate(el):
         self.append(envio0('envio', r))
     return self
 def transferencias_recibidas0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Recepcion']
     for r in iterate(el):
         self.append(recepcion0('recepcion', r))
     return self
 def operaciones_fondos0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data.get('FondosRetirados')
     if el is not None:
         self.append(fondos_retirados0('fondos_retirados', el))
@@ -754,19 +753,19 @@ def operaciones_fondos0(name, data):
         self.append(fondos_depositados0('fondos_depositados', el))
     return self
 def fondos_retirados0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Retiro']
     for r in iterate(el):
         self.append(retiro0('retiro', r))
     return self
 def fondos_depositados0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Deposito']
     for r in iterate(el):
         self.append(deposito0('deposito', r))
     return self
 def compra0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['FechaHoraOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['MonedaOperacion']
@@ -779,7 +778,7 @@ def compra0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}hash_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def venta0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['FechaHoraOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['MonedaOperacion']
@@ -792,7 +791,7 @@ def venta0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}hash_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def intercambio0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['FechaHoraOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['ActivoVirtualEnviado']
@@ -803,7 +802,7 @@ def intercambio0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}hash_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def envio0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['FechaHoraOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['MontoOperacionMn']
@@ -814,7 +813,7 @@ def envio0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}hash_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def recepcion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['FechaHoraOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['MontoOperacionMn']
@@ -825,7 +824,7 @@ def recepcion0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}hash_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def retiro0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['FechaHoraOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['InstrumentoMonetario']
@@ -838,7 +837,7 @@ def retiro0(name, data):
     self.append(datos_beneficiario0('datos_beneficiario', el))
     return self
 def deposito0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['FechaHoraOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['InstrumentoMonetario']
@@ -851,7 +850,7 @@ def deposito0(name, data):
     self.append(datos_beneficiario0('datos_ordenante', el))
     return self
 def activo_virtual0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['ActivoVirtualOperado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}activo_virtual_operado', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=str(el)))
     el = data.get('DescripcionActivoVirtual')
@@ -863,21 +862,21 @@ def activo_virtual0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}cantidad_activo_virtual', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def activo_virtual_enviado0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['ActivoVirtual']
     self.append(activo_virtual0('activo_virtual', el))
     el = data['MontoOperacionMn']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}monto_operacion_mn', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def datos_beneficiario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['TipoPersona']
     self.append(tipo_persona4('tipo_persona', el))
     el = data['NacionalidadCuenta']
     self.append(nacionalidad_cuenta0('nacionalidad_cuenta', el))
     return self
 def tipo_persona4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica4('persona_fisica', el))
@@ -886,7 +885,7 @@ def tipo_persona4(name, data):
         self.append(persona_moral4('persona_moral', el))
     return self
 def persona_fisica4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}nombre', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['ApellidoPaterno']
@@ -895,12 +894,12 @@ def persona_fisica4(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}apellido_materno', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def persona_moral4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}denominacion_razon', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def nacionalidad_cuenta0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional2('nacional', el))
@@ -909,27 +908,27 @@ def nacionalidad_cuenta0(name, data):
         self.append(extranjero2('extranjero', el))
     return self
 def nacional2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['ClabeDestino']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}clabe_destino', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['ClaveInstitucionFinanciera']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}clave_institucion_financiera', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=str(el)))
     return self
 def extranjero2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/avi', name), nsmap=data.get('_nsmap') or {'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'})
     el = data['NumeroCuenta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}numero_cuenta', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     el = data['NombreBanco']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/avi}nombre_banco', nsmap={'avi': 'http://www.uif.shcp.gob.mx/recepcion/avi'}, text=el))
     return self
 def archivo_type2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe2('informe', r))
     return self
 def informe2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}mes_reportado', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data['SujetoObligado']
@@ -940,7 +939,7 @@ def informe2(name, data):
             self.append(aviso2('aviso', r))
     return self
 def sujeto_obligado2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}clave_entidad_colegiada', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
@@ -953,7 +952,7 @@ def sujeto_obligado2(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}exento', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def aviso2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}referencia_aviso', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data.get('Modificatorio')
@@ -974,14 +973,14 @@ def aviso2(name, data):
     self.append(detalle_operaciones2('detalle_operaciones', el))
     return self
 def modificatorio2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}folio_modificacion', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}descripcion_modificacion', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def alerta2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}tipo_alerta', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -989,7 +988,7 @@ def alerta2(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}descripcion_alerta', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def persona_aviso2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['TipoPersona']
     self.append(tipo_persona5('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -1000,7 +999,7 @@ def persona_aviso2(name, data):
         self.append(telefono2('telefono', el))
     return self
 def tipo_persona5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica5('persona_fisica', el))
@@ -1012,7 +1011,7 @@ def tipo_persona5(name, data):
         self.append(fideicomiso4('fideicomiso', el))
     return self
 def persona_fisica5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}nombre', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data['ApellidoPaterno']
@@ -1034,7 +1033,7 @@ def persona_fisica5(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}actividad_economica', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=strcode(el)))
     return self
 def persona_moral5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}denominacion_razon', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data.get('FechaConstitucion')
@@ -1051,7 +1050,7 @@ def persona_moral5(name, data):
     self.append(representante_apoderado2('representante_apoderado', el))
     return self
 def fideicomiso4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}denominacion_razon', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data.get('Rfc')
@@ -1064,7 +1063,7 @@ def fideicomiso4(name, data):
     self.append(representante_apoderado2('apoderado_delegado', el))
     return self
 def representante_apoderado2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}nombre', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data['ApellidoPaterno']
@@ -1082,7 +1081,7 @@ def representante_apoderado2(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}curp', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def tipo_domicilio2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional3('nacional', el))
@@ -1091,7 +1090,7 @@ def tipo_domicilio2(name, data):
         self.append(extranjero3('extranjero', el))
     return self
 def nacional3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}colonia', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data['Calle']
@@ -1105,7 +1104,7 @@ def nacional3(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}codigo_postal', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def extranjero3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}pais', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -1125,7 +1124,7 @@ def extranjero3(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}codigo_postal', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def telefono2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}clave_pais', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=strcode(el)))
@@ -1137,12 +1136,12 @@ def telefono2(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}correo_electronico', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def dueno_beneficiario2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['TipoPersona']
     self.append(tipo_persona6('tipo_persona', el))
     return self
 def tipo_persona6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica6('persona_fisica', el))
@@ -1154,7 +1153,7 @@ def tipo_persona6(name, data):
         self.append(fideicomiso5('fideicomiso', el))
     return self
 def persona_fisica6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}nombre', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data['ApellidoPaterno']
@@ -1175,7 +1174,7 @@ def persona_fisica6(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}pais_nacionalidad', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=strcode(el)))
     return self
 def persona_moral6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}denominacion_razon', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data.get('FechaConstitucion')
@@ -1189,7 +1188,7 @@ def persona_moral6(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}pais_nacionalidad', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=strcode(el)))
     return self
 def fideicomiso5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}denominacion_razon', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data.get('Rfc')
@@ -1200,13 +1199,13 @@ def fideicomiso5(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}identificador_fideicomiso', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def detalle_operaciones2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion1('datos_operacion', r))
     return self
 def datos_operacion1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}fecha_operacion', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el.strftime('%Y%m%d')))
     el = data['CodigoPostal']
@@ -1220,7 +1219,7 @@ def datos_operacion1(name, data):
         self.append(datos_liquidacion1('datos_liquidacion', r))
     return self
 def tipo_bien0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data.get('DatosVehiculoTerrestre')
     if el is not None:
         self.append(datos_vehiculo_terrestre0('datos_vehiculo_terrestre', el))
@@ -1229,7 +1228,7 @@ def tipo_bien0(name, data):
         self.append(datos_inmueble0('datos_inmueble', el))
     return self
 def datos_vehiculo_terrestre0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['MarcaFabricante']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}marca_fabricante', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data['Modelo']
@@ -1251,7 +1250,7 @@ def datos_vehiculo_terrestre0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}nivel_blindaje', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def datos_inmueble0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}tipo_inmueble', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data['CodigoPostal']
@@ -1261,14 +1260,14 @@ def datos_inmueble0(name, data):
         self.append(datos_parte_blindada0('datos_parte_blindada', r))
     return self
 def datos_parte_blindada0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['ParteBlindada']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}parte_blindada', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     el = data['NivelBlindaje']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}nivel_blindaje', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def datos_liquidacion1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/bli', name), nsmap=data.get('_nsmap') or {'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}fecha_pago', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el.strftime('%Y%m%d')))
     el = data['InstrumentoMonetario']
@@ -1279,13 +1278,13 @@ def datos_liquidacion1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/bli}monto_operacion', nsmap={'bli': 'http://www.uif.shcp.gob.mx/recepcion/bli'}, text=el))
     return self
 def archivo_type3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe3('informe', r))
     return self
 def informe3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}mes_reportado', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data['SujetoObligado']
@@ -1296,7 +1295,7 @@ def informe3(name, data):
             self.append(aviso3('aviso', r))
     return self
 def sujeto_obligado3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}clave_entidad_colegiada', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
@@ -1309,7 +1308,7 @@ def sujeto_obligado3(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}exento', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     return self
 def aviso3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}referencia_aviso', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data.get('Modificatorio')
@@ -1330,14 +1329,14 @@ def aviso3(name, data):
     self.append(detalle_operaciones3('detalle_operaciones', el))
     return self
 def modificatorio3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}folio_modificacion', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}descripcion_modificacion', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     return self
 def alerta3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}tipo_alerta', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -1345,7 +1344,7 @@ def alerta3(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}descripcion_alerta', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     return self
 def persona_aviso3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['TipoPersona']
     self.append(tipo_persona7('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -1356,7 +1355,7 @@ def persona_aviso3(name, data):
         self.append(telefono3('telefono', el))
     return self
 def tipo_persona7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica7('persona_fisica', el))
@@ -1368,7 +1367,7 @@ def tipo_persona7(name, data):
         self.append(fideicomiso6('fideicomiso', el))
     return self
 def persona_fisica7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}nombre', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data['ApellidoPaterno']
@@ -1390,7 +1389,7 @@ def persona_fisica7(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}actividad_economica', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=strcode(el)))
     return self
 def persona_moral7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}denominacion_razon', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data.get('FechaConstitucion')
@@ -1407,7 +1406,7 @@ def persona_moral7(name, data):
     self.append(representante_apoderado3('representante_apoderado', el))
     return self
 def fideicomiso6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}denominacion_razon', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data.get('Rfc')
@@ -1420,7 +1419,7 @@ def fideicomiso6(name, data):
     self.append(representante_apoderado3('apoderado_delegado', el))
     return self
 def representante_apoderado3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}nombre', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data['ApellidoPaterno']
@@ -1438,7 +1437,7 @@ def representante_apoderado3(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}curp', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     return self
 def tipo_domicilio3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional4('nacional', el))
@@ -1447,7 +1446,7 @@ def tipo_domicilio3(name, data):
         self.append(extranjero4('extranjero', el))
     return self
 def nacional4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}colonia', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data['Calle']
@@ -1461,7 +1460,7 @@ def nacional4(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}codigo_postal', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     return self
 def extranjero4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}pais', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -1481,7 +1480,7 @@ def extranjero4(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}codigo_postal', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     return self
 def telefono3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}clave_pais', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=strcode(el)))
@@ -1493,12 +1492,12 @@ def telefono3(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}correo_electronico', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     return self
 def dueno_beneficiario3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['TipoPersona']
     self.append(tipo_persona8('tipo_persona', el))
     return self
 def tipo_persona8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica8('persona_fisica', el))
@@ -1510,7 +1509,7 @@ def tipo_persona8(name, data):
         self.append(fideicomiso7('fideicomiso', el))
     return self
 def persona_fisica8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}nombre', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data['ApellidoPaterno']
@@ -1531,7 +1530,7 @@ def persona_fisica8(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}pais_nacionalidad', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=strcode(el)))
     return self
 def persona_moral8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}denominacion_razon', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data.get('FechaConstitucion')
@@ -1545,7 +1544,7 @@ def persona_moral8(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}pais_nacionalidad', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=strcode(el)))
     return self
 def fideicomiso7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}denominacion_razon', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data.get('Rfc')
@@ -1556,13 +1555,13 @@ def fideicomiso7(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}identificador_fideicomiso', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     return self
 def detalle_operaciones3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion2('datos_operacion', r))
     return self
 def datos_operacion2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}fecha_operacion', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el.strftime('%Y%m%d')))
     el = data['CodigoPostal']
@@ -1577,14 +1576,14 @@ def datos_operacion2(name, data):
         self.append(datos_liquidacion2('datos_liquidacion', r))
     return self
 def datos_cheque0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['NumeroCheques']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}numero_cheques', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     el = data['MonedaCheques']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}moneda_cheques', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     return self
 def datos_liquidacion2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/chv', name), nsmap=data.get('_nsmap') or {'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}fecha_pago', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el.strftime('%Y%m%d')))
     el = data['InstrumentoMonetario']
@@ -1595,13 +1594,13 @@ def datos_liquidacion2(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/chv}monto_operacion', nsmap={'chv': 'http://www.uif.shcp.gob.mx/recepcion/chv'}, text=el))
     return self
 def archivo_type4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe4('informe', r))
     return self
 def informe4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}mes_reportado', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     el = data['SujetoObligado']
@@ -1612,7 +1611,7 @@ def informe4(name, data):
             self.append(aviso4('aviso', r))
     return self
 def sujeto_obligado4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}clave_entidad_colegiada', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -1625,7 +1624,7 @@ def sujeto_obligado4(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}exento', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def aviso4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}referencia_aviso', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     el = data.get('Modificatorio')
@@ -1639,14 +1638,14 @@ def aviso4(name, data):
     self.append(detalle_operaciones4('detalle_operaciones', el))
     return self
 def modificatorio4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}folio_modificacion', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}descripcion_modificacion', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def alerta4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_alerta', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -1654,13 +1653,13 @@ def alerta4(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}descripcion_alerta', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def detalle_operaciones4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion3('datos_operacion', r))
     return self
 def datos_operacion3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['TipoOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_operacion', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=strcode(el)))
     el = data['DesarrollosInmobiliarios']
@@ -1669,13 +1668,13 @@ def datos_operacion3(name, data):
     self.append(aportaciones0('aportaciones', el))
     return self
 def desarrollos_inmobiliarios0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['DatosDesarrollo']
     for r in iterate(el):
         self.append(datos_desarrollo0('datos_desarrollo', r))
     return self
 def datos_desarrollo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['ObjetoAvisoAnterior']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}objeto_aviso_anterior', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     el = data['Modificacion']
@@ -1689,7 +1688,7 @@ def datos_desarrollo0(name, data):
         self.append(caracteristicas_desarrollo0('caracteristicas_desarrollo', r))
     return self
 def caracteristicas_desarrollo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['CodigoPostal']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}codigo_postal', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     el = data['Colonia']
@@ -1711,7 +1710,7 @@ def caracteristicas_desarrollo0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}otras_empresas', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def aportaciones0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('FechaAportacion')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}fecha_aportacion', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el.strftime('%Y%m%d')))
@@ -1721,7 +1720,7 @@ def aportaciones0(name, data):
             self.append(tipo_aportacion0('tipo_aportacion', r))
     return self
 def tipo_aportacion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('RecursosPropios')
     if el is not None:
         self.append(recursos_propios0('recursos_propios', el))
@@ -1742,14 +1741,14 @@ def tipo_aportacion0(name, data):
         self.append(financiamiento_bursatil0('financiamiento_bursatil', el))
     return self
 def recursos_propios0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('DatosAportacion')
     if el is not None:
         for r in iterate(el):
             self.append(datos_aportacion0('datos_aportacion', r))
     return self
 def datos_aportacion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('AportacionNumerario')
     if el is not None:
         self.append(aportacion_numerario0('aportacion_numerario', el))
@@ -1758,7 +1757,7 @@ def datos_aportacion0(name, data):
         self.append(aportacion_especie0('aportacion_especie', el))
     return self
 def aportacion_numerario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('InstrumentoMonetario')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}instrumento_monetario', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=strcode(el)))
@@ -1776,7 +1775,7 @@ def aportacion_numerario0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}nombre_institucion', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def aportacion_especie0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('DescripcionBien')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}descripcion_bien', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -1785,7 +1784,7 @@ def aportacion_especie0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}monto_estimado', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def socios0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('NumeroSocios')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}numero_socios', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -1793,14 +1792,14 @@ def socios0(name, data):
     self.append(detalle_socios0('detalle_socios', el))
     return self
 def detalle_socios0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('DatosSocio')
     if el is not None:
         for r in iterate(el):
             self.append(datos_socio0('datos_socio', r))
     return self
 def datos_socio0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('AportacionAnteriorSocio')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}aportacion_anterior_socio', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -1818,7 +1817,7 @@ def datos_socio0(name, data):
     self.append(detalle_aportaciones0('detalle_aportaciones', el))
     return self
 def tipo_persona_socio0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica9('persona_fisica', el))
@@ -1830,7 +1829,7 @@ def tipo_persona_socio0(name, data):
         self.append(fideicomiso8('fideicomiso', el))
     return self
 def persona_fisica9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('Nombre')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}nombre', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -1854,7 +1853,7 @@ def persona_fisica9(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}actividad_economica', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=strcode(el)))
     return self
 def persona_moral9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('DenominacionRazon')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}denominacion_razon', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -1871,7 +1870,7 @@ def persona_moral9(name, data):
     self.append(representante_apoderado4('representante_apoderado', el))
     return self
 def representante_apoderado4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('Nombre')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}nombre', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -1892,7 +1891,7 @@ def representante_apoderado4(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}curp', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def tipo_domicilio_socio0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional5('nacional', el))
@@ -1901,7 +1900,7 @@ def tipo_domicilio_socio0(name, data):
         self.append(extranjero5('extranjero', el))
     return self
 def nacional5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('Colonia')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}colonia', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -1919,7 +1918,7 @@ def nacional5(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}codigo_postal', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def extranjero5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('Pais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}pais', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=strcode(el)))
@@ -1946,7 +1945,7 @@ def extranjero5(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}codigo_postal', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def telefono4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}clave_pais', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=strcode(el)))
@@ -1958,12 +1957,12 @@ def telefono4(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}correo_electronico', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def detalle_aportaciones0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['DatosAportacion']
     self.append(datos_aportacion1('datos_aportacion', el))
     return self
 def datos_aportacion1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('AportacionNumerario')
     if el is not None:
         self.append(aportacion_numerario0('aportacion_numerario', el))
@@ -1972,7 +1971,7 @@ def datos_aportacion1(name, data):
         self.append(aportacion_especie0('aportacion_especie', el))
     return self
 def terceros0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('NumeroTerceros')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}numero_terceros', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -1980,14 +1979,14 @@ def terceros0(name, data):
     self.append(detalle_terceros0('detalle_terceros', el))
     return self
 def detalle_terceros0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('DatosTercero')
     if el is not None:
         for r in iterate(el):
             self.append(datos_tercero0('datos_tercero', r))
     return self
 def datos_tercero0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('TipoTercero')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_tercero', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -2000,7 +1999,7 @@ def datos_tercero0(name, data):
     self.append(detalle_aportaciones1('detalle_aportaciones', el))
     return self
 def tipo_persona_tercero0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisicaa('persona_fisica', el))
@@ -2012,7 +2011,7 @@ def tipo_persona_tercero0(name, data):
         self.append(fideicomiso8('fideicomiso', el))
     return self
 def persona_fisicaa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('Nombre')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}nombre', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -2039,7 +2038,7 @@ def persona_fisicaa(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}actividad_economica', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=strcode(el)))
     return self
 def persona_morala(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('DenominacionRazon')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}denominacion_razon', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -2059,7 +2058,7 @@ def persona_morala(name, data):
     self.append(representante_apoderado4('representante_apoderado', el))
     return self
 def fideicomiso8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('DenominacionRazon')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}denominacion_razon', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -2071,12 +2070,12 @@ def fideicomiso8(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}identificador_fideicomiso', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def detalle_aportaciones1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data['DatosAportacion']
     self.append(datos_aportacion2('datos_aportacion', el))
     return self
 def datos_aportacion2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('AportacionNumerario')
     if el is not None:
         self.append(aportacion_numerario1('aportacion_numerario', el))
@@ -2085,7 +2084,7 @@ def datos_aportacion2(name, data):
         self.append(aportacion_especie0('aportacion_especie', el))
     return self
 def aportacion_numerario1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('InstrumentoMonetario')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}instrumento_monetario', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=strcode(el)))
@@ -2106,14 +2105,14 @@ def aportacion_numerario1(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}valor_inmueble_preventa', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def prestamo_financiero0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('DatosPrestamo')
     if el is not None:
         for r in iterate(el):
             self.append(datos_prestamo0('datos_prestamo', r))
     return self
 def datos_prestamo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('TipoInstitucion')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_institucion', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -2134,14 +2133,14 @@ def datos_prestamo0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}plazo_meses', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def prestamo_no_financiero0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('DatosPrestamo')
     if el is not None:
         for r in iterate(el):
             self.append(datos_prestamo1('datos_prestamo', r))
     return self
 def datos_prestamo1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('MontoPrestamo')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}monto_prestamo', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
@@ -2155,14 +2154,14 @@ def datos_prestamo1(name, data):
     self.append(detalle_acreedores0('detalle_acreedores', el))
     return self
 def detalle_acreedores0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('TipoPersonaAcreedor')
     if el is not None:
         for r in iterate(el):
             self.append(tipo_persona_tercero0('tipo_persona_acreedor', r))
     return self
 def financiamiento_bursatil0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/din', name), nsmap=data.get('_nsmap') or {'din': 'http://www.uif.shcp.gob.mx/recepcion/din'})
     el = data.get('FechaEmision')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}fecha_emision', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el.strftime('%Y%m%d')))
@@ -2174,13 +2173,13 @@ def financiamiento_bursatil0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/din}monto_recibido', nsmap={'din': 'http://www.uif.shcp.gob.mx/recepcion/din'}, text=el))
     return self
 def archivo_type5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe5('informe', r))
     return self
 def informe5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}mes_reportado', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data['SujetoObligado']
@@ -2191,7 +2190,7 @@ def informe5(name, data):
             self.append(aviso5('aviso', r))
     return self
 def sujeto_obligado5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}clave_entidad_colegiada', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
@@ -2204,7 +2203,7 @@ def sujeto_obligado5(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}exento', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def aviso5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}referencia_aviso', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data.get('Modificatorio')
@@ -2225,14 +2224,14 @@ def aviso5(name, data):
     self.append(detalle_operaciones5('detalle_operaciones', el))
     return self
 def modificatorio5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}folio_modificacion', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}descripcion_modificacion', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def alerta5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}tipo_alerta', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -2240,7 +2239,7 @@ def alerta5(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}descripcion_alerta', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def persona_aviso4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['TipoPersona']
     self.append(tipo_persona9('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -2251,7 +2250,7 @@ def persona_aviso4(name, data):
         self.append(telefono5('telefono', el))
     return self
 def tipo_persona9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisicab('persona_fisica', el))
@@ -2263,7 +2262,7 @@ def tipo_persona9(name, data):
         self.append(fideicomiso9('fideicomiso', el))
     return self
 def persona_fisicab(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}nombre', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data['ApellidoPaterno']
@@ -2285,7 +2284,7 @@ def persona_fisicab(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}actividad_economica', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=strcode(el)))
     return self
 def persona_moralb(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}denominacion_razon', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data.get('FechaConstitucion')
@@ -2302,7 +2301,7 @@ def persona_moralb(name, data):
     self.append(representante_apoderado5('representante_apoderado', el))
     return self
 def fideicomiso9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}denominacion_razon', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data.get('Rfc')
@@ -2315,7 +2314,7 @@ def fideicomiso9(name, data):
     self.append(representante_apoderado5('apoderado_delegado', el))
     return self
 def representante_apoderado5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}nombre', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data['ApellidoPaterno']
@@ -2333,7 +2332,7 @@ def representante_apoderado5(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}curp', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def tipo_domicilio4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional6('nacional', el))
@@ -2342,7 +2341,7 @@ def tipo_domicilio4(name, data):
         self.append(extranjero6('extranjero', el))
     return self
 def nacional6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}colonia', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data['Calle']
@@ -2356,7 +2355,7 @@ def nacional6(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}codigo_postal', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def extranjero6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}pais', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -2376,7 +2375,7 @@ def extranjero6(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}codigo_postal', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def telefono5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}clave_pais', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=strcode(el)))
@@ -2388,12 +2387,12 @@ def telefono5(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}correo_electronico', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def dueno_beneficiario4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['TipoPersona']
     self.append(tipo_personaa('tipo_persona', el))
     return self
 def tipo_personaa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisicac('persona_fisica', el))
@@ -2405,7 +2404,7 @@ def tipo_personaa(name, data):
         self.append(fideicomisoa('fideicomiso', el))
     return self
 def persona_fisicac(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}nombre', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data['ApellidoPaterno']
@@ -2426,7 +2425,7 @@ def persona_fisicac(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}pais_nacionalidad', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=strcode(el)))
     return self
 def persona_moralc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}denominacion_razon', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data.get('FechaConstitucion')
@@ -2440,7 +2439,7 @@ def persona_moralc(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}pais_nacionalidad', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=strcode(el)))
     return self
 def fideicomisoa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}denominacion_razon', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data.get('Rfc')
@@ -2451,13 +2450,13 @@ def fideicomisoa(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}identificador_fideicomiso', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def detalle_operaciones5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion4('datos_operacion', r))
     return self
 def datos_operacion4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}fecha_operacion', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el.strftime('%Y%m%d')))
     el = data['CodigoPostal']
@@ -2468,13 +2467,13 @@ def datos_operacion4(name, data):
     self.append(datos_donativo0('datos_donativo', el))
     return self
 def datos_donativo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['TipoDonativo']
     for r in iterate(el):
         self.append(tipo_donativo0('tipo_donativo', r))
     return self
 def tipo_donativo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data.get('LiquidacionNumerario')
     if el is not None:
         self.append(liquidacion_numerario0('liquidacion_numerario', el))
@@ -2483,7 +2482,7 @@ def tipo_donativo0(name, data):
         self.append(liquidacion_especie0('liquidacion_especie', el))
     return self
 def liquidacion_numerario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}fecha_pago', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el.strftime('%Y%m%d')))
     el = data['InstrumentoMonetario']
@@ -2494,7 +2493,7 @@ def liquidacion_numerario0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}monto_operacion', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def liquidacion_especie0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['MontoOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}monto_operacion', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     el = data['Moneda']
@@ -2506,7 +2505,7 @@ def liquidacion_especie0(name, data):
         self.append(datos_bien_donado0('datos_bien_donado', el))
     return self
 def datos_bien_donado0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data.get('DatosInmueble')
     if el is not None:
         self.append(datos_inmueble1('datos_inmueble', el))
@@ -2515,7 +2514,7 @@ def datos_bien_donado0(name, data):
         self.append(datos_otro0('datos_otro', el))
     return self
 def datos_inmueble1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}tipo_inmueble', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=strcode(el)))
     el = data['CodigoPostal']
@@ -2524,12 +2523,12 @@ def datos_inmueble1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}folio_real', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def datos_otro0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/don', name), nsmap=data.get('_nsmap') or {'don': 'http://www.uif.shcp.gob.mx/recepcion/don'})
     el = data['DescripcionBienDonado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/don}descripcion_bien_donado', nsmap={'don': 'http://www.uif.shcp.gob.mx/recepcion/don'}, text=el))
     return self
 def tipo_persona_1_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoMovimientoFideicomisario']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_movimiento_fideicomisario', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('PersonaFisica')
@@ -2543,13 +2542,13 @@ def tipo_persona_1_type0(name, data):
         self.append(fideicomisob('fideicomiso', el))
     return self
 def archivo_type6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe6('informe', r))
     return self
 def informe6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}mes_reportado', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['SujetoObligado']
@@ -2560,7 +2559,7 @@ def informe6(name, data):
             self.append(aviso6('aviso', r))
     return self
 def sujeto_obligado6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}clave_entidad_colegiada', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
@@ -2573,7 +2572,7 @@ def sujeto_obligado6(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}exento', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def aviso6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}referencia_aviso', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('Modificatorio')
@@ -2590,14 +2589,14 @@ def aviso6(name, data):
     self.append(detalle_operaciones6('detalle_operaciones', el))
     return self
 def modificatorio6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}folio_modificacion', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}descripcion_modificacion', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def alerta6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_alerta', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -2605,7 +2604,7 @@ def alerta6(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}descripcion_alerta', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def persona_aviso5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}nombre', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['ApellidoPaterno']
@@ -2623,13 +2622,13 @@ def persona_aviso5(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}curp', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def detalle_operaciones6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion5('datos_operacion', r))
     return self
 def datos_operacion5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['InstrumentoPublico']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}instrumento_publico', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['FechaOperacion']
@@ -2638,7 +2637,7 @@ def datos_operacion5(name, data):
     self.append(tipo_actividad0('tipo_actividad', el))
     return self
 def tipo_actividad0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data.get('OtorgamientoPoder')
     if el is not None:
         self.append(otorgamiento_poder0('otorgamiento_poder', el))
@@ -2671,7 +2670,7 @@ def tipo_actividad0(name, data):
         self.append(avaluo0('avaluo', el))
     return self
 def otorgamiento_poder0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DatosPoderdante']
     for r in iterate(el):
         self.append(datos_poderdante0('datos_poderdante', r))
@@ -2680,19 +2679,19 @@ def otorgamiento_poder0(name, data):
         self.append(datos_apoderado0('datos_apoderado', r))
     return self
 def datos_poderdante0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoPersona']
     self.append(tipo_personab('tipo_persona', el))
     return self
 def datos_apoderado0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoPoder']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_poder', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['TipoPersona']
     self.append(tipo_personac('tipo_persona', el))
     return self
 def tipo_personab(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisicad('persona_fisica', el))
@@ -2704,7 +2703,7 @@ def tipo_personab(name, data):
         self.append(fideicomisob('fideicomiso', el))
     return self
 def persona_fisicad(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}nombre', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['ApellidoPaterno']
@@ -2726,7 +2725,7 @@ def persona_fisicad(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}actividad_economica', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=strcode(el)))
     return self
 def persona_morald(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('FechaConstitucion')
@@ -2741,7 +2740,7 @@ def persona_morald(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}giro_mercantil', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=strcode(el)))
     return self
 def fideicomisob(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('Rfc')
@@ -2752,7 +2751,7 @@ def fideicomisob(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}identificador_fideicomiso', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def tipo_personac(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisicae('persona_fisica', el))
@@ -2764,7 +2763,7 @@ def tipo_personac(name, data):
         self.append(fideicomisob('fideicomiso', el))
     return self
 def persona_morale(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('FechaConstitucion')
@@ -2777,7 +2776,7 @@ def persona_morale(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=strcode(el)))
     return self
 def persona_fisicae(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}nombre', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['ApellidoPaterno']
@@ -2797,7 +2796,7 @@ def persona_fisicae(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=strcode(el)))
     return self
 def constitucion_personas_morales0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoPersonaMoral']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona_moral', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('TipoPersonaMoralOtra')
@@ -2828,7 +2827,7 @@ def constitucion_personas_morales0(name, data):
     self.append(capital_social0('capital_social', el))
     return self
 def datos_accionista0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['CargoAccionista']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}cargo_accionista', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['TipoPersona']
@@ -2837,7 +2836,7 @@ def datos_accionista0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}numero_acciones', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def capital_social0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['CapitalFijo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_fijo', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('CapitalVariable')
@@ -2845,14 +2844,14 @@ def capital_social0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_variable', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def modificacion_patrimonial0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['PersonaMoralModifica']
     self.append(persona_moral_modifica0('persona_moral_modifica', el))
     el = data['DatosModificacion']
     self.append(datos_modificacion0('datos_modificacion', el))
     return self
 def persona_moral_modifica0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('FechaConstitucion')
@@ -2874,7 +2873,7 @@ def persona_moral_modifica0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}instrumento_publico', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def datos_modificacion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoModificacionCapitalFijo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_modificacion_capital_fijo', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['InicialCapitalFijo']
@@ -2892,14 +2891,14 @@ def datos_modificacion0(name, data):
         self.append(datos_accionista1('datos_accionista', r))
     return self
 def datos_accionista1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoPersona']
     self.append(tipo_personac('tipo_persona', el))
     el = data['NumeroAcciones']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}numero_acciones', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def fusion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoFusion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_fusion', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['DatosFusionadas']
@@ -2908,13 +2907,13 @@ def fusion0(name, data):
     self.append(datos_fusionante0('datos_fusionante', el))
     return self
 def datos_fusionadas0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DatosFusionada']
     for r in iterate(el):
         self.append(datos_fusionada0('datos_fusionada', r))
     return self
 def datos_fusionada0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('FechaConstitucion')
@@ -2937,7 +2936,7 @@ def datos_fusionada0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}folio_mercantil', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def datos_fusionante0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['FusionanteDeterminadas']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}fusionante_determinadas', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('Fusionante')
@@ -2945,7 +2944,7 @@ def datos_fusionante0(name, data):
         self.append(fusionante0('fusionante', el))
     return self
 def fusionante0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('FechaConstitucion')
@@ -2973,14 +2972,14 @@ def fusionante0(name, data):
         self.append(datos_accionista1('datos_accionista', r))
     return self
 def escision0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DatosEscindente']
     self.append(datos_escindente0('datos_escindente', el))
     el = data['DatosEscindidas']
     self.append(datos_escindidas0('datos_escindidas', el))
     return self
 def datos_escindente0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('FechaConstitucion')
@@ -3009,7 +3008,7 @@ def datos_escindente0(name, data):
             self.append(datos_accionista1('datos_accionista_escindente', r))
     return self
 def datos_escindidas0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['EscindidasDeterminadas']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}escindidas_determinadas', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('DatoEscindida')
@@ -3018,7 +3017,7 @@ def datos_escindidas0(name, data):
             self.append(dato_escindida0('dato_escindida', r))
     return self
 def dato_escindida0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('FechaConstitucion')
@@ -3046,7 +3045,7 @@ def dato_escindida0(name, data):
         self.append(datos_accionista1('datos_accionista', r))
     return self
 def compra_venta_acciones0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_operacion', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['PersonaMoralAcciones']
@@ -3057,7 +3056,7 @@ def compra_venta_acciones0(name, data):
         self.append(datos_liquidacion3('datos_liquidacion', r))
     return self
 def persona_moral_acciones0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('FechaConstitucion')
@@ -3080,21 +3079,21 @@ def persona_moral_acciones0(name, data):
         self.append(datos_comprador0('datos_comprador', r))
     return self
 def datos_vendedor0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['NumeroAccionesVendidas']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}numero_acciones_vendidas', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['TipoPersona']
     self.append(tipo_personac('tipo_persona', el))
     return self
 def datos_comprador0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['NumeroAccionesCompradas']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}numero_acciones_compradas', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['TipoPersona']
     self.append(tipo_personac('tipo_persona', el))
     return self
 def datos_liquidacion3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}fecha_pago', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el.strftime('%Y%m%d')))
     el = data.get('InstrumentoMonetario')
@@ -3106,7 +3105,7 @@ def datos_liquidacion3(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}monto_operacion', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def constitucion_modificacion_fideicomiso0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoMovimiento']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_movimiento', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['TipoFideicomiso']
@@ -3136,7 +3135,7 @@ def constitucion_modificacion_fideicomiso0(name, data):
         self.append(datos_miembro_comite_tecnico0('datos_miembro_comite_tecnico', el))
     return self
 def datos_fideicomitente0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoMovimientoFideicomitente']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_movimiento_fideicomitente', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['TipoPersona']
@@ -3147,7 +3146,7 @@ def datos_fideicomitente0(name, data):
             self.append(datos_tipo_patrimonio0('datos_tipo_patrimonio', r))
     return self
 def datos_tipo_patrimonio0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data.get('PatrimonioMonetario')
     if el is not None:
         self.append(patrimonio_monetario0('patrimonio_monetario', el))
@@ -3159,14 +3158,14 @@ def datos_tipo_patrimonio0(name, data):
         self.append(patrimonio_otro_bien0('patrimonio_otro_bien', el))
     return self
 def patrimonio_monetario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['Moneda']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}moneda', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=strcode(el)))
     el = data['MontoOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}monto_operacion', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def patrimonio_inmueble0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_inmueble', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=strcode(el)))
     el = data['CodigoPostal']
@@ -3177,14 +3176,14 @@ def patrimonio_inmueble0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}importe_garantia', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def patrimonio_otro_bien0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['Descripcion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}descripcion', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['ValorBien']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}valor_bien', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def datos_fideicomisarios0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DatosFideicomisariosDeterminados']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_fideicomisarios_determinados', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('TipoPersona')
@@ -3193,7 +3192,7 @@ def datos_fideicomisarios0(name, data):
             self.append(tipo_persona_1_type0('tipo_persona', r))
     return self
 def cesion_derechos_fideicomitente_fideicomisario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data.get('IdentificadorFideicomiso')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}identificador_fideicomiso', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
@@ -3212,22 +3211,22 @@ def cesion_derechos_fideicomitente_fideicomisario0(name, data):
     self.append(datos_cesion0('datos_cesion', el))
     return self
 def datos_cedente0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoPersona']
     self.append(tipo_personab('tipo_persona', el))
     return self
 def datos_cesionario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoPersona']
     self.append(tipo_personab('tipo_persona', el))
     return self
 def datos_cesion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['MontoCesion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}monto_cesion', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def contrato_mutuo_credito0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoOtorgamiento']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_otorgamiento', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['DatosAcreedor']
@@ -3245,17 +3244,17 @@ def contrato_mutuo_credito0(name, data):
         self.append(datos_liquidacion4('datos_liquidacion', r))
     return self
 def datos_acreedor0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoPersona']
     self.append(tipo_personab('tipo_persona', el))
     return self
 def datos_deudor0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoPersona']
     self.append(tipo_personab('tipo_persona', el))
     return self
 def datos_garantia0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoGarantia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_garantia', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('DatosBienMutuo')
@@ -3266,7 +3265,7 @@ def datos_garantia0(name, data):
         self.append(tipo_personad('tipo_persona', el))
     return self
 def datos_bien_mutuo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data.get('DatosInmueble')
     if el is not None:
         self.append(datos_inmueble2('datos_inmueble', el))
@@ -3275,7 +3274,7 @@ def datos_bien_mutuo0(name, data):
         self.append(datos_otro1('datos_otro', el))
     return self
 def datos_inmueble2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_inmueble', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=strcode(el)))
     el = data['ValorReferencia']
@@ -3286,12 +3285,12 @@ def datos_inmueble2(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}folio_real', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def datos_otro1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DescripcionGarantia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}descripcion_garantia', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def tipo_personad(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisicaf('persona_fisica', el))
@@ -3303,7 +3302,7 @@ def tipo_personad(name, data):
         self.append(fideicomisob('fideicomiso', el))
     return self
 def persona_fisicaf(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}nombre', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['ApellidoPaterno']
@@ -3321,7 +3320,7 @@ def persona_fisicaf(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}curp', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def persona_moralf(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('FechaConstitucion')
@@ -3332,14 +3331,14 @@ def persona_moralf(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}rfc', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def datos_liquidacion4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['Moneda']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}moneda', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=strcode(el)))
     el = data['MontoOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}monto_operacion', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def avaluo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['TipoBien']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_bien', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('Descripcion')
@@ -3351,7 +3350,7 @@ def avaluo0(name, data):
     self.append(datos_propietario0('datos_propietario', el))
     return self
 def datos_propietario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['PropietarioSolicita']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}propietario_solicita', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data.get('TipoPersona')
@@ -3359,14 +3358,14 @@ def datos_propietario0(name, data):
         self.append(tipo_personac('tipo_persona', el))
     return self
 def datos_miembro_comite_tecnico0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fep', name), nsmap=data.get('_nsmap') or {'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'})
     el = data['ComiteTecnico']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}comite_tecnico', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     el = data['ModificacionComiteTecnico']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fep}modificacion_comite_tecnico', nsmap={'fep': 'http://www.uif.shcp.gob.mx/recepcion/fep'}, text=el))
     return self
 def administrativo1_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Organo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}organo', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['Cargo']
@@ -3375,7 +3374,7 @@ def administrativo1_type0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}instrumento_publico_oficio', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def persona_moral_simple_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('FechaConstitucion')
@@ -3388,7 +3387,7 @@ def persona_moral_simple_type0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}pais_nacionalidad', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=strcode(el)))
     return self
 def persona_fisica_simple_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}nombre', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['ApellidoPaterno']
@@ -3408,7 +3407,7 @@ def persona_fisica_simple_type0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}pais_nacionalidad', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=strcode(el)))
     return self
 def fideicomiso_simple_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('Rfc')
@@ -3419,7 +3418,7 @@ def fideicomiso_simple_type0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}identificador_fideicomiso', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def representante_apoderado_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}nombre', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['ApellidoPaterno']
@@ -3437,7 +3436,7 @@ def representante_apoderado_type0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}curp', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def informe_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}mes_reportado', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['TribunalDependencia']
@@ -3451,33 +3450,33 @@ def informe_type0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}version', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def archivo_type7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe_type0('informe', r))
     return self
 def operaciones_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion6('datos_operacion', r))
     return self
 def datos_operacion6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}fecha_operacion', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el.strftime('%Y%m%d')))
     el = data['TipoActividad']
     self.append(tipo_actividad1('tipo_actividad', el))
     return self
 def modificatorio_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}folio_modificacion', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}descripcion_modificacion', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def aviso7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}referencia_aviso', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('Modificatorio')
@@ -3491,7 +3490,7 @@ def aviso7(name, data):
     self.append(operaciones_type0('detalle_operaciones', el))
     return self
 def tipo_actividad1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data.get('DerechosInmuebles')
     if el is not None:
         self.append(derechos_inmuebles0('derechos_inmuebles', el))
@@ -3512,7 +3511,7 @@ def tipo_actividad1(name, data):
         self.append(avaluo1('avaluo', el))
     return self
 def derechos_inmuebles0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Organo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}organo', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['TipoJuicio']
@@ -3532,7 +3531,7 @@ def derechos_inmuebles0(name, data):
     self.append(personas_acto0('personas_acto', el))
     return self
 def otorgamiento_poder1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Autoridad']
     self.append(autoridad0('autoridad', el))
     el = data['PersonaSolicita']
@@ -3545,7 +3544,7 @@ def otorgamiento_poder1(name, data):
         self.append(datos_apoderado1('datos_apoderado', r))
     return self
 def constitucion_personas_morales1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Autoridad']
     self.append(autoridad1('autoridad', el))
     el = data['PersonaSolicita']
@@ -3554,7 +3553,7 @@ def constitucion_personas_morales1(name, data):
     self.append(persona_moral_constitucion0('persona_moral_constitucion', el))
     return self
 def modificacion_patrimonial1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Autoridad']
     self.append(autoridad1('autoridad', el))
     el = data['PersonaMoralModifica']
@@ -3563,7 +3562,7 @@ def modificacion_patrimonial1(name, data):
     self.append(datos_modificacion1('datos_modificacion', el))
     return self
 def contrato_mutuo_credito1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Autoridad']
     self.append(autoridad0('autoridad', el))
     el = data['TipoOtorgamiento']
@@ -3585,7 +3584,7 @@ def contrato_mutuo_credito1(name, data):
         self.append(datos_liquidacion5('datos_liquidacion', r))
     return self
 def avaluo1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Organo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}organo', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['Cargo']
@@ -3605,13 +3604,13 @@ def avaluo1(name, data):
     self.append(datos_propietario1('datos_propietario', el))
     return self
 def datos_inmuebles0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['CaracteristicasInmueble']
     for r in iterate(el):
         self.append(caracteristicas_inmueble0('caracteristicas_inmueble', r))
     return self
 def caracteristicas_inmueble0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_inmueble', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=strcode(el)))
     el = data['ValorCatastral']
@@ -3635,13 +3634,13 @@ def caracteristicas_inmueble0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}folio_real', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def personas_acto0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['DatosPersonaActo']
     for r in iterate(el):
         self.append(datos_persona_acto0('datos_persona_acto', r))
     return self
 def tipo_persona_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_solicita0('persona_fisica', el))
@@ -3653,7 +3652,7 @@ def tipo_persona_type0(name, data):
         self.append(fideicomisoc('fideicomiso', el))
     return self
 def persona_solicita0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}nombre', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['ApellidoPaterno']
@@ -3673,7 +3672,7 @@ def persona_solicita0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}pais_nacionalidad', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=strcode(el)))
     return self
 def persona_moral10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('FechaConstitucion')
@@ -3688,7 +3687,7 @@ def persona_moral10(name, data):
     self.append(representante_apoderado_type0('representante_apoderado', el))
     return self
 def fideicomisoc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('Rfc')
@@ -3701,7 +3700,7 @@ def fideicomisoc(name, data):
     self.append(representante_apoderado_type0('apoderado_delegado', el))
     return self
 def datos_persona_acto0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Caracter']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}caracter', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('CaracterOtro')
@@ -3717,7 +3716,7 @@ def datos_persona_acto0(name, data):
         self.append(telefono6('telefono', el))
     return self
 def tipo_domicilio5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional7('nacional', el))
@@ -3726,7 +3725,7 @@ def tipo_domicilio5(name, data):
         self.append(extranjero7('extranjero', el))
     return self
 def nacional7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}colonia', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['Calle']
@@ -3740,7 +3739,7 @@ def nacional7(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}codigo_postal', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def extranjero7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}pais', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -3760,7 +3759,7 @@ def extranjero7(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}codigo_postal', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def telefono6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}clave_pais', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=strcode(el)))
@@ -3771,7 +3770,7 @@ def telefono6(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}correo_electronico', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def administrativo_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Organo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}organo', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['Cargo']
@@ -3780,7 +3779,7 @@ def administrativo_type0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}instrumento_publico', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def jurisdiccional_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Organo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}organo', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['TipoJuicio']
@@ -3791,7 +3790,7 @@ def jurisdiccional_type0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}expediente', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def tipo_autoridad_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data.get('Administrativo')
     if el is not None:
         self.append(administrativo_type0('administrativo', el))
@@ -3800,7 +3799,7 @@ def tipo_autoridad_type0(name, data):
         self.append(jurisdiccional_type0('jurisdiccional', el))
     return self
 def domicilio_oficina_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional7('nacional', el))
@@ -3809,7 +3808,7 @@ def domicilio_oficina_type0(name, data):
         self.append(extranjero7('extranjero', el))
     return self
 def autoridad0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoAutoridad']
     self.append(tipo_autoridad_type0('tipo_autoridad', el))
     el = data.get('DomicilioOficina')
@@ -3817,7 +3816,7 @@ def autoridad0(name, data):
         self.append(domicilio_oficina_type0('domicilio_oficina', el))
     return self
 def tipo_persona_simple_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica_simple_type0('persona_fisica', el))
@@ -3829,19 +3828,19 @@ def tipo_persona_simple_type0(name, data):
         self.append(fideicomiso_simple_type0('fideicomiso', el))
     return self
 def datos_poderdante1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoPersona']
     self.append(tipo_persona_simple_type0('tipo_persona', el))
     return self
 def datos_apoderado1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoPoder']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_poder', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['TipoPersona']
     self.append(tipo_persona_simple_type0('tipo_persona', el))
     return self
 def tipo_autoridad1_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data.get('Administrativo')
     if el is not None:
         self.append(administrativo1_type0('administrativo', el))
@@ -3850,7 +3849,7 @@ def tipo_autoridad1_type0(name, data):
         self.append(jurisdiccional_type0('jurisdiccional', el))
     return self
 def autoridad1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoAutoridad']
     self.append(tipo_autoridad1_type0('tipo_autoridad', el))
     el = data.get('DomicilioOficina')
@@ -3858,7 +3857,7 @@ def autoridad1(name, data):
         self.append(domicilio_oficina_type0('domicilio_oficina', el))
     return self
 def persona_moral_constitucion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoPersonaMoral']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_persona_moral', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('TipoPersonaMoralOtra')
@@ -3890,7 +3889,7 @@ def persona_moral_constitucion0(name, data):
     self.append(capital_social1('capital_social', el))
     return self
 def datos_accionista2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['CargoAccionista']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}cargo_accionista', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['TipoPersona']
@@ -3899,7 +3898,7 @@ def datos_accionista2(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}numero_acciones', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def capital_social1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['CapitalFijo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}capital_fijo', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('CapitalVariable')
@@ -3907,14 +3906,14 @@ def capital_social1(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}capital_variable', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def datos_accionista1_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoPersona']
     self.append(tipo_persona_simple_type0('tipo_persona', el))
     el = data['NumeroAcciones']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}numero_acciones', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def persona_moral_modifica1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('FechaConstitucion')
@@ -3936,7 +3935,7 @@ def persona_moral_modifica1(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}instrumento_publico', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def datos_modificacion1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoModificacionCapitalFijo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_modificacion_capital_fijo', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['InicialCapitalFijo']
@@ -3954,17 +3953,17 @@ def datos_modificacion1(name, data):
         self.append(datos_accionista1_type0('datos_accionista', r))
     return self
 def datos_acreedor1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoPersona']
     self.append(tipo_persona_simple_type0('tipo_persona', el))
     return self
 def datos_deudor1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoPersona']
     self.append(tipo_persona_simple_type0('tipo_persona', el))
     return self
 def garante_fisica_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}nombre', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['ApellidoPaterno']
@@ -3982,7 +3981,7 @@ def garante_fisica_type0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}curp', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def garante_moral_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('FechaConstitucion')
@@ -3993,7 +3992,7 @@ def garante_moral_type0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}rfc', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def garante_fideicomiso_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('Rfc')
@@ -4004,7 +4003,7 @@ def garante_fideicomiso_type0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}identificador_fideicomiso', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def tipo_garante_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(garante_fisica_type0('persona_fisica', el))
@@ -4016,7 +4015,7 @@ def tipo_garante_type0(name, data):
         self.append(garante_fideicomiso_type0('fideicomiso', el))
     return self
 def garantia_inmueble_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_inmueble', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=strcode(el)))
     el = data['ValorReferencia']
@@ -4027,12 +4026,12 @@ def garantia_inmueble_type0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}folio_real', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def garantia_otro_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['DescripcionGarantia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}descripcion_garantia', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def bien_garantia_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data.get('DatosInmueble')
     if el is not None:
         self.append(garantia_inmueble_type0('datos_inmueble', el))
@@ -4041,7 +4040,7 @@ def bien_garantia_type0(name, data):
         self.append(garantia_otro_type0('datos_otro', el))
     return self
 def datos_garantia1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoGarantia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_garantia', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('DatosBienGarantia')
@@ -4052,14 +4051,14 @@ def datos_garantia1(name, data):
         self.append(tipo_garante_type0('tipo_persona', el))
     return self
 def datos_liquidacion5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['Moneda']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}moneda', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=strcode(el)))
     el = data['MontoOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}monto_operacion', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def datos_propietario1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['PropietarioSolicita']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}propietario_solicita', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data.get('DatoPropietario')
@@ -4068,19 +4067,19 @@ def datos_propietario1(name, data):
             self.append(dato_propietario0('dato_propietario', r))
     return self
 def dato_propietario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoPersona']
     self.append(tipo_persona_simple_type0('tipo_persona', el))
     return self
 def tribunal_dependencia0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['ClaveTribunalDependencia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}clave_tribunal_dependencia', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     el = data['ClaveActividad']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}clave_actividad', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=strcode(el)))
     return self
 def alerta7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/fes', name), nsmap=data.get('_nsmap') or {'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_alerta', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -4088,13 +4087,13 @@ def alerta7(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/fes}descripcion_alerta', nsmap={'fes': 'http://www.uif.shcp.gob.mx/recepcion/fes'}, text=el))
     return self
 def archivo_type8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe7('informe', r))
     return self
 def informe7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}mes_reportado', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data['SujetoObligado']
@@ -4105,7 +4104,7 @@ def informe7(name, data):
             self.append(aviso8('aviso', r))
     return self
 def sujeto_obligado7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}clave_entidad_colegiada', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
@@ -4118,7 +4117,7 @@ def sujeto_obligado7(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}exento', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def aviso8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}referencia_aviso', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data.get('Modificatorio')
@@ -4139,14 +4138,14 @@ def aviso8(name, data):
     self.append(detalle_operaciones7('detalle_operaciones', el))
     return self
 def modificatorio7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}folio_modificacion', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}descripcion_modificacion', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def alerta8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}tipo_alerta', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -4154,7 +4153,7 @@ def alerta8(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}descripcion_alerta', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def persona_aviso6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['TipoPersona']
     self.append(tipo_personae('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -4165,7 +4164,7 @@ def persona_aviso6(name, data):
         self.append(telefono7('telefono', el))
     return self
 def tipo_personae(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica10('persona_fisica', el))
@@ -4177,7 +4176,7 @@ def tipo_personae(name, data):
         self.append(fideicomisod('fideicomiso', el))
     return self
 def persona_fisica10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}nombre', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data['ApellidoPaterno']
@@ -4199,7 +4198,7 @@ def persona_fisica10(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}actividad_economica', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=strcode(el)))
     return self
 def persona_moral11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}denominacion_razon', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data.get('FechaConstitucion')
@@ -4216,7 +4215,7 @@ def persona_moral11(name, data):
     self.append(representante_apoderado6('representante_apoderado', el))
     return self
 def fideicomisod(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}denominacion_razon', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data.get('Rfc')
@@ -4229,7 +4228,7 @@ def fideicomisod(name, data):
     self.append(representante_apoderado6('apoderado_delegado', el))
     return self
 def representante_apoderado6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}nombre', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data['ApellidoPaterno']
@@ -4247,7 +4246,7 @@ def representante_apoderado6(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}curp', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def tipo_domicilio6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional8('nacional', el))
@@ -4256,7 +4255,7 @@ def tipo_domicilio6(name, data):
         self.append(extranjero8('extranjero', el))
     return self
 def nacional8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}colonia', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data['Calle']
@@ -4270,7 +4269,7 @@ def nacional8(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}codigo_postal', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def extranjero8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}pais', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -4290,7 +4289,7 @@ def extranjero8(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}codigo_postal', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def telefono7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}clave_pais', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=strcode(el)))
@@ -4302,12 +4301,12 @@ def telefono7(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}correo_electronico', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def dueno_beneficiario5(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['TipoPersona']
     self.append(tipo_personaf('tipo_persona', el))
     return self
 def tipo_personaf(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica11('persona_fisica', el))
@@ -4319,7 +4318,7 @@ def tipo_personaf(name, data):
         self.append(fideicomisoe('fideicomiso', el))
     return self
 def persona_fisica11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}nombre', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data['ApellidoPaterno']
@@ -4340,7 +4339,7 @@ def persona_fisica11(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}pais_nacionalidad', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=strcode(el)))
     return self
 def persona_moral12(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}denominacion_razon', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data.get('FechaConstitucion')
@@ -4354,7 +4353,7 @@ def persona_moral12(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}pais_nacionalidad', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=strcode(el)))
     return self
 def fideicomisoe(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}denominacion_razon', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data.get('Rfc')
@@ -4365,13 +4364,13 @@ def fideicomisoe(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}identificador_fideicomiso', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def detalle_operaciones7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion7('datos_operacion', r))
     return self
 def datos_operacion7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}fecha_operacion', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el.strftime('%Y%m%d')))
     el = data['TipoOperacion']
@@ -4395,12 +4394,12 @@ def datos_operacion7(name, data):
             self.append(datos_liquidacion6('datos_liquidacion', r))
     return self
 def datos_contraparte0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['TipoPersona']
     self.append(tipo_personaf('tipo_persona', el))
     return self
 def caracteristicas_inmueble1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}tipo_inmueble', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=strcode(el)))
     el = data['ValorPactado']
@@ -4424,7 +4423,7 @@ def caracteristicas_inmueble1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}folio_real', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def contrato_instrumento_publico0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data.get('DatosInstrumentoPublico')
     if el is not None:
         self.append(datos_instrumento_publico0('datos_instrumento_publico', el))
@@ -4433,7 +4432,7 @@ def contrato_instrumento_publico0(name, data):
         self.append(datos_contrato0('datos_contrato', el))
     return self
 def datos_instrumento_publico0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['NumeroInstrumentoPublico']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}numero_instrumento_publico', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     el = data['FechaInstrumentoPublico']
@@ -4446,12 +4445,12 @@ def datos_instrumento_publico0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}valor_avaluo_catastral', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def datos_contrato0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['FechaContrato']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}fecha_contrato', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el.strftime('%Y%m%d')))
     return self
 def datos_liquidacion6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/inm', name), nsmap=data.get('_nsmap') or {'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}fecha_pago', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el.strftime('%Y%m%d')))
     el = data['FormaPago']
@@ -4465,13 +4464,13 @@ def datos_liquidacion6(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/inm}monto_operacion', nsmap={'inm': 'http://www.uif.shcp.gob.mx/recepcion/inm'}, text=el))
     return self
 def archivo_type9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe8('informe', r))
     return self
 def informe8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}mes_reportado', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data['SujetoObligado']
@@ -4482,7 +4481,7 @@ def informe8(name, data):
             self.append(aviso9('aviso', r))
     return self
 def sujeto_obligado8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}clave_entidad_colegiada', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
@@ -4495,7 +4494,7 @@ def sujeto_obligado8(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}exento', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def aviso9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}referencia_aviso', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data.get('Modificatorio')
@@ -4516,14 +4515,14 @@ def aviso9(name, data):
     self.append(detalle_operaciones8('detalle_operaciones', el))
     return self
 def modificatorio8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}folio_modificacion', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}descripcion_modificacion', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def alerta9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}tipo_alerta', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -4531,7 +4530,7 @@ def alerta9(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}descripcion_alerta', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def persona_aviso7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['TipoPersona']
     self.append(tipo_persona10('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -4542,7 +4541,7 @@ def persona_aviso7(name, data):
         self.append(telefono8('telefono', el))
     return self
 def tipo_persona10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica12('persona_fisica', el))
@@ -4554,7 +4553,7 @@ def tipo_persona10(name, data):
         self.append(fideicomisof('fideicomiso', el))
     return self
 def persona_fisica12(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}nombre', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data['ApellidoPaterno']
@@ -4576,7 +4575,7 @@ def persona_fisica12(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}actividad_economica', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=strcode(el)))
     return self
 def persona_moral13(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}denominacion_razon', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data.get('FechaConstitucion')
@@ -4593,7 +4592,7 @@ def persona_moral13(name, data):
     self.append(representante_apoderado7('representante_apoderado', el))
     return self
 def fideicomisof(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}denominacion_razon', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data.get('Rfc')
@@ -4606,7 +4605,7 @@ def fideicomisof(name, data):
     self.append(representante_apoderado7('apoderado_delegado', el))
     return self
 def representante_apoderado7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}nombre', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data['ApellidoPaterno']
@@ -4624,7 +4623,7 @@ def representante_apoderado7(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}curp', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def tipo_domicilio7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional9('nacional', el))
@@ -4633,7 +4632,7 @@ def tipo_domicilio7(name, data):
         self.append(extranjero9('extranjero', el))
     return self
 def nacional9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}colonia', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data['Calle']
@@ -4647,7 +4646,7 @@ def nacional9(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}codigo_postal', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def extranjero9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}pais', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -4667,7 +4666,7 @@ def extranjero9(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}codigo_postal', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def telefono8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}clave_pais', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=strcode(el)))
@@ -4679,12 +4678,12 @@ def telefono8(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}correo_electronico', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def dueno_beneficiario6(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['TipoPersona']
     self.append(tipo_persona11('tipo_persona', el))
     return self
 def tipo_persona11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica13('persona_fisica', el))
@@ -4696,7 +4695,7 @@ def tipo_persona11(name, data):
         self.append(fideicomiso10('fideicomiso', el))
     return self
 def persona_fisica13(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}nombre', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data['ApellidoPaterno']
@@ -4717,7 +4716,7 @@ def persona_fisica13(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}pais_nacionalidad', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=strcode(el)))
     return self
 def persona_moral14(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}denominacion_razon', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data.get('FechaConstitucion')
@@ -4731,7 +4730,7 @@ def persona_moral14(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}pais_nacionalidad', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=strcode(el)))
     return self
 def fideicomiso10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}denominacion_razon', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data.get('Rfc')
@@ -4742,13 +4741,13 @@ def fideicomiso10(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}identificador_fideicomiso', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def detalle_operaciones8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion8('datos_operacion', r))
     return self
 def datos_operacion8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}fecha_operacion', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el.strftime('%Y%m%d')))
     el = data['TipoSucursal']
@@ -4764,7 +4763,7 @@ def datos_operacion8(name, data):
         self.append(datos_liquidacion7('datos_liquidacion', r))
     return self
 def tipo_sucursal0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data.get('DatosSucursalPropia')
     if el is not None:
         self.append(datos_sucursal_propia0('datos_sucursal_propia', el))
@@ -4773,19 +4772,19 @@ def tipo_sucursal0(name, data):
         self.append(datos_sucursal_operador0('datos_sucursal_operador', el))
     return self
 def datos_sucursal_propia0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['CodigoPostal']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}codigo_postal', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def datos_sucursal_operador0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['NombreOperador']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}nombre_operador', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data['CodigoPostal']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}codigo_postal', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def datos_liquidacion7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data.get('LiquidacionNumerario')
     if el is not None:
         self.append(liquidacion_numerario1('liquidacion_numerario', el))
@@ -4794,7 +4793,7 @@ def datos_liquidacion7(name, data):
         self.append(liquidacion_especie1('liquidacion_especie', el))
     return self
 def liquidacion_numerario1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}fecha_pago', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el.strftime('%Y%m%d')))
     el = data['InstrumentoMonetario']
@@ -4805,7 +4804,7 @@ def liquidacion_numerario1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}monto_operacion', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def liquidacion_especie1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['ValorBien']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}valor_bien', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data['Moneda']
@@ -4817,7 +4816,7 @@ def liquidacion_especie1(name, data):
         self.append(datos_bien_liquidacion0('datos_bien_liquidacion', el))
     return self
 def datos_bien_liquidacion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data.get('DatosInmueble')
     if el is not None:
         self.append(datos_inmueble3('datos_inmueble', el))
@@ -4826,7 +4825,7 @@ def datos_bien_liquidacion0(name, data):
         self.append(datos_otro2('datos_otro', el))
     return self
 def datos_inmueble3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}tipo_inmueble', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     el = data['CodigoPostal']
@@ -4835,18 +4834,18 @@ def datos_inmueble3(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}folio_real', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def datos_otro2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/jys', name), nsmap=data.get('_nsmap') or {'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'})
     el = data['DescripcionBienLiquidacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/jys}descripcion_bien_liquidacion', nsmap={'jys': 'http://www.uif.shcp.gob.mx/recepcion/jys'}, text=el))
     return self
 def archivo_typea(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe9('informe', r))
     return self
 def informe9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}mes_reportado', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data['SujetoObligado']
@@ -4857,7 +4856,7 @@ def informe9(name, data):
             self.append(avisoa('aviso', r))
     return self
 def sujeto_obligado9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}clave_entidad_colegiada', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
@@ -4870,7 +4869,7 @@ def sujeto_obligado9(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}exento', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     return self
 def avisoa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}referencia_aviso', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data.get('Modificatorio')
@@ -4891,14 +4890,14 @@ def avisoa(name, data):
     self.append(detalle_operaciones9('detalle_operaciones', el))
     return self
 def modificatorio9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}folio_modificacion', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}descripcion_modificacion', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     return self
 def alertaa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}tipo_alerta', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -4906,7 +4905,7 @@ def alertaa(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}descripcion_alerta', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     return self
 def persona_aviso8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['TipoPersona']
     self.append(tipo_persona12('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -4917,7 +4916,7 @@ def persona_aviso8(name, data):
         self.append(telefono9('telefono', el))
     return self
 def tipo_persona12(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica14('persona_fisica', el))
@@ -4929,7 +4928,7 @@ def tipo_persona12(name, data):
         self.append(fideicomiso11('fideicomiso', el))
     return self
 def persona_fisica14(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}nombre', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data['ApellidoPaterno']
@@ -4951,7 +4950,7 @@ def persona_fisica14(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}actividad_economica', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=strcode(el)))
     return self
 def persona_moral15(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}denominacion_razon', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -4968,7 +4967,7 @@ def persona_moral15(name, data):
     self.append(representante_apoderado8('representante_apoderado', el))
     return self
 def fideicomiso11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}denominacion_razon', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data.get('Rfc')
@@ -4981,7 +4980,7 @@ def fideicomiso11(name, data):
     self.append(representante_apoderado8('apoderado_delegado', el))
     return self
 def representante_apoderado8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}nombre', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data['ApellidoPaterno']
@@ -4999,7 +4998,7 @@ def representante_apoderado8(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}curp', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     return self
 def tipo_domicilio8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacionala('nacional', el))
@@ -5008,7 +5007,7 @@ def tipo_domicilio8(name, data):
         self.append(extranjeroa('extranjero', el))
     return self
 def nacionala(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}colonia', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data['Calle']
@@ -5022,7 +5021,7 @@ def nacionala(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}codigo_postal', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     return self
 def extranjeroa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}pais', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -5042,7 +5041,7 @@ def extranjeroa(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}codigo_postal', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     return self
 def telefono9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}clave_pais', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=strcode(el)))
@@ -5054,12 +5053,12 @@ def telefono9(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}correo_electronico', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     return self
 def dueno_beneficiario7(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['TipoPersona']
     self.append(tipo_persona13('tipo_persona', el))
     return self
 def tipo_persona13(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica15('persona_fisica', el))
@@ -5071,7 +5070,7 @@ def tipo_persona13(name, data):
         self.append(fideicomiso12('fideicomiso', el))
     return self
 def persona_fisica15(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}nombre', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data['ApellidoPaterno']
@@ -5092,7 +5091,7 @@ def persona_fisica15(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}pais_nacionalidad', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=strcode(el)))
     return self
 def persona_moral16(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}denominacion_razon', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -5106,7 +5105,7 @@ def persona_moral16(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}pais_nacionalidad', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=strcode(el)))
     return self
 def fideicomiso12(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}denominacion_razon', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data.get('Rfc')
@@ -5117,13 +5116,13 @@ def fideicomiso12(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}identificador_fideicomiso', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     return self
 def detalle_operaciones9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion9('datos_operacion', r))
     return self
 def datos_operacion9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}fecha_operacion', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el.strftime('%Y%m%d')))
     el = data['CodigoPostal']
@@ -5138,7 +5137,7 @@ def datos_operacion9(name, data):
         self.append(datos_liquidacion8('datos_liquidacion', r))
     return self
 def datos_bien0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['TipoBien']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}tipo_bien', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     el = data['UnidadComercializada']
@@ -5147,7 +5146,7 @@ def datos_bien0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}cantidad_comercializada', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     return self
 def datos_liquidacion8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mjr', name), nsmap=data.get('_nsmap') or {'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}fecha_pago', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el.strftime('%Y%m%d')))
     el = data['FormaPago']
@@ -5160,13 +5159,13 @@ def datos_liquidacion8(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mjr}monto_operacion', nsmap={'mjr': 'http://www.uif.shcp.gob.mx/recepcion/mjr'}, text=el))
     return self
 def archivo_typeb(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informea('informe', r))
     return self
 def informea(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}mes_reportado', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data['SujetoObligado']
@@ -5177,7 +5176,7 @@ def informea(name, data):
             self.append(avisob('aviso', r))
     return self
 def sujeto_obligadoa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}clave_entidad_colegiada', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
@@ -5190,7 +5189,7 @@ def sujeto_obligadoa(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}exento', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def avisob(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}referencia_aviso', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data.get('Modificatorio')
@@ -5211,14 +5210,14 @@ def avisob(name, data):
     self.append(detalle_operacionesa('detalle_operaciones', el))
     return self
 def modificatorioa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}folio_modificacion', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}descripcion_modificacion', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def alertab(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}tipo_alerta', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -5226,7 +5225,7 @@ def alertab(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}descripcion_alerta', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def persona_aviso9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['TipoPersona']
     self.append(tipo_persona14('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -5237,7 +5236,7 @@ def persona_aviso9(name, data):
         self.append(telefonoa('telefono', el))
     return self
 def tipo_persona14(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica16('persona_fisica', el))
@@ -5249,7 +5248,7 @@ def tipo_persona14(name, data):
         self.append(fideicomiso13('fideicomiso', el))
     return self
 def persona_fisica16(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}nombre', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data['ApellidoPaterno']
@@ -5271,7 +5270,7 @@ def persona_fisica16(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}actividad_economica', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=strcode(el)))
     return self
 def persona_moral17(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data.get('FechaConstitucion')
@@ -5288,7 +5287,7 @@ def persona_moral17(name, data):
     self.append(representante_apoderado9('representante_apoderado', el))
     return self
 def fideicomiso13(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data.get('Rfc')
@@ -5301,7 +5300,7 @@ def fideicomiso13(name, data):
     self.append(representante_apoderado9('apoderado_delegado', el))
     return self
 def representante_apoderado9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}nombre', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data['ApellidoPaterno']
@@ -5319,7 +5318,7 @@ def representante_apoderado9(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}curp', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def tipo_domicilio9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacionalb('nacional', el))
@@ -5328,7 +5327,7 @@ def tipo_domicilio9(name, data):
         self.append(extranjerob('extranjero', el))
     return self
 def nacionalb(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}colonia', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data['Calle']
@@ -5342,7 +5341,7 @@ def nacionalb(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}codigo_postal', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def extranjerob(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}pais', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -5362,7 +5361,7 @@ def extranjerob(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}codigo_postal', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def telefonoa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}clave_pais', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=strcode(el)))
@@ -5374,12 +5373,12 @@ def telefonoa(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}correo_electronico', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def dueno_beneficiario8(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['TipoPersona']
     self.append(tipo_persona15('tipo_persona', el))
     return self
 def tipo_persona15(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica17('persona_fisica', el))
@@ -5391,7 +5390,7 @@ def tipo_persona15(name, data):
         self.append(fideicomiso14('fideicomiso', el))
     return self
 def persona_fisica17(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}nombre', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data['ApellidoPaterno']
@@ -5412,7 +5411,7 @@ def persona_fisica17(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}pais_nacionalidad', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=strcode(el)))
     return self
 def persona_moral18(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data.get('FechaConstitucion')
@@ -5426,7 +5425,7 @@ def persona_moral18(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}pais_nacionalidad', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=strcode(el)))
     return self
 def fideicomiso14(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data.get('Rfc')
@@ -5437,13 +5436,13 @@ def fideicomiso14(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}identificador_fideicomiso', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def detalle_operacionesa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operaciona('datos_operacion', r))
     return self
 def datos_operaciona(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}fecha_operacion', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el.strftime('%Y%m%d')))
     el = data['CodigoPostal']
@@ -5459,7 +5458,7 @@ def datos_operaciona(name, data):
         self.append(datos_liquidacion9('datos_liquidacion', r))
     return self
 def datos_garantia2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['TipoGarantia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}tipo_garantia', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data.get('DatosBienMutuo')
@@ -5470,7 +5469,7 @@ def datos_garantia2(name, data):
         self.append(tipo_persona16('tipo_persona', el))
     return self
 def datos_bien_mutuo1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data.get('DatosInmueble')
     if el is not None:
         self.append(datos_inmueble4('datos_inmueble', el))
@@ -5479,7 +5478,7 @@ def datos_bien_mutuo1(name, data):
         self.append(datos_otro3('datos_otro', el))
     return self
 def datos_inmueble4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}tipo_inmueble', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=strcode(el)))
     el = data['ValorReferencia']
@@ -5490,12 +5489,12 @@ def datos_inmueble4(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}folio_real', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def datos_otro3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['DescripcionGarantia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}descripcion_garantia', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def tipo_persona16(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica18('persona_fisica', el))
@@ -5507,7 +5506,7 @@ def tipo_persona16(name, data):
         self.append(fideicomiso15('fideicomiso', el))
     return self
 def persona_fisica18(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}nombre', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data['ApellidoPaterno']
@@ -5525,7 +5524,7 @@ def persona_fisica18(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}curp', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def persona_moral19(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data.get('FechaConstitucion')
@@ -5536,7 +5535,7 @@ def persona_moral19(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}rfc', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def fideicomiso15(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     el = data.get('Rfc')
@@ -5547,7 +5546,7 @@ def fideicomiso15(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}identificador_fideicomiso', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def datos_liquidacion9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/mpc', name), nsmap=data.get('_nsmap') or {'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'})
     el = data['FechaDisposicion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}fecha_disposicion', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el.strftime('%Y%m%d')))
     el = data['InstrumentoMonetario']
@@ -5558,7 +5557,7 @@ def datos_liquidacion9(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/mpc}monto_operacion', nsmap={'mpc': 'http://www.uif.shcp.gob.mx/recepcion/mpc'}, text=el))
     return self
 def datos_liquidacion_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}fecha_pago', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el.strftime('%Y%m%d')))
     el = data['FormaPago']
@@ -5572,13 +5571,13 @@ def datos_liquidacion_type0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}monto_operacion', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     return self
 def detalle_operaciones_type0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacionb('datos_operacion', r))
     return self
 def datos_operacionb(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}fecha_operacion', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el.strftime('%Y%m%d')))
     el = data['CodigoPostal']
@@ -5593,7 +5592,7 @@ def datos_operacionb(name, data):
         self.append(datos_liquidacion_type0('datos_liquidacion', r))
     return self
 def datos_objeto0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['TipoObjeto']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}tipo_objeto', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data['Descripcion']
@@ -5606,13 +5605,13 @@ def datos_objeto0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}valor_referencia', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     return self
 def archivo_typec(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informeb('informe', r))
     return self
 def informeb(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}mes_reportado', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data['SujetoObligado']
@@ -5623,7 +5622,7 @@ def informeb(name, data):
             self.append(avisoc('aviso', r))
     return self
 def sujeto_obligadob(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}clave_entidad_colegiada', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
@@ -5636,7 +5635,7 @@ def sujeto_obligadob(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}exento', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     return self
 def avisoc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}referencia_aviso', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data.get('Modificatorio')
@@ -5657,14 +5656,14 @@ def avisoc(name, data):
     self.append(detalle_operaciones_type0('detalle_operaciones', el))
     return self
 def modificatoriob(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}folio_modificacion', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}descripcion_modificacion', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     return self
 def alertac(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}tipo_alerta', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -5672,7 +5671,7 @@ def alertac(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}descripcion_alerta', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     return self
 def persona_avisoa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['TipoPersona']
     self.append(tipo_persona17('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -5683,7 +5682,7 @@ def persona_avisoa(name, data):
         self.append(telefonob('telefono', el))
     return self
 def tipo_persona17(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica19('persona_fisica', el))
@@ -5695,7 +5694,7 @@ def tipo_persona17(name, data):
         self.append(fideicomiso16('fideicomiso', el))
     return self
 def persona_fisica19(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}nombre', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data['ApellidoPaterno']
@@ -5717,7 +5716,7 @@ def persona_fisica19(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}actividad_economica', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=strcode(el)))
     return self
 def persona_moral1a(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}denominacion_razon', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data.get('FechaConstitucion')
@@ -5734,7 +5733,7 @@ def persona_moral1a(name, data):
     self.append(representante_apoderadoa('representante_apoderado', el))
     return self
 def fideicomiso16(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}denominacion_razon', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data.get('Rfc')
@@ -5747,7 +5746,7 @@ def fideicomiso16(name, data):
     self.append(representante_apoderadoa('apoderado_delegado', el))
     return self
 def representante_apoderadoa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}nombre', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data['ApellidoPaterno']
@@ -5765,7 +5764,7 @@ def representante_apoderadoa(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}curp', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     return self
 def tipo_domicilioa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacionalc('nacional', el))
@@ -5774,7 +5773,7 @@ def tipo_domicilioa(name, data):
         self.append(extranjeroc('extranjero', el))
     return self
 def nacionalc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}colonia', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data['Calle']
@@ -5788,7 +5787,7 @@ def nacionalc(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}codigo_postal', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     return self
 def extranjeroc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}pais', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -5808,7 +5807,7 @@ def extranjeroc(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}codigo_postal', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     return self
 def telefonob(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}clave_pais', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=strcode(el)))
@@ -5820,12 +5819,12 @@ def telefonob(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}correo_electronico', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     return self
 def dueno_beneficiario9(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['TipoPersona']
     self.append(tipo_persona18('tipo_persona', el))
     return self
 def tipo_persona18(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica1a('persona_fisica', el))
@@ -5837,7 +5836,7 @@ def tipo_persona18(name, data):
         self.append(fideicomiso17('fideicomiso', el))
     return self
 def persona_fisica1a(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}nombre', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data['ApellidoPaterno']
@@ -5858,7 +5857,7 @@ def persona_fisica1a(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}pais_nacionalidad', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=strcode(el)))
     return self
 def persona_moral1b(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}denominacion_razon', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data.get('FechaConstitucion')
@@ -5872,7 +5871,7 @@ def persona_moral1b(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}pais_nacionalidad', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=strcode(el)))
     return self
 def fideicomiso17(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/oba', name), nsmap=data.get('_nsmap') or {'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}denominacion_razon', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     el = data.get('Rfc')
@@ -5883,13 +5882,13 @@ def fideicomiso17(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/oba}identificador_fideicomiso', nsmap={'oba': 'http://www.uif.shcp.gob.mx/recepcion/oba'}, text=el))
     return self
 def archivo_typed(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informec('informe', r))
     return self
 def informec(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}mes_reportado', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['SujetoObligado']
@@ -5900,7 +5899,7 @@ def informec(name, data):
             self.append(avisod('aviso', r))
     return self
 def sujeto_obligadoc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}clave_entidad_colegiada', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
@@ -5916,7 +5915,7 @@ def sujeto_obligadoc(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}exento', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def ocupacion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoOcupacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_ocupacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=str(el)))
     el = data.get('DescripcionOtraOcupacion')
@@ -5924,7 +5923,7 @@ def ocupacion0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion_otra_ocupacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def avisod(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}referencia_aviso', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('Modificatorio')
@@ -5945,14 +5944,14 @@ def avisod(name, data):
     self.append(detalle_operacionesb('detalle_operaciones', el))
     return self
 def modificatorioc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_modificacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion_modificacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def alertad(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_alerta', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -5960,7 +5959,7 @@ def alertad(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion_alerta', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def persona_avisob(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoPersona']
     self.append(tipo_persona19('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -5971,7 +5970,7 @@ def persona_avisob(name, data):
         self.append(telefonoc('telefono', el))
     return self
 def tipo_persona19(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica1b('persona_fisica', el))
@@ -5983,7 +5982,7 @@ def tipo_persona19(name, data):
         self.append(fideicomiso18('fideicomiso', el))
     return self
 def persona_fisica1b(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}nombre', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['ApellidoPaterno']
@@ -6009,7 +6008,7 @@ def persona_fisica1b(name, data):
             self.append(representante_apoderadob('representante_apoderado', r))
     return self
 def persona_moral1c(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -6027,7 +6026,7 @@ def persona_moral1c(name, data):
         self.append(representante_apoderadob('representante_apoderado', r))
     return self
 def fideicomiso18(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('Rfc')
@@ -6041,7 +6040,7 @@ def fideicomiso18(name, data):
         self.append(representante_apoderadob('apoderado_delegado', r))
     return self
 def representante_apoderadob(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}nombre', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['ApellidoPaterno']
@@ -6059,7 +6058,7 @@ def representante_apoderadob(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}curp', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def tipo_domiciliob(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacionald('nacional', el))
@@ -6068,7 +6067,7 @@ def tipo_domiciliob(name, data):
         self.append(extranjerod('extranjero', el))
     return self
 def nacionald(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}colonia', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['Calle']
@@ -6082,7 +6081,7 @@ def nacionald(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}codigo_postal', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def extranjerod(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}pais', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -6102,7 +6101,7 @@ def extranjerod(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}codigo_postal', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def telefonoc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}clave_pais', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
@@ -6114,12 +6113,12 @@ def telefonoc(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}correo_electronico', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def dueno_beneficiarioa(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoPersona']
     self.append(tipo_persona1a('tipo_persona', el))
     return self
 def tipo_persona1a(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica1c('persona_fisica', el))
@@ -6131,7 +6130,7 @@ def tipo_persona1a(name, data):
         self.append(fideicomiso19('fideicomiso', el))
     return self
 def persona_fisica1c(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}nombre', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['ApellidoPaterno']
@@ -6152,7 +6151,7 @@ def persona_fisica1c(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     return self
 def persona_moral1d(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -6166,7 +6165,7 @@ def persona_moral1d(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     return self
 def fideicomiso19(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('Rfc')
@@ -6177,13 +6176,13 @@ def fideicomiso19(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}identificador_fideicomiso', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def detalle_operacionesb(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacionc('datos_operacion', r))
     return self
 def datos_operacionc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}fecha_operacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el.strftime('%Y%m%d')))
     el = data['TipoActividad']
@@ -6193,7 +6192,7 @@ def datos_operacionc(name, data):
         self.append(datos_operacion_financiera0('datos_operacion_financiera', r))
     return self
 def tipo_actividad2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('CompraVentaInmuebles')
     if el is not None:
         self.append(compra_venta_inmuebles0('compra_venta_inmuebles', el))
@@ -6226,7 +6225,7 @@ def tipo_actividad2(name, data):
         self.append(compra_venta_entidades_mercantiles0('compra_venta_entidades_mercantiles', el))
     return self
 def compra_venta_inmuebles0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_operacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['ValorPactado']
@@ -6239,12 +6238,12 @@ def compra_venta_inmuebles0(name, data):
         self.append(caracteristicas_inmueble2('caracteristicas_inmueble', r))
     return self
 def datos_contraparte1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoPersona']
     self.append(tipo_persona1b('tipo_persona', el))
     return self
 def tipo_persona1b(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica1d('persona_fisica', el))
@@ -6256,7 +6255,7 @@ def tipo_persona1b(name, data):
         self.append(fideicomiso19('fideicomiso', el))
     return self
 def persona_fisica1d(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}nombre', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['ApellidoPaterno']
@@ -6276,7 +6275,7 @@ def persona_fisica1d(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     return self
 def persona_moral1e(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -6289,7 +6288,7 @@ def persona_moral1e(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     return self
 def caracteristicas_inmueble2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_inmueble', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     el = data['Colonia']
@@ -6313,7 +6312,7 @@ def caracteristicas_inmueble2(name, data):
     self.append(contrato_instrumento_publico1('contrato_instrumento_publico', el))
     return self
 def contrato_instrumento_publico1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('DatosInstrumentoPublico')
     if el is not None:
         self.append(datos_instrumento_publico1('datos_instrumento_publico', el))
@@ -6322,7 +6321,7 @@ def contrato_instrumento_publico1(name, data):
         self.append(contrato0('contrato', el))
     return self
 def datos_instrumento_publico1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['NumeroInstrumentoPublico']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_instrumento_publico', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['FechaInstrumentoPublico']
@@ -6335,14 +6334,14 @@ def datos_instrumento_publico1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_referencia', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def contrato0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['FechaContrato']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}fecha_contrato', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el.strftime('%Y%m%d')))
     el = data['ValorReferencia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_referencia', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def cesion_derechos_inmuebles0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['FiguraCliente']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}figura_cliente', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['TipoCesion']
@@ -6355,7 +6354,7 @@ def cesion_derechos_inmuebles0(name, data):
         self.append(caracteristicas_inmueble3('caracteristicas_inmueble', r))
     return self
 def caracteristicas_inmueble3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_inmueble', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     el = data['ValorReferencia']
@@ -6379,7 +6378,7 @@ def caracteristicas_inmueble3(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_real', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def administracion_recursos0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoActivo']
     for r in iterate(el):
         self.append(tipo_activo0('tipo_activo', r))
@@ -6387,7 +6386,7 @@ def administracion_recursos0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_operaciones', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=str(el)))
     return self
 def tipo_activo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('ActivoBanco')
     if el is not None:
         self.append(activo_banco0('activo_banco', el))
@@ -6402,7 +6401,7 @@ def tipo_activo0(name, data):
         self.append(activo_otros0('activo_otros', el))
     return self
 def activo_banco0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['EstatusManejo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}estatus_manejo', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['ClaveTipoInstitucion']
@@ -6413,7 +6412,7 @@ def activo_banco0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_cuenta', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def activo_inmobiliario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_inmueble', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     el = data['ValorReferencia']
@@ -6433,7 +6432,7 @@ def activo_inmobiliario0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_real', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def activo_outsourcing0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['AreaServicio']
     self.append(area_servicio0('area_servicio', el))
     el = data['ActivoAdministrado']
@@ -6442,7 +6441,7 @@ def activo_outsourcing0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_empleados', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=str(el)))
     return self
 def area_servicio0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoAreaServicio']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_area_servicio', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=str(el)))
     el = data.get('DescripcionOtroAreaServicio')
@@ -6450,7 +6449,7 @@ def area_servicio0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion_otro_area_servicio', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def activo_administrado0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoActivoAdministrado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_activo_administrado', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=str(el)))
     el = data.get('DescripcionOtroActivoAdministrado')
@@ -6458,12 +6457,12 @@ def activo_administrado0(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion_otro_activo_administrado', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def activo_otros0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DescripcionActivoAdministrado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion_activo_administrado', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def constitucion_sociedades_mercantiles0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoPersonaMoral']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_persona_moral', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=str(el)))
     el = data.get('TipoPersonaMoralOtra')
@@ -6494,7 +6493,7 @@ def constitucion_sociedades_mercantiles0(name, data):
     self.append(capital_social2('capital_social', el))
     return self
 def datos_accionista3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['CargoAccionista']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}cargo_accionista', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['TipoPersona']
@@ -6503,7 +6502,7 @@ def datos_accionista3(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_acciones', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def capital_social2(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['CapitalFijo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_fijo', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('CapitalVariable')
@@ -6511,7 +6510,7 @@ def capital_social2(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_variable', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def organizacion_aportaciones0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['MotivoAportacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}motivo_aportacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['DatosAportacion']
@@ -6519,7 +6518,7 @@ def organizacion_aportaciones0(name, data):
         self.append(datos_aportacion3('datos_aportacion', r))
     return self
 def datos_aportacion3(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DatosPersonaAporta']
     self.append(datos_persona_aporta0('datos_persona_aporta', el))
     el = data['DatosTipoAportacion']
@@ -6527,7 +6526,7 @@ def datos_aportacion3(name, data):
         self.append(datos_tipo_aportacion0('datos_tipo_aportacion', r))
     return self
 def datos_persona_aporta0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica1e('persona_fisica', el))
@@ -6539,7 +6538,7 @@ def datos_persona_aporta0(name, data):
         self.append(fideicomiso19('fideicomiso', el))
     return self
 def persona_fisica1e(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}nombre', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['ApellidoPaterno']
@@ -6561,7 +6560,7 @@ def persona_fisica1e(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}actividad_economica', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     return self
 def persona_moral1f(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -6576,7 +6575,7 @@ def persona_moral1f(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}giro_mercantil', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     return self
 def datos_tipo_aportacion0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('AportacionMonetaria')
     if el is not None:
         self.append(aportacion_monetaria0('aportacion_monetaria', el))
@@ -6588,7 +6587,7 @@ def datos_tipo_aportacion0(name, data):
         self.append(aportacion_otro_bien0('aportacion_otro_bien', el))
     return self
 def aportacion_monetaria0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['InstrumentoMonetario']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}instrumento_monetario', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     el = data['Moneda']
@@ -6597,7 +6596,7 @@ def aportacion_monetaria0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}monto_operacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def aportacion_inmueble0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_inmueble', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     el = data['CodigoPostal']
@@ -6608,14 +6607,14 @@ def aportacion_inmueble0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_aportacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def aportacion_otro_bien0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Descripcion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['ValorAportacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_aportacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def fusion1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoFusion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_fusion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['DatosFusionadas']
@@ -6624,13 +6623,13 @@ def fusion1(name, data):
     self.append(datos_fusionante1('datos_fusionante', el))
     return self
 def datos_fusionadas1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DatosFusionada']
     for r in iterate(el):
         self.append(datos_fusionada1('datos_fusionada', r))
     return self
 def datos_fusionada1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -6653,7 +6652,7 @@ def datos_fusionada1(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_mercantil', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def datos_fusionante1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['FusionanteDeterminadas']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}fusionante_determinadas', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('Fusionante')
@@ -6661,7 +6660,7 @@ def datos_fusionante1(name, data):
         self.append(fusionante1('fusionante', el))
     return self
 def fusionante1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -6689,21 +6688,21 @@ def fusionante1(name, data):
         self.append(datos_accionista4('datos_accionista', r))
     return self
 def datos_accionista4(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoPersona']
     self.append(tipo_persona1b('tipo_persona', el))
     el = data['NumeroAcciones']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_acciones', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def escision1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DatosEscindente']
     self.append(datos_escindente1('datos_escindente', el))
     el = data['DatosEscindidas']
     self.append(datos_escindidas1('datos_escindidas', el))
     return self
 def datos_escindente1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -6732,14 +6731,14 @@ def datos_escindente1(name, data):
             self.append(datos_accionista_escindente0('datos_accionista_escindente', r))
     return self
 def datos_accionista_escindente0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoPersona']
     self.append(tipo_persona1b('tipo_persona', el))
     el = data['NumeroAcciones']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_acciones', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def datos_escindidas1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['EscindidasDeterminadas']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}escindidas_determinadas', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('DatoEscindida')
@@ -6748,7 +6747,7 @@ def datos_escindidas1(name, data):
             self.append(dato_escindida1('dato_escindida', r))
     return self
 def dato_escindida1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -6776,7 +6775,7 @@ def dato_escindida1(name, data):
         self.append(datos_accionista4('datos_accionista', r))
     return self
 def administracion_personas_morales0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoAdministracion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_administracion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['TipoOperacion']
@@ -6788,7 +6787,7 @@ def administracion_personas_morales0(name, data):
         self.append(tipo_persona1c('tipo_persona', el))
     return self
 def tipo_persona1c(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('PersonaMoral')
     if el is not None:
         self.append(persona_moral1d('persona_moral', el))
@@ -6797,7 +6796,7 @@ def tipo_persona1c(name, data):
         self.append(fideicomiso19('fideicomiso', el))
     return self
 def constitucion_fideicomiso0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('Rfc')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}rfc', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
@@ -6820,7 +6819,7 @@ def constitucion_fideicomiso0(name, data):
     self.append(datos_miembro_comite_tecnico1('datos_miembro_comite_tecnico', el))
     return self
 def datos_fideicomitente1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoPersona']
     self.append(tipo_persona1b('tipo_persona', el))
     el = data['DatosTipoPatrimonio']
@@ -6828,7 +6827,7 @@ def datos_fideicomitente1(name, data):
         self.append(datos_tipo_patrimonio1('datos_tipo_patrimonio', r))
     return self
 def datos_tipo_patrimonio1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('PatrimonioMonetario')
     if el is not None:
         self.append(patrimonio_monetario1('patrimonio_monetario', el))
@@ -6840,14 +6839,14 @@ def datos_tipo_patrimonio1(name, data):
         self.append(patrimonio_otro_bien1('patrimonio_otro_bien', el))
     return self
 def patrimonio_monetario1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Moneda']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}moneda', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     el = data['MontoOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}monto_operacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def patrimonio_inmueble1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoInmueble']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_inmueble', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=strcode(el)))
     el = data['CodigoPostal']
@@ -6858,14 +6857,14 @@ def patrimonio_inmueble1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}importe_garantia', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def patrimonio_otro_bien1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['Descripcion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['ValorBien']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_bien', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def datos_fideicomisario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DatosFideicomisariosDeterminados']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_fideicomisarios_determinados', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data.get('TipoPersona')
@@ -6873,12 +6872,12 @@ def datos_fideicomisario0(name, data):
         self.append(tipo_persona1b('tipo_persona', el))
     return self
 def datos_miembro_comite_tecnico1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['ComiteTecnico']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}comite_tecnico', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def compra_venta_entidades_mercantiles0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_operacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['DatosSociedadMercantil']
@@ -6886,7 +6885,7 @@ def compra_venta_entidades_mercantiles0(name, data):
         self.append(datos_sociedad_mercantil0('datos_sociedad_mercantil', r))
     return self
 def datos_sociedad_mercantil0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     el = data['GiroMercantil']
@@ -6910,7 +6909,7 @@ def datos_sociedad_mercantil0(name, data):
     self.append(tipo_persona1b('datos_contraparte', el))
     return self
 def datos_operacion_financiera0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data.get('FechaPago')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}fecha_pago', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el.strftime('%Y%m%d')))
@@ -6926,7 +6925,7 @@ def datos_operacion_financiera0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}monto_operacion', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def activo_virtual1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/spr', name), nsmap=data.get('_nsmap') or {'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'})
     el = data['TipoActivoVirtual']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_activo_virtual', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=str(el)))
     el = data.get('DescripcionActivoVirtual')
@@ -6936,13 +6935,13 @@ def activo_virtual1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/spr}cantidad_activo_virtual', nsmap={'spr': 'http://www.uif.shcp.gob.mx/recepcion/spr'}, text=el))
     return self
 def archivo_typee(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informed('informe', r))
     return self
 def informed(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}mes_reportado', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data['SujetoObligado']
@@ -6953,7 +6952,7 @@ def informed(name, data):
             self.append(avisoe('aviso', r))
     return self
 def sujeto_obligadod(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}clave_entidad_colegiada', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
@@ -6966,7 +6965,7 @@ def sujeto_obligadod(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}exento', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def avisoe(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}referencia_aviso', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data.get('Modificatorio')
@@ -6987,14 +6986,14 @@ def avisoe(name, data):
     self.append(detalle_operacionesc('detalle_operaciones', el))
     return self
 def modificatoriod(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}folio_modificacion', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}descripcion_modificacion', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def alertae(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_alerta', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -7002,7 +7001,7 @@ def alertae(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}descripcion_alerta', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def persona_avisoc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['TipoPersona']
     self.append(tipo_persona1d('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -7013,7 +7012,7 @@ def persona_avisoc(name, data):
         self.append(telefonod('telefono', el))
     return self
 def tipo_persona1d(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica1f('persona_fisica', el))
@@ -7025,7 +7024,7 @@ def tipo_persona1d(name, data):
         self.append(fideicomiso1a('fideicomiso', el))
     return self
 def persona_fisica1f(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}nombre', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data['ApellidoPaterno']
@@ -7047,7 +7046,7 @@ def persona_fisica1f(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}actividad_economica', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=strcode(el)))
     return self
 def persona_moral20(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data.get('FechaConstitucion')
@@ -7064,7 +7063,7 @@ def persona_moral20(name, data):
     self.append(representante_apoderadoc('representante_apoderado', el))
     return self
 def fideicomiso1a(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data.get('Rfc')
@@ -7077,7 +7076,7 @@ def fideicomiso1a(name, data):
     self.append(representante_apoderadoc('apoderado_delegado', el))
     return self
 def representante_apoderadoc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}nombre', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data['ApellidoPaterno']
@@ -7095,7 +7094,7 @@ def representante_apoderadoc(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}curp', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def tipo_domicilioc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacionale('nacional', el))
@@ -7104,7 +7103,7 @@ def tipo_domicilioc(name, data):
         self.append(extranjeroe('extranjero', el))
     return self
 def nacionale(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}colonia', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data['Calle']
@@ -7118,7 +7117,7 @@ def nacionale(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def extranjeroe(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}pais', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -7138,7 +7137,7 @@ def extranjeroe(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def telefonod(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}clave_pais', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=strcode(el)))
@@ -7150,12 +7149,12 @@ def telefonod(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}correo_electronico', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def dueno_beneficiariob(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['TipoPersona']
     self.append(tipo_persona1e('tipo_persona', el))
     return self
 def tipo_persona1e(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica20('persona_fisica', el))
@@ -7167,7 +7166,7 @@ def tipo_persona1e(name, data):
         self.append(fideicomiso1b('fideicomiso', el))
     return self
 def persona_fisica20(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}nombre', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data['ApellidoPaterno']
@@ -7188,7 +7187,7 @@ def persona_fisica20(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}pais_nacionalidad', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=strcode(el)))
     return self
 def persona_moral21(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data.get('FechaConstitucion')
@@ -7202,7 +7201,7 @@ def persona_moral21(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}pais_nacionalidad', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=strcode(el)))
     return self
 def fideicomiso1b(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data.get('Rfc')
@@ -7213,13 +7212,13 @@ def fideicomiso1b(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}identificador_fideicomiso', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def detalle_operacionesc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operaciond('datos_operacion', r))
     return self
 def datos_operaciond(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}fecha_operacion', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el.strftime('%Y%m%d')))
     el = data['TipoOperacion']
@@ -7241,7 +7240,7 @@ def datos_operaciond(name, data):
         self.append(destinatario0('destinatario', el))
     return self
 def tipo_bien1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data.get('DatosEfectivoInstrumentos')
     if el is not None:
         self.append(datos_efectivo_instrumentos0('datos_efectivo_instrumentos', el))
@@ -7250,7 +7249,7 @@ def tipo_bien1(name, data):
         self.append(datos_valores0('datos_valores', el))
     return self
 def datos_efectivo_instrumentos0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['InstrumentoMonetario']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}instrumento_monetario', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=strcode(el)))
     el = data['Moneda']
@@ -7259,7 +7258,7 @@ def datos_efectivo_instrumentos0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}monto_operacion', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def datos_valores0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['TipoValor']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_valor', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data['ValorObjeto']
@@ -7268,7 +7267,7 @@ def datos_valores0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}descripcion', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def recepcion1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['TipoServicio']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_servicio', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data['FechaRecepcion']
@@ -7277,7 +7276,7 @@ def recepcion1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def custodia0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['FechaInicio']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}fecha_inicio', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el.strftime('%Y%m%d')))
     el = data['FechaFin']
@@ -7286,7 +7285,7 @@ def custodia0(name, data):
     self.append(tipo_custodia0('tipo_custodia', el))
     return self
 def tipo_custodia0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data.get('DatosSucursal')
     if el is not None:
         self.append(datos_sucursal0('datos_sucursal', el))
@@ -7295,12 +7294,12 @@ def tipo_custodia0(name, data):
         self.append(datos_no_sucursal0('datos_no_sucursal', el))
     return self
 def datos_sucursal0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['CodigoPostal']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def datos_no_sucursal0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}colonia', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data['Calle']
@@ -7314,14 +7313,14 @@ def datos_no_sucursal0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def entrega0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['FechaEntrega']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}fecha_entrega', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el.strftime('%Y%m%d')))
     el = data['TipoEntrega']
     self.append(tipo_entrega0('tipo_entrega', el))
     return self
 def tipo_entrega0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacionalf('nacional', el))
@@ -7330,12 +7329,12 @@ def tipo_entrega0(name, data):
         self.append(extranjerof('extranjero', el))
     return self
 def nacionalf(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['CodigoPostal']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def extranjerof(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}pais', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -7346,7 +7345,7 @@ def extranjerof(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def destinatario0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['DestinatarioPersonaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}destinatario_persona_aviso', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data.get('TipoPersona')
@@ -7354,7 +7353,7 @@ def destinatario0(name, data):
         self.append(tipo_persona1f('tipo_persona', el))
     return self
 def tipo_persona1f(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica21('persona_fisica', el))
@@ -7366,7 +7365,7 @@ def tipo_persona1f(name, data):
         self.append(fideicomiso1c('fideicomiso', el))
     return self
 def persona_fisica21(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}nombre', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data['ApellidoPaterno']
@@ -7384,7 +7383,7 @@ def persona_fisica21(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}curp', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def persona_moral22(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data.get('FechaConstitucion')
@@ -7395,7 +7394,7 @@ def persona_moral22(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}rfc', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def fideicomiso1c(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tcv', name), nsmap=data.get('_nsmap') or {'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     el = data.get('Rfc')
@@ -7406,13 +7405,13 @@ def fideicomiso1c(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tcv}identificador_fideicomiso', nsmap={'tcv': 'http://www.uif.shcp.gob.mx/recepcion/tcv'}, text=el))
     return self
 def archivo_typef(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informee('informe', r))
     return self
 def informee(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}mes_reportado', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data['SujetoObligado']
@@ -7423,7 +7422,7 @@ def informee(name, data):
             self.append(avisof('aviso', r))
     return self
 def sujeto_obligadoe(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}clave_entidad_colegiada', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
@@ -7436,7 +7435,7 @@ def sujeto_obligadoe(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}exento', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     return self
 def avisof(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}referencia_aviso', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data.get('Modificatorio')
@@ -7457,14 +7456,14 @@ def avisof(name, data):
     self.append(detalle_operacionesd('detalle_operaciones', el))
     return self
 def modificatorioe(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}folio_modificacion', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}descripcion_modificacion', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     return self
 def alertaf(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}tipo_alerta', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -7472,7 +7471,7 @@ def alertaf(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}descripcion_alerta', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     return self
 def persona_avisod(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['TipoPersona']
     self.append(tipo_persona20('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -7483,7 +7482,7 @@ def persona_avisod(name, data):
         self.append(telefonoe('telefono', el))
     return self
 def tipo_persona20(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica22('persona_fisica', el))
@@ -7495,7 +7494,7 @@ def tipo_persona20(name, data):
         self.append(fideicomiso1d('fideicomiso', el))
     return self
 def persona_fisica22(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}nombre', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data['ApellidoPaterno']
@@ -7517,7 +7516,7 @@ def persona_fisica22(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}actividad_economica', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=strcode(el)))
     return self
 def persona_moral23(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}denominacion_razon', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -7534,7 +7533,7 @@ def persona_moral23(name, data):
     self.append(representante_apoderadod('representante_apoderado', el))
     return self
 def fideicomiso1d(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}denominacion_razon', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data.get('Rfc')
@@ -7547,7 +7546,7 @@ def fideicomiso1d(name, data):
     self.append(representante_apoderadod('apoderado_delegado', el))
     return self
 def representante_apoderadod(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}nombre', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data['ApellidoPaterno']
@@ -7565,7 +7564,7 @@ def representante_apoderadod(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}curp', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     return self
 def tipo_domiciliod(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional10('nacional', el))
@@ -7574,7 +7573,7 @@ def tipo_domiciliod(name, data):
         self.append(extranjero10('extranjero', el))
     return self
 def nacional10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}colonia', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data['Calle']
@@ -7588,7 +7587,7 @@ def nacional10(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}codigo_postal', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     return self
 def extranjero10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}pais', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -7608,7 +7607,7 @@ def extranjero10(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}codigo_postal', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     return self
 def telefonoe(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}clave_pais', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=strcode(el)))
@@ -7620,12 +7619,12 @@ def telefonoe(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}correo_electronico', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     return self
 def dueno_beneficiarioc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['TipoPersona']
     self.append(tipo_persona21('tipo_persona', el))
     return self
 def tipo_persona21(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica23('persona_fisica', el))
@@ -7637,7 +7636,7 @@ def tipo_persona21(name, data):
         self.append(fideicomiso1e('fideicomiso', el))
     return self
 def persona_fisica23(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}nombre', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data['ApellidoPaterno']
@@ -7658,7 +7657,7 @@ def persona_fisica23(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}pais_nacionalidad', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=strcode(el)))
     return self
 def persona_moral24(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}denominacion_razon', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data.get('FechaConstitucion')
@@ -7672,7 +7671,7 @@ def persona_moral24(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}pais_nacionalidad', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=strcode(el)))
     return self
 def fideicomiso1e(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}denominacion_razon', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     el = data.get('Rfc')
@@ -7683,13 +7682,13 @@ def fideicomiso1e(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}identificador_fideicomiso', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     return self
 def detalle_operacionesd(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacione('datos_operacion', r))
     return self
 def datos_operacione(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}fecha_operacion', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el.strftime('%Y%m%d')))
     el = data['CodigoPostal']
@@ -7703,20 +7702,20 @@ def datos_operacione(name, data):
         self.append(datos_liquidaciona('datos_liquidacion', r))
     return self
 def datos_liquidaciona(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tdr', name), nsmap=data.get('_nsmap') or {'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'})
     el = data['Moneda']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}moneda', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=strcode(el)))
     el = data['MontoOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tdr}monto_operacion', nsmap={'tdr': 'http://www.uif.shcp.gob.mx/recepcion/tdr'}, text=el))
     return self
 def archivo_type10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informef('informe', r))
     return self
 def informef(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}mes_reportado', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data['SujetoObligado']
@@ -7727,7 +7726,7 @@ def informef(name, data):
             self.append(aviso10('aviso', r))
     return self
 def sujeto_obligadof(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}clave_entidad_colegiada', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
@@ -7740,7 +7739,7 @@ def sujeto_obligadof(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}exento', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     return self
 def aviso10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}referencia_aviso', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data.get('Modificatorio')
@@ -7761,14 +7760,14 @@ def aviso10(name, data):
     self.append(detalle_operacionese('detalle_operaciones', el))
     return self
 def modificatoriof(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}folio_modificacion', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}descripcion_modificacion', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     return self
 def alerta10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}tipo_alerta', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -7776,7 +7775,7 @@ def alerta10(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}descripcion_alerta', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     return self
 def persona_avisoe(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['TipoPersona']
     self.append(tipo_persona22('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -7787,7 +7786,7 @@ def persona_avisoe(name, data):
         self.append(telefonof('telefono', el))
     return self
 def tipo_persona22(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica24('persona_fisica', el))
@@ -7799,7 +7798,7 @@ def tipo_persona22(name, data):
         self.append(fideicomiso1f('fideicomiso', el))
     return self
 def persona_fisica24(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}nombre', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data['ApellidoPaterno']
@@ -7821,7 +7820,7 @@ def persona_fisica24(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}actividad_economica', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=strcode(el)))
     return self
 def persona_moral25(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}denominacion_razon', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data.get('FechaConstitucion')
@@ -7838,7 +7837,7 @@ def persona_moral25(name, data):
     self.append(representante_apoderadoe('representante_apoderado', el))
     return self
 def fideicomiso1f(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}denominacion_razon', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data.get('Rfc')
@@ -7851,7 +7850,7 @@ def fideicomiso1f(name, data):
     self.append(representante_apoderadoe('apoderado_delegado', el))
     return self
 def representante_apoderadoe(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}nombre', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data['ApellidoPaterno']
@@ -7869,7 +7868,7 @@ def representante_apoderadoe(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}curp', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     return self
 def tipo_domicilioe(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional11('nacional', el))
@@ -7878,7 +7877,7 @@ def tipo_domicilioe(name, data):
         self.append(extranjero11('extranjero', el))
     return self
 def nacional11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}colonia', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data['Calle']
@@ -7892,7 +7891,7 @@ def nacional11(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}codigo_postal', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     return self
 def extranjero11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}pais', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -7912,7 +7911,7 @@ def extranjero11(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}codigo_postal', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     return self
 def telefonof(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}clave_pais', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=strcode(el)))
@@ -7924,12 +7923,12 @@ def telefonof(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}correo_electronico', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     return self
 def dueno_beneficiariod(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['TipoPersona']
     self.append(tipo_persona23('tipo_persona', el))
     return self
 def tipo_persona23(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica25('persona_fisica', el))
@@ -7941,7 +7940,7 @@ def tipo_persona23(name, data):
         self.append(fideicomiso20('fideicomiso', el))
     return self
 def persona_fisica25(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}nombre', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data['ApellidoPaterno']
@@ -7962,7 +7961,7 @@ def persona_fisica25(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}pais_nacionalidad', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=strcode(el)))
     return self
 def persona_moral26(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}denominacion_razon', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data.get('FechaConstitucion')
@@ -7976,7 +7975,7 @@ def persona_moral26(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}pais_nacionalidad', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=strcode(el)))
     return self
 def fideicomiso20(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}denominacion_razon', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     el = data.get('Rfc')
@@ -7987,13 +7986,13 @@ def fideicomiso20(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}identificador_fideicomiso', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     return self
 def detalle_operacionese(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacionf('datos_operacion', r))
     return self
 def datos_operacionf(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}fecha_operacion', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el.strftime('%Y%m%d')))
     el = data['CodigoPostal']
@@ -8007,7 +8006,7 @@ def datos_operacionf(name, data):
         self.append(datos_liquidacionb('datos_liquidacion', r))
     return self
 def datos_liquidacionb(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tpp', name), nsmap=data.get('_nsmap') or {'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}fecha_pago', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el.strftime('%Y%m%d')))
     el = data['InstrumentoMonetario']
@@ -8018,13 +8017,13 @@ def datos_liquidacionb(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tpp}monto_operacion', nsmap={'tpp': 'http://www.uif.shcp.gob.mx/recepcion/tpp'}, text=el))
     return self
 def detalle_operaciones_type1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion10('datos_operacion', r))
     return self
 def datos_operacion10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['FechaPeriodo']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}fecha_periodo', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data['TipoOperacion']
@@ -8037,13 +8036,13 @@ def datos_operacion10(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}monto_gasto', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     return self
 def archivo_type11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe10('informe', r))
     return self
 def informe10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}mes_reportado', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data['SujetoObligado']
@@ -8054,7 +8053,7 @@ def informe10(name, data):
             self.append(aviso11('aviso', r))
     return self
 def sujeto_obligado10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}clave_entidad_colegiada', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
@@ -8067,7 +8066,7 @@ def sujeto_obligado10(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}exento', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     return self
 def aviso11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}referencia_aviso', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data.get('Modificatorio')
@@ -8088,14 +8087,14 @@ def aviso11(name, data):
     self.append(detalle_operaciones_type1('detalle_operaciones', el))
     return self
 def modificatorio10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}folio_modificacion', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}descripcion_modificacion', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     return self
 def alerta11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}tipo_alerta', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -8103,7 +8102,7 @@ def alerta11(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}descripcion_alerta', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     return self
 def persona_avisof(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['TipoPersona']
     self.append(tipo_persona24('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -8114,7 +8113,7 @@ def persona_avisof(name, data):
         self.append(telefono10('telefono', el))
     return self
 def tipo_persona24(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica26('persona_fisica', el))
@@ -8126,7 +8125,7 @@ def tipo_persona24(name, data):
         self.append(fideicomiso21('fideicomiso', el))
     return self
 def persona_fisica26(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}nombre', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data['ApellidoPaterno']
@@ -8148,7 +8147,7 @@ def persona_fisica26(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}actividad_economica', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=strcode(el)))
     return self
 def persona_moral27(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}denominacion_razon', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data.get('FechaConstitucion')
@@ -8165,7 +8164,7 @@ def persona_moral27(name, data):
     self.append(representante_apoderadof('representante_apoderado', el))
     return self
 def fideicomiso21(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}denominacion_razon', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data.get('Rfc')
@@ -8178,7 +8177,7 @@ def fideicomiso21(name, data):
     self.append(representante_apoderadof('apoderado_delegado', el))
     return self
 def representante_apoderadof(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}nombre', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data['ApellidoPaterno']
@@ -8196,7 +8195,7 @@ def representante_apoderadof(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}curp', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     return self
 def tipo_domiciliof(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional12('nacional', el))
@@ -8205,7 +8204,7 @@ def tipo_domiciliof(name, data):
         self.append(extranjero12('extranjero', el))
     return self
 def nacional12(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}colonia', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data['Calle']
@@ -8219,7 +8218,7 @@ def nacional12(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}codigo_postal', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     return self
 def extranjero12(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}pais', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -8239,7 +8238,7 @@ def extranjero12(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}codigo_postal', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     return self
 def telefono10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}clave_pais', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=strcode(el)))
@@ -8251,12 +8250,12 @@ def telefono10(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}correo_electronico', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     return self
 def dueno_beneficiarioe(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['TipoPersona']
     self.append(tipo_persona25('tipo_persona', el))
     return self
 def tipo_persona25(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica27('persona_fisica', el))
@@ -8268,7 +8267,7 @@ def tipo_persona25(name, data):
         self.append(fideicomiso22('fideicomiso', el))
     return self
 def persona_fisica27(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}nombre', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data['ApellidoPaterno']
@@ -8289,7 +8288,7 @@ def persona_fisica27(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}pais_nacionalidad', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=strcode(el)))
     return self
 def persona_moral28(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}denominacion_razon', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data.get('FechaConstitucion')
@@ -8303,7 +8302,7 @@ def persona_moral28(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}pais_nacionalidad', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=strcode(el)))
     return self
 def fideicomiso22(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/tsc', name), nsmap=data.get('_nsmap') or {'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}denominacion_razon', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     el = data.get('Rfc')
@@ -8314,13 +8313,13 @@ def fideicomiso22(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/tsc}identificador_fideicomiso', nsmap={'tsc': 'http://www.uif.shcp.gob.mx/recepcion/tsc'}, text=el))
     return self
 def archivo_type12(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['Informe']
     for r in iterate(el):
         self.append(informe11('informe', r))
     return self
 def informe11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['MesReportado']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}mes_reportado', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data['SujetoObligado']
@@ -8331,7 +8330,7 @@ def informe11(name, data):
             self.append(aviso12('aviso', r))
     return self
 def sujeto_obligado11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data.get('ClaveEntidadColegiada')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}clave_entidad_colegiada', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
@@ -8344,7 +8343,7 @@ def sujeto_obligado11(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}exento', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def aviso12(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['ReferenciaAviso']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}referencia_aviso', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data.get('Modificatorio')
@@ -8365,14 +8364,14 @@ def aviso12(name, data):
     self.append(detalle_operacionesf('detalle_operaciones', el))
     return self
 def modificatorio11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['FolioModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}folio_modificacion', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data['DescripcionModificacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}descripcion_modificacion', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def alerta12(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['TipoAlerta']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}tipo_alerta', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=strcode(el)))
     el = data.get('DescripcionAlerta')
@@ -8380,7 +8379,7 @@ def alerta12(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}descripcion_alerta', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def persona_aviso10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['TipoPersona']
     self.append(tipo_persona26('tipo_persona', el))
     el = data.get('TipoDomicilio')
@@ -8391,7 +8390,7 @@ def persona_aviso10(name, data):
         self.append(telefono11('telefono', el))
     return self
 def tipo_persona26(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica28('persona_fisica', el))
@@ -8403,7 +8402,7 @@ def tipo_persona26(name, data):
         self.append(fideicomiso23('fideicomiso', el))
     return self
 def persona_fisica28(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}nombre', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data['ApellidoPaterno']
@@ -8425,7 +8424,7 @@ def persona_fisica28(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}actividad_economica', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=strcode(el)))
     return self
 def persona_moral29(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}denominacion_razon', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data.get('FechaConstitucion')
@@ -8442,7 +8441,7 @@ def persona_moral29(name, data):
     self.append(representante_apoderado10('representante_apoderado', el))
     return self
 def fideicomiso23(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}denominacion_razon', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data.get('Rfc')
@@ -8455,7 +8454,7 @@ def fideicomiso23(name, data):
     self.append(representante_apoderado10('apoderado_delegado', el))
     return self
 def representante_apoderado10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}nombre', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data['ApellidoPaterno']
@@ -8473,7 +8472,7 @@ def representante_apoderado10(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}curp', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def tipo_domicilio10(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional13('nacional', el))
@@ -8482,7 +8481,7 @@ def tipo_domicilio10(name, data):
         self.append(extranjero13('extranjero', el))
     return self
 def nacional13(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['Colonia']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}colonia', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data['Calle']
@@ -8496,7 +8495,7 @@ def nacional13(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}codigo_postal', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def extranjero13(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['Pais']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}pais', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=strcode(el)))
     el = data['EstadoProvincia']
@@ -8516,7 +8515,7 @@ def extranjero13(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}codigo_postal', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def telefono11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data.get('ClavePais')
     if el is not None:
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}clave_pais', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=strcode(el)))
@@ -8528,12 +8527,12 @@ def telefono11(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}correo_electronico', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def dueno_beneficiariof(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['TipoPersona']
     self.append(tipo_persona27('tipo_persona', el))
     return self
 def tipo_persona27(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data.get('PersonaFisica')
     if el is not None:
         self.append(persona_fisica29('persona_fisica', el))
@@ -8545,7 +8544,7 @@ def tipo_persona27(name, data):
         self.append(fideicomiso24('fideicomiso', el))
     return self
 def persona_fisica29(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['Nombre']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}nombre', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data['ApellidoPaterno']
@@ -8566,7 +8565,7 @@ def persona_fisica29(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}pais_nacionalidad', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=strcode(el)))
     return self
 def persona_moral2a(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}denominacion_razon', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data.get('FechaConstitucion')
@@ -8580,7 +8579,7 @@ def persona_moral2a(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}pais_nacionalidad', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=strcode(el)))
     return self
 def fideicomiso24(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['DenominacionRazon']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}denominacion_razon', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data.get('Rfc')
@@ -8591,13 +8590,13 @@ def fideicomiso24(name, data):
         self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}identificador_fideicomiso', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def detalle_operacionesf(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['DatosOperacion']
     for r in iterate(el):
         self.append(datos_operacion11('datos_operacion', r))
     return self
 def datos_operacion11(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['FechaOperacion']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}fecha_operacion', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el.strftime('%Y%m%d')))
     el = data['CodigoPostal']
@@ -8613,7 +8612,7 @@ def datos_operacion11(name, data):
             self.append(datos_liquidacionc('datos_liquidacion', r))
     return self
 def tipo_vehiculo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data.get('DatosVehiculoTerrestre')
     if el is not None:
         self.append(datos_vehiculo_terrestre1('datos_vehiculo_terrestre', el))
@@ -8625,7 +8624,7 @@ def tipo_vehiculo0(name, data):
         self.append(datos_vehiculo_aereo0('datos_vehiculo_aereo', el))
     return self
 def datos_vehiculo_terrestre1(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['MarcaFabricante']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}marca_fabricante', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data['Modelo']
@@ -8645,7 +8644,7 @@ def datos_vehiculo_terrestre1(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}nivel_blindaje', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def datos_vehiculo_maritimo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['MarcaFabricante']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}marca_fabricante', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data['Modelo']
@@ -8664,7 +8663,7 @@ def datos_vehiculo_maritimo0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}nivel_blindaje', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def datos_vehiculo_aereo0(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['MarcaFabricante']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}marca_fabricante', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     el = data['Modelo']
@@ -8683,7 +8682,7 @@ def datos_vehiculo_aereo0(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}nivel_blindaje', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def datos_liquidacionc(name, data):
-    self = etree.Element(QName('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
+    self = Element('{%s}%s' % ('http://www.uif.shcp.gob.mx/recepcion/veh', name), nsmap=data.get('_nsmap') or {'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'})
     el = data['FechaPago']
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}fecha_pago', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el.strftime('%Y%m%d')))
     el = data['FormaPago']
@@ -8697,7 +8696,7 @@ def datos_liquidacionc(name, data):
     self.append(simple_element('{http://www.uif.shcp.gob.mx/recepcion/veh}monto_operacion', nsmap={'veh': 'http://www.uif.shcp.gob.mx/recepcion/veh'}, text=el))
     return self
 def t_ubicacion0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     if (a := data.get('Calle')) is not None:
         self.attrib['calle'] = a
     if (a := data.get('NoExterior')) is not None:
@@ -8719,7 +8718,7 @@ def t_ubicacion0(name, data):
         self.attrib['codigoPostal'] = a
     return self
 def t_ubicacion_fiscal0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['calle'] = data['Calle']
     if (a := data.get('NoExterior')) is not None:
         self.attrib['noExterior'] = a
@@ -8737,14 +8736,14 @@ def t_ubicacion_fiscal0(name, data):
     self.attrib['codigoPostal'] = data['CodigoPostal']
     return self
 def t_informacion_aduanera0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['numero'] = data['Numero']
     self.attrib['fecha'] = data['Fecha'].isoformat()
     if (a := data.get('Aduana')) is not None:
         self.attrib['aduana'] = a
     return self
 def t_ubicacion_fiscal1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
     self.attrib['calle'] = data['Calle']
     if (a := data.get('NoExterior')) is not None:
         self.attrib['noExterior'] = a
@@ -8762,28 +8761,28 @@ def t_ubicacion_fiscal1(name, data):
     self.attrib['codigoPostal'] = data['CodigoPostal']
     return self
 def t_informacion_aduanera1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
     self.attrib['numero'] = data['Numero']
     self.attrib['fecha'] = data['Fecha'].isoformat()
     if (a := data.get('Aduana')) is not None:
         self.attrib['aduana'] = a
     return self
 def t_informacion_aduanera2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/vehiculousado', name), nsmap=data.get('_nsmap') or {'vehiculousado': 'http://www.sat.gob.mx/vehiculousado'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/vehiculousado', name), nsmap=data.get('_nsmap') or {'vehiculousado': 'http://www.sat.gob.mx/vehiculousado'})
     self.attrib['numero'] = data['Numero']
     self.attrib['fecha'] = data['Fecha'].isoformat()
     if (a := data.get('Aduana')) is not None:
         self.attrib['aduana'] = a
     return self
 def t_informacion_aduanera3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ventavehiculos', name), nsmap=data.get('_nsmap') or {'ventavehiculos': 'http://www.sat.gob.mx/ventavehiculos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ventavehiculos', name), nsmap=data.get('_nsmap') or {'ventavehiculos': 'http://www.sat.gob.mx/ventavehiculos'})
     self.attrib['numero'] = data['Numero']
     self.attrib['fecha'] = data['Fecha'].isoformat()
     if (a := data.get('Aduana')) is not None:
         self.attrib['aduana'] = a
     return self
 def signature_type0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     el = data['SignedInfo']
     self.append(signed_info0('SignedInfo', el))
     el = data['SignatureValue']
@@ -8799,13 +8798,13 @@ def signature_type0(name, data):
         self.attrib['Id'] = a
     return self
 def signature_value0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     self.text = data['_text']
     if (a := data.get('Id')) is not None:
         self.attrib['Id'] = a
     return self
 def signed_info0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     el = data['CanonicalizationMethod']
     self.append(canonicalization_method0('CanonicalizationMethod', el))
     el = data['SignatureMethod']
@@ -8817,14 +8816,14 @@ def signed_info0(name, data):
         self.attrib['Id'] = a
     return self
 def canonicalization_method0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
     self.attrib['Algorithm'] = data['Algorithm']
     return self
 def signature_method0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -8834,7 +8833,7 @@ def signature_method0(name, data):
     self.attrib['Algorithm'] = data['Algorithm']
     return self
 def reference0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     el = data.get('Transforms')
     if el is not None:
         self.append(transforms0('Transforms', el))
@@ -8850,13 +8849,13 @@ def reference0(name, data):
         self.attrib['Type'] = a
     return self
 def transforms0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     el = data['Transform']
     for r in iterate(el):
         self.append(transform0('Transform', r))
     return self
 def transform0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -8866,14 +8865,14 @@ def transform0(name, data):
     self.attrib['Algorithm'] = data['Algorithm']
     return self
 def digest_method0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
     self.attrib['Algorithm'] = data['Algorithm']
     return self
 def key_info0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -8902,7 +8901,7 @@ def key_info0(name, data):
         self.attrib['Id'] = a
     return self
 def key_value0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -8914,7 +8913,7 @@ def key_value0(name, data):
         self.append(rsakey_value0('RSAKeyValue', el))
     return self
 def retrieval_method0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     el = data.get('Transforms')
     if el is not None:
         self.append(transforms0('Transforms', el))
@@ -8924,7 +8923,7 @@ def retrieval_method0(name, data):
         self.attrib['Type'] = a
     return self
 def x509data0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -8945,14 +8944,14 @@ def x509data0(name, data):
         self.append(simple_element('{http://www.w3.org/2000/09/xmldsig#}X509CRL', nsmap={'ds': 'http://www.w3.org/2000/09/xmldsig#'}, text=el))
     return self
 def x509issuer_serial0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     el = data['X509IssuerName']
     self.append(simple_element('{http://www.w3.org/2000/09/xmldsig#}X509IssuerName', nsmap={'ds': 'http://www.w3.org/2000/09/xmldsig#'}, text=el))
     el = data['X509SerialNumber']
     self.append(simple_element('{http://www.w3.org/2000/09/xmldsig#}X509SerialNumber', nsmap={'ds': 'http://www.w3.org/2000/09/xmldsig#'}, text=str(el)))
     return self
 def pgpdata0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -8965,7 +8964,7 @@ def pgpdata0(name, data):
     self.append(simple_element('{http://www.w3.org/2000/09/xmldsig#}PGPKeyPacket', nsmap={'ds': 'http://www.w3.org/2000/09/xmldsig#'}, text=el))
     return self
 def spkid_ata0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -8973,7 +8972,7 @@ def spkid_ata0(name, data):
     self.append(simple_element('{http://www.w3.org/2000/09/xmldsig#}SPKISexp', nsmap={'ds': 'http://www.w3.org/2000/09/xmldsig#'}, text=el))
     return self
 def object0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -8985,7 +8984,7 @@ def object0(name, data):
         self.attrib['Encoding'] = a
     return self
 def manifest_type0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     el = data['Reference']
     for r in iterate(el):
         self.append(reference0('Reference', r))
@@ -8993,7 +8992,7 @@ def manifest_type0(name, data):
         self.attrib['Id'] = a
     return self
 def signature_properties_type0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     el = data['SignatureProperty']
     for r in iterate(el):
         self.append(signature_property0('SignatureProperty', r))
@@ -9001,7 +9000,7 @@ def signature_properties_type0(name, data):
         self.attrib['Id'] = a
     return self
 def signature_property0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -9010,7 +9009,7 @@ def signature_property0(name, data):
         self.attrib['Id'] = a
     return self
 def dsakey_value0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     el = data['P']
     self.append(simple_element('{http://www.w3.org/2000/09/xmldsig#}P', nsmap={'ds': 'http://www.w3.org/2000/09/xmldsig#'}, text=el))
     el = data['Q']
@@ -9029,17 +9028,17 @@ def dsakey_value0(name, data):
     self.append(simple_element('{http://www.w3.org/2000/09/xmldsig#}PgenCounter', nsmap={'ds': 'http://www.w3.org/2000/09/xmldsig#'}, text=el))
     return self
 def rsakey_value0(name, data):
-    self = etree.Element(QName('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
+    self = Element('{%s}%s' % ('http://www.w3.org/2000/09/xmldsig#', name), nsmap=data.get('_nsmap') or {'ds': 'http://www.w3.org/2000/09/xmldsig#'})
     el = data['Modulus']
     self.append(simple_element('{http://www.w3.org/2000/09/xmldsig#}Modulus', nsmap={'ds': 'http://www.w3.org/2000/09/xmldsig#'}, text=el))
     el = data['Exponent']
     self.append(simple_element('{http://www.w3.org/2000/09/xmldsig#}Exponent', nsmap={'ds': 'http://www.w3.org/2000/09/xmldsig#'}, text=el))
     return self
 def cancelacion0(name, data):
-    self = etree.Element(QName('http://cancelacfd.sat.gob.mx', name), nsmap=data.get('_nsmap') or {None: 'http://cancelacfd.sat.gob.mx'})
+    self = Element('{%s}%s' % ('http://cancelacfd.sat.gob.mx', name), nsmap=data.get('_nsmap') or {None: 'http://cancelacfd.sat.gob.mx'})
     el = data['Folios']
     for r in iterate(el):
-        st = etree.SubElement(self, '{http://cancelacfd.sat.gob.mx}Folios')
+        st = SubElement(self, '{http://cancelacfd.sat.gob.mx}Folios')
         st.append(folio0('Folio', r))
     el = data.get('Signature')
     if el is not None:
@@ -9048,17 +9047,17 @@ def cancelacion0(name, data):
     self.attrib['Fecha'] = data['Fecha'].isoformat(timespec='seconds')
     return self
 def folio0(name, data):
-    self = etree.Element(QName('http://cancelacfd.sat.gob.mx', name), nsmap=data.get('_nsmap') or {None: 'http://cancelacfd.sat.gob.mx'})
+    self = Element('{%s}%s' % ('http://cancelacfd.sat.gob.mx', name), nsmap=data.get('_nsmap') or {None: 'http://cancelacfd.sat.gob.mx'})
     self.attrib['UUID'] = str(data['UUID'])
     self.attrib['Motivo'] = data['Motivo']
     if (a := data.get('FolioSustitucion')) is not None:
         self.attrib['FolioSustitucion'] = str(a)
     return self
 def cancelacion1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {None: 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {None: 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     el = data['Folios']
     for r in iterate(el):
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/esquemas/retencionpago/1}Folios')
+        st = SubElement(self, '{http://www.sat.gob.mx/esquemas/retencionpago/1}Folios')
         st.append(folio1('Folio', r))
     el = data.get('Signature')
     if el is not None:
@@ -9067,14 +9066,14 @@ def cancelacion1(name, data):
     self.attrib['Fecha'] = data['Fecha'].isoformat(timespec='seconds')
     return self
 def folio1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {None: 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {None: 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     self.attrib['UUID'] = str(data['UUID'])
     self.attrib['Motivo'] = data['Motivo']
     if (a := data.get('FolioSustitucion')) is not None:
         self.attrib['FolioSustitucion'] = str(a)
     return self
 def solicitud_aceptacion_rechazo0(name, data):
-    self = etree.Element(QName('http://cancelacfd.sat.gob.mx', name), nsmap=data.get('_nsmap') or {None: 'http://cancelacfd.sat.gob.mx'})
+    self = Element('{%s}%s' % ('http://cancelacfd.sat.gob.mx', name), nsmap=data.get('_nsmap') or {None: 'http://cancelacfd.sat.gob.mx'})
     el = data.get('Folios')
     if el is not None:
         for r in iterate(el):
@@ -9089,7 +9088,7 @@ def solicitud_aceptacion_rechazo0(name, data):
     self.attrib['Fecha'] = data['Fecha'].isoformat(timespec='seconds')
     return self
 def folios0(name, data):
-    self = etree.Element(QName('http://cancelacfd.sat.gob.mx', name), nsmap=data.get('_nsmap') or {None: 'http://cancelacfd.sat.gob.mx'})
+    self = Element('{%s}%s' % ('http://cancelacfd.sat.gob.mx', name), nsmap=data.get('_nsmap') or {None: 'http://cancelacfd.sat.gob.mx'})
     el = data.get('UUID')
     if el is not None:
         self.append(simple_element('{http://cancelacfd.sat.gob.mx}UUID', nsmap={None: 'http://cancelacfd.sat.gob.mx'}, text=el))
@@ -9099,7 +9098,7 @@ def folios0(name, data):
 def diverza0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=col.nsmap)
     el = data.get('Generales')
     if el is not None:
         self.append(generales0('generales', el))
@@ -9117,13 +9116,13 @@ def diverza0(name, data):
         self.append(conceptos0('conceptos', el))
     el = data.get('Complemento')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.diverza.com/ns/addenda/diverza/1}complemento')
+        st = SubElement(self, '{http://www.diverza.com/ns/addenda/diverza/1}complemento')
         for r in iterate(el):
             st.append(extra0('datosExtra', r))
     self.attrib['version'] = data['Version']
     return self
 def generales0(name, data):
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
     if (a := data.get('TipoDocumento')) is not None:
         self.attrib['tipoDocumento'] = a
     if (a := data.get('TotalConLetra')) is not None:
@@ -9146,7 +9145,7 @@ def generales0(name, data):
         self.attrib['fechaTipoCambio'] = a.isoformat()
     return self
 def claves_descripcion0(name, data):
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
     if (a := data.get('CFormaPago')) is not None:
         self.attrib['c_FormaPago'] = a
     if (a := data.get('CMoneda')) is not None:
@@ -9167,7 +9166,7 @@ def claves_descripcion0(name, data):
         self.attrib['c_UsoCFDI'] = a
     return self
 def emisor0(name, data):
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
     el = data.get('DatosContactoE')
     if el is not None:
         self.append(datos_contacto0('datosContactoE', el))
@@ -9190,7 +9189,7 @@ def emisor0(name, data):
         self.attrib['gln'] = a
     return self
 def sucursal_e0(name, data):
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
     el = data.get('DomicilioSucursal')
     if el is not None:
         self.append(ubicacion0('domicilioSucursal', el))
@@ -9201,7 +9200,7 @@ def sucursal_e0(name, data):
         self.attrib['alias'] = a
     return self
 def receptor0(name, data):
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
     el = data.get('DatosContactoR')
     if el is not None:
         self.append(datos_contacto0('datosContactoR', el))
@@ -9210,7 +9209,7 @@ def receptor0(name, data):
         self.append(ubicacion0('domicilioFiscalR', el))
     el = data.get('Destino')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.diverza.com/ns/addenda/diverza/1}destino')
+        st = SubElement(self, '{http://www.diverza.com/ns/addenda/diverza/1}destino')
         for r in iterate(el):
             st.append(ubicacion0('domicilioDestinoR', r))
     if (a := data.get('Comprador')) is not None:
@@ -9219,7 +9218,7 @@ def receptor0(name, data):
         self.attrib['numCliente'] = a
     return self
 def conceptos0(name, data):
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
     el = data['Concepto']
     for r in iterate(el):
         self.append(concepto0('concepto', r))
@@ -9227,7 +9226,7 @@ def conceptos0(name, data):
         self.attrib['numeroConceptos'] = str(a)
     return self
 def concepto0(name, data):
-    self = etree.Element(QName('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
+    self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})
     el = data.get('DatosExtraC')
     if el is not None:
         for r in iterate(el):
@@ -9262,7 +9261,7 @@ def concepto0(name, data):
 def auxiliar_ctas0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas', name), nsmap=col.nsmap)
     el = data['Cuenta']
     for r in iterate(el):
         self.append(cuenta0('Cuenta', r))
@@ -9283,7 +9282,7 @@ def auxiliar_ctas0(name, data):
         self.attrib['Certificado'] = a
     return self
 def cuenta0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas', name), nsmap=data.get('_nsmap') or {'AuxiliarCtas': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas', name), nsmap=data.get('_nsmap') or {'AuxiliarCtas': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas'})
     el = data['DetalleAux']
     for r in iterate(el):
         self.append(detalle_aux0('DetalleAux', r))
@@ -9293,7 +9292,7 @@ def cuenta0(name, data):
     self.attrib['SaldoFin'] = fmt_decimal(data['SaldoFin'])
     return self
 def detalle_aux0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas', name), nsmap=data.get('_nsmap') or {'AuxiliarCtas': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas', name), nsmap=data.get('_nsmap') or {'AuxiliarCtas': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas'})
     self.attrib['Fecha'] = data['Fecha'].isoformat()
     self.attrib['NumUnIdenPol'] = data['NumUnIdenPol']
     self.attrib['Concepto'] = data['Concepto']
@@ -9303,7 +9302,7 @@ def detalle_aux0(name, data):
 def rep_aux_fol0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios', name), nsmap=col.nsmap)
     el = data.get('DetAuxFol')
     if el is not None:
         for r in iterate(el):
@@ -9325,7 +9324,7 @@ def rep_aux_fol0(name, data):
         self.attrib['Certificado'] = a
     return self
 def det_aux_fol0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios'})
     el = data.get('ComprNal')
     if el is not None:
         for r in iterate(el):
@@ -9342,7 +9341,7 @@ def det_aux_fol0(name, data):
     self.attrib['Fecha'] = data['Fecha'].isoformat()
     return self
 def compr_nal0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios'})
     self.attrib['UUID_CFDI'] = str(data['UUID_CFDI'])
     self.attrib['MontoTotal'] = fmt_decimal(data['MontoTotal'])
     self.attrib['RFC'] = data['RFC']
@@ -9354,7 +9353,7 @@ def compr_nal0(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def compr_nal_otr0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios'})
     if (a := data.get('CFD_CBB_Serie')) is not None:
         self.attrib['CFD_CBB_Serie'] = a
     self.attrib['CFD_CBB_NumFol'] = str(data['CFD_CBB_NumFol'])
@@ -9368,7 +9367,7 @@ def compr_nal_otr0(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def compr_ext0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios'})
     self.attrib['NumFactExt'] = data['NumFactExt']
     if (a := data.get('TaxID')) is not None:
         self.attrib['TaxID'] = a
@@ -9383,7 +9382,7 @@ def compr_ext0(name, data):
 def balanza0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/BalanzaComprobacion', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/BalanzaComprobacion', name), nsmap=col.nsmap)
     el = data['Ctas']
     for r in iterate(el):
         self.append(ctas0('Ctas', r))
@@ -9402,7 +9401,7 @@ def balanza0(name, data):
         self.attrib['Certificado'] = a
     return self
 def ctas0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/BalanzaComprobacion', name), nsmap=data.get('_nsmap') or {'BCE': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/BalanzaComprobacion'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/BalanzaComprobacion', name), nsmap=data.get('_nsmap') or {'BCE': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/BalanzaComprobacion'})
     self.attrib['NumCta'] = data['NumCta']
     self.attrib['SaldoIni'] = fmt_decimal(data['SaldoIni'])
     self.attrib['Debe'] = fmt_decimal(data['Debe'])
@@ -9412,7 +9411,7 @@ def ctas0(name, data):
 def catalogo0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas', name), nsmap=col.nsmap)
     el = data['Ctas']
     for r in iterate(el):
         self.append(ctas1('Ctas', r))
@@ -9428,7 +9427,7 @@ def catalogo0(name, data):
         self.attrib['Certificado'] = a
     return self
 def ctas1(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas', name), nsmap=data.get('_nsmap') or {'catalogocuentas': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas', name), nsmap=data.get('_nsmap') or {'catalogocuentas': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas'})
     self.attrib['CodAgrup'] = strcode(data['CodAgrup'])
     self.attrib['NumCta'] = data['NumCta']
     self.attrib['Desc'] = data['Desc']
@@ -9440,7 +9439,7 @@ def ctas1(name, data):
 def polizas0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=col.nsmap)
     el = data['Poliza']
     for r in iterate(el):
         self.append(poliza0('Poliza', r))
@@ -9461,7 +9460,7 @@ def polizas0(name, data):
         self.attrib['Certificado'] = a
     return self
 def poliza0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
     el = data['Transaccion']
     for r in iterate(el):
         self.append(transaccion0('Transaccion', r))
@@ -9470,7 +9469,7 @@ def poliza0(name, data):
     self.attrib['Concepto'] = data['Concepto']
     return self
 def transaccion0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
     el = data.get('CompNal')
     if el is not None:
         for r in iterate(el):
@@ -9502,7 +9501,7 @@ def transaccion0(name, data):
     self.attrib['Haber'] = fmt_decimal(data['Haber'])
     return self
 def comp_nal0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
     self.attrib['UUID_CFDI'] = str(data['UUID_CFDI'])
     self.attrib['RFC'] = data['RFC']
     self.attrib['MontoTotal'] = fmt_decimal(data['MontoTotal'])
@@ -9512,7 +9511,7 @@ def comp_nal0(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def comp_nal_otr0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
     if (a := data.get('CFD_CBB_Serie')) is not None:
         self.attrib['CFD_CBB_Serie'] = a
     self.attrib['CFD_CBB_NumFol'] = str(data['CFD_CBB_NumFol'])
@@ -9524,7 +9523,7 @@ def comp_nal_otr0(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def comp_ext0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
     self.attrib['NumFactExt'] = data['NumFactExt']
     if (a := data.get('TaxID')) is not None:
         self.attrib['TaxID'] = a
@@ -9535,7 +9534,7 @@ def comp_ext0(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def cheque0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
     self.attrib['Num'] = data['Num']
     self.attrib['BanEmisNal'] = strcode(data['BanEmisNal'])
     if (a := data.get('BanEmisExt')) is not None:
@@ -9551,7 +9550,7 @@ def cheque0(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def transferencia0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
     if (a := data.get('CtaOri')) is not None:
         self.attrib['CtaOri'] = a
     self.attrib['BancoOriNal'] = strcode(data['BancoOriNal'])
@@ -9571,7 +9570,7 @@ def transferencia0(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def otr_metodo_pago0(name, data):
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo'})
     self.attrib['MetPagoPol'] = strcode(data['MetPagoPol'])
     self.attrib['Fecha'] = data['Fecha'].isoformat()
     self.attrib['Benef'] = data['Benef']
@@ -9585,7 +9584,7 @@ def otr_metodo_pago0(name, data):
 def auxiliar_ctas1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas', name), nsmap=col.nsmap)
     el = data['Cuenta']
     for r in iterate(el):
         self.append(cuenta1('Cuenta', r))
@@ -9606,7 +9605,7 @@ def auxiliar_ctas1(name, data):
         self.attrib['Certificado'] = a
     return self
 def cuenta1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas', name), nsmap=data.get('_nsmap') or {'AuxiliarCtas': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas', name), nsmap=data.get('_nsmap') or {'AuxiliarCtas': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas'})
     el = data['DetalleAux']
     for r in iterate(el):
         self.append(detalle_aux1('DetalleAux', r))
@@ -9616,7 +9615,7 @@ def cuenta1(name, data):
     self.attrib['SaldoFin'] = fmt_decimal(data['SaldoFin'])
     return self
 def detalle_aux1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas', name), nsmap=data.get('_nsmap') or {'AuxiliarCtas': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas', name), nsmap=data.get('_nsmap') or {'AuxiliarCtas': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas'})
     self.attrib['Fecha'] = data['Fecha'].isoformat()
     self.attrib['NumUnIdenPol'] = data['NumUnIdenPol']
     self.attrib['Concepto'] = data['Concepto']
@@ -9626,7 +9625,7 @@ def detalle_aux1(name, data):
 def rep_aux_fol1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios', name), nsmap=col.nsmap)
     el = data.get('DetAuxFol')
     if el is not None:
         for r in iterate(el):
@@ -9648,7 +9647,7 @@ def rep_aux_fol1(name, data):
         self.attrib['Certificado'] = a
     return self
 def det_aux_fol1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios'})
     el = data.get('ComprNal')
     if el is not None:
         for r in iterate(el):
@@ -9665,7 +9664,7 @@ def det_aux_fol1(name, data):
     self.attrib['Fecha'] = data['Fecha'].isoformat()
     return self
 def compr_nal1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios'})
     self.attrib['UUID_CFDI'] = str(data['UUID_CFDI'])
     self.attrib['MontoTotal'] = fmt_decimal(data['MontoTotal'])
     self.attrib['RFC'] = data['RFC']
@@ -9677,7 +9676,7 @@ def compr_nal1(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def compr_nal_otr1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios'})
     if (a := data.get('CFD_CBB_Serie')) is not None:
         self.attrib['CFD_CBB_Serie'] = a
     self.attrib['CFD_CBB_NumFol'] = str(data['CFD_CBB_NumFol'])
@@ -9691,7 +9690,7 @@ def compr_nal_otr1(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def compr_ext1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios', name), nsmap=data.get('_nsmap') or {'RepAux': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios'})
     self.attrib['NumFactExt'] = data['NumFactExt']
     if (a := data.get('TaxID')) is not None:
         self.attrib['TaxID'] = a
@@ -9706,7 +9705,7 @@ def compr_ext1(name, data):
 def balanza1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion', name), nsmap=col.nsmap)
     el = data['Ctas']
     for r in iterate(el):
         self.append(ctas2('Ctas', r))
@@ -9725,7 +9724,7 @@ def balanza1(name, data):
         self.attrib['Certificado'] = a
     return self
 def ctas2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion', name), nsmap=data.get('_nsmap') or {'BCE': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion', name), nsmap=data.get('_nsmap') or {'BCE': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion'})
     self.attrib['NumCta'] = data['NumCta']
     self.attrib['SaldoIni'] = fmt_decimal(data['SaldoIni'])
     self.attrib['Debe'] = fmt_decimal(data['Debe'])
@@ -9735,7 +9734,7 @@ def ctas2(name, data):
 def catalogo1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas', name), nsmap=col.nsmap)
     el = data['Ctas']
     for r in iterate(el):
         self.append(ctas3('Ctas', r))
@@ -9751,7 +9750,7 @@ def catalogo1(name, data):
         self.attrib['Certificado'] = a
     return self
 def ctas3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas', name), nsmap=data.get('_nsmap') or {'catalogocuentas': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas', name), nsmap=data.get('_nsmap') or {'catalogocuentas': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas'})
     self.attrib['CodAgrup'] = strcode(data['CodAgrup'])
     self.attrib['NumCta'] = data['NumCta']
     self.attrib['Desc'] = data['Desc']
@@ -9763,7 +9762,7 @@ def ctas3(name, data):
 def polizas1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=col.nsmap)
     el = data['Poliza']
     for r in iterate(el):
         self.append(poliza1('Poliza', r))
@@ -9784,7 +9783,7 @@ def polizas1(name, data):
         self.attrib['Certificado'] = a
     return self
 def poliza1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
     el = data['Transaccion']
     for r in iterate(el):
         self.append(transaccion1('Transaccion', r))
@@ -9793,7 +9792,7 @@ def poliza1(name, data):
     self.attrib['Concepto'] = data['Concepto']
     return self
 def transaccion1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
     el = data.get('CompNal')
     if el is not None:
         for r in iterate(el):
@@ -9825,7 +9824,7 @@ def transaccion1(name, data):
     self.attrib['Haber'] = fmt_decimal(data['Haber'])
     return self
 def comp_nal1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
     self.attrib['UUID_CFDI'] = str(data['UUID_CFDI'])
     self.attrib['RFC'] = data['RFC']
     self.attrib['MontoTotal'] = fmt_decimal(data['MontoTotal'])
@@ -9835,7 +9834,7 @@ def comp_nal1(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def comp_nal_otr1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
     if (a := data.get('CFD_CBB_Serie')) is not None:
         self.attrib['CFD_CBB_Serie'] = a
     self.attrib['CFD_CBB_NumFol'] = str(data['CFD_CBB_NumFol'])
@@ -9847,7 +9846,7 @@ def comp_nal_otr1(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def comp_ext1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
     self.attrib['NumFactExt'] = data['NumFactExt']
     if (a := data.get('TaxID')) is not None:
         self.attrib['TaxID'] = a
@@ -9858,7 +9857,7 @@ def comp_ext1(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def cheque1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
     self.attrib['Num'] = data['Num']
     self.attrib['BanEmisNal'] = strcode(data['BanEmisNal'])
     if (a := data.get('BanEmisExt')) is not None:
@@ -9874,7 +9873,7 @@ def cheque1(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def transferencia1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
     if (a := data.get('CtaOri')) is not None:
         self.attrib['CtaOri'] = a
     self.attrib['BancoOriNal'] = strcode(data['BancoOriNal'])
@@ -9894,7 +9893,7 @@ def transferencia1(name, data):
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
 def otr_metodo_pago1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo', name), nsmap=data.get('_nsmap') or {'PLZ': 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo'})
     self.attrib['MetPagoPol'] = strcode(data['MetPagoPol'])
     self.attrib['Fecha'] = data['Fecha'].isoformat()
     self.attrib['Benef'] = data['Benef']
@@ -9908,7 +9907,7 @@ def otr_metodo_pago1(name, data):
 def sello_digital_cont_elec0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['Folio'] = data['Folio']
     self.attrib['RFC'] = data['RFC']
@@ -9921,9 +9920,9 @@ def sello_digital_cont_elec0(name, data):
 def servicios_plataformas_tecnologicas0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10', name), nsmap=col.nsmap)
     el = data['Servicios']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10}Servicios')
+    st = SubElement(self, '{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10}Servicios')
     for r in iterate(el):
         st.append(detalles_del_servicio0('DetallesDelServicio', r))
     self.attrib['Version'] = data['Version']
@@ -9939,7 +9938,7 @@ def servicios_plataformas_tecnologicas0(name, data):
         self.attrib['MonTotalContribucionGubernamental'] = fmt_decimal(a)
     return self
 def detalles_del_servicio0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10', name), nsmap=data.get('_nsmap') or {'plataformasTecnologicas': 'http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10', name), nsmap=data.get('_nsmap') or {'plataformasTecnologicas': 'http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10'})
     el = data.get('ImpuestosTrasladadosdelServicio')
     if el is not None:
         self.append(impuestos_trasladadosdel_servicio0('ImpuestosTrasladadosdelServicio', el))
@@ -9959,7 +9958,7 @@ def detalles_del_servicio0(name, data):
     self.attrib['PrecioServSinIVA'] = fmt_decimal(data['PrecioServSinIVA'])
     return self
 def impuestos_trasladadosdel_servicio0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10', name), nsmap=data.get('_nsmap') or {'plataformasTecnologicas': 'http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10', name), nsmap=data.get('_nsmap') or {'plataformasTecnologicas': 'http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10'})
     self.attrib['Base'] = fmt_decimal(data['Base'])
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['TipoFactor'] = data['TipoFactor']
@@ -9967,12 +9966,12 @@ def impuestos_trasladadosdel_servicio0(name, data):
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def contribucion_gubernamental0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10', name), nsmap=data.get('_nsmap') or {'plataformasTecnologicas': 'http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10', name), nsmap=data.get('_nsmap') or {'plataformasTecnologicas': 'http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10'})
     self.attrib['ImpContrib'] = fmt_decimal(data['ImpContrib'])
     self.attrib['EntidadDondePagaLaContribucion'] = strcode(data['EntidadDondePagaLaContribucion'])
     return self
 def comision_del_servicio0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10', name), nsmap=data.get('_nsmap') or {'plataformasTecnologicas': 'http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10', name), nsmap=data.get('_nsmap') or {'plataformasTecnologicas': 'http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10'})
     if (a := data.get('Base')) is not None:
         self.attrib['Base'] = fmt_decimal(a)
     if (a := data.get('Porcentaje')) is not None:
@@ -9982,7 +9981,7 @@ def comision_del_servicio0(name, data):
 def arrendamientoenfideicomiso0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/arrendamientoenfideicomiso', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/arrendamientoenfideicomiso', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['PagProvEfecPorFiduc'] = fmt_decimal(data['PagProvEfecPorFiduc'])
     self.attrib['RendimFideicom'] = fmt_decimal(data['RendimFideicom'])
@@ -9999,7 +9998,7 @@ def arrendamientoenfideicomiso0(name, data):
 def dividendos0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos', name), nsmap=col.nsmap)
     el = data.get('DividOUtil')
     if el is not None:
         self.append(divid_o_util0('DividOUtil', el))
@@ -10009,7 +10008,7 @@ def dividendos0(name, data):
     self.attrib['Version'] = data['Version']
     return self
 def divid_o_util0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos', name), nsmap=data.get('_nsmap') or {'dividendos': 'http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos', name), nsmap=data.get('_nsmap') or {'dividendos': 'http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos'})
     self.attrib['CveTipDivOUtil'] = strcode(data['CveTipDivOUtil'])
     self.attrib['MontISRAcredRetMexico'] = fmt_decimal(data['MontISRAcredRetMexico'])
     self.attrib['MontISRAcredRetExtranjero'] = fmt_decimal(data['MontISRAcredRetExtranjero'])
@@ -10024,14 +10023,14 @@ def divid_o_util0(name, data):
         self.attrib['MontDivAcumExt'] = fmt_decimal(a)
     return self
 def remanente0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos', name), nsmap=data.get('_nsmap') or {'dividendos': 'http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos', name), nsmap=data.get('_nsmap') or {'dividendos': 'http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos'})
     if (a := data.get('ProporcionRem')) is not None:
         self.attrib['ProporcionRem'] = fmt_decimal(a)
     return self
 def enajenacionde_acciones0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/enajenaciondeacciones', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/enajenaciondeacciones', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['ContratoIntermediacion'] = data['ContratoIntermediacion']
     self.attrib['Ganancia'] = fmt_decimal(data['Ganancia'])
@@ -10040,7 +10039,7 @@ def enajenacionde_acciones0(name, data):
 def fideicomisonoempresarial0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap=col.nsmap)
     el = data['IngresosOEntradas']
     self.append(ingresos_oentradas0('IngresosOEntradas', el))
     el = data['DeduccOSalidas']
@@ -10050,7 +10049,7 @@ def fideicomisonoempresarial0(name, data):
     self.attrib['Version'] = data['Version']
     return self
 def ingresos_oentradas0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap=data.get('_nsmap') or {'fideicomisonoempresarial': 'http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap=data.get('_nsmap') or {'fideicomisonoempresarial': 'http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial'})
     el = data['IntegracIngresos']
     self.append(integrac_ingresos0('IntegracIngresos', el))
     self.attrib['MontTotEntradasPeriodo'] = fmt_decimal(data['MontTotEntradasPeriodo'])
@@ -10058,11 +10057,11 @@ def ingresos_oentradas0(name, data):
     self.attrib['PropDelMontTot'] = fmt_decimal(data['PropDelMontTot'])
     return self
 def integrac_ingresos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap={'fideicomisonoempresarial': 'http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap={'fideicomisonoempresarial': 'http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial'})
     self.attrib['Concepto'] = data
     return self
 def deducc_osalidas0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap=data.get('_nsmap') or {'fideicomisonoempresarial': 'http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap=data.get('_nsmap') or {'fideicomisonoempresarial': 'http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial'})
     el = data['IntegracEgresos']
     self.append(integrac_egresos0('IntegracEgresos', el))
     self.attrib['MontTotEgresPeriodo'] = fmt_decimal(data['MontTotEgresPeriodo'])
@@ -10070,18 +10069,18 @@ def deducc_osalidas0(name, data):
     self.attrib['PropDelMontTot'] = fmt_decimal(data['PropDelMontTot'])
     return self
 def integrac_egresos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap={'fideicomisonoempresarial': 'http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap={'fideicomisonoempresarial': 'http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial'})
     self.attrib['ConceptoS'] = data
     return self
 def ret_efect_fideicomiso0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap=data.get('_nsmap') or {'fideicomisonoempresarial': 'http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial', name), nsmap=data.get('_nsmap') or {'fideicomisonoempresarial': 'http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial'})
     self.attrib['MontRetRelPagFideic'] = fmt_decimal(data['MontRetRelPagFideic'])
     self.attrib['DescRetRelPagFideic'] = data['DescRetRelPagFideic']
     return self
 def intereses0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/intereses', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/intereses', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['SistFinanciero'] = data['SistFinanciero']
     self.attrib['RetiroAORESRetInt'] = data['RetiroAORESRetInt']
@@ -10093,7 +10092,7 @@ def intereses0(name, data):
 def intereseshipotecarios0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/intereseshipotecarios', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/intereseshipotecarios', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['CreditoDeInstFinanc'] = data['CreditoDeInstFinanc']
     self.attrib['SaldoInsoluto'] = fmt_decimal(data['SaldoInsoluto'])
@@ -10111,7 +10110,7 @@ def intereseshipotecarios0(name, data):
 def operacionesconderivados0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/operacionesconderivados', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/operacionesconderivados', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['MontGanAcum'] = fmt_decimal(data['MontGanAcum'])
     self.attrib['MontPerdDed'] = fmt_decimal(data['MontPerdDed'])
@@ -10119,7 +10118,7 @@ def operacionesconderivados0(name, data):
 def pagosaextranjeros0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros', name), nsmap=col.nsmap)
     el = data.get('NoBeneficiario')
     if el is not None:
         self.append(no_beneficiario0('NoBeneficiario', el))
@@ -10130,13 +10129,13 @@ def pagosaextranjeros0(name, data):
     self.attrib['EsBenefEfectDelCobro'] = data['EsBenefEfectDelCobro']
     return self
 def no_beneficiario0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros', name), nsmap=data.get('_nsmap') or {'pagosaextranjeros': 'http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros', name), nsmap=data.get('_nsmap') or {'pagosaextranjeros': 'http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros'})
     self.attrib['PaisDeResidParaEfecFisc'] = strcode(data['PaisDeResidParaEfecFisc'])
     self.attrib['ConceptoPago'] = strcode(data['ConceptoPago'])
     self.attrib['DescripcionConcepto'] = data['DescripcionConcepto']
     return self
 def beneficiario0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros', name), nsmap=data.get('_nsmap') or {'pagosaextranjeros': 'http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros', name), nsmap=data.get('_nsmap') or {'pagosaextranjeros': 'http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros'})
     self.attrib['RFC'] = data['RFC']
     self.attrib['CURP'] = data['CURP']
     self.attrib['NomDenRazSocB'] = data['NomDenRazSocB']
@@ -10146,7 +10145,7 @@ def beneficiario0(name, data):
 def planesderetiro0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11', name), nsmap=col.nsmap)
     el = data.get('AportacionesODepositos')
     if el is not None:
         for r in iterate(el):
@@ -10170,7 +10169,7 @@ def planesderetiro0(name, data):
         self.attrib['NumReferencia'] = a
     return self
 def aportaciones_odepositos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11', name), nsmap=data.get('_nsmap') or {'planesderetiro11': 'http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11', name), nsmap=data.get('_nsmap') or {'planesderetiro11': 'http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11'})
     self.attrib['TipoAportacionODeposito'] = strcode(data['TipoAportacionODeposito'])
     self.attrib['MontAportODep'] = fmt_decimal(data['MontAportODep'])
     if (a := data.get('RFCFiduciaria')) is not None:
@@ -10179,7 +10178,7 @@ def aportaciones_odepositos0(name, data):
 def planesderetiro1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['SistemaFinanc'] = data['SistemaFinanc']
     if (a := data.get('MontTotAportAnioInmAnterior')) is not None:
@@ -10199,7 +10198,7 @@ def planesderetiro1(name, data):
 def premios0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/premios', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/premios', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['EntidadFederativa'] = strcode(data['EntidadFederativa'])
     self.attrib['MontTotPago'] = fmt_decimal(data['MontTotPago'])
@@ -10209,7 +10208,7 @@ def premios0(name, data):
 def retenciones0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=col.nsmap)
     el = data['Emisor']
     self.append(emisor1('Emisor', el))
     el = data['Receptor']
@@ -10236,7 +10235,7 @@ def retenciones0(name, data):
         self.attrib['DescRetenc'] = a
     return self
 def emisor1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     self.attrib['RFCEmisor'] = data['RFCEmisor']
     if (a := data.get('NomDenRazSocE')) is not None:
         self.attrib['NomDenRazSocE'] = a
@@ -10244,7 +10243,7 @@ def emisor1(name, data):
         self.attrib['CURPE'] = a
     return self
 def receptor1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional14('Nacional', el))
@@ -10254,7 +10253,7 @@ def receptor1(name, data):
     self.attrib['Nacionalidad'] = data['Nacionalidad']
     return self
 def nacional14(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     self.attrib['RFCRecep'] = data['RFCRecep']
     if (a := data.get('NomDenRazSocR')) is not None:
         self.attrib['NomDenRazSocR'] = a
@@ -10262,19 +10261,19 @@ def nacional14(name, data):
         self.attrib['CURPR'] = a
     return self
 def extranjero14(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     if (a := data.get('NumRegIdTrib')) is not None:
         self.attrib['NumRegIdTrib'] = a
     self.attrib['NomDenRazSocR'] = data['NomDenRazSocR']
     return self
 def periodo0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     self.attrib['MesIni'] = str(data['MesIni'])
     self.attrib['MesFin'] = str(data['MesFin'])
     self.attrib['Ejerc'] = str(data['Ejerc'])
     return self
 def totales0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     el = data.get('ImpRetenidos')
     if el is not None:
         for r in iterate(el):
@@ -10285,7 +10284,7 @@ def totales0(name, data):
     self.attrib['montoTotRet'] = fmt_decimal(data['MontoTotRet'])
     return self
 def imp_retenidos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     if (a := data.get('BaseRet')) is not None:
         self.attrib['BaseRet'] = fmt_decimal(a)
     if (a := data.get('Impuesto')) is not None:
@@ -10294,13 +10293,13 @@ def imp_retenidos0(name, data):
     self.attrib['TipoPagoRet'] = data['TipoPagoRet']
     return self
 def complemento0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
     return self
 def addenda0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/1'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -10308,7 +10307,7 @@ def addenda0(name, data):
 def sector_financiero0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/1/sectorfinanciero', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/sectorfinanciero', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['IdFideicom'] = data['IdFideicom']
     if (a := data.get('NomFideicom')) is not None:
@@ -10318,7 +10317,7 @@ def sector_financiero0(name, data):
 def retenciones1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=col.nsmap)
     el = data.get('CfdiRetenRelacionados')
     if el is not None:
         self.append(cfdi_reten_relacionados0('CfdiRetenRelacionados', el))
@@ -10349,18 +10348,18 @@ def retenciones1(name, data):
         self.attrib['DescRetenc'] = a
     return self
 def cfdi_reten_relacionados0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     self.attrib['TipoRelacion'] = strcode(data['TipoRelacion'])
     self.attrib['UUID'] = str(data['UUID'])
     return self
 def emisor2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     self.attrib['RfcE'] = str(data['RfcE'])
     self.attrib['NomDenRazSocE'] = data['NomDenRazSocE']
     self.attrib['RegimenFiscalE'] = strcode(data['RegimenFiscalE'])
     return self
 def receptor2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     el = data.get('Nacional')
     if el is not None:
         self.append(nacional15('Nacional', el))
@@ -10370,7 +10369,7 @@ def receptor2(name, data):
     self.attrib['NacionalidadR'] = data['NacionalidadR']
     return self
 def nacional15(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     self.attrib['RfcR'] = str(data['RfcR'])
     self.attrib['NomDenRazSocR'] = data['NomDenRazSocR']
     if (a := data.get('CurpR')) is not None:
@@ -10378,19 +10377,19 @@ def nacional15(name, data):
     self.attrib['DomicilioFiscalR'] = data['DomicilioFiscalR']
     return self
 def extranjero15(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     if (a := data.get('NumRegIdTribR')) is not None:
         self.attrib['NumRegIdTribR'] = a
     self.attrib['NomDenRazSocR'] = data['NomDenRazSocR']
     return self
 def periodo1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     self.attrib['MesIni'] = strcode(data['MesIni'])
     self.attrib['MesFin'] = strcode(data['MesFin'])
     self.attrib['Ejercicio'] = strcode(data['Ejercicio'])
     return self
 def totales1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     el = data.get('ImpRetenidos')
     if el is not None:
         for r in iterate(el):
@@ -10405,7 +10404,7 @@ def totales1(name, data):
         self.attrib['ISRCorrespondiente'] = fmt_decimal(a)
     return self
 def imp_retenidos1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     if (a := data.get('BaseRet')) is not None:
         self.attrib['BaseRet'] = fmt_decimal(a)
     if (a := data.get('ImpuestoRet')) is not None:
@@ -10414,13 +10413,13 @@ def imp_retenidos1(name, data):
     self.attrib['TipoPagoRet'] = strcode(data['TipoPagoRet'])
     return self
 def complemento1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
     return self
 def addenda1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -10428,13 +10427,13 @@ def addenda1(name, data):
 def comprobante0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=col.nsmap)
     el = data['Emisor']
     self.append(emisor3('Emisor', el))
     el = data['Receptor']
     self.append(receptor3('Receptor', el))
     el = data['Conceptos']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/3}Conceptos')
+    st = SubElement(self, '{http://www.sat.gob.mx/cfd/3}Conceptos')
     for r in iterate(el):
         st.append(concepto1('Concepto', r))
     el = data['Impuestos']
@@ -10482,7 +10481,7 @@ def comprobante0(name, data):
         self.attrib['MontoFolioFiscalOrig'] = fmt_decimal(a)
     return self
 def emisor3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     el = data.get('DomicilioFiscal')
     if el is not None:
         self.append(t_ubicacion_fiscal0('DomicilioFiscal', el))
@@ -10497,11 +10496,11 @@ def emisor3(name, data):
         self.attrib['nombre'] = a
     return self
 def regimen_fiscal0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['Regimen'] = data
     return self
 def receptor3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     el = data.get('Domicilio')
     if el is not None:
         self.append(t_ubicacion0('Domicilio', el))
@@ -10510,7 +10509,7 @@ def receptor3(name, data):
         self.attrib['nombre'] = a
     return self
 def concepto1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     el = data.get('InformacionAduanera')
     if el is not None:
         for r in iterate(el):
@@ -10534,17 +10533,17 @@ def concepto1(name, data):
     self.attrib['importe'] = fmt_decimal(data['Importe'])
     return self
 def cuenta_predial0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['numero'] = data
     return self
 def complemento_concepto0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
     return self
 def parte0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     el = data.get('InformacionAduanera')
     if el is not None:
         for r in iterate(el):
@@ -10561,15 +10560,15 @@ def parte0(name, data):
         self.attrib['importe'] = fmt_decimal(a)
     return self
 def impuestos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     el = data.get('Retenciones')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/3}Retenciones')
+        st = SubElement(self, '{http://www.sat.gob.mx/cfd/3}Retenciones')
         for r in iterate(el):
             st.append(retencion0('Retencion', r))
     el = data.get('Traslados')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/3}Traslados')
+        st = SubElement(self, '{http://www.sat.gob.mx/cfd/3}Traslados')
         for r in iterate(el):
             st.append(traslado0('Traslado', r))
     if (a := data.get('TotalImpuestosRetenidos')) is not None:
@@ -10578,24 +10577,24 @@ def impuestos0(name, data):
         self.attrib['totalImpuestosTrasladados'] = fmt_decimal(a)
     return self
 def retencion0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['impuesto'] = data['Impuesto']
     self.attrib['importe'] = fmt_decimal(data['Importe'])
     return self
 def traslado0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['impuesto'] = data['Impuesto']
     self.attrib['tasa'] = fmt_decimal(data['Tasa'])
     self.attrib['importe'] = fmt_decimal(data['Importe'])
     return self
 def complemento2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
     return self
 def addenda2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -10603,7 +10602,7 @@ def addenda2(name, data):
 def comprobante1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=col.nsmap)
     el = data.get('CfdiRelacionados')
     if el is not None:
         self.append(cfdi_relacionados0('CfdiRelacionados', el))
@@ -10612,7 +10611,7 @@ def comprobante1(name, data):
     el = data['Receptor']
     self.append(receptor4('Receptor', el))
     el = data['Conceptos']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/3}Conceptos')
+    st = SubElement(self, '{http://www.sat.gob.mx/cfd/3}Conceptos')
     for r in iterate(el):
         st.append(concepto2('Concepto', r))
     el = data.get('Impuestos')
@@ -10652,25 +10651,25 @@ def comprobante1(name, data):
         self.attrib['Confirmacion'] = a
     return self
 def cfdi_relacionados0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     el = data['CfdiRelacionado']
     for r in iterate(el):
         self.append(cfdi_relacionado0('CfdiRelacionado', r))
     self.attrib['TipoRelacion'] = strcode(data['TipoRelacion'])
     return self
 def cfdi_relacionado0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['UUID'] = str(data)
     return self
 def emisor4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['Rfc'] = str(data['Rfc'])
     if (a := data.get('Nombre')) is not None:
         self.attrib['Nombre'] = a
     self.attrib['RegimenFiscal'] = strcode(data['RegimenFiscal'])
     return self
 def receptor4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['Rfc'] = str(data['Rfc'])
     if (a := data.get('Nombre')) is not None:
         self.attrib['Nombre'] = a
@@ -10681,7 +10680,7 @@ def receptor4(name, data):
     self.attrib['UsoCFDI'] = strcode(data['UsoCFDI'])
     return self
 def concepto2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     el = data.get('Impuestos')
     if el is not None:
         self.append(impuestos1('Impuestos', el))
@@ -10713,20 +10712,20 @@ def concepto2(name, data):
         self.attrib['Descuento'] = fmt_decimal(a)
     return self
 def impuestos1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     el = data.get('Traslados')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/3}Traslados')
+        st = SubElement(self, '{http://www.sat.gob.mx/cfd/3}Traslados')
         for r in iterate(el):
             st.append(traslado1('Traslado', r))
     el = data.get('Retenciones')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/3}Retenciones')
+        st = SubElement(self, '{http://www.sat.gob.mx/cfd/3}Retenciones')
         for r in iterate(el):
             st.append(retencion1('Retencion', r))
     return self
 def traslado1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['Base'] = fmt_decimal(data['Base'])
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['TipoFactor'] = strcode(data['TipoFactor'])
@@ -10736,7 +10735,7 @@ def traslado1(name, data):
         self.attrib['Importe'] = fmt_decimal(a)
     return self
 def retencion1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['Base'] = fmt_decimal(data['Base'])
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['TipoFactor'] = strcode(data['TipoFactor'])
@@ -10744,21 +10743,21 @@ def retencion1(name, data):
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def informacion_aduanera0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['NumeroPedimento'] = data
     return self
 def cuenta_predial1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['Numero'] = data
     return self
 def complemento_concepto1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
     return self
 def parte1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     el = data.get('InformacionAduanera')
     if el is not None:
         for r in iterate(el):
@@ -10776,19 +10775,19 @@ def parte1(name, data):
         self.attrib['Importe'] = fmt_decimal(a)
     return self
 def informacion_aduanera1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['NumeroPedimento'] = data
     return self
 def impuestos2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     el = data.get('Retenciones')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/3}Retenciones')
+        st = SubElement(self, '{http://www.sat.gob.mx/cfd/3}Retenciones')
         for r in iterate(el):
             st.append(retencion2('Retencion', r))
     el = data.get('Traslados')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/3}Traslados')
+        st = SubElement(self, '{http://www.sat.gob.mx/cfd/3}Traslados')
         for r in iterate(el):
             st.append(traslado2('Traslado', r))
     if (a := data.get('TotalImpuestosRetenidos')) is not None:
@@ -10797,25 +10796,25 @@ def impuestos2(name, data):
         self.attrib['TotalImpuestosTrasladados'] = fmt_decimal(a)
     return self
 def retencion2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def traslado2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['TipoFactor'] = strcode(data['TipoFactor'])
     self.attrib['TasaOCuota'] = fmt_decimal(data['TasaOCuota'])
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def complemento3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
     return self
 def addenda3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/3', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/3'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -10823,7 +10822,7 @@ def addenda3(name, data):
 def comprobante2(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=col.nsmap)
     el = data.get('InformacionGlobal')
     if el is not None:
         self.append(informacion_global0('InformacionGlobal', el))
@@ -10836,7 +10835,7 @@ def comprobante2(name, data):
     el = data['Receptor']
     self.append(receptor5('Receptor', el))
     el = data['Conceptos']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/4}Conceptos')
+    st = SubElement(self, '{http://www.sat.gob.mx/cfd/4}Conceptos')
     for r in iterate(el):
         st.append(concepto3('Concepto', r))
     el = data.get('Impuestos')
@@ -10877,24 +10876,24 @@ def comprobante2(name, data):
         self.attrib['Confirmacion'] = a
     return self
 def informacion_global0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['Periodicidad'] = strcode(data['Periodicidad'])
     self.attrib['Meses'] = strcode(data['Meses'])
     self.attrib['Año'] = str(data['Año'])
     return self
 def cfdi_relacionados1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     el = data['CfdiRelacionado']
     for r in iterate(el):
         self.append(cfdi_relacionado1('CfdiRelacionado', r))
     self.attrib['TipoRelacion'] = strcode(data['TipoRelacion'])
     return self
 def cfdi_relacionado1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['UUID'] = str(data)
     return self
 def emisor5(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['Rfc'] = str(data['Rfc'])
     self.attrib['Nombre'] = data['Nombre']
     self.attrib['RegimenFiscal'] = strcode(data['RegimenFiscal'])
@@ -10902,7 +10901,7 @@ def emisor5(name, data):
         self.attrib['FacAtrAdquirente'] = a
     return self
 def receptor5(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['Rfc'] = str(data['Rfc'])
     self.attrib['Nombre'] = data['Nombre']
     self.attrib['DomicilioFiscalReceptor'] = data['DomicilioFiscalReceptor']
@@ -10914,7 +10913,7 @@ def receptor5(name, data):
     self.attrib['UsoCFDI'] = strcode(data['UsoCFDI'])
     return self
 def concepto3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     el = data.get('Impuestos')
     if el is not None:
         self.append(impuestos3('Impuestos', el))
@@ -10951,20 +10950,20 @@ def concepto3(name, data):
     self.attrib['ObjetoImp'] = strcode(data['ObjetoImp'])
     return self
 def impuestos3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     el = data.get('Traslados')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/4}Traslados')
+        st = SubElement(self, '{http://www.sat.gob.mx/cfd/4}Traslados')
         for r in iterate(el):
             st.append(traslado3('Traslado', r))
     el = data.get('Retenciones')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/4}Retenciones')
+        st = SubElement(self, '{http://www.sat.gob.mx/cfd/4}Retenciones')
         for r in iterate(el):
             st.append(retencion3('Retencion', r))
     return self
 def traslado3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['Base'] = fmt_decimal(data['Base'])
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['TipoFactor'] = strcode(data['TipoFactor'])
@@ -10974,7 +10973,7 @@ def traslado3(name, data):
         self.attrib['Importe'] = fmt_decimal(a)
     return self
 def retencion3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['Base'] = fmt_decimal(data['Base'])
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['TipoFactor'] = strcode(data['TipoFactor'])
@@ -10982,28 +10981,28 @@ def retencion3(name, data):
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def a_cuenta_terceros0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['RfcACuentaTerceros'] = str(data['RfcACuentaTerceros'])
     self.attrib['NombreACuentaTerceros'] = data['NombreACuentaTerceros']
     self.attrib['RegimenFiscalACuentaTerceros'] = strcode(data['RegimenFiscalACuentaTerceros'])
     self.attrib['DomicilioFiscalACuentaTerceros'] = data['DomicilioFiscalACuentaTerceros']
     return self
 def informacion_aduanera2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['NumeroPedimento'] = data
     return self
 def cuenta_predial2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['Numero'] = data
     return self
 def complemento_concepto2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
     return self
 def parte2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     el = data.get('InformacionAduanera')
     if el is not None:
         for r in iterate(el):
@@ -11021,19 +11020,19 @@ def parte2(name, data):
         self.attrib['Importe'] = fmt_decimal(a)
     return self
 def informacion_aduanera3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap={'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['NumeroPedimento'] = data
     return self
 def impuestos4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     el = data.get('Retenciones')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/4}Retenciones')
+        st = SubElement(self, '{http://www.sat.gob.mx/cfd/4}Retenciones')
         for r in iterate(el):
             st.append(retencion4('Retencion', r))
     el = data.get('Traslados')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/cfd/4}Traslados')
+        st = SubElement(self, '{http://www.sat.gob.mx/cfd/4}Traslados')
         for r in iterate(el):
             st.append(traslado4('Traslado', r))
     if (a := data.get('TotalImpuestosRetenidos')) is not None:
@@ -11042,12 +11041,12 @@ def impuestos4(name, data):
         self.attrib['TotalImpuestosTrasladados'] = fmt_decimal(a)
     return self
 def retencion4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def traslado4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     self.attrib['Base'] = fmt_decimal(data['Base'])
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['TipoFactor'] = strcode(data['TipoFactor'])
@@ -11057,13 +11056,13 @@ def traslado4(name, data):
         self.attrib['Importe'] = fmt_decimal(a)
     return self
 def complemento4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
     return self
 def addenda4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/cfd/4', name), nsmap=data.get('_nsmap') or {'cfdi': 'http://www.sat.gob.mx/cfd/4'})
     for v in iterate(data):
         if hasattr(v, 'tag'):
             self.append(cfdi_xmlify[v.tag](v))
@@ -11071,9 +11070,9 @@ def addenda4(name, data):
 def carta_porte0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=col.nsmap)
     el = data['Ubicaciones']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/CartaPorte}Ubicaciones')
+    st = SubElement(self, '{http://www.sat.gob.mx/CartaPorte}Ubicaciones')
     for r in iterate(el):
         st.append(ubicacion1('Ubicacion', r))
     el = data['Mercancias']
@@ -11091,7 +11090,7 @@ def carta_porte0(name, data):
         self.attrib['TotalDistRec'] = fmt_decimal(a)
     return self
 def ubicacion1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data.get('Origen')
     if el is not None:
         self.append(origen0('Origen', el))
@@ -11107,7 +11106,7 @@ def ubicacion1(name, data):
         self.attrib['DistanciaRecorrida'] = fmt_decimal(a)
     return self
 def origen0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     if (a := data.get('IDOrigen')) is not None:
         self.attrib['IDOrigen'] = a
     if (a := data.get('RFCRemitente')) is not None:
@@ -11127,7 +11126,7 @@ def origen0(name, data):
     self.attrib['FechaHoraSalida'] = data['FechaHoraSalida'].isoformat(timespec='seconds')
     return self
 def destino0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     if (a := data.get('IDDestino')) is not None:
         self.attrib['IDDestino'] = a
     if (a := data.get('RFCDestinatario')) is not None:
@@ -11147,7 +11146,7 @@ def destino0(name, data):
     self.attrib['FechaHoraProgLlegada'] = data['FechaHoraProgLlegada'].isoformat(timespec='seconds')
     return self
 def domicilio0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
         self.attrib['NumeroExterior'] = a
@@ -11166,7 +11165,7 @@ def domicilio0(name, data):
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
 def mercancias0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data['Mercancia']
     for r in iterate(el):
         self.append(mercancia0('Mercancia', r))
@@ -11193,7 +11192,7 @@ def mercancias0(name, data):
         self.attrib['CargoPorTasacion'] = fmt_decimal(a)
     return self
 def mercancia0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data.get('CantidadTransporta')
     if el is not None:
         for r in iterate(el):
@@ -11234,7 +11233,7 @@ def mercancia0(name, data):
         self.attrib['UUIDComercioExt'] = str(a)
     return self
 def cantidad_transporta0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['Cantidad'] = fmt_decimal(data['Cantidad'])
     self.attrib['IDOrigen'] = data['IDOrigen']
     self.attrib['IDDestino'] = data['IDDestino']
@@ -11242,7 +11241,7 @@ def cantidad_transporta0(name, data):
         self.attrib['CvesTransporte'] = strcode(a)
     return self
 def detalle_mercancia0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['UnidadPeso'] = strcode(data['UnidadPeso'])
     self.attrib['PesoBruto'] = fmt_decimal(data['PesoBruto'])
     self.attrib['PesoNeto'] = fmt_decimal(data['PesoNeto'])
@@ -11251,12 +11250,12 @@ def detalle_mercancia0(name, data):
         self.attrib['NumPiezas'] = str(a)
     return self
 def autotransporte_federal0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data['IdentificacionVehicular']
     self.append(identificacion_vehicular0('IdentificacionVehicular', el))
     el = data.get('Remolques')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/CartaPorte}Remolques')
+        st = SubElement(self, '{http://www.sat.gob.mx/CartaPorte}Remolques')
         for r in iterate(el):
             st.append(remolque0('Remolque', r))
     self.attrib['PermSCT'] = strcode(data['PermSCT'])
@@ -11265,18 +11264,18 @@ def autotransporte_federal0(name, data):
     self.attrib['NumPolizaSeguro'] = data['NumPolizaSeguro']
     return self
 def identificacion_vehicular0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['ConfigVehicular'] = strcode(data['ConfigVehicular'])
     self.attrib['PlacaVM'] = data['PlacaVM']
     self.attrib['AnioModeloVM'] = str(data['AnioModeloVM'])
     return self
 def remolque0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['SubTipoRem'] = strcode(data['SubTipoRem'])
     self.attrib['Placa'] = data['Placa']
     return self
 def transporte_maritimo0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data['Contenedor']
     for r in iterate(el):
         self.append(contenedor0('Contenedor', r))
@@ -11315,14 +11314,14 @@ def transporte_maritimo0(name, data):
         self.attrib['NumConocEmbarc'] = a
     return self
 def contenedor0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['MatriculaContenedor'] = data['MatriculaContenedor']
     self.attrib['TipoContenedor'] = strcode(data['TipoContenedor'])
     if (a := data.get('NumPrecinto')) is not None:
         self.attrib['NumPrecinto'] = a
     return self
 def transporte_aereo0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['PermSCT'] = strcode(data['PermSCT'])
     self.attrib['NumPermisoSCT'] = data['NumPermisoSCT']
     self.attrib['MatriculaAeronave'] = data['MatriculaAeronave']
@@ -11352,7 +11351,7 @@ def transporte_aereo0(name, data):
         self.attrib['NombreEmbarcador'] = a
     return self
 def transporte_ferroviario0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data.get('DerechosDePaso')
     if el is not None:
         for r in iterate(el):
@@ -11369,12 +11368,12 @@ def transporte_ferroviario0(name, data):
         self.attrib['Concesionario'] = str(a)
     return self
 def derechos_de_paso0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['TipoDerechoDePaso'] = strcode(data['TipoDerechoDePaso'])
     self.attrib['KilometrajePagado'] = fmt_decimal(data['KilometrajePagado'])
     return self
 def carro0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data.get('Contenedor')
     if el is not None:
         for r in iterate(el):
@@ -11385,13 +11384,13 @@ def carro0(name, data):
     self.attrib['ToneladasNetasCarro'] = fmt_decimal(data['ToneladasNetasCarro'])
     return self
 def contenedor1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['TipoContenedor'] = strcode(data['TipoContenedor'])
     self.attrib['PesoContenedorVacio'] = fmt_decimal(data['PesoContenedorVacio'])
     self.attrib['PesoNetoMercancia'] = fmt_decimal(data['PesoNetoMercancia'])
     return self
 def figura_transporte0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data.get('Operadores')
     if el is not None:
         for r in iterate(el):
@@ -11411,13 +11410,13 @@ def figura_transporte0(name, data):
     self.attrib['CveTransporte'] = strcode(data['CveTransporte'])
     return self
 def operadores0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data['Operador']
     for r in iterate(el):
         self.append(operador0('Operador', r))
     return self
 def operador0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data.get('Domicilio')
     if el is not None:
         self.append(domicilio1('Domicilio', el))
@@ -11433,7 +11432,7 @@ def operador0(name, data):
         self.attrib['ResidenciaFiscalOperador'] = strcode(a)
     return self
 def domicilio1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
         self.attrib['NumeroExterior'] = a
@@ -11452,7 +11451,7 @@ def domicilio1(name, data):
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
 def propietario0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data.get('Domicilio')
     if el is not None:
         self.append(domicilio2('Domicilio', el))
@@ -11466,7 +11465,7 @@ def propietario0(name, data):
         self.attrib['ResidenciaFiscalPropietario'] = strcode(a)
     return self
 def domicilio2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
         self.attrib['NumeroExterior'] = a
@@ -11485,7 +11484,7 @@ def domicilio2(name, data):
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
 def arrendatario0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data.get('Domicilio')
     if el is not None:
         self.append(domicilio3('Domicilio', el))
@@ -11499,7 +11498,7 @@ def arrendatario0(name, data):
         self.attrib['ResidenciaFiscalArrendatario'] = strcode(a)
     return self
 def domicilio3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
         self.attrib['NumeroExterior'] = a
@@ -11518,7 +11517,7 @@ def domicilio3(name, data):
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
 def notificado0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     el = data.get('Domicilio')
     if el is not None:
         self.append(domicilio4('Domicilio', el))
@@ -11532,7 +11531,7 @@ def notificado0(name, data):
         self.attrib['ResidenciaFiscalNotificado'] = strcode(a)
     return self
 def domicilio4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte', name), nsmap=data.get('_nsmap') or {'cartaporte': 'http://www.sat.gob.mx/CartaPorte'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
         self.attrib['NumeroExterior'] = a
@@ -11553,16 +11552,16 @@ def domicilio4(name, data):
 def carta_porte1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=col.nsmap)
     el = data['Ubicaciones']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/CartaPorte20}Ubicaciones')
+    st = SubElement(self, '{http://www.sat.gob.mx/CartaPorte20}Ubicaciones')
     for r in iterate(el):
         st.append(ubicacion2('Ubicacion', r))
     el = data['Mercancias']
     self.append(mercancias1('Mercancias', el))
     el = data.get('FiguraTransporte')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/CartaPorte20}FiguraTransporte')
+        st = SubElement(self, '{http://www.sat.gob.mx/CartaPorte20}FiguraTransporte')
         for r in iterate(el):
             st.append(tipos_figura0('TiposFigura', r))
     self.attrib['Version'] = data['Version']
@@ -11577,7 +11576,7 @@ def carta_porte1(name, data):
         self.attrib['TotalDistRec'] = fmt_decimal(a)
     return self
 def ubicacion2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     el = data.get('Domicilio')
     if el is not None:
         self.append(domicilio5('Domicilio', el))
@@ -11604,7 +11603,7 @@ def ubicacion2(name, data):
         self.attrib['DistanciaRecorrida'] = fmt_decimal(a)
     return self
 def domicilio5(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     if (a := data.get('Calle')) is not None:
         self.attrib['Calle'] = a
     if (a := data.get('NumeroExterior')) is not None:
@@ -11624,7 +11623,7 @@ def domicilio5(name, data):
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
 def mercancias1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     el = data['Mercancia']
     for r in iterate(el):
         self.append(mercancia1('Mercancia', r))
@@ -11649,7 +11648,7 @@ def mercancias1(name, data):
         self.attrib['CargoPorTasacion'] = fmt_decimal(a)
     return self
 def mercancia1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     el = data.get('Pedimentos')
     if el is not None:
         for r in iterate(el):
@@ -11694,17 +11693,17 @@ def mercancia1(name, data):
         self.attrib['UUIDComercioExt'] = str(a)
     return self
 def pedimentos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap={'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap={'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['Pedimento'] = data
     return self
 def guias_identificacion0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['NumeroGuiaIdentificacion'] = data['NumeroGuiaIdentificacion']
     self.attrib['DescripGuiaIdentificacion'] = data['DescripGuiaIdentificacion']
     self.attrib['PesoGuiaIdentificacion'] = fmt_decimal(data['PesoGuiaIdentificacion'])
     return self
 def cantidad_transporta1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['Cantidad'] = fmt_decimal(data['Cantidad'])
     self.attrib['IDOrigen'] = data['IDOrigen']
     self.attrib['IDDestino'] = data['IDDestino']
@@ -11712,7 +11711,7 @@ def cantidad_transporta1(name, data):
         self.attrib['CvesTransporte'] = strcode(a)
     return self
 def detalle_mercancia1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['UnidadPesoMerc'] = strcode(data['UnidadPesoMerc'])
     self.attrib['PesoBruto'] = fmt_decimal(data['PesoBruto'])
     self.attrib['PesoNeto'] = fmt_decimal(data['PesoNeto'])
@@ -11721,27 +11720,27 @@ def detalle_mercancia1(name, data):
         self.attrib['NumPiezas'] = str(a)
     return self
 def autotransporte0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     el = data['IdentificacionVehicular']
     self.append(identificacion_vehicular1('IdentificacionVehicular', el))
     el = data['Seguros']
     self.append(seguros0('Seguros', el))
     el = data.get('Remolques')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/CartaPorte20}Remolques')
+        st = SubElement(self, '{http://www.sat.gob.mx/CartaPorte20}Remolques')
         for r in iterate(el):
             st.append(remolque1('Remolque', r))
     self.attrib['PermSCT'] = strcode(data['PermSCT'])
     self.attrib['NumPermisoSCT'] = data['NumPermisoSCT']
     return self
 def identificacion_vehicular1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['ConfigVehicular'] = strcode(data['ConfigVehicular'])
     self.attrib['PlacaVM'] = data['PlacaVM']
     self.attrib['AnioModeloVM'] = str(data['AnioModeloVM'])
     return self
 def seguros0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['AseguraRespCivil'] = data['AseguraRespCivil']
     self.attrib['PolizaRespCivil'] = data['PolizaRespCivil']
     if (a := data.get('AseguraMedAmbiente')) is not None:
@@ -11756,12 +11755,12 @@ def seguros0(name, data):
         self.attrib['PrimaSeguro'] = fmt_decimal(a)
     return self
 def remolque1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['SubTipoRem'] = strcode(data['SubTipoRem'])
     self.attrib['Placa'] = data['Placa']
     return self
 def transporte_maritimo1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     el = data['Contenedor']
     for r in iterate(el):
         self.append(contenedor2('Contenedor', r))
@@ -11800,14 +11799,14 @@ def transporte_maritimo1(name, data):
         self.attrib['NumConocEmbarc'] = a
     return self
 def contenedor2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['MatriculaContenedor'] = data['MatriculaContenedor']
     self.attrib['TipoContenedor'] = strcode(data['TipoContenedor'])
     if (a := data.get('NumPrecinto')) is not None:
         self.attrib['NumPrecinto'] = a
     return self
 def transporte_aereo1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['PermSCT'] = strcode(data['PermSCT'])
     self.attrib['NumPermisoSCT'] = data['NumPermisoSCT']
     if (a := data.get('MatriculaAeronave')) is not None:
@@ -11830,7 +11829,7 @@ def transporte_aereo1(name, data):
         self.attrib['NombreEmbarcador'] = a
     return self
 def transporte_ferroviario1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     el = data.get('DerechosDePaso')
     if el is not None:
         for r in iterate(el):
@@ -11846,12 +11845,12 @@ def transporte_ferroviario1(name, data):
         self.attrib['NumPolizaSeguro'] = a
     return self
 def derechos_de_paso1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['TipoDerechoDePaso'] = strcode(data['TipoDerechoDePaso'])
     self.attrib['KilometrajePagado'] = fmt_decimal(data['KilometrajePagado'])
     return self
 def carro1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     el = data.get('Contenedor')
     if el is not None:
         for r in iterate(el):
@@ -11862,13 +11861,13 @@ def carro1(name, data):
     self.attrib['ToneladasNetasCarro'] = fmt_decimal(data['ToneladasNetasCarro'])
     return self
 def contenedor3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['TipoContenedor'] = strcode(data['TipoContenedor'])
     self.attrib['PesoContenedorVacio'] = fmt_decimal(data['PesoContenedorVacio'])
     self.attrib['PesoNetoMercancia'] = fmt_decimal(data['PesoNetoMercancia'])
     return self
 def tipos_figura0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     el = data.get('PartesTransporte')
     if el is not None:
         for r in iterate(el):
@@ -11889,11 +11888,11 @@ def tipos_figura0(name, data):
         self.attrib['ResidenciaFiscalFigura'] = strcode(a)
     return self
 def partes_transporte0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap={'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap={'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     self.attrib['ParteTransporte'] = strcode(data)
     return self
 def domicilio6(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte20', name), nsmap=data.get('_nsmap') or {'cartaporte20': 'http://www.sat.gob.mx/CartaPorte20'})
     if (a := data.get('Calle')) is not None:
         self.attrib['Calle'] = a
     if (a := data.get('NumeroExterior')) is not None:
@@ -11915,7 +11914,7 @@ def domicilio6(name, data):
 def comercio_exterior0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=col.nsmap)
     el = data.get('Emisor')
     if el is not None:
         self.append(emisor6('Emisor', el))
@@ -11932,7 +11931,7 @@ def comercio_exterior0(name, data):
             self.append(destinatario1('Destinatario', r))
     el = data.get('Mercancias')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/ComercioExterior11}Mercancias')
+        st = SubElement(self, '{http://www.sat.gob.mx/ComercioExterior11}Mercancias')
         for r in iterate(el):
             st.append(mercancia2('Mercancia', r))
     self.attrib['Version'] = data['Version']
@@ -11959,7 +11958,7 @@ def comercio_exterior0(name, data):
         self.attrib['TotalUSD'] = fmt_decimal(a)
     return self
 def emisor6(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data.get('Domicilio')
     if el is not None:
         self.append(domicilio7('Domicilio', el))
@@ -11967,7 +11966,7 @@ def emisor6(name, data):
         self.attrib['Curp'] = a
     return self
 def domicilio7(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
         self.attrib['NumeroExterior'] = a
@@ -11986,12 +11985,12 @@ def domicilio7(name, data):
     self.attrib['CodigoPostal'] = strcode(data['CodigoPostal'])
     return self
 def propietario1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     self.attrib['NumRegIdTrib'] = data['NumRegIdTrib']
     self.attrib['ResidenciaFiscal'] = strcode(data['ResidenciaFiscal'])
     return self
 def receptor6(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data.get('Domicilio')
     if el is not None:
         self.append(domicilio8('Domicilio', el))
@@ -11999,7 +11998,7 @@ def receptor6(name, data):
         self.attrib['NumRegIdTrib'] = a
     return self
 def domicilio8(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
         self.attrib['NumeroExterior'] = a
@@ -12018,7 +12017,7 @@ def domicilio8(name, data):
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
 def destinatario1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data['Domicilio']
     for r in iterate(el):
         self.append(domicilio9('Domicilio', r))
@@ -12028,7 +12027,7 @@ def destinatario1(name, data):
         self.attrib['Nombre'] = a
     return self
 def domicilio9(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
         self.attrib['NumeroExterior'] = a
@@ -12047,7 +12046,7 @@ def domicilio9(name, data):
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
 def mercancia2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data.get('DescripcionesEspecificas')
     if el is not None:
         for r in iterate(el):
@@ -12064,7 +12063,7 @@ def mercancia2(name, data):
     self.attrib['ValorDolares'] = fmt_decimal(data['ValorDolares'])
     return self
 def descripciones_especificas0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     self.attrib['Marca'] = data['Marca']
     if (a := data.get('Modelo')) is not None:
         self.attrib['Modelo'] = a
@@ -12076,7 +12075,7 @@ def descripciones_especificas0(name, data):
 def comercio_exterior1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=col.nsmap)
     el = data.get('Emisor')
     if el is not None:
         self.append(emisor7('Emisor', el))
@@ -12087,7 +12086,7 @@ def comercio_exterior1(name, data):
         self.append(destinatario2('Destinatario', el))
     el = data.get('Mercancias')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/ComercioExterior}Mercancias')
+        st = SubElement(self, '{http://www.sat.gob.mx/ComercioExterior}Mercancias')
         for r in iterate(el):
             st.append(mercancia3('Mercancia', r))
     self.attrib['Version'] = data['Version']
@@ -12112,18 +12111,18 @@ def comercio_exterior1(name, data):
         self.attrib['TotalUSD'] = fmt_decimal(a)
     return self
 def emisor7(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
     if (a := data.get('Curp')) is not None:
         self.attrib['Curp'] = a
     return self
 def receptor7(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
     if (a := data.get('Curp')) is not None:
         self.attrib['Curp'] = a
     self.attrib['NumRegIdTrib'] = data['NumRegIdTrib']
     return self
 def destinatario2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
     el = data['Domicilio']
     self.append(domicilioa('Domicilio', el))
     if (a := data.get('NumRegIdTrib')) is not None:
@@ -12136,7 +12135,7 @@ def destinatario2(name, data):
         self.attrib['Nombre'] = a
     return self
 def domicilioa(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
         self.attrib['NumeroExterior'] = a
@@ -12155,7 +12154,7 @@ def domicilioa(name, data):
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
 def mercancia3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
     el = data.get('DescripcionesEspecificas')
     if el is not None:
         for r in iterate(el):
@@ -12172,7 +12171,7 @@ def mercancia3(name, data):
     self.attrib['ValorDolares'] = fmt_decimal(data['ValorDolares'])
     return self
 def descripciones_especificas1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
     self.attrib['Marca'] = data['Marca']
     if (a := data.get('Modelo')) is not None:
         self.attrib['Modelo'] = a
@@ -12184,9 +12183,9 @@ def descripciones_especificas1(name, data):
 def estado_de_cuenta_combustible0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/EstadoDeCuentaCombustible', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/EstadoDeCuentaCombustible', name), nsmap=col.nsmap)
     el = data['Conceptos']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}Conceptos')
+    st = SubElement(self, '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}Conceptos')
     for r in iterate(el):
         st.append(concepto_estado_de_cuenta_combustible0('ConceptoEstadoDeCuentaCombustible', r))
     self.attrib['Version'] = data['Version']
@@ -12196,9 +12195,9 @@ def estado_de_cuenta_combustible0(name, data):
     self.attrib['Total'] = fmt_decimal(data['Total'])
     return self
 def concepto_estado_de_cuenta_combustible0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/EstadoDeCuentaCombustible', name), nsmap=data.get('_nsmap') or {'ecc11': 'http://www.sat.gob.mx/EstadoDeCuentaCombustible'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/EstadoDeCuentaCombustible', name), nsmap=data.get('_nsmap') or {'ecc11': 'http://www.sat.gob.mx/EstadoDeCuentaCombustible'})
     el = data['Traslados']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}Traslados')
+    st = SubElement(self, '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}Traslados')
     for r in iterate(el):
         st.append(traslado5('Traslado', r))
     self.attrib['Identificador'] = data['Identificador']
@@ -12217,7 +12216,7 @@ def concepto_estado_de_cuenta_combustible0(name, data):
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def traslado5(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/EstadoDeCuentaCombustible', name), nsmap=data.get('_nsmap') or {'ecc11': 'http://www.sat.gob.mx/EstadoDeCuentaCombustible'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/EstadoDeCuentaCombustible', name), nsmap=data.get('_nsmap') or {'ecc11': 'http://www.sat.gob.mx/EstadoDeCuentaCombustible'})
     self.attrib['Impuesto'] = data['Impuesto']
     self.attrib['TasaoCuota'] = fmt_decimal(data['TasaoCuota'])
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
@@ -12225,9 +12224,9 @@ def traslado5(name, data):
 def estado_de_cuenta_combustible1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/EstadoDeCuentaCombustible12', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/EstadoDeCuentaCombustible12', name), nsmap=col.nsmap)
     el = data['Conceptos']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}Conceptos')
+    st = SubElement(self, '{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}Conceptos')
     for r in iterate(el):
         st.append(concepto_estado_de_cuenta_combustible1('ConceptoEstadoDeCuentaCombustible', r))
     self.attrib['Version'] = data['Version']
@@ -12237,9 +12236,9 @@ def estado_de_cuenta_combustible1(name, data):
     self.attrib['Total'] = fmt_decimal(data['Total'])
     return self
 def concepto_estado_de_cuenta_combustible1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/EstadoDeCuentaCombustible12', name), nsmap=data.get('_nsmap') or {'ecc12': 'http://www.sat.gob.mx/EstadoDeCuentaCombustible12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/EstadoDeCuentaCombustible12', name), nsmap=data.get('_nsmap') or {'ecc12': 'http://www.sat.gob.mx/EstadoDeCuentaCombustible12'})
     el = data['Traslados']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}Traslados')
+    st = SubElement(self, '{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}Traslados')
     for r in iterate(el):
         st.append(traslado6('Traslado', r))
     self.attrib['Identificador'] = data['Identificador']
@@ -12256,7 +12255,7 @@ def concepto_estado_de_cuenta_combustible1(name, data):
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def traslado6(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/EstadoDeCuentaCombustible12', name), nsmap=data.get('_nsmap') or {'ecc12': 'http://www.sat.gob.mx/EstadoDeCuentaCombustible12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/EstadoDeCuentaCombustible12', name), nsmap=data.get('_nsmap') or {'ecc12': 'http://www.sat.gob.mx/EstadoDeCuentaCombustible12'})
     self.attrib['Impuesto'] = data['Impuesto']
     self.attrib['TasaOCuota'] = fmt_decimal(data['TasaOCuota'])
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
@@ -12264,7 +12263,7 @@ def traslado6(name, data):
 def gastos_hidrocarburos0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=col.nsmap)
     el = data['Erogacion']
     for r in iterate(el):
         self.append(erogacion0('Erogacion', r))
@@ -12274,7 +12273,7 @@ def gastos_hidrocarburos0(name, data):
         self.attrib['AreaContractual'] = a
     return self
 def erogacion0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
     el = data['DocumentoRelacionado']
     for r in iterate(el):
         self.append(documento_relacionado0('DocumentoRelacionado', r))
@@ -12291,7 +12290,7 @@ def erogacion0(name, data):
     self.attrib['Porcentaje'] = fmt_decimal(data['Porcentaje'])
     return self
 def documento_relacionado0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
     self.attrib['OrigenErogacion'] = data['OrigenErogacion']
     if (a := data.get('FolioFiscalVinculado')) is not None:
         self.attrib['FolioFiscalVinculado'] = str(a)
@@ -12321,7 +12320,7 @@ def documento_relacionado0(name, data):
     self.attrib['MontoTotalErogaciones'] = fmt_decimal(data['MontoTotalErogaciones'])
     return self
 def actividades0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
     el = data.get('SubActividades')
     if el is not None:
         for r in iterate(el):
@@ -12330,7 +12329,7 @@ def actividades0(name, data):
         self.attrib['ActividadRelacionada'] = strcode(a)
     return self
 def sub_actividades0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
     el = data.get('Tareas')
     if el is not None:
         for r in iterate(el):
@@ -12339,12 +12338,12 @@ def sub_actividades0(name, data):
         self.attrib['SubActividadRelacionada'] = strcode(a)
     return self
 def tareas0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
     if (a := data.get('TareaRelacionada')) is not None:
         self.attrib['TareaRelacionada'] = strcode(a)
     return self
 def centro_costos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
     el = data.get('Yacimientos')
     if el is not None:
         for r in iterate(el):
@@ -12353,7 +12352,7 @@ def centro_costos0(name, data):
         self.attrib['Campo'] = a
     return self
 def yacimientos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
     el = data.get('Pozos')
     if el is not None:
         for r in iterate(el):
@@ -12362,14 +12361,14 @@ def yacimientos0(name, data):
         self.attrib['Yacimiento'] = a
     return self
 def pozos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/GastosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'gceh': 'http://www.sat.gob.mx/GastosHidrocarburos10'})
     if (a := data.get('Pozo')) is not None:
         self.attrib['Pozo'] = a
     return self
 def ingresos_hidrocarburos0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/IngresosHidrocarburos10', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/IngresosHidrocarburos10', name), nsmap=col.nsmap)
     el = data['DocumentoRelacionado']
     for r in iterate(el):
         self.append(documento_relacionado1('DocumentoRelacionado', r))
@@ -12379,7 +12378,7 @@ def ingresos_hidrocarburos0(name, data):
     self.attrib['Porcentaje'] = fmt_decimal(data['Porcentaje'])
     return self
 def documento_relacionado1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/IngresosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'ieeh': 'http://www.sat.gob.mx/IngresosHidrocarburos10'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/IngresosHidrocarburos10', name), nsmap=data.get('_nsmap') or {'ieeh': 'http://www.sat.gob.mx/IngresosHidrocarburos10'})
     self.attrib['FolioFiscalVinculado'] = str(data['FolioFiscalVinculado'])
     self.attrib['FechaFolioFiscalVinculado'] = data['FechaFolioFiscalVinculado'].isoformat()
     self.attrib['Mes'] = strcode(data['Mes'])
@@ -12387,14 +12386,14 @@ def documento_relacionado1(name, data):
 def pagos0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos', name), nsmap=col.nsmap)
     el = data['Pago']
     for r in iterate(el):
         self.append(pago0('Pago', r))
     self.attrib['Version'] = data['Version']
     return self
 def pago0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos', name), nsmap=data.get('_nsmap') or {'pago10': 'http://www.sat.gob.mx/Pagos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos', name), nsmap=data.get('_nsmap') or {'pago10': 'http://www.sat.gob.mx/Pagos'})
     el = data.get('DoctoRelacionado')
     if el is not None:
         for r in iterate(el):
@@ -12431,7 +12430,7 @@ def pago0(name, data):
         self.attrib['SelloPago'] = a
     return self
 def docto_relacionado0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos', name), nsmap=data.get('_nsmap') or {'pago10': 'http://www.sat.gob.mx/Pagos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos', name), nsmap=data.get('_nsmap') or {'pago10': 'http://www.sat.gob.mx/Pagos'})
     self.attrib['IdDocumento'] = str(data['IdDocumento'])
     if (a := data.get('Serie')) is not None:
         self.attrib['Serie'] = a
@@ -12451,15 +12450,15 @@ def docto_relacionado0(name, data):
         self.attrib['ImpSaldoInsoluto'] = fmt_decimal(a)
     return self
 def impuestos5(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos', name), nsmap=data.get('_nsmap') or {'pago10': 'http://www.sat.gob.mx/Pagos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos', name), nsmap=data.get('_nsmap') or {'pago10': 'http://www.sat.gob.mx/Pagos'})
     el = data.get('Retenciones')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/Pagos}Retenciones')
+        st = SubElement(self, '{http://www.sat.gob.mx/Pagos}Retenciones')
         for r in iterate(el):
             st.append(retencion5('Retencion', r))
     el = data.get('Traslados')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/Pagos}Traslados')
+        st = SubElement(self, '{http://www.sat.gob.mx/Pagos}Traslados')
         for r in iterate(el):
             st.append(traslado7('Traslado', r))
     if (a := data.get('TotalImpuestosRetenidos')) is not None:
@@ -12468,12 +12467,12 @@ def impuestos5(name, data):
         self.attrib['TotalImpuestosTrasladados'] = fmt_decimal(a)
     return self
 def retencion5(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos', name), nsmap=data.get('_nsmap') or {'pago10': 'http://www.sat.gob.mx/Pagos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos', name), nsmap=data.get('_nsmap') or {'pago10': 'http://www.sat.gob.mx/Pagos'})
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def traslado7(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos', name), nsmap=data.get('_nsmap') or {'pago10': 'http://www.sat.gob.mx/Pagos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos', name), nsmap=data.get('_nsmap') or {'pago10': 'http://www.sat.gob.mx/Pagos'})
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['TipoFactor'] = strcode(data['TipoFactor'])
     self.attrib['TasaOCuota'] = fmt_decimal(data['TasaOCuota'])
@@ -12482,7 +12481,7 @@ def traslado7(name, data):
 def pagos1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos20', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos20', name), nsmap=col.nsmap)
     el = data['Totales']
     self.append(totales2('Totales', el))
     el = data['Pago']
@@ -12491,7 +12490,7 @@ def pagos1(name, data):
     self.attrib['Version'] = data['Version']
     return self
 def totales2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
     if (a := data.get('TotalRetencionesIVA')) is not None:
         self.attrib['TotalRetencionesIVA'] = fmt_decimal(a)
     if (a := data.get('TotalRetencionesISR')) is not None:
@@ -12515,7 +12514,7 @@ def totales2(name, data):
     self.attrib['MontoTotalPagos'] = fmt_decimal(data['MontoTotalPagos'])
     return self
 def pago1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
     el = data['DoctoRelacionado']
     for r in iterate(el):
         self.append(docto_relacionado1('DoctoRelacionado', r))
@@ -12550,7 +12549,7 @@ def pago1(name, data):
         self.attrib['SelloPago'] = a
     return self
 def docto_relacionado1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
     el = data.get('ImpuestosDR')
     if el is not None:
         self.append(impuestos_dr0('ImpuestosDR', el))
@@ -12569,20 +12568,20 @@ def docto_relacionado1(name, data):
     self.attrib['ObjetoImpDR'] = strcode(data['ObjetoImpDR'])
     return self
 def impuestos_dr0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
     el = data.get('RetencionesDR')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/Pagos20}RetencionesDR')
+        st = SubElement(self, '{http://www.sat.gob.mx/Pagos20}RetencionesDR')
         for r in iterate(el):
             st.append(retencion_dr0('RetencionDR', r))
     el = data.get('TrasladosDR')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/Pagos20}TrasladosDR')
+        st = SubElement(self, '{http://www.sat.gob.mx/Pagos20}TrasladosDR')
         for r in iterate(el):
             st.append(traslado_dr0('TrasladoDR', r))
     return self
 def retencion_dr0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
     self.attrib['BaseDR'] = fmt_decimal(data['BaseDR'])
     self.attrib['ImpuestoDR'] = strcode(data['ImpuestoDR'])
     self.attrib['TipoFactorDR'] = strcode(data['TipoFactorDR'])
@@ -12590,7 +12589,7 @@ def retencion_dr0(name, data):
     self.attrib['ImporteDR'] = fmt_decimal(data['ImporteDR'])
     return self
 def traslado_dr0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
     self.attrib['BaseDR'] = fmt_decimal(data['BaseDR'])
     self.attrib['ImpuestoDR'] = strcode(data['ImpuestoDR'])
     self.attrib['TipoFactorDR'] = strcode(data['TipoFactorDR'])
@@ -12600,25 +12599,25 @@ def traslado_dr0(name, data):
         self.attrib['ImporteDR'] = fmt_decimal(a)
     return self
 def impuestos_p0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
     el = data.get('RetencionesP')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/Pagos20}RetencionesP')
+        st = SubElement(self, '{http://www.sat.gob.mx/Pagos20}RetencionesP')
         for r in iterate(el):
             st.append(retencion_p0('RetencionP', r))
     el = data.get('TrasladosP')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/Pagos20}TrasladosP')
+        st = SubElement(self, '{http://www.sat.gob.mx/Pagos20}TrasladosP')
         for r in iterate(el):
             st.append(traslado_p0('TrasladoP', r))
     return self
 def retencion_p0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
     self.attrib['ImpuestoP'] = strcode(data['ImpuestoP'])
     self.attrib['ImporteP'] = fmt_decimal(data['ImporteP'])
     return self
 def traslado_p0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/Pagos20', name), nsmap=data.get('_nsmap') or {'pago20': 'http://www.sat.gob.mx/Pagos20'})
     self.attrib['BaseP'] = fmt_decimal(data['BaseP'])
     self.attrib['ImpuestoP'] = strcode(data['ImpuestoP'])
     self.attrib['TipoFactorP'] = strcode(data['TipoFactorP'])
@@ -12630,7 +12629,7 @@ def traslado_p0(name, data):
 def timbre_fiscal_digital0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/TimbreFiscalDigital', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/TimbreFiscalDigital', name), nsmap=col.nsmap)
     self.attrib['version'] = data['Version']
     self.attrib['UUID'] = str(data['UUID'])
     self.attrib['FechaTimbrado'] = data['FechaTimbrado'].isoformat(timespec='seconds')
@@ -12641,7 +12640,7 @@ def timbre_fiscal_digital0(name, data):
 def timbre_fiscal_digital1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/TimbreFiscalDigital', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/TimbreFiscalDigital', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['UUID'] = str(data['UUID'])
     self.attrib['FechaTimbrado'] = data['FechaTimbrado'].isoformat(timespec='seconds')
@@ -12655,7 +12654,7 @@ def timbre_fiscal_digital1(name, data):
 def turista_pasajero_extranjero0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/TuristaPasajeroExtranjero', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/TuristaPasajeroExtranjero', name), nsmap=col.nsmap)
     el = data['DatosTransito']
     self.append(datos_transito0('datosTransito', el))
     self.attrib['version'] = data['Version']
@@ -12663,7 +12662,7 @@ def turista_pasajero_extranjero0(name, data):
     self.attrib['tipoTransito'] = data['TipoTransito']
     return self
 def datos_transito0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/TuristaPasajeroExtranjero', name), nsmap=data.get('_nsmap') or {'tpe': 'http://www.sat.gob.mx/TuristaPasajeroExtranjero'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/TuristaPasajeroExtranjero', name), nsmap=data.get('_nsmap') or {'tpe': 'http://www.sat.gob.mx/TuristaPasajeroExtranjero'})
     self.attrib['Via'] = data['Via']
     self.attrib['TipoId'] = data['TipoId']
     self.attrib['NumeroId'] = data['NumeroId']
@@ -12675,14 +12674,14 @@ def datos_transito0(name, data):
 def acreditamiento_ieps0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/acreditamiento', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/acreditamiento', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['TAR'] = strcode(data['TAR'])
     return self
 def aerolineas0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/aerolineas', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/aerolineas', name), nsmap=col.nsmap)
     el = data.get('OtrosCargos')
     if el is not None:
         self.append(otros_cargos0('OtrosCargos', el))
@@ -12690,21 +12689,21 @@ def aerolineas0(name, data):
     self.attrib['TUA'] = fmt_decimal(data['TUA'])
     return self
 def otros_cargos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/aerolineas', name), nsmap=data.get('_nsmap') or {'aerolineas': 'http://www.sat.gob.mx/aerolineas'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/aerolineas', name), nsmap=data.get('_nsmap') or {'aerolineas': 'http://www.sat.gob.mx/aerolineas'})
     el = data['Cargo']
     for r in iterate(el):
         self.append(cargo0('Cargo', r))
     self.attrib['TotalCargos'] = fmt_decimal(data['TotalCargos'])
     return self
 def cargo0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/aerolineas', name), nsmap=data.get('_nsmap') or {'aerolineas': 'http://www.sat.gob.mx/aerolineas'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/aerolineas', name), nsmap=data.get('_nsmap') or {'aerolineas': 'http://www.sat.gob.mx/aerolineas'})
     self.attrib['CodigoCargo'] = data['CodigoCargo']
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def obrasarteantiguedades0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/arteantiguedades', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/arteantiguedades', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['TipoBien'] = strcode(data['TipoBien'])
     if (a := data.get('OtrosTipoBien')) is not None:
@@ -12722,7 +12721,7 @@ def obrasarteantiguedades0(name, data):
 def certificadodedestruccion0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/certificadodestruccion', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/certificadodestruccion', name), nsmap=col.nsmap)
     el = data['VehiculoDestruido']
     self.append(vehiculo_destruido0('VehiculoDestruido', el))
     el = data.get('InformacionAduanera')
@@ -12733,7 +12732,7 @@ def certificadodedestruccion0(name, data):
     self.attrib['NumFolDesVeh'] = data['NumFolDesVeh']
     return self
 def vehiculo_destruido0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/certificadodestruccion', name), nsmap=data.get('_nsmap') or {'destruccion': 'http://www.sat.gob.mx/certificadodestruccion'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/certificadodestruccion', name), nsmap=data.get('_nsmap') or {'destruccion': 'http://www.sat.gob.mx/certificadodestruccion'})
     self.attrib['Marca'] = data['Marca']
     self.attrib['TipooClase'] = data['TipooClase']
     self.attrib['Año'] = str(data['Año'])
@@ -12749,7 +12748,7 @@ def vehiculo_destruido0(name, data):
     self.attrib['NumFolTarjCir'] = data['NumFolTarjCir']
     return self
 def informacion_aduanera4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/certificadodestruccion', name), nsmap=data.get('_nsmap') or {'destruccion': 'http://www.sat.gob.mx/certificadodestruccion'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/certificadodestruccion', name), nsmap=data.get('_nsmap') or {'destruccion': 'http://www.sat.gob.mx/certificadodestruccion'})
     self.attrib['NumPedImp'] = data['NumPedImp']
     self.attrib['Fecha'] = data['Fecha'].isoformat()
     self.attrib['Aduana'] = data['Aduana']
@@ -12757,16 +12756,16 @@ def informacion_aduanera4(name, data):
 def cfdiregistro_fiscal0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/registrofiscal', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/registrofiscal', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['Folio'] = data['Folio']
     return self
 def consumo_de_combustibles0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/ConsumoDeCombustibles11', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ConsumoDeCombustibles11', name), nsmap=col.nsmap)
     el = data['Conceptos']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/ConsumoDeCombustibles11}Conceptos')
+    st = SubElement(self, '{http://www.sat.gob.mx/ConsumoDeCombustibles11}Conceptos')
     for r in iterate(el):
         st.append(concepto_consumo_de_combustibles0('ConceptoConsumoDeCombustibles', r))
     self.attrib['version'] = data['Version']
@@ -12777,9 +12776,9 @@ def consumo_de_combustibles0(name, data):
     self.attrib['total'] = fmt_decimal(data['Total'])
     return self
 def concepto_consumo_de_combustibles0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ConsumoDeCombustibles11', name), nsmap=data.get('_nsmap') or {'consumodecombustibles11': 'http://www.sat.gob.mx/ConsumoDeCombustibles11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ConsumoDeCombustibles11', name), nsmap=data.get('_nsmap') or {'consumodecombustibles11': 'http://www.sat.gob.mx/ConsumoDeCombustibles11'})
     el = data['Determinados']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/ConsumoDeCombustibles11}Determinados')
+    st = SubElement(self, '{http://www.sat.gob.mx/ConsumoDeCombustibles11}Determinados')
     for r in iterate(el):
         st.append(determinado0('Determinado', r))
     self.attrib['identificador'] = data['Identificador']
@@ -12794,7 +12793,7 @@ def concepto_consumo_de_combustibles0(name, data):
     self.attrib['importe'] = fmt_decimal(data['Importe'])
     return self
 def determinado0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ConsumoDeCombustibles11', name), nsmap=data.get('_nsmap') or {'consumodecombustibles11': 'http://www.sat.gob.mx/ConsumoDeCombustibles11'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ConsumoDeCombustibles11', name), nsmap=data.get('_nsmap') or {'consumodecombustibles11': 'http://www.sat.gob.mx/ConsumoDeCombustibles11'})
     self.attrib['impuesto'] = data['Impuesto']
     self.attrib['tasaOCuota'] = fmt_decimal(data['TasaOCuota'])
     self.attrib['importe'] = fmt_decimal(data['Importe'])
@@ -12802,9 +12801,9 @@ def determinado0(name, data):
 def consumo_de_combustibles1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/consumodecombustibles', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/consumodecombustibles', name), nsmap=col.nsmap)
     el = data['Conceptos']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/consumodecombustibles}Conceptos')
+    st = SubElement(self, '{http://www.sat.gob.mx/consumodecombustibles}Conceptos')
     for r in iterate(el):
         st.append(concepto_consumo_de_combustibles1('ConceptoConsumoDeCombustibles', r))
     self.attrib['version'] = data['Version']
@@ -12815,9 +12814,9 @@ def consumo_de_combustibles1(name, data):
     self.attrib['total'] = fmt_decimal(data['Total'])
     return self
 def concepto_consumo_de_combustibles1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/consumodecombustibles', name), nsmap=data.get('_nsmap') or {'consumodecombustibles': 'http://www.sat.gob.mx/consumodecombustibles'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/consumodecombustibles', name), nsmap=data.get('_nsmap') or {'consumodecombustibles': 'http://www.sat.gob.mx/consumodecombustibles'})
     el = data['Determinados']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/consumodecombustibles}Determinados')
+    st = SubElement(self, '{http://www.sat.gob.mx/consumodecombustibles}Determinados')
     for r in iterate(el):
         st.append(determinado1('Determinado', r))
     self.attrib['identificador'] = data['Identificador']
@@ -12831,7 +12830,7 @@ def concepto_consumo_de_combustibles1(name, data):
     self.attrib['importe'] = fmt_decimal(data['Importe'])
     return self
 def determinado1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/consumodecombustibles', name), nsmap=data.get('_nsmap') or {'consumodecombustibles': 'http://www.sat.gob.mx/consumodecombustibles'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/consumodecombustibles', name), nsmap=data.get('_nsmap') or {'consumodecombustibles': 'http://www.sat.gob.mx/consumodecombustibles'})
     self.attrib['impuesto'] = data['Impuesto']
     self.attrib['tasa'] = fmt_decimal(data['Tasa'])
     self.attrib['importe'] = fmt_decimal(data['Importe'])
@@ -12839,7 +12838,7 @@ def determinado1(name, data):
 def detallista0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=col.nsmap)
     el = data['RequestForPaymentIdentification']
     self.append(request_for_payment_identification0('requestForPaymentIdentification', el))
     el = data.get('SpecialInstruction')
@@ -12849,7 +12848,7 @@ def detallista0(name, data):
     el = data['OrderIdentification']
     self.append(order_identification0('orderIdentification', el))
     el = data['AdditionalInformation']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/detallista}AdditionalInformation')
+    st = SubElement(self, '{http://www.sat.gob.mx/detallista}AdditionalInformation')
     for r in iterate(el):
         st.append(reference_identification1('referenceIdentification', r))
     el = data.get('DeliveryNote')
@@ -12869,7 +12868,7 @@ def detallista0(name, data):
     el = data.get('Customs')
     if el is not None:
         for r in iterate(el):
-            st = etree.SubElement(self, '{http://www.sat.gob.mx/detallista}Customs')
+            st = SubElement(self, '{http://www.sat.gob.mx/detallista}Customs')
             st.append(simple_element('{http://www.sat.gob.mx/detallista}gln', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=r))
     el = data.get('Currency')
     if el is not None:
@@ -12904,19 +12903,19 @@ def detallista0(name, data):
     self.attrib['documentStatus'] = data['DocumentStatus']
     return self
 def request_for_payment_identification0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['EntityType']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}entityType', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     return self
 def special_instruction0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Text']
     for r in iterate(el):
         self.append(simple_element('{http://www.sat.gob.mx/detallista}text', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=r))
     self.attrib['code'] = data['Code']
     return self
 def order_identification0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['ReferenceIdentification']
     for r in iterate(el):
         self.append(reference_identification0('referenceIdentification', r))
@@ -12925,17 +12924,17 @@ def order_identification0(name, data):
         self.append(simple_element('{http://www.sat.gob.mx/detallista}ReferenceDate', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el.isoformat()))
     return self
 def reference_identification0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = data['_text']
     self.attrib['type'] = data['Type']
     return self
 def reference_identification1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = data['_text']
     self.attrib['type'] = data['Type']
     return self
 def delivery_note0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['ReferenceIdentification']
     for r in iterate(el):
         self.append(simple_element('{http://www.sat.gob.mx/detallista}referenceIdentification', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=r))
@@ -12944,7 +12943,7 @@ def delivery_note0(name, data):
         self.append(simple_element('{http://www.sat.gob.mx/detallista}ReferenceDate', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el.isoformat()))
     return self
 def buyer0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Gln']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}gln', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     el = data.get('ContactInformation')
@@ -12952,29 +12951,29 @@ def buyer0(name, data):
         self.append(contact_information0('contactInformation', el))
     return self
 def contact_information0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['PersonOrDepartmentName']
     self.append(person_or_department_name0('personOrDepartmentName', el))
     return self
 def person_or_department_name0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Text']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}text', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     return self
 def seller0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Gln']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}gln', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     el = data['AlternatePartyIdentification']
     self.append(alternate_party_identification0('alternatePartyIdentification', el))
     return self
 def alternate_party_identification0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = data['_text']
     self.attrib['type'] = data['Type']
     return self
 def ship_to0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('Gln')
     if el is not None:
         self.append(simple_element('{http://www.sat.gob.mx/detallista}gln', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
@@ -12983,7 +12982,7 @@ def ship_to0(name, data):
         self.append(name_and_address0('nameAndAddress', el))
     return self
 def name_and_address0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('Name')
     if el is not None:
         self.append(simple_element('{http://www.sat.gob.mx/detallista}name', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
@@ -12998,7 +12997,7 @@ def name_and_address0(name, data):
         self.append(simple_element('{http://www.sat.gob.mx/detallista}postalCode', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     return self
 def invoice_creator0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('Gln')
     if el is not None:
         self.append(simple_element('{http://www.sat.gob.mx/detallista}gln', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
@@ -13010,12 +13009,12 @@ def invoice_creator0(name, data):
         self.append(name_and_address1('nameAndAddress', el))
     return self
 def alternate_party_identification1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = data['_text']
     self.attrib['type'] = data['Type']
     return self
 def name_and_address1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('Name')
     if el is not None:
         self.append(simple_element('{http://www.sat.gob.mx/detallista}name', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
@@ -13030,7 +13029,7 @@ def name_and_address1(name, data):
         self.append(simple_element('{http://www.sat.gob.mx/detallista}postalCode', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     return self
 def currency0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['CurrencyFunction']
     for r in iterate(el):
         self.append(simple_element('{http://www.sat.gob.mx/detallista}currencyFunction', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=r))
@@ -13040,7 +13039,7 @@ def currency0(name, data):
     self.attrib['currencyISOCode'] = data['CurrencyISOCode']
     return self
 def payment_terms0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('NetPayment')
     if el is not None:
         self.append(net_payment0('netPayment', el))
@@ -13053,34 +13052,34 @@ def payment_terms0(name, data):
         self.attrib['PaymentTermsRelationTime'] = a
     return self
 def net_payment0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('PaymentTimePeriod')
     if el is not None:
         self.append(payment_time_period0('paymentTimePeriod', el))
     self.attrib['netPaymentTermsType'] = data['NetPaymentTermsType']
     return self
 def payment_time_period0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['TimePeriodDue']
     self.append(time_period_due0('timePeriodDue', el))
     return self
 def time_period_due0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Value']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}value', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     self.attrib['timePeriod'] = data['TimePeriod']
     return self
 def discount_payment0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Percentage']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}percentage', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     self.attrib['discountType'] = data['DiscountType']
     return self
 def shipment_detail0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     return self
 def allowance_charge0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('SpecialServicesType')
     if el is not None:
         self.append(simple_element('{http://www.sat.gob.mx/detallista}specialServicesType', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
@@ -13093,19 +13092,19 @@ def allowance_charge0(name, data):
         self.attrib['sequenceNumber'] = a
     return self
 def monetary_amount_or_percentage0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('Rate')
     if el is not None:
         self.append(rate0('rate', el))
     return self
 def rate0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Percentage']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}percentage', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=fmt_decimal(el)))
     self.attrib['base'] = data['Base']
     return self
 def line_item0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['TradeItemIdentification']
     self.append(trade_item_identification0('tradeItemIdentification', el))
     el = data.get('AlternateTradeItemIdentification')
@@ -13142,7 +13141,7 @@ def line_item0(name, data):
         self.append(pallet_information0('palletInformation', el))
     el = data.get('ExtendedAttributes')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/detallista}extendedAttributes')
+        st = SubElement(self, '{http://www.sat.gob.mx/detallista}extendedAttributes')
         for r in iterate(el):
             st.append(lot_number0('lotNumber', r))
     el = data.get('AllowanceCharge')
@@ -13161,55 +13160,55 @@ def line_item0(name, data):
         self.attrib['number'] = str(a)
     return self
 def trade_item_identification0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Gtin']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}gtin', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     return self
 def alternate_trade_item_identification0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = data['_text']
     self.attrib['type'] = data['Type']
     return self
 def trade_item_description_information0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['LongText']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}longText', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     if (a := data.get('Language')) is not None:
         self.attrib['language'] = a
     return self
 def invoiced_quantity0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = fmt_decimal(data['_text'])
     self.attrib['unitOfMeasure'] = data['UnitOfMeasure']
     return self
 def aditional_quantity0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = fmt_decimal(data['_text'])
     self.attrib['QuantityType'] = data['QuantityType']
     return self
 def gross_price0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Amount']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}Amount', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=fmt_decimal(el)))
     return self
 def net_price0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Amount']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}Amount', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=fmt_decimal(el)))
     return self
 def additional_information0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('ReferenceIdentification')
     if el is not None:
         self.append(reference_identification2('referenceIdentification', el))
     return self
 def reference_identification2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = data['_text']
     self.attrib['type'] = data['Type']
     return self
 def customs0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('Gln')
     if el is not None:
         self.append(simple_element('{http://www.sat.gob.mx/detallista}gln', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
@@ -13221,27 +13220,27 @@ def customs0(name, data):
     self.append(name_and_address2('nameAndAddress', el))
     return self
 def alternate_party_identification2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = data['_text']
     self.attrib['type'] = data['Type']
     return self
 def name_and_address2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Name']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}name', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     return self
 def logistic_units0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['SerialShippingContainerCode']
     self.append(serial_shipping_container_code0('serialShippingContainerCode', el))
     return self
 def serial_shipping_container_code0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = data['_text']
     self.attrib['type'] = data['Type']
     return self
 def pallet_information0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['PalletQuantity']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}palletQuantity', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     el = data['Description']
@@ -13250,23 +13249,23 @@ def pallet_information0(name, data):
     self.append(transport0('transport', el))
     return self
 def description0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap={'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = data['_text']
     self.attrib['type'] = data['Type']
     return self
 def transport0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['MethodOfPayment']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}methodOfPayment', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     return self
 def lot_number0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     self.text = data['_text']
     if (a := data.get('ProductionDate')) is not None:
         self.attrib['productionDate'] = a.isoformat()
     return self
 def allowance_charge1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('SpecialServicesType')
     if el is not None:
         self.append(simple_element('{http://www.sat.gob.mx/detallista}specialServicesType', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
@@ -13279,7 +13278,7 @@ def allowance_charge1(name, data):
         self.attrib['sequenceNumber'] = a
     return self
 def monetary_amount_or_percentage1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['PercentagePerUnit']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}percentagePerUnit', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     el = data.get('RatePerUnit')
@@ -13287,12 +13286,12 @@ def monetary_amount_or_percentage1(name, data):
         self.append(rate_per_unit0('ratePerUnit', el))
     return self
 def rate_per_unit0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['AmountPerUnit']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}amountPerUnit', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     return self
 def trade_item_tax_information0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['TaxTypeDescription']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}taxTypeDescription', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     el = data.get('ReferenceNumber')
@@ -13306,14 +13305,14 @@ def trade_item_tax_information0(name, data):
         self.append(simple_element('{http://www.sat.gob.mx/detallista}taxCategory', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
     return self
 def trade_item_tax_amount0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['TaxPercentage']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}taxPercentage', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=fmt_decimal(el)))
     el = data['TaxAmount']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}taxAmount', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=fmt_decimal(el)))
     return self
 def total_line_amount0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('GrossAmount')
     if el is not None:
         self.append(gross_amount0('grossAmount', el))
@@ -13321,22 +13320,22 @@ def total_line_amount0(name, data):
     self.append(net_amount0('netAmount', el))
     return self
 def gross_amount0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Amount']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}Amount', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=fmt_decimal(el)))
     return self
 def net_amount0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Amount']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}Amount', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=fmt_decimal(el)))
     return self
 def total_amount0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data['Amount']
     self.append(simple_element('{http://www.sat.gob.mx/detallista}Amount', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=fmt_decimal(el)))
     return self
 def total_allowance_charge0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/detallista', name), nsmap=data.get('_nsmap') or {'detallista': 'http://www.sat.gob.mx/detallista'})
     el = data.get('SpecialServicesType')
     if el is not None:
         self.append(simple_element('{http://www.sat.gob.mx/detallista}specialServicesType', nsmap={'detallista': 'http://www.sat.gob.mx/detallista'}, text=el))
@@ -13348,14 +13347,14 @@ def total_allowance_charge0(name, data):
 def divisas0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/divisas', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/divisas', name), nsmap=col.nsmap)
     self.attrib['version'] = data['Version']
     self.attrib['tipoOperacion'] = data['TipoOperacion']
     return self
 def donatarias0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/donat', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/donat', name), nsmap=col.nsmap)
     self.attrib['version'] = data['Version']
     self.attrib['noAutorizacion'] = data['NoAutorizacion']
     self.attrib['fechaAutorizacion'] = data['FechaAutorizacion'].isoformat()
@@ -13364,7 +13363,7 @@ def donatarias0(name, data):
 def estado_de_cuenta_bancario0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/ecb', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ecb', name), nsmap=col.nsmap)
     el = data['Movimientos']
     self.append(movimientos0('Movimientos', el))
     self.attrib['version'] = data['Version']
@@ -13375,7 +13374,7 @@ def estado_de_cuenta_bancario0(name, data):
         self.attrib['sucursal'] = a
     return self
 def movimientos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ecb', name), nsmap=data.get('_nsmap') or {'ecb': 'http://www.sat.gob.mx/ecb'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ecb', name), nsmap=data.get('_nsmap') or {'ecb': 'http://www.sat.gob.mx/ecb'})
     el = data.get('MovimientoECB')
     if el is not None:
         self.append(movimiento_ecb0('MovimientoECB', el))
@@ -13384,7 +13383,7 @@ def movimientos0(name, data):
         self.append(movimiento_ecbfiscal0('MovimientoECBFiscal', el))
     return self
 def movimiento_ecb0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ecb', name), nsmap=data.get('_nsmap') or {'ecb': 'http://www.sat.gob.mx/ecb'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ecb', name), nsmap=data.get('_nsmap') or {'ecb': 'http://www.sat.gob.mx/ecb'})
     self.attrib['fecha'] = data['Fecha'].isoformat(timespec='seconds')
     if (a := data.get('Referencia')) is not None:
         self.attrib['referencia'] = a
@@ -13398,7 +13397,7 @@ def movimiento_ecb0(name, data):
         self.attrib['saldoAlCorte'] = fmt_decimal(a)
     return self
 def movimiento_ecbfiscal0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ecb', name), nsmap=data.get('_nsmap') or {'ecb': 'http://www.sat.gob.mx/ecb'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ecb', name), nsmap=data.get('_nsmap') or {'ecb': 'http://www.sat.gob.mx/ecb'})
     self.attrib['fecha'] = data['Fecha'].isoformat(timespec='seconds')
     if (a := data.get('Referencia')) is not None:
         self.attrib['referencia'] = a
@@ -13415,9 +13414,9 @@ def movimiento_ecbfiscal0(name, data):
 def estado_de_cuenta_combustible2(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/ecc', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ecc', name), nsmap=col.nsmap)
     el = data['Conceptos']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/ecc}Conceptos')
+    st = SubElement(self, '{http://www.sat.gob.mx/ecc}Conceptos')
     for r in iterate(el):
         st.append(concepto_estado_de_cuenta_combustible2('ConceptoEstadoDeCuentaCombustible', r))
     self.attrib['tipoOperacion'] = data['TipoOperacion']
@@ -13427,9 +13426,9 @@ def estado_de_cuenta_combustible2(name, data):
     self.attrib['total'] = fmt_decimal(data['Total'])
     return self
 def concepto_estado_de_cuenta_combustible2(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ecc', name), nsmap=data.get('_nsmap') or {'ecc': 'http://www.sat.gob.mx/ecc'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ecc', name), nsmap=data.get('_nsmap') or {'ecc': 'http://www.sat.gob.mx/ecc'})
     el = data['Traslados']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/ecc}Traslados')
+    st = SubElement(self, '{http://www.sat.gob.mx/ecc}Traslados')
     for r in iterate(el):
         st.append(traslado8('Traslado', r))
     self.attrib['identificador'] = data['Identificador']
@@ -13443,7 +13442,7 @@ def concepto_estado_de_cuenta_combustible2(name, data):
     self.attrib['importe'] = fmt_decimal(data['Importe'])
     return self
 def traslado8(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ecc', name), nsmap=data.get('_nsmap') or {'ecc': 'http://www.sat.gob.mx/ecc'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ecc', name), nsmap=data.get('_nsmap') or {'ecc': 'http://www.sat.gob.mx/ecc'})
     self.attrib['impuesto'] = data['Impuesto']
     self.attrib['tasa'] = fmt_decimal(data['Tasa'])
     self.attrib['importe'] = fmt_decimal(data['Importe'])
@@ -13451,7 +13450,7 @@ def traslado8(name, data):
 def inst_educativas0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/iedu', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/iedu', name), nsmap=col.nsmap)
     self.attrib['version'] = data['Version']
     self.attrib['nombreAlumno'] = data['NombreAlumno']
     self.attrib['CURP'] = data['CURP']
@@ -13463,7 +13462,7 @@ def inst_educativas0(name, data):
 def impuestos_locales0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/implocal', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/implocal', name), nsmap=col.nsmap)
     el = data.get('RetencionesLocales')
     if el is not None:
         self.append(retenciones_locales0('RetencionesLocales', el))
@@ -13475,13 +13474,13 @@ def impuestos_locales0(name, data):
     self.attrib['TotaldeTraslados'] = fmt_decimal(data['TotaldeTraslados'])
     return self
 def retenciones_locales0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/implocal', name), nsmap=data.get('_nsmap') or {'implocal': 'http://www.sat.gob.mx/implocal'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/implocal', name), nsmap=data.get('_nsmap') or {'implocal': 'http://www.sat.gob.mx/implocal'})
     self.attrib['ImpLocRetenido'] = data['ImpLocRetenido']
     self.attrib['TasadeRetencion'] = fmt_decimal(data['TasadeRetencion'])
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def traslados_locales0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/implocal', name), nsmap=data.get('_nsmap') or {'implocal': 'http://www.sat.gob.mx/implocal'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/implocal', name), nsmap=data.get('_nsmap') or {'implocal': 'http://www.sat.gob.mx/implocal'})
     self.attrib['ImpLocTrasladado'] = data['ImpLocTrasladado']
     self.attrib['TasadeTraslado'] = fmt_decimal(data['TasadeTraslado'])
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
@@ -13489,7 +13488,7 @@ def traslados_locales0(name, data):
 def ine0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/ine', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ine', name), nsmap=col.nsmap)
     el = data.get('Entidad')
     if el is not None:
         for r in iterate(el):
@@ -13502,7 +13501,7 @@ def ine0(name, data):
         self.attrib['IdContabilidad'] = str(a)
     return self
 def entidad0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ine', name), nsmap=data.get('_nsmap') or {'ine': 'http://www.sat.gob.mx/ine'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ine', name), nsmap=data.get('_nsmap') or {'ine': 'http://www.sat.gob.mx/ine'})
     el = data.get('Contabilidad')
     if el is not None:
         for r in iterate(el):
@@ -13512,13 +13511,13 @@ def entidad0(name, data):
         self.attrib['Ambito'] = strcode(a)
     return self
 def contabilidad0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ine', name), nsmap={'ine': 'http://www.sat.gob.mx/ine'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ine', name), nsmap={'ine': 'http://www.sat.gob.mx/ine'})
     self.attrib['IdContabilidad'] = str(data)
     return self
 def ine1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/ine', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ine', name), nsmap=col.nsmap)
     el = data.get('Entidad')
     if el is not None:
         for r in iterate(el):
@@ -13531,7 +13530,7 @@ def ine1(name, data):
         self.attrib['IdContabilidad'] = str(a)
     return self
 def entidad1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ine', name), nsmap=data.get('_nsmap') or {'ine': 'http://www.sat.gob.mx/ine'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ine', name), nsmap=data.get('_nsmap') or {'ine': 'http://www.sat.gob.mx/ine'})
     el = data.get('Contabilidad')
     if el is not None:
         for r in iterate(el):
@@ -13541,20 +13540,20 @@ def entidad1(name, data):
         self.attrib['Ambito'] = strcode(a)
     return self
 def contabilidad1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ine', name), nsmap={'ine': 'http://www.sat.gob.mx/ine'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ine', name), nsmap={'ine': 'http://www.sat.gob.mx/ine'})
     self.attrib['IdContabilidad'] = str(data)
     return self
 def leyendas_fiscales0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/leyendasFiscales', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/leyendasFiscales', name), nsmap=col.nsmap)
     el = data['Leyenda']
     for r in iterate(el):
         self.append(leyenda0('Leyenda', r))
     self.attrib['version'] = data['Version']
     return self
 def leyenda0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/leyendasFiscales', name), nsmap=data.get('_nsmap') or {'leyendasFisc': 'http://www.sat.gob.mx/leyendasFiscales'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/leyendasFiscales', name), nsmap=data.get('_nsmap') or {'leyendasFisc': 'http://www.sat.gob.mx/leyendasFiscales'})
     if (a := data.get('DisposicionFiscal')) is not None:
         self.attrib['disposicionFiscal'] = a
     if (a := data.get('Norma')) is not None:
@@ -13564,7 +13563,7 @@ def leyenda0(name, data):
 def nomina0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina', name), nsmap=col.nsmap)
     el = data.get('Percepciones')
     if el is not None:
         self.append(percepciones0('Percepciones', el))
@@ -13573,12 +13572,12 @@ def nomina0(name, data):
         self.append(deducciones0('Deducciones', el))
     el = data.get('Incapacidades')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/nomina}Incapacidades')
+        st = SubElement(self, '{http://www.sat.gob.mx/nomina}Incapacidades')
         for r in iterate(el):
             st.append(incapacidad0('Incapacidad', r))
     el = data.get('HorasExtras')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/nomina}HorasExtras')
+        st = SubElement(self, '{http://www.sat.gob.mx/nomina}HorasExtras')
         for r in iterate(el):
             st.append(horas_extra0('HorasExtra', r))
     self.attrib['Version'] = data['Version']
@@ -13618,7 +13617,7 @@ def nomina0(name, data):
         self.attrib['SalarioDiarioIntegrado'] = fmt_decimal(a)
     return self
 def percepciones0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
     el = data['Percepcion']
     for r in iterate(el):
         self.append(percepcion0('Percepcion', r))
@@ -13626,7 +13625,7 @@ def percepciones0(name, data):
     self.attrib['TotalExento'] = fmt_decimal(data['TotalExento'])
     return self
 def percepcion0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
     self.attrib['TipoPercepcion'] = str(data['TipoPercepcion'])
     self.attrib['Clave'] = data['Clave']
     self.attrib['Concepto'] = data['Concepto']
@@ -13634,7 +13633,7 @@ def percepcion0(name, data):
     self.attrib['ImporteExento'] = fmt_decimal(data['ImporteExento'])
     return self
 def deducciones0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
     el = data['Deduccion']
     for r in iterate(el):
         self.append(deduccion0('Deduccion', r))
@@ -13642,7 +13641,7 @@ def deducciones0(name, data):
     self.attrib['TotalExento'] = fmt_decimal(data['TotalExento'])
     return self
 def deduccion0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
     self.attrib['TipoDeduccion'] = str(data['TipoDeduccion'])
     self.attrib['Clave'] = data['Clave']
     self.attrib['Concepto'] = data['Concepto']
@@ -13650,13 +13649,13 @@ def deduccion0(name, data):
     self.attrib['ImporteExento'] = fmt_decimal(data['ImporteExento'])
     return self
 def incapacidad0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
     self.attrib['DiasIncapacidad'] = fmt_decimal(data['DiasIncapacidad'])
     self.attrib['TipoIncapacidad'] = str(data['TipoIncapacidad'])
     self.attrib['Descuento'] = fmt_decimal(data['Descuento'])
     return self
 def horas_extra0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina', name), nsmap=data.get('_nsmap') or {'nomina': 'http://www.sat.gob.mx/nomina'})
     self.attrib['Dias'] = str(data['Dias'])
     self.attrib['TipoHoras'] = data['TipoHoras']
     self.attrib['HorasExtra'] = str(data['HorasExtra'])
@@ -13665,7 +13664,7 @@ def horas_extra0(name, data):
 def nomina1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=col.nsmap)
     el = data.get('Emisor')
     if el is not None:
         self.append(emisor8('Emisor', el))
@@ -13679,12 +13678,12 @@ def nomina1(name, data):
         self.append(deducciones1('Deducciones', el))
     el = data.get('OtrosPagos')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/nomina12}OtrosPagos')
+        st = SubElement(self, '{http://www.sat.gob.mx/nomina12}OtrosPagos')
         for r in iterate(el):
             st.append(otro_pago0('OtroPago', r))
     el = data.get('Incapacidades')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/nomina12}Incapacidades')
+        st = SubElement(self, '{http://www.sat.gob.mx/nomina12}Incapacidades')
         for r in iterate(el):
             st.append(incapacidad1('Incapacidad', r))
     self.attrib['Version'] = data['Version']
@@ -13701,7 +13700,7 @@ def nomina1(name, data):
         self.attrib['TotalOtrosPagos'] = fmt_decimal(a)
     return self
 def emisor8(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     el = data.get('EntidadSNCF')
     if el is not None:
         self.append(entidad_sncf0('EntidadSNCF', el))
@@ -13713,13 +13712,13 @@ def emisor8(name, data):
         self.attrib['RfcPatronOrigen'] = str(a)
     return self
 def entidad_sncf0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     self.attrib['OrigenRecurso'] = strcode(data['OrigenRecurso'])
     if (a := data.get('MontoRecursoPropio')) is not None:
         self.attrib['MontoRecursoPropio'] = fmt_decimal(a)
     return self
 def receptor8(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     el = data.get('SubContratacion')
     if el is not None:
         for r in iterate(el):
@@ -13756,12 +13755,12 @@ def receptor8(name, data):
     self.attrib['ClaveEntFed'] = strcode(data['ClaveEntFed'])
     return self
 def sub_contratacion0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     self.attrib['RfcLabora'] = str(data['RfcLabora'])
     self.attrib['PorcentajeTiempo'] = fmt_decimal(data['PorcentajeTiempo'])
     return self
 def percepciones1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     el = data['Percepcion']
     for r in iterate(el):
         self.append(percepcion1('Percepcion', r))
@@ -13781,7 +13780,7 @@ def percepciones1(name, data):
     self.attrib['TotalExento'] = fmt_decimal(data['TotalExento'])
     return self
 def percepcion1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     el = data.get('AccionesOTitulos')
     if el is not None:
         self.append(acciones_o_titulos0('AccionesOTitulos', el))
@@ -13796,19 +13795,19 @@ def percepcion1(name, data):
     self.attrib['ImporteExento'] = fmt_decimal(data['ImporteExento'])
     return self
 def acciones_o_titulos0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     self.attrib['ValorMercado'] = fmt_decimal(data['ValorMercado'])
     self.attrib['PrecioAlOtorgarse'] = fmt_decimal(data['PrecioAlOtorgarse'])
     return self
 def horas_extra1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     self.attrib['Dias'] = str(data['Dias'])
     self.attrib['TipoHoras'] = strcode(data['TipoHoras'])
     self.attrib['HorasExtra'] = str(data['HorasExtra'])
     self.attrib['ImportePagado'] = fmt_decimal(data['ImportePagado'])
     return self
 def jubilacion_pension_retiro0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     if (a := data.get('TotalUnaExhibicion')) is not None:
         self.attrib['TotalUnaExhibicion'] = fmt_decimal(a)
     if (a := data.get('TotalParcialidad')) is not None:
@@ -13819,7 +13818,7 @@ def jubilacion_pension_retiro0(name, data):
     self.attrib['IngresoNoAcumulable'] = fmt_decimal(data['IngresoNoAcumulable'])
     return self
 def separacion_indemnizacion0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     self.attrib['TotalPagado'] = fmt_decimal(data['TotalPagado'])
     self.attrib['NumAñosServicio'] = str(data['NumAñosServicio'])
     self.attrib['UltimoSueldoMensOrd'] = fmt_decimal(data['UltimoSueldoMensOrd'])
@@ -13827,7 +13826,7 @@ def separacion_indemnizacion0(name, data):
     self.attrib['IngresoNoAcumulable'] = fmt_decimal(data['IngresoNoAcumulable'])
     return self
 def deducciones1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     el = data['Deduccion']
     for r in iterate(el):
         self.append(deduccion1('Deduccion', r))
@@ -13837,14 +13836,14 @@ def deducciones1(name, data):
         self.attrib['TotalImpuestosRetenidos'] = fmt_decimal(a)
     return self
 def deduccion1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     self.attrib['TipoDeduccion'] = strcode(data['TipoDeduccion'])
     self.attrib['Clave'] = data['Clave']
     self.attrib['Concepto'] = data['Concepto']
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def otro_pago0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     el = data.get('SubsidioAlEmpleo')
     if el is not None:
         self.append(subsidio_al_empleo0('SubsidioAlEmpleo', el))
@@ -13857,17 +13856,17 @@ def otro_pago0(name, data):
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def subsidio_al_empleo0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap={'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap={'nomina12': 'http://www.sat.gob.mx/nomina12'})
     self.attrib['SubsidioCausado'] = fmt_decimal(data)
     return self
 def compensacion_saldos_a_favor0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     self.attrib['SaldoAFavor'] = fmt_decimal(data['SaldoAFavor'])
     self.attrib['Año'] = str(data['Año'])
     self.attrib['RemanenteSalFav'] = fmt_decimal(data['RemanenteSalFav'])
     return self
 def incapacidad1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/nomina12', name), nsmap=data.get('_nsmap') or {'nomina12': 'http://www.sat.gob.mx/nomina12'})
     self.attrib['DiasIncapacidad'] = str(data['DiasIncapacidad'])
     self.attrib['TipoIncapacidad'] = strcode(data['TipoIncapacidad'])
     if (a := data.get('ImporteMonetario')) is not None:
@@ -13876,9 +13875,9 @@ def incapacidad1(name, data):
 def notarios_publicos0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/notariospublicos', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/notariospublicos', name), nsmap=col.nsmap)
     el = data['DescInmuebles']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/notariospublicos}DescInmuebles')
+    st = SubElement(self, '{http://www.sat.gob.mx/notariospublicos}DescInmuebles')
     for r in iterate(el):
         st.append(desc_inmueble0('DescInmueble', r))
     el = data['DatosOperacion']
@@ -13892,7 +13891,7 @@ def notarios_publicos0(name, data):
     self.attrib['Version'] = data['Version']
     return self
 def desc_inmueble0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
     self.attrib['TipoInmueble'] = data['TipoInmueble']
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NoExterior')) is not None:
@@ -13911,7 +13910,7 @@ def desc_inmueble0(name, data):
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
 def datos_operacion12(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
     self.attrib['NumInstrumentoNotarial'] = str(data['NumInstrumentoNotarial'])
     self.attrib['FechaInstNotarial'] = data['FechaInstNotarial'].isoformat()
     self.attrib['MontoOperacion'] = fmt_decimal(data['MontoOperacion'])
@@ -13919,7 +13918,7 @@ def datos_operacion12(name, data):
     self.attrib['IVA'] = fmt_decimal(data['IVA'])
     return self
 def datos_notario0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
     self.attrib['CURP'] = data['CURP']
     self.attrib['NumNotaria'] = str(data['NumNotaria'])
     self.attrib['EntidadFederativa'] = strcode(data['EntidadFederativa'])
@@ -13927,19 +13926,19 @@ def datos_notario0(name, data):
         self.attrib['Adscripcion'] = a
     return self
 def datos_enajenante0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
     el = data.get('DatosUnEnajenante')
     if el is not None:
         self.append(datos_un_enajenante0('DatosUnEnajenante', el))
     el = data.get('DatosEnajenantesCopSC')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/notariospublicos}DatosEnajenantesCopSC')
+        st = SubElement(self, '{http://www.sat.gob.mx/notariospublicos}DatosEnajenantesCopSC')
         for r in iterate(el):
             st.append(datos_enajenante_cop_sc0('DatosEnajenanteCopSC', r))
     self.attrib['CoproSocConyugalE'] = data['CoproSocConyugalE']
     return self
 def datos_un_enajenante0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
     self.attrib['Nombre'] = data['Nombre']
     self.attrib['ApellidoPaterno'] = data['ApellidoPaterno']
     if (a := data.get('ApellidoMaterno')) is not None:
@@ -13948,7 +13947,7 @@ def datos_un_enajenante0(name, data):
     self.attrib['CURP'] = data['CURP']
     return self
 def datos_enajenante_cop_sc0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
     self.attrib['Nombre'] = data['Nombre']
     if (a := data.get('ApellidoPaterno')) is not None:
         self.attrib['ApellidoPaterno'] = a
@@ -13960,19 +13959,19 @@ def datos_enajenante_cop_sc0(name, data):
     self.attrib['Porcentaje'] = fmt_decimal(data['Porcentaje'])
     return self
 def datos_adquiriente0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
     el = data.get('DatosUnAdquiriente')
     if el is not None:
         self.append(datos_un_adquiriente0('DatosUnAdquiriente', el))
     el = data.get('DatosAdquirientesCopSC')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/notariospublicos}DatosAdquirientesCopSC')
+        st = SubElement(self, '{http://www.sat.gob.mx/notariospublicos}DatosAdquirientesCopSC')
         for r in iterate(el):
             st.append(datos_adquiriente_cop_sc0('DatosAdquirienteCopSC', r))
     self.attrib['CoproSocConyugalE'] = data['CoproSocConyugalE']
     return self
 def datos_un_adquiriente0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
     self.attrib['Nombre'] = data['Nombre']
     if (a := data.get('ApellidoPaterno')) is not None:
         self.attrib['ApellidoPaterno'] = a
@@ -13983,7 +13982,7 @@ def datos_un_adquiriente0(name, data):
         self.attrib['CURP'] = a
     return self
 def datos_adquiriente_cop_sc0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/notariospublicos', name), nsmap=data.get('_nsmap') or {'notariospublicos': 'http://www.sat.gob.mx/notariospublicos'})
     self.attrib['Nombre'] = data['Nombre']
     if (a := data.get('ApellidoPaterno')) is not None:
         self.attrib['ApellidoPaterno'] = a
@@ -13997,7 +13996,7 @@ def datos_adquiriente_cop_sc0(name, data):
 def pago_en_especie0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/pagoenespecie', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/pagoenespecie', name), nsmap=col.nsmap)
     self.attrib['Version'] = data['Version']
     self.attrib['CvePIC'] = data['CvePIC']
     self.attrib['FolioSolDon'] = data['FolioSolDon']
@@ -14009,7 +14008,7 @@ def pago_en_especie0(name, data):
 def pfintegrante_coordinado0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/pfic', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/pfic', name), nsmap=col.nsmap)
     self.attrib['version'] = data['Version']
     self.attrib['ClaveVehicular'] = data['ClaveVehicular']
     self.attrib['Placa'] = data['Placa']
@@ -14019,7 +14018,7 @@ def pfintegrante_coordinado0(name, data):
 def prestadores_de_servicios_de_cfd0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/psgecfd', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/psgecfd', name), nsmap=col.nsmap)
     self.attrib['nombre'] = data['Nombre']
     self.attrib['rfc'] = data['Rfc']
     self.attrib['noCertificado'] = data['NoCertificado']
@@ -14030,7 +14029,7 @@ def prestadores_de_servicios_de_cfd0(name, data):
 def renovacionysustitucionvehiculos0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=col.nsmap)
     el = data.get('DecretoRenovVehicular')
     if el is not None:
         self.append(decreto_renov_vehicular0('DecretoRenovVehicular', el))
@@ -14041,7 +14040,7 @@ def renovacionysustitucionvehiculos0(name, data):
     self.attrib['TipoDeDecreto'] = strcode(data['TipoDeDecreto'])
     return self
 def decreto_renov_vehicular0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
     el = data['VehiculosUsadosEnajenadoPermAlFab']
     for r in iterate(el):
         self.append(vehiculos_usados_enajenado_perm_al_fab0('VehiculosUsadosEnajenadoPermAlFab', r))
@@ -14050,7 +14049,7 @@ def decreto_renov_vehicular0(name, data):
     self.attrib['VehEnaj'] = strcode(data['VehEnaj'])
     return self
 def vehiculos_usados_enajenado_perm_al_fab0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
     self.attrib['PrecioVehUsado'] = fmt_decimal(data['PrecioVehUsado'])
     self.attrib['TipoVeh'] = strcode(data['TipoVeh'])
     self.attrib['Marca'] = data['Marca']
@@ -14075,7 +14074,7 @@ def vehiculos_usados_enajenado_perm_al_fab0(name, data):
     self.attrib['Foliofiscal'] = data['Foliofiscal']
     return self
 def vehiculo_nuvo_sem_enajenado_fab_al_perm0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
     self.attrib['Año'] = str(data['Año'])
     if (a := data.get('Modelo')) is not None:
         self.attrib['Modelo'] = a
@@ -14084,7 +14083,7 @@ def vehiculo_nuvo_sem_enajenado_fab_al_perm0(name, data):
         self.attrib['RFC'] = a
     return self
 def decreto_sustit_vehicular0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
     el = data['VehiculoUsadoEnajenadoPermAlFab']
     self.append(vehiculo_usado_enajenado_perm_al_fab0('VehiculoUsadoEnajenadoPermAlFab', el))
     el = data['VehiculoNuvoSemEnajenadoFabAlPerm']
@@ -14092,7 +14091,7 @@ def decreto_sustit_vehicular0(name, data):
     self.attrib['VehEnaj'] = strcode(data['VehEnaj'])
     return self
 def vehiculo_usado_enajenado_perm_al_fab0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
     self.attrib['PrecioVehUsado'] = fmt_decimal(data['PrecioVehUsado'])
     self.attrib['TipoVeh'] = strcode(data['TipoVeh'])
     self.attrib['Marca'] = data['Marca']
@@ -14115,7 +14114,7 @@ def vehiculo_usado_enajenado_perm_al_fab0(name, data):
     self.attrib['Foliofiscal'] = data['Foliofiscal']
     return self
 def vehiculo_nuvo_sem_enajenado_fab_al_perm1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/renovacionysustitucionvehiculos', name), nsmap=data.get('_nsmap') or {'decreto': 'http://www.sat.gob.mx/renovacionysustitucionvehiculos'})
     self.attrib['Año'] = str(data['Año'])
     if (a := data.get('Modelo')) is not None:
         self.attrib['Modelo'] = a
@@ -14126,14 +14125,14 @@ def vehiculo_nuvo_sem_enajenado_fab_al_perm1(name, data):
 def parcialesconstruccion0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/servicioparcialconstruccion', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/servicioparcialconstruccion', name), nsmap=col.nsmap)
     el = data['Inmueble']
     self.append(inmueble0('Inmueble', el))
     self.attrib['Version'] = data['Version']
     self.attrib['NumPerLicoAut'] = data['NumPerLicoAut']
     return self
 def inmueble0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/servicioparcialconstruccion', name), nsmap=data.get('_nsmap') or {'servicioparcial': 'http://www.sat.gob.mx/servicioparcialconstruccion'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/servicioparcialconstruccion', name), nsmap=data.get('_nsmap') or {'servicioparcial': 'http://www.sat.gob.mx/servicioparcialconstruccion'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NoExterior')) is not None:
         self.attrib['NoExterior'] = a
@@ -14152,13 +14151,13 @@ def inmueble0(name, data):
 def complemento_spei0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/spei', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/spei', name), nsmap=col.nsmap)
     el = data['SPEI_Tercero']
     for r in iterate(el):
         self.append(spei_tercero0('SPEI_Tercero', r))
     return self
 def spei_tercero0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/spei', name), nsmap=data.get('_nsmap') or {'spei': 'http://www.sat.gob.mx/spei'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/spei', name), nsmap=data.get('_nsmap') or {'spei': 'http://www.sat.gob.mx/spei'})
     el = data['Ordenante']
     self.append(ordenante0('Ordenante', el))
     el = data['Beneficiario']
@@ -14171,7 +14170,7 @@ def spei_tercero0(name, data):
     self.attrib['cadenaCDA'] = data['CadenaCDA']
     return self
 def ordenante0(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/spei', name), nsmap=data.get('_nsmap') or {'spei': 'http://www.sat.gob.mx/spei'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/spei', name), nsmap=data.get('_nsmap') or {'spei': 'http://www.sat.gob.mx/spei'})
     self.attrib['BancoEmisor'] = data['BancoEmisor']
     self.attrib['Nombre'] = data['Nombre']
     self.attrib['TipoCuenta'] = fmt_decimal(data['TipoCuenta'])
@@ -14179,7 +14178,7 @@ def ordenante0(name, data):
     self.attrib['RFC'] = data['RFC']
     return self
 def beneficiario1(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/spei', name), nsmap=data.get('_nsmap') or {'spei': 'http://www.sat.gob.mx/spei'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/spei', name), nsmap=data.get('_nsmap') or {'spei': 'http://www.sat.gob.mx/spei'})
     self.attrib['BancoReceptor'] = data['BancoReceptor']
     self.attrib['Nombre'] = data['Nombre']
     self.attrib['TipoCuenta'] = fmt_decimal(data['TipoCuenta'])
@@ -14193,7 +14192,7 @@ def beneficiario1(name, data):
 def por_cuentade_terceros0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/terceros', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/terceros', name), nsmap=col.nsmap)
     el = data.get('InformacionFiscalTercero')
     if el is not None:
         self.append(informacion_fiscal_tercero0('InformacionFiscalTercero', el))
@@ -14221,7 +14220,7 @@ def informacion_aduanera5(name, data):
     self = t_informacion_aduanera1(name, data)
     return self
 def parte3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
     el = data.get('InformacionAduanera')
     if el is not None:
         for r in iterate(el):
@@ -14238,29 +14237,29 @@ def parte3(name, data):
         self.attrib['importe'] = fmt_decimal(a)
     return self
 def cuenta_predial3(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/terceros', name), nsmap={'terceros': 'http://www.sat.gob.mx/terceros'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/terceros', name), nsmap={'terceros': 'http://www.sat.gob.mx/terceros'})
     self.attrib['numero'] = data
     return self
 def impuestos6(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
     el = data.get('Retenciones')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/terceros}Retenciones')
+        st = SubElement(self, '{http://www.sat.gob.mx/terceros}Retenciones')
         for r in iterate(el):
             st.append(retencion6('Retencion', r))
     el = data.get('Traslados')
     if el is not None:
-        st = etree.SubElement(self, '{http://www.sat.gob.mx/terceros}Traslados')
+        st = SubElement(self, '{http://www.sat.gob.mx/terceros}Traslados')
         for r in iterate(el):
             st.append(traslado9('Traslado', r))
     return self
 def retencion6(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
     self.attrib['impuesto'] = data['Impuesto']
     self.attrib['importe'] = fmt_decimal(data['Importe'])
     return self
 def traslado9(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/terceros', name), nsmap=data.get('_nsmap') or {'terceros': 'http://www.sat.gob.mx/terceros'})
     self.attrib['impuesto'] = data['Impuesto']
     self.attrib['tasa'] = fmt_decimal(data['Tasa'])
     self.attrib['importe'] = fmt_decimal(data['Importe'])
@@ -14268,9 +14267,9 @@ def traslado9(name, data):
 def vales_de_despensa0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/valesdedespensa', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/valesdedespensa', name), nsmap=col.nsmap)
     el = data['Conceptos']
-    st = etree.SubElement(self, '{http://www.sat.gob.mx/valesdedespensa}Conceptos')
+    st = SubElement(self, '{http://www.sat.gob.mx/valesdedespensa}Conceptos')
     for r in iterate(el):
         st.append(concepto4('Concepto', r))
     self.attrib['version'] = data['Version']
@@ -14281,7 +14280,7 @@ def vales_de_despensa0(name, data):
     self.attrib['total'] = fmt_decimal(data['Total'])
     return self
 def concepto4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/valesdedespensa', name), nsmap=data.get('_nsmap') or {'valesdedespensa': 'http://www.sat.gob.mx/valesdedespensa'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/valesdedespensa', name), nsmap=data.get('_nsmap') or {'valesdedespensa': 'http://www.sat.gob.mx/valesdedespensa'})
     self.attrib['identificador'] = data['Identificador']
     self.attrib['fecha'] = data['Fecha'].isoformat(timespec='seconds')
     self.attrib['rfc'] = data['Rfc']
@@ -14294,7 +14293,7 @@ def concepto4(name, data):
 def vehiculo_usado0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/vehiculousado', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/vehiculousado', name), nsmap=col.nsmap)
     el = data.get('InformacionAduanera')
     if el is not None:
         for r in iterate(el):
@@ -14317,7 +14316,7 @@ def vehiculo_usado0(name, data):
 def venta_vehiculos0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = etree.Element(QName('http://www.sat.gob.mx/ventavehiculos', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ventavehiculos', name), nsmap=col.nsmap)
     el = data.get('InformacionAduanera')
     if el is not None:
         for r in iterate(el):
@@ -14331,7 +14330,7 @@ def venta_vehiculos0(name, data):
     self.attrib['Niv'] = data['Niv']
     return self
 def parte4(name, data):
-    self = etree.Element(QName('http://www.sat.gob.mx/ventavehiculos', name), nsmap=data.get('_nsmap') or {'ventavehiculos': 'http://www.sat.gob.mx/ventavehiculos'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ventavehiculos', name), nsmap=data.get('_nsmap') or {'ventavehiculos': 'http://www.sat.gob.mx/ventavehiculos'})
     el = data.get('InformacionAduanera')
     if el is not None:
         for r in iterate(el):
