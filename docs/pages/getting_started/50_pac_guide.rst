@@ -81,9 +81,10 @@ ______________________
     from satcfdi.pacs.sat import SAT
     
     sat = SAT()
+    res = sat.status(
+        cfdi=CFDI.from_file('comprobante.xml')
+    )
     
-    cfdi = CFDI.from_file('comprobante.xml')
-    res = sat.status(cfdi)
     print(res)
     
 
