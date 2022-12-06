@@ -1,6 +1,8 @@
 from collections.abc import Sequence
+from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
+from typing import Iterator
 
 from . import pago20
 from ..compute import make_impuestos, rounder, make_impuestos_dr, make_impuesto, \
@@ -291,6 +293,23 @@ class Receptor(XElement):
         })
 
 
+@dataclass
+class PagoComprobante:
+    comprobante: CFDI
+    num_parcialidad: int = None
+    imp_saldo_ant: Decimal | int = None
+    imp_pagado: Decimal | int = None
+
+    def __post_init__(self):
+        if self.num_parcialidad is None and self.imp_saldo_ant is None and self.imp_pagado is None:
+            self.num_parcialidad = 1
+            self.imp_saldo_ant = self.comprobante['Total']
+            self.imp_pagado = self.comprobante['Total']
+
+        if self.imp_pagado > self.imp_saldo_ant:
+            raise ValueError('Importe Pagado debe de ser mayor a Importe Saldo Anterior')
+
+
 # MAIN #
 class Comprobante(CFDI):
     """
@@ -492,108 +511,11 @@ class Comprobante(CFDI):
         )
 
     @classmethod
-    def pago_comprobante(
-            cls,
-            emisor: Issuer,
-            lugar_expedicion: str,
-            comprobante: CFDI,
-            num_parcialidad: int,
-            imp_saldo_ant: Decimal | int,
-            imp_pagado: Decimal | int,
-            fecha_pago: datetime,
-            forma_pago: str,
-            tipo_cambio: Decimal | int = None,
-            cfdi_relacionados: CfdiRelacionados | Sequence[CfdiRelacionados | dict] = None,
-            confirmacion: str = None,
-            serie: str = None,
-            folio: str = None,
-            addenda: CFDI | Sequence[CFDI] = None,
-            fecha: datetime = None) -> CFDI:
-        """
-        Estándar de Comprobante Fiscal Digital por Internet de Tipo Pago. Generado a partir de un Comprobante
-
-        :param emisor: Nodo requerido para expresar la información del contribuyente emisor del comprobante.
-        :param lugar_expedicion: Atributo requerido para incorporar el código postal del lugar de expedición del comprobante (domicilio de la matriz o de la sucursal).
-        :param comprobante: CFDIS de Comprobante de Ingreso para generar el pago por su monto total
-        :param num_parcialidad: Atributo requerido para expresar el número de parcialidad que corresponde al pago.
-        :param imp_saldo_ant: Atributo requerido para expresar el monto del saldo insoluto de la parcialidad anterior. En el caso de que sea la primer parcialidad este atributo debe contener el importe total del documento relacionado.
-        :param imp_pagado: Atributo requerido para expresar el importe pagado para el documento relacionado.
-        :param fecha_pago: Atributo requerido para expresar la fecha y hora en la que el beneficiario recibe el pago. Se expresa en la forma aaaa-mm-ddThh:mm:ss, de acuerdo con la especificación ISO 8601.En caso de no contar con la hora se debe registrar 12:00:00.
-        :param serie: Atributo opcional para precisar la serie para control interno del contribuyente. Este atributo acepta una cadena de caracteres.
-        :param folio: Atributo opcional para control interno del contribuyente que expresa el folio del comprobante, acepta una cadena de caracteres.
-        :param forma_pago: Atributo condicional para expresar la clave de la forma de pago de los bienes o servicios amparados por el comprobante.
-        :param tipo_cambio: Atributo condicional para representar el tipo de cambio FIX conforme con la moneda usada. Es requerido cuando la clave de moneda es distinta de MXN y de XXX. El valor debe reflejar el número de pesos mexicanos que equivalen a una unidad de la divisa señalada en el atributo moneda. Si el valor está fuera del porcentaje aplicable a la moneda tomado del catálogo c_Moneda, el emisor debe obtener del PAC que vaya a timbrar el CFDI, de manera no automática, una clave de confirmación para ratificar que el valor es correcto e integrar dicha clave en el atributo Confirmacion.
-        :param confirmacion: Atributo condicional para registrar la clave de confirmación que entregue el PAC para expedir el comprobante con importes grandes, con un tipo de cambio fuera del rango establecido o con ambos casos. Es requerido cuando se registra un tipo de cambio o un total fuera del rango establecido.
-        :param cfdi_relacionados: Nodo opcional para precisar la información de los comprobantes relacionados.
-        :param addenda: Nodo opcional para recibir las extensiones al presente formato que sean de utilidad al contribuyente. Para las reglas de uso del mismo, referirse al formato origen.
-        :param fecha: Atributo requerido para la expresión de la fecha y hora de expedición del Comprobante Fiscal Digital por Internet. Se expresa en la forma AAAA-MM-DDThh:mm:ss y debe corresponder con la hora local donde se expide el comprobante.
-        :return: objeto CFDI
-        """
-        first_cfdi = comprobante
-        moneda = first_cfdi['Moneda']
-        receptor = first_cfdi['Receptor'].copy()
-
-        # CRP204: El campo TipoCambioP no debe estar presente cuando el campo Moneda contenga ^MXN$ en el nodo Pago
-        if cls.complemento_pago.version == "1.0":
-            if moneda == 'MXN' and tipo_cambio == 1:
-                tipo_cambio = None
-        else:
-            if moneda == 'MXN' and tipo_cambio is None:
-                tipo_cambio = 1
-
-        c = comprobante
-        if not c["Moneda"] == moneda:
-            raise ValueError("Moneda de comprobante es diferente de Moneda de Pago")
-
-        return cls.pago(
-            emisor=emisor,
-            lugar_expedicion=lugar_expedicion,
-            receptor=receptor,
-            complemento_pago=cls.complemento_pago(
-                pago=[
-                    {
-                        'DoctoRelacionado': [
-                            {
-                                'IdDocumento': c["Complemento"]["TimbreFiscalDigital"]["UUID"],
-                                'Serie': c.get("Serie"),
-                                'Folio': c.get("Folio"),
-                                'MonedaDR': c["Moneda"],
-                                'EquivalenciaDR': 1,
-                                'MetodoDePagoDR': c["MetodoPago"],
-                                'NumParcialidad': num_parcialidad,
-                                'ImpSaldoAnt': imp_saldo_ant,
-                                'ImpPagado': imp_pagado,
-                                'ObjetoImpDR': '02' if 'Impuestos' in c else '01',
-                                'ImpuestosDR': make_impuestos_dr_parcial(
-                                    conceptos=c['Conceptos'],
-                                    imp_saldo_ant=imp_saldo_ant,
-                                    imp_pagado=imp_pagado,
-                                    total=c["Total"],
-                                    rnd_fn=rounder(c["Moneda"])
-                                ) if 'Impuestos' in c else None
-                            }
-                        ],
-                        'FechaPago': fecha_pago,
-                        'FormaDePagoP': forma_pago,
-                        'MonedaP': moneda,
-                        'TipoCambioP': tipo_cambio
-                    }
-                ]
-            ),
-            cfdi_relacionados=cfdi_relacionados,
-            confirmacion=confirmacion,
-            serie=serie,
-            folio=folio,
-            addenda=addenda,
-            fecha=fecha
-        )
-
-    @classmethod
     def pago_comprobantes(
             cls,
             emisor: Issuer,
             lugar_expedicion: str,
-            comprobantes: Sequence[CFDI],
+            comprobantes: CFDI | PagoComprobante | Sequence[CFDI | PagoComprobante],
             fecha_pago: datetime,
             forma_pago: str,
             tipo_cambio: Decimal | int = None,
@@ -621,7 +543,9 @@ class Comprobante(CFDI):
         :param fecha: Atributo requerido para la expresión de la fecha y hora de expedición del Comprobante Fiscal Digital por Internet. Se expresa en la forma AAAA-MM-DDThh:mm:ss y debe corresponder con la hora local donde se expide el comprobante.
         :return: objeto CFDI
         """
-        first_cfdi = comprobantes[0]
+        comprobantes = list(c if isinstance(c, PagoComprobante) else PagoComprobante(comprobante=c) for c in iterate(comprobantes))
+
+        first_cfdi = comprobantes[0].comprobante
         moneda = first_cfdi['Moneda']
         receptor = first_cfdi['Receptor'].copy()
 
@@ -634,11 +558,11 @@ class Comprobante(CFDI):
                 tipo_cambio = 1
 
         if not all(
-                c["Moneda"] == moneda
-                and c["Emisor"]["Rfc"] == emisor.rfc
-                and c["Emisor"]["RegimenFiscal"] == emisor.tax_system
-                and c["Receptor"]["Rfc"] == receptor["Rfc"]
-                and c["Receptor"].get("RegimenFiscalReceptor") == receptor.get("RegimenFiscalReceptor")
+                c.comprobante["Moneda"] == moneda
+                and c.comprobante["Emisor"]["Rfc"] == emisor.rfc
+                and c.comprobante["Emisor"]["RegimenFiscal"] == emisor.tax_system
+                and c.comprobante["Receptor"]["Rfc"] == receptor["Rfc"]
+                and c.comprobante["Receptor"].get("RegimenFiscalReceptor") == receptor.get("RegimenFiscalReceptor")
                 for c in comprobantes
         ):
             raise ValueError("CFDIS are of different RFC's Emisor/Receptor o Moneda")
@@ -652,17 +576,23 @@ class Comprobante(CFDI):
                     {
                         'DoctoRelacionado': [
                             {
-                                'IdDocumento': c["Complemento"]["TimbreFiscalDigital"]["UUID"],
-                                'Serie': c.get("Serie"),
-                                'Folio': c.get("Folio"),
-                                'MonedaDR': c["Moneda"],
+                                'IdDocumento': c.comprobante["Complemento"]["TimbreFiscalDigital"]["UUID"],
+                                'Serie': c.comprobante.get("Serie"),
+                                'Folio': c.comprobante.get("Folio"),
+                                'MonedaDR': c.comprobante["Moneda"],
                                 'EquivalenciaDR': 1,
-                                'MetodoDePagoDR': c["MetodoPago"],
-                                'NumParcialidad': 1,
-                                'ImpSaldoAnt': c["Total"],
-                                'ImpPagado': c["Total"],
-                                'ObjetoImpDR': '02' if 'Impuestos' in c else '01',
-                                'ImpuestosDR': make_impuestos_dr(c['Conceptos']) if 'Impuestos' in c else None
+                                'MetodoDePagoDR': c.comprobante["MetodoPago"],
+                                'NumParcialidad': c.num_parcialidad,
+                                'ImpSaldoAnt': c.imp_saldo_ant,
+                                'ImpPagado': c.imp_pagado,
+                                'ObjetoImpDR': '02' if 'Impuestos' in c.comprobante else '01',
+                                'ImpuestosDR': make_impuestos_dr_parcial(
+                                    conceptos=c.comprobante['Conceptos'],
+                                    imp_saldo_ant=c.imp_saldo_ant,
+                                    imp_pagado=c.imp_pagado,
+                                    total=c.comprobante["Total"],
+                                    rnd_fn=rounder(c.comprobante["Moneda"])
+                                ) if 'Impuestos' in c.comprobante else None
                             } for c in comprobantes
                         ],
                         'FechaPago': fecha_pago,

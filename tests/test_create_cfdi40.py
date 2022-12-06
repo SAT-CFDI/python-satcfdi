@@ -7,6 +7,7 @@ import pytest
 
 from satcfdi.cfdi import CFDI
 from satcfdi.create.cfd import cfdi40, nomina12
+from satcfdi.create.cfd.cfdi40 import PagoComprobante
 from satcfdi.pacs.sat import SAT
 from tests.utils import get_signer, verify_result, _uuid, get_rfc_pac, stamp_v11, SAT_Certificate_Store_Pruebas, XElementPrettyPrinter
 
@@ -219,14 +220,16 @@ def test_create_pago_parcial(rfc, xml_file, traslados, retenciones, total, trasl
 
     ingreso_invoice = CFDI.from_file(os.path.join(current_dir, f"{current_filename}/{xml_file}_stamped.xml"))
 
-    invoice = cfdi40.Comprobante.pago_comprobante(
+    invoice = cfdi40.Comprobante.pago_comprobantes(
         emisor=emisor,
         lugar_expedicion="56820",
         fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
-        comprobante=ingreso_invoice,
-        num_parcialidad=2,
-        imp_saldo_ant=Decimal("5000.43"),
-        imp_pagado=Decimal("3245.12"),
+        comprobantes=PagoComprobante(
+            comprobante=ingreso_invoice,
+            num_parcialidad=2,
+            imp_saldo_ant=Decimal("5000.43"),
+            imp_pagado=Decimal("3245.12"),
+        ),
         fecha_pago=datetime.fromisoformat("2020-01-02T22:40:38"),
         forma_pago="03",
         serie="A",
