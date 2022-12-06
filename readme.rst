@@ -152,12 +152,14 @@ ____________________
     # XML
     invoice.xml_write("my_invoice.xml")
     
+    # JSON
+    invoice.json_write("my_invoice.json", pretty_print=True)
+    
     # HTML
     invoice.html_write("my_invoice.html")
     
     # PDF
     invoice.pdf_write("my_invoice.pdf")
-    
     
 
 
