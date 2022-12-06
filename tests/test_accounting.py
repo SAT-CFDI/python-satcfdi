@@ -46,6 +46,10 @@ def test_cfdi():
 
     complement_invoices_data(all_invoices)
 
+    for c in all_invoices.values():
+        d = c.ultima_num_parcialidad
+        assert d >= 0
+
     with mock.patch('builtins.print') as p:
         ingresos_pendientes = filter_invoices_by(invoices=all_invoices, fecha=dp, rfc_emisor=rfc, invoice_type=InvoiceType.PAYMENT_PENDING)
         invoices_print(ingresos_pendientes)

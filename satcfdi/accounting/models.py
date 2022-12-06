@@ -55,6 +55,10 @@ class SatCFDI(CFDI):
 
         return None
 
+    @property
+    def ultima_num_parcialidad(self) -> int:
+        return max((c.docto_relacionado['NumParcialidad'] for c in self.payments), default=0)
+
     def consulta_estado(self):
         raise NotImplementedError()
 
