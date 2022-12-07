@@ -13,9 +13,13 @@ Welcome to SAT-CFDI documentation!
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
-   :glob:
 
-   pages/modules/*
+.. autosummary::
+   :toctree: generated
+   :template: custom-module-template.rst
+   :recursive:
+
+   satcfdi
 
 .. toctree::
    :maxdepth: 1

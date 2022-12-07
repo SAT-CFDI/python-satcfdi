@@ -44,7 +44,7 @@ ______________________
                 valor_unitario=Decimal('1250.30'),
                 traslados='IVA|Tasa|0.160000',
                 retenciones=['ISR|Tasa|0.100000', 'IVA|Tasa|0.106667'],
-                _traslados_incluidos=False
+                _traslados_incluidos=False  # indica si el valor unitario incluye los traslados
             )
         ]
     ).process()
