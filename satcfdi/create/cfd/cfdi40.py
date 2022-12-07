@@ -350,8 +350,6 @@ def _make_conceptos(conceptos, rnd_fn):
     return conceptos
 
 
-
-
 # MAIN #
 class Comprobante(CFDI):
     """
