@@ -5,31 +5,29 @@ Welcome to SAT-CFDI documentation!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Getting Started:
+   :caption: Getting Started
    :glob:
 
    pages/getting_started/*
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Contents:
-
+.. rubric:: Modules
 .. autosummary::
    :toctree: generated
    :template: custom-module-template.rst
+   :caption: Modules
    :recursive:
 
    satcfdi
 
 .. toctree::
    :maxdepth: 1
-   :caption: Community:
+   :caption: Community
 
    pages/contributing
 
 .. toctree::
    :maxdepth: 1
-   :caption: History:
+   :caption: History
 
    pages/history
 
