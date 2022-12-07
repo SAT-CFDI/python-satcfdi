@@ -152,3 +152,4 @@ dmypy.json
 /tests/test_portal/session
 /tests/test_certifica/test_csd/
 /satcfdi/create/*/*_z.py
+/docs/generated/
