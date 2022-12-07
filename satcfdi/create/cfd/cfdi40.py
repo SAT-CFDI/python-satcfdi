@@ -311,8 +311,7 @@ class PagoComprobante:
 
 
 def _make_conceptos(conceptos, rnd_fn):
-    conceptos = [c for c in iterate(conceptos)]
-    for concepto in conceptos:
+    def make_concepto(concepto):
         trasladados = [x if isinstance(x, Impuesto) else Impuesto.parse(x) for x in iterate(concepto.get("Impuestos", {}).get("Traslados"))]
         retenciones = [x if isinstance(x, Impuesto) else Impuesto.parse(x) for x in iterate(concepto.get("Impuestos", {}).get("Retenciones"))]
 
@@ -333,7 +332,7 @@ def _make_conceptos(conceptos, rnd_fn):
 
         if concepto.get("ObjetoImp") in ("01", "03"):
             concepto['Impuestos'] = None
-            continue
+            return concepto
 
         base = importe - (concepto.get("Descuento") or 0)
 
@@ -346,8 +345,9 @@ def _make_conceptos(conceptos, rnd_fn):
 
         concepto['Impuestos'] = impuestos or None
         concepto["ObjetoImp"] = "02" if impuestos else "01"
+        return concepto
 
-    return conceptos
+    return [make_concepto(c) for c in iterate(conceptos)]
 
 
 # MAIN #
