@@ -46,6 +46,14 @@
    :template: custom-module-template.rst
    :recursive:
 {% for item in modules %}
+{% if item not in (
+      'satcfdi.transform.catalog',
+      'satcfdi.transform.objectify',
+      'satcfdi.transform.schemas',
+      'satcfdi.transform.xmlify',
+      'satcfdi.transform.xslt'
+) %}
    {{ item }}
+{% endif %}
 {%- endfor %}
 {% endif %}
