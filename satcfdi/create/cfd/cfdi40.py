@@ -310,6 +310,48 @@ class PagoComprobante:
             raise ValueError('Importe Pagado debe de ser menor o igual al Importe Saldo Anterior')
 
 
+def _make_conceptos(conceptos, rnd_fn):
+    conceptos = [c for c in iterate(conceptos)]
+    for concepto in conceptos:
+        trasladados = [x if isinstance(x, Impuesto) else Impuesto.parse(x) for x in iterate(concepto.get("Impuestos", {}).get("Traslados"))]
+        retenciones = [x if isinstance(x, Impuesto) else Impuesto.parse(x) for x in iterate(concepto.get("Impuestos", {}).get("Retenciones"))]
+
+        if concepto.get('_traslados_incluidos'):
+            s_tasa = sum(c["TasaOCuota"] for c in trasladados if c["TipoFactor"] == "Tasa")
+            s_cuota = sum(c["TasaOCuota"] for c in trasladados if c["TipoFactor"] == "Cuota")
+            if any(c for c in trasladados if c["TipoFactor"] in ('Tasa', 'Cuota') and (c.get('Base') is not None or c.get('Importe') is not None)):
+                raise ValueError("Not possible to compute '_traslados_incluidos' if any 'trasladados' contains 'Base' or 'Importe'")
+
+            valor_unitario = concepto['ValorUnitario']
+            valor_unitario = (valor_unitario - s_cuota) / (s_tasa + 1)
+            concepto['ValorUnitario'] = rnd_fn(valor_unitario)
+        else:
+            valor_unitario = concepto['ValorUnitario']
+
+        importe = concepto["Cantidad"] * valor_unitario
+        concepto["Importe"] = rnd_fn(importe)
+
+        if concepto.get("ObjetoImp") in ("01", "03"):
+            concepto['Impuestos'] = None
+            continue
+
+        base = importe - (concepto.get("Descuento") or 0)
+
+        impuestos = {
+            imp_t: [
+                make_impuesto(i, base=base, rnd_fn=rnd_fn) for i in imp
+            ]
+            for imp_t, imp in [('Traslados', trasladados), ('Retenciones', retenciones)] if imp
+        }
+
+        concepto['Impuestos'] = impuestos or None
+        concepto["ObjetoImp"] = "02" if impuestos else "01"
+
+    return conceptos
+
+
+
+
 # MAIN #
 class Comprobante(CFDI):
     """
@@ -365,46 +407,9 @@ class Comprobante(CFDI):
         :param fecha: Atributo requerido para la expresión de la fecha y hora de expedición del Comprobante Fiscal Digital por Internet. Se expresa en la forma AAAA-MM-DDThh:mm:ss y debe corresponder con la hora local donde se expide el comprobante.
         :return: objeto CFDI
         """
-
-        rnd_fn = rounder(moneda)
-
-        for concepto in iterate(conceptos):
-            trasladados = [x if isinstance(x, Impuesto) else Impuesto.parse(x) for x in iterate(concepto.get("Impuestos", {}).get("Traslados"))]
-            retenciones = [x if isinstance(x, Impuesto) else Impuesto.parse(x) for x in iterate(concepto.get("Impuestos", {}).get("Retenciones"))]
-
-            if concepto.get('_traslados_incluidos'):
-                s_tasa = sum(c["TasaOCuota"] for c in trasladados if c["TipoFactor"] == "Tasa")
-                s_cuota = sum(c["TasaOCuota"] for c in trasladados if c["TipoFactor"] == "Cuota")
-                if any(c for c in trasladados if c["TipoFactor"] in ('Tasa', 'Cuota') and (c.get('Base') is not None or c.get('Importe') is not None)):
-                    raise ValueError("Not possible to compute '_traslados_incluidos' if any 'trasladados' contains 'Base' or 'Importe'")
-
-                valor_unitario = concepto['ValorUnitario']
-                valor_unitario = (valor_unitario - s_cuota) / (s_tasa + 1)
-                concepto['ValorUnitario'] = rnd_fn(valor_unitario)
-            else:
-                valor_unitario = concepto['ValorUnitario']
-
-            importe = concepto["Cantidad"] * valor_unitario
-            concepto["Importe"] = rnd_fn(importe)
-
-            if concepto.get("ObjetoImp") in ("01", "03"):
-                concepto['Impuestos'] = None
-                continue
-
-            base = importe - (concepto.get("Descuento") or 0)
-
-            impuestos = {
-                imp_t: [
-                    make_impuesto(i, base=base, rnd_fn=rnd_fn) for i in imp
-                ]
-                for imp_t, imp in [('Traslados', trasladados), ('Retenciones', retenciones)] if imp
-            }
-
-            concepto['Impuestos'] = impuestos or None
-            concepto["ObjetoImp"] = "02" if impuestos else "01"
-
-        sub_total = sum(c['Importe'] for c in iterate(conceptos))
-        descuento = sum(c.get('Descuento') or 0 for c in iterate(conceptos))
+        conceptos = _make_conceptos(conceptos, rnd_fn=rounder(moneda))
+        sub_total = sum(c['Importe'] for c in conceptos)
+        descuento = sum(c.get('Descuento') or 0 for c in conceptos)
         impuestos = make_impuestos(conceptos)
 
         total = sub_total - descuento
@@ -511,6 +516,17 @@ class Comprobante(CFDI):
         )
 
     @classmethod
+    def _pago_tipo_cambio(cls, moneda, tipo_cambio):
+        # CRP204: El campo TipoCambioP no debe estar presente cuando el campo Moneda contenga ^MXN$ en el nodo Pago
+        if cls.complemento_pago.version == "1.0":
+            if moneda == 'MXN' and tipo_cambio == 1:
+                tipo_cambio = None
+        else:
+            if moneda == 'MXN' and tipo_cambio is None:
+                tipo_cambio = 1
+        return tipo_cambio
+
+    @classmethod
     def pago_comprobantes(
             cls,
             emisor: Issuer,
@@ -543,19 +559,11 @@ class Comprobante(CFDI):
         :param fecha: Atributo requerido para la expresión de la fecha y hora de expedición del Comprobante Fiscal Digital por Internet. Se expresa en la forma AAAA-MM-DDThh:mm:ss y debe corresponder con la hora local donde se expide el comprobante.
         :return: objeto CFDI
         """
-        comprobantes = list(c if isinstance(c, PagoComprobante) else PagoComprobante(comprobante=c) for c in iterate(comprobantes))
-
+        comprobantes = [c if isinstance(c, PagoComprobante) else PagoComprobante(comprobante=c) for c in iterate(comprobantes)]
         first_cfdi = comprobantes[0].comprobante
         moneda = first_cfdi['Moneda']
         receptor = first_cfdi['Receptor'].copy()
-
-        # CRP204: El campo TipoCambioP no debe estar presente cuando el campo Moneda contenga ^MXN$ en el nodo Pago
-        if cls.complemento_pago.version == "1.0":
-            if moneda == 'MXN' and tipo_cambio == 1:
-                tipo_cambio = None
-        else:
-            if moneda == 'MXN' and tipo_cambio is None:
-                tipo_cambio = 1
+        tipo_cambio = cls._pago_tipo_cambio(moneda, tipo_cambio)
 
         if not all(
                 c.comprobante["Moneda"] == moneda
@@ -572,35 +580,33 @@ class Comprobante(CFDI):
             lugar_expedicion=lugar_expedicion,
             receptor=receptor,
             complemento_pago=cls.complemento_pago(
-                pago=[
-                    {
-                        'DoctoRelacionado': [
-                            {
-                                'IdDocumento': c.comprobante["Complemento"]["TimbreFiscalDigital"]["UUID"],
-                                'Serie': c.comprobante.get("Serie"),
-                                'Folio': c.comprobante.get("Folio"),
-                                'MonedaDR': c.comprobante["Moneda"],
-                                'EquivalenciaDR': 1,
-                                'MetodoDePagoDR': c.comprobante["MetodoPago"],
-                                'NumParcialidad': c.num_parcialidad,
-                                'ImpSaldoAnt': c.imp_saldo_ant,
-                                'ImpPagado': c.imp_pagado,
-                                'ObjetoImpDR': '02' if 'Impuestos' in c.comprobante else '01',
-                                'ImpuestosDR': make_impuestos_dr_parcial(
-                                    conceptos=c.comprobante['Conceptos'],
-                                    imp_saldo_ant=c.imp_saldo_ant,
-                                    imp_pagado=c.imp_pagado,
-                                    total=c.comprobante["Total"],
-                                    rnd_fn=rounder(c.comprobante["Moneda"])
-                                ) if 'Impuestos' in c.comprobante else None
-                            } for c in comprobantes
-                        ],
-                        'FechaPago': fecha_pago,
-                        'FormaDePagoP': forma_pago,
-                        'MonedaP': moneda,
-                        'TipoCambioP': tipo_cambio
-                    }
-                ]
+                pago=[{
+                    'DoctoRelacionado': [
+                        {
+                            'IdDocumento': c.comprobante["Complemento"]["TimbreFiscalDigital"]["UUID"],
+                            'Serie': c.comprobante.get("Serie"),
+                            'Folio': c.comprobante.get("Folio"),
+                            'MonedaDR': c.comprobante["Moneda"],
+                            'EquivalenciaDR': 1,
+                            'MetodoDePagoDR': c.comprobante["MetodoPago"],
+                            'NumParcialidad': c.num_parcialidad,
+                            'ImpSaldoAnt': c.imp_saldo_ant,
+                            'ImpPagado': c.imp_pagado,
+                            'ObjetoImpDR': '02' if 'Impuestos' in c.comprobante else '01',
+                            'ImpuestosDR': make_impuestos_dr_parcial(
+                                conceptos=c.comprobante['Conceptos'],
+                                imp_saldo_ant=c.imp_saldo_ant,
+                                imp_pagado=c.imp_pagado,
+                                total=c.comprobante["Total"],
+                                rnd_fn=rounder(c.comprobante["Moneda"])
+                            ) if 'Impuestos' in c.comprobante else None
+                        } for c in comprobantes
+                    ],
+                    'FechaPago': fecha_pago,
+                    'FormaDePagoP': forma_pago,
+                    'MonedaP': moneda,
+                    'TipoCambioP': tipo_cambio
+                }]
             ),
             cfdi_relacionados=cfdi_relacionados,
             confirmacion=confirmacion,
