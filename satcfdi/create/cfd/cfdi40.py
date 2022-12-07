@@ -332,19 +332,17 @@ def _make_conceptos(conceptos, rnd_fn):
 
         if concepto.get("ObjetoImp") in ("01", "03"):
             concepto['Impuestos'] = None
-            return concepto
+        else:
+            base = importe - (concepto.get("Descuento") or 0)
+            impuestos = {
+                imp_t: [
+                    make_impuesto(i, base=base, rnd_fn=rnd_fn) for i in imp
+                ]
+                for imp_t, imp in [('Traslados', trasladados), ('Retenciones', retenciones)] if imp
+            }
+            concepto['Impuestos'] = impuestos or None
+            concepto["ObjetoImp"] = "02" if impuestos else "01"
 
-        base = importe - (concepto.get("Descuento") or 0)
-
-        impuestos = {
-            imp_t: [
-                make_impuesto(i, base=base, rnd_fn=rnd_fn) for i in imp
-            ]
-            for imp_t, imp in [('Traslados', trasladados), ('Retenciones', retenciones)] if imp
-        }
-
-        concepto['Impuestos'] = impuestos or None
-        concepto["ObjetoImp"] = "02" if impuestos else "01"
         return concepto
 
     return [make_concepto(c) for c in iterate(conceptos)]
