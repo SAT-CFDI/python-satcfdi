@@ -177,6 +177,41 @@ ______________________
     ).process()
     
 
+Pago a partir de un Comprobante
+__________________________________
+
+.. code-block:: python
+
+    from datetime import datetime
+    from satcfdi import Signer, CFDI
+    from satcfdi.create import Issuer
+    from satcfdi.create.cfd import cfdi40
+    
+    # Load signing certificate
+    signer = Signer.load(
+        certificate=open('csd/xiqb891116qe4_csd.cer', 'rb').read(),
+        key=open('csd/xiqb891116qe4_csd.key', 'rb').read(),
+        password=open('csd/xiqb891116qe4_csd.txt', 'r').read()
+    )
+    
+    # create an Emisor
+    emisor = Issuer(signer=signer, tax_system="606")
+    
+    # load comprobante
+    cfdi = CFDI.from_file('comprobante.xml')
+    
+    # create Comprobante
+    invoice = cfdi40.Comprobante.pago_comprobantes(
+        emisor=emisor,
+        lugar_expedicion="56820",
+        comprobantes=cfdi,
+        fecha_pago=datetime.now(),
+        forma_pago="03",
+        serie="A",
+        folio="123456"
+    ).process()
+    
+
 Addenda
 _______________________
 
