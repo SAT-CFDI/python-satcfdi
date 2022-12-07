@@ -307,7 +307,7 @@ class PagoComprobante:
             self.imp_pagado = self.comprobante['Total']
 
         if self.imp_pagado > self.imp_saldo_ant:
-            raise ValueError('Importe Pagado debe de ser mayor a Importe Saldo Anterior')
+            raise ValueError('Importe Pagado debe de ser menor o igual al Importe Saldo Anterior')
 
 
 # MAIN #
