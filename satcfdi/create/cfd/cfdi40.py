@@ -430,7 +430,7 @@ class Comprobante(CFDI):
             serie: str = None,
             folio: str = None,
             addenda: CFDI | Sequence[CFDI] = None,
-            fecha: datetime = None) -> CFDI:
+            fecha: datetime = None) -> 'Comprobante':
         """
         Estándar de Comprobante Fiscal Digital por Internet de Tipo Pago.
 
@@ -500,7 +500,7 @@ class Comprobante(CFDI):
             serie: str = None,
             folio: str = None,
             addenda: CFDI | Sequence[CFDI] = None,
-            fecha: datetime = None) -> CFDI:
+            fecha: datetime = None) -> 'Comprobante':
         """
         Estándar de Comprobante Fiscal Digital por Internet de Tipo Pago. Generado a partir de una lista de Comprobantes
         Se asume que los comprobantes se pagan en su totalidad en una sola exhibición
@@ -588,7 +588,7 @@ class Comprobante(CFDI):
             serie: str = None,
             folio: str = None,
             addenda: CFDI | Sequence[CFDI] = None,
-            fecha: datetime = None) -> CFDI:
+            fecha: datetime = None) -> 'Comprobante':
         """
         Estándar de Comprobante Fiscal Digital por Internet de Tipo Pago.
 
