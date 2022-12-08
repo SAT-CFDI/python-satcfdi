@@ -1,3 +1,4 @@
+"""nomina12 http://www.sat.gob.mx/nomina12"""
 from collections.abc import *
 from datetime import date
 from decimal import Decimal

@@ -1,3 +1,4 @@
+"""cartaporte20 http://www.sat.gob.mx/CartaPorte20"""
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence

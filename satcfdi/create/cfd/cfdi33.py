@@ -1,3 +1,4 @@
+"""cfdi http://www.sat.gob.mx/cfd/3"""
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import *

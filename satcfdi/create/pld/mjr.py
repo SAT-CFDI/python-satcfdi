@@ -1,3 +1,4 @@
+"""mjr http://www.uif.shcp.gob.mx/recepcion/mjr"""
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence

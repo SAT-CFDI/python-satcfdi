@@ -1,3 +1,4 @@
+"""tfd http://www.sat.gob.mx/TimbreFiscalDigital"""
 from datetime import datetime
 from ... import CFDI, XElement, ScalarMap
 from ...models.signer import Signer

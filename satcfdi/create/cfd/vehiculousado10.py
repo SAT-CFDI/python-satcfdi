@@ -1,3 +1,4 @@
+"""vehiculousado http://www.sat.gob.mx/vehiculousado"""
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence

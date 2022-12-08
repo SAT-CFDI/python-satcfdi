@@ -1,3 +1,4 @@
+"""sellodigital www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec"""
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence

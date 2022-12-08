@@ -1,3 +1,4 @@
+"""catalogocuentas http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas"""
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence

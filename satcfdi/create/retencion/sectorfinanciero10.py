@@ -1,3 +1,4 @@
+"""sectorfinanciero http://www.sat.gob.mx/esquemas/retencionpago/1/sectorfinanciero"""
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence

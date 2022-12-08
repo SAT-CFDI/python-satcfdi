@@ -1,3 +1,4 @@
+"""nomina http://www.sat.gob.mx/nomina"""
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence

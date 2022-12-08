@@ -1,3 +1,4 @@
+"""PLZ www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo"""
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence

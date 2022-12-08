@@ -1,3 +1,4 @@
+"""dvz http://www.diverza.com/ns/addenda/diverza/1"""
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence

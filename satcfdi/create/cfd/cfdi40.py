@@ -1,3 +1,4 @@
+"""cfdi http://www.sat.gob.mx/cfd/4"""
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import datetime
