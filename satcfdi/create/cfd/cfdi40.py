@@ -338,7 +338,6 @@ class Comprobante(CFDI):
     :param complemento: Nodo opcional donde se incluye el complemento Timbre Fiscal Digital de manera obligatoria y los nodos complementarios determinados por el SAT, de acuerdo con las disposiciones particulares para un sector o actividad específica.
     :param addenda: Nodo opcional para recibir las extensiones al presente formato que sean de utilidad al contribuyente. Para las reglas de uso del mismo, referirse al formato origen.
     :param fecha: Atributo requerido para la expresión de la fecha y hora de expedición del Comprobante Fiscal Digital por Internet. Se expresa en la forma AAAA-MM-DDThh:mm:ss y debe corresponder con la hora local donde se expide el comprobante.
-    :return: objeto CFDI
     """
 
     tag = '{http://www.sat.gob.mx/cfd/4}Comprobante'
@@ -444,7 +443,7 @@ class Comprobante(CFDI):
         :param cfdi_relacionados: Nodo opcional para precisar la información de los comprobantes relacionados.
         :param addenda: Nodo opcional para recibir las extensiones al presente formato que sean de utilidad al contribuyente. Para las reglas de uso del mismo, referirse al formato origen.
         :param fecha: Atributo requerido para la expresión de la fecha y hora de expedición del Comprobante Fiscal Digital por Internet. Se expresa en la forma AAAA-MM-DDThh:mm:ss y debe corresponder con la hora local donde se expide el comprobante.
-        :return: objeto CFDI
+        :return: Comprobante
         """
         if cls.version == "3.3":
             receptor["UsoCFDI"] = "P01"
@@ -517,7 +516,7 @@ class Comprobante(CFDI):
         :param cfdi_relacionados: Nodo opcional para precisar la información de los comprobantes relacionados.
         :param addenda: Nodo opcional para recibir las extensiones al presente formato que sean de utilidad al contribuyente. Para las reglas de uso del mismo, referirse al formato origen.
         :param fecha: Atributo requerido para la expresión de la fecha y hora de expedición del Comprobante Fiscal Digital por Internet. Se expresa en la forma AAAA-MM-DDThh:mm:ss y debe corresponder con la hora local donde se expide el comprobante.
-        :return: objeto CFDI
+        :return: Comprobante
         """
         comprobantes = [c if isinstance(c, PagoComprobante) else PagoComprobante(comprobante=c) for c in iterate(comprobantes)]
         first_cfdi = comprobantes[0].comprobante
@@ -602,7 +601,7 @@ class Comprobante(CFDI):
         :param cfdi_relacionados: Nodo opcional para precisar la información de los comprobantes relacionados.
         :param addenda: Nodo opcional para recibir las extensiones al presente formato que sean de utilidad al contribuyente. Para las reglas de uso del mismo, referirse al formato origen.
         :param fecha: Atributo requerido para la expresión de la fecha y hora de expedición del Comprobante Fiscal Digital por Internet. Se expresa en la forma AAAA-MM-DDThh:mm:ss y debe corresponder con la hora local donde se expide el comprobante.
-        :return: objeto CFDI
+        :return: Comprobante
         """
         if cls.version == "3.3":
             receptor["UsoCFDI"] = "P01"
