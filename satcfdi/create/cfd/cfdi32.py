@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class TInformacionAduanera(XElement):
+class TInformacionAduanera(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Tipo definido para expresar información aduanera
@@ -30,7 +30,7 @@ class TInformacionAduanera(XElement):
         })
         
 
-class TUbicacionFiscal(XElement):
+class TUbicacionFiscal(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Tipo definido para expresar domicilios o direcciones
@@ -77,7 +77,7 @@ class TUbicacionFiscal(XElement):
         })
         
 
-class TUbicacion(XElement):
+class TUbicacion(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Tipo definido para expresar domicilios o direcciones
@@ -124,7 +124,7 @@ class TUbicacion(XElement):
         })
         
 
-class Traslado(XElement):
+class Traslado(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo para la información detallada de un traslado de impuesto específico
@@ -150,7 +150,7 @@ class Traslado(XElement):
         })
         
 
-class Retencion(XElement):
+class Retencion(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo para la información detallada de una retención de impuesto específico
@@ -173,7 +173,7 @@ class Retencion(XElement):
         })
         
 
-class Impuestos(XElement):
+class Impuestos(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo requerido para capturar los impuestos aplicables.
@@ -202,7 +202,7 @@ class Impuestos(XElement):
         })
         
 
-class Parte(XElement):
+class Parte(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo opcional para expresar las partes o componentes que integran la totalidad del concepto expresado en el comprobante fiscal digital a través de Internet
@@ -240,7 +240,7 @@ class Parte(XElement):
         })
         
 
-class Concepto(XElement):
+class Concepto(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo para introducir la información detallada de un bien o servicio amparado en el comprobante.
@@ -287,7 +287,7 @@ class Concepto(XElement):
         })
         
 
-class Receptor(XElement):
+class Receptor(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo requerido para precisar la información del contribuyente receptor del comprobante.
@@ -313,7 +313,7 @@ class Receptor(XElement):
         })
         
 
-class Emisor(XElement):
+class Emisor(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo requerido para expresar la información del contribuyente emisor del comprobante.

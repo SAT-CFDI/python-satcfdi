@@ -4,7 +4,7 @@ from collections.abc import *
 
 from . import cfdi40, pago10
 from .. import Issuer
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 _a = Issuer
 
@@ -16,7 +16,7 @@ class Impuesto(cfdi40.Impuesto):
     """
 
 
-class CfdiRelacionados(XElement):
+class CfdiRelacionados(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo opcional para precisar la información de los comprobantes relacionados.
@@ -40,7 +40,7 @@ class CfdiRelacionados(XElement):
         })
 
 
-class Parte(XElement):
+class Parte(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo opcional para expresar las partes o componentes que integran la totalidad del concepto expresado en el comprobante fiscal digital por Internet.
@@ -82,7 +82,7 @@ class Parte(XElement):
         })
 
 
-class Concepto(XElement):
+class Concepto(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo requerido para registrar la información detallada de un bien o servicio amparado en el comprobante.
@@ -147,7 +147,7 @@ class Concepto(XElement):
         })
 
 
-class Receptor(XElement):
+class Receptor(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/3
     Nodo requerido para precisar la información del contribuyente receptor del comprobante.

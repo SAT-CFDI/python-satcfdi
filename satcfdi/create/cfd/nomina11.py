@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class HorasExtra(XElement):
+class HorasExtra(ScalarMap):
     """
     http://www.sat.gob.mx/nomina
     Nodo opcional para expresar información de las horas extras
@@ -33,7 +33,7 @@ class HorasExtra(XElement):
         })
         
 
-class Incapacidad(XElement):
+class Incapacidad(ScalarMap):
     """
     http://www.sat.gob.mx/nomina
     Nodo opcional para expresar información de las incapacidades
@@ -59,7 +59,7 @@ class Incapacidad(XElement):
         })
         
 
-class Deduccion(XElement):
+class Deduccion(ScalarMap):
     """
     http://www.sat.gob.mx/nomina
     Nodo para expresar la información detallada de una deducción
@@ -91,7 +91,7 @@ class Deduccion(XElement):
         })
         
 
-class Deducciones(XElement):
+class Deducciones(ScalarMap):
     """
     http://www.sat.gob.mx/nomina
     Nodo opcional para expresar las deducciones aplicables
@@ -117,7 +117,7 @@ class Deducciones(XElement):
         })
         
 
-class Percepcion(XElement):
+class Percepcion(ScalarMap):
     """
     http://www.sat.gob.mx/nomina
     Nodo para expresar la información detallada de una percepción
@@ -149,7 +149,7 @@ class Percepcion(XElement):
         })
         
 
-class Percepciones(XElement):
+class Percepciones(ScalarMap):
     """
     http://www.sat.gob.mx/nomina
     Nodo opcional para expresar las percepciones aplicables

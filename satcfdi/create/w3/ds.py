@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class RSAKeyValueType(XElement):
+class RSAKeyValueType(ScalarMap):
     def __init__(
             self,
             modulus: str,
@@ -22,7 +22,7 @@ class RSAKeyValueType(XElement):
         })
 
 
-class DSAKeyValueType(XElement):
+class DSAKeyValueType(ScalarMap):
     def __init__(
             self,
             p: str,
@@ -55,7 +55,7 @@ class DSAKeyValueType(XElement):
         })
 
 
-class SignaturePropertyType(XElement):
+class SignaturePropertyType(ScalarMap):
     def __init__(
             self,
             target: str,
@@ -73,7 +73,7 @@ class SignaturePropertyType(XElement):
         })
 
 
-class SignaturePropertiesType(XElement):
+class SignaturePropertiesType(ScalarMap):
     def __init__(
             self,
             signature_property: SignaturePropertyType | dict = None,
@@ -91,7 +91,7 @@ class SignaturePropertiesType(XElement):
         })
 
 
-class ObjectType(XElement):
+class ObjectType(ScalarMap):
     def __init__(
             self,
             id: str = None,
@@ -112,7 +112,7 @@ class ObjectType(XElement):
         })
 
 
-class SPKIDataType(XElement):
+class SPKIDataType(ScalarMap):
     def __init__(
             self,
             spkisexp: str,
@@ -127,7 +127,7 @@ class SPKIDataType(XElement):
         })
 
 
-class PGPDataType(XElement):
+class PGPDataType(ScalarMap):
     def __init__(
             self,
             pgpkey_id: str,
@@ -145,7 +145,7 @@ class PGPDataType(XElement):
         })
 
 
-class X509IssuerSerialType(XElement):
+class X509IssuerSerialType(ScalarMap):
     def __init__(
             self,
             x509issuer_name: str,
@@ -163,7 +163,7 @@ class X509IssuerSerialType(XElement):
         })
 
 
-class X509DataType(XElement):
+class X509DataType(ScalarMap):
     def __init__(
             self,
             x509issuer_serial: X509IssuerSerialType | dict = None,
@@ -190,7 +190,7 @@ class X509DataType(XElement):
         })
 
 
-class KeyValueType(XElement):
+class KeyValueType(ScalarMap):
     def __init__(
             self,
             dsakey_value: DSAKeyValueType | dict = None,
@@ -208,7 +208,7 @@ class KeyValueType(XElement):
         })
 
 
-class DigestMethodType(XElement):
+class DigestMethodType(ScalarMap):
     def __init__(
             self,
             algorithm: str,
@@ -223,7 +223,7 @@ class DigestMethodType(XElement):
         })
 
 
-class TransformType(XElement):
+class TransformType(ScalarMap):
     def __init__(
             self,
             algorithm: str,
@@ -241,7 +241,7 @@ class TransformType(XElement):
         })
 
 
-class TransformsType(XElement):
+class TransformsType(ScalarMap):
     def __init__(
             self,
             transform: TransformType | dict = None,
@@ -256,7 +256,7 @@ class TransformsType(XElement):
         })
 
 
-class RetrievalMethodType(XElement):
+class RetrievalMethodType(ScalarMap):
     def __init__(
             self,
             uri: str = None,
@@ -277,7 +277,7 @@ class RetrievalMethodType(XElement):
         })
 
 
-class KeyInfoType(XElement):
+class KeyInfoType(ScalarMap):
     def __init__(
             self,
             id: str = None,
@@ -313,7 +313,7 @@ class KeyInfoType(XElement):
         })
 
 
-class ReferenceType(XElement):
+class ReferenceType(ScalarMap):
     def __init__(
             self,
             digest_method: DigestMethodType | dict = None,
@@ -343,7 +343,7 @@ class ReferenceType(XElement):
         })
 
 
-class ManifestType(XElement):
+class ManifestType(ScalarMap):
     def __init__(
             self,
             reference: ReferenceType | dict = None,
@@ -361,7 +361,7 @@ class ManifestType(XElement):
         })
 
 
-class SignatureMethodType(XElement):
+class SignatureMethodType(ScalarMap):
     def __init__(
             self,
             algorithm: str,
@@ -379,7 +379,7 @@ class SignatureMethodType(XElement):
         })
 
 
-class CanonicalizationMethodType(XElement):
+class CanonicalizationMethodType(ScalarMap):
     def __init__(
             self,
             algorithm: str,
@@ -394,7 +394,7 @@ class CanonicalizationMethodType(XElement):
         })
 
 
-class SignedInfoType(XElement):
+class SignedInfoType(ScalarMap):
     def __init__(
             self,
             canonicalization_method: CanonicalizationMethodType | dict = None,
@@ -418,7 +418,7 @@ class SignedInfoType(XElement):
         })
 
 
-class SignatureValueType(XElement):
+class SignatureValueType(ScalarMap):
     def __init__(
             self,
             _text: str,
@@ -436,7 +436,7 @@ class SignatureValueType(XElement):
         })
 
 
-class SignatureType(XElement):
+class SignatureType(ScalarMap):
     def __init__(
             self,
             signed_info: SignedInfoType | dict = None,
@@ -463,85 +463,85 @@ class SignatureType(XElement):
         })
 
 
-class RSAKeyValue(RSAKeyValueType):
+class RSAKeyValue(RSAKeyValueType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}RSAKeyValue'
 
 
-class DSAKeyValue(DSAKeyValueType):
+class DSAKeyValue(DSAKeyValueType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}DSAKeyValue'
 
 
-class SignatureProperty(SignaturePropertyType):
+class SignatureProperty(SignaturePropertyType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}SignatureProperty'
 
 
-class SignatureProperties(SignaturePropertiesType):
+class SignatureProperties(SignaturePropertiesType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}SignatureProperties'
 
 
-class Manifest(ManifestType):
+class Manifest(ManifestType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}Manifest'
 
 
-class Object(ObjectType):
+class Object(ObjectType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}Object'
 
 
-class SPKIData(SPKIDataType):
+class SPKIData(SPKIDataType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}SPKIData'
 
 
-class PGPData(PGPDataType):
+class PGPData(PGPDataType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}PGPData'
 
 
-class X509Data(X509DataType):
+class X509Data(X509DataType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}X509Data'
 
 
-class RetrievalMethod(RetrievalMethodType):
+class RetrievalMethod(RetrievalMethodType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}RetrievalMethod'
 
 
-class KeyValue(KeyValueType):
+class KeyValue(KeyValueType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}KeyValue'
 
 
-class KeyInfo(KeyInfoType):
+class KeyInfo(KeyInfoType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}KeyInfo'
 
 
-class DigestMethod(DigestMethodType):
+class DigestMethod(DigestMethodType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}DigestMethod'
 
 
-class Transform(TransformType):
+class Transform(TransformType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}Transform'
 
 
-class Transforms(TransformsType):
+class Transforms(TransformsType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}Transforms'
 
 
-class Reference(ReferenceType):
+class Reference(ReferenceType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}Reference'
 
 
-class SignatureMethod(SignatureMethodType):
+class SignatureMethod(SignatureMethodType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}SignatureMethod'
 
 
-class CanonicalizationMethod(CanonicalizationMethodType):
+class CanonicalizationMethod(CanonicalizationMethodType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}CanonicalizationMethod'
 
 
-class SignedInfo(SignedInfoType):
+class SignedInfo(SignedInfoType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}SignedInfo'
 
 
-class SignatureValue(SignatureValueType):
+class SignatureValue(SignatureValueType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}SignatureValue'
 
 
-class Signature(SignatureType):
+class Signature(SignatureType, XElement):
     tag = '{http://www.w3.org/2000/09/xmldsig#}Signature'

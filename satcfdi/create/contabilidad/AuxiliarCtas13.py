@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class DetalleAux(XElement):
+class DetalleAux(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas
     Nodo obligatorio para expresar el detalle de los movimientos del periodo de cada uno de los auxiliares
@@ -36,7 +36,7 @@ class DetalleAux(XElement):
         })
         
 
-class Cuenta(XElement):
+class Cuenta(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas
     Nodo obligatorio para expresar los movimientos del periodo de cada uno de los auxiliares de la cuenta y/o subcuenta.

@@ -1,11 +1,12 @@
 from datetime import datetime
 
 from satcfdi.create.cancela import cancelacion, cancelacionretencion
-from tests.utils import verify_result, get_signer
+from tests.utils import verify_result, get_signer, XElementPrettyPrinter
 
 
 def verify_invoice(invoice, path):
-    verify = verify_result(data=repr(invoice), filename=f"{path}.py")
+    pp = XElementPrettyPrinter()
+    verify = verify_result(data=pp.pformat(invoice), filename=f"{path}.py")
     assert verify
 
     verify = verify_result(data=invoice.xml_bytes(pretty_print=True), filename=f"{path}.xml")

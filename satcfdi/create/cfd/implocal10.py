@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class TrasladosLocales(XElement):
+class TrasladosLocales(ScalarMap):
     """
     http://www.sat.gob.mx/implocal
     Nodo opcional para la expresión de los impuestos locales trasladados
@@ -30,7 +30,7 @@ class TrasladosLocales(XElement):
         })
         
 
-class RetencionesLocales(XElement):
+class RetencionesLocales(ScalarMap):
     """
     http://www.sat.gob.mx/implocal
     Nodo opcional para la expresión de los impuestos locales retenidos

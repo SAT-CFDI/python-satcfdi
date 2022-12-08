@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class DatosAdquirienteCopSC(XElement):
+class DatosAdquirienteCopSC(ScalarMap):
     """
     http://www.sat.gob.mx/notariospublicos
     Nodo para capturar los datos de un adquiriente o de un propietario o poseedor en caso de Copropiedad o Sociedad Conyugal
@@ -39,7 +39,7 @@ class DatosAdquirienteCopSC(XElement):
         })
         
 
-class DatosUnAdquiriente(XElement):
+class DatosUnAdquiriente(ScalarMap):
     """
     http://www.sat.gob.mx/notariospublicos
     Nodo para capturar los datos del adquiriente o del propietario o poseedor en caso de ser solo uno.
@@ -71,7 +71,7 @@ class DatosUnAdquiriente(XElement):
         })
         
 
-class DatosAdquiriente(XElement):
+class DatosAdquiriente(ScalarMap):
     """
     http://www.sat.gob.mx/notariospublicos
     Nodo para capturar los datos del adquiriente, adquirientes o propietario, o propietarios o poseedores, en caso de servidumbres de paso.
@@ -97,7 +97,7 @@ class DatosAdquiriente(XElement):
         })
         
 
-class DatosEnajenanteCopSC(XElement):
+class DatosEnajenanteCopSC(ScalarMap):
     """
     http://www.sat.gob.mx/notariospublicos
     Nodo para capturar los datos de un enajenante o de los propietarios o poseedores tratándose de servidumbres de paso, en caso de Copropiedad o Sociedad Conyugal
@@ -132,7 +132,7 @@ class DatosEnajenanteCopSC(XElement):
         })
         
 
-class DatosUnEnajenante(XElement):
+class DatosUnEnajenante(ScalarMap):
     """
     http://www.sat.gob.mx/notariospublicos
     Nodo para capturar los datos del enajenante o del propietario o poseedor del predio sirviente en caso de ser solo uno.
@@ -164,7 +164,7 @@ class DatosUnEnajenante(XElement):
         })
         
 
-class DatosEnajenante(XElement):
+class DatosEnajenante(ScalarMap):
     """
     http://www.sat.gob.mx/notariospublicos
     Nodo para capturar los datos del enajenante o enajenantes, o en el caso de servidumbres de paso del propietario o poseedores o propietarios o poseedores del predio sirviente.
@@ -190,7 +190,7 @@ class DatosEnajenante(XElement):
         })
         
 
-class DatosNotario(XElement):
+class DatosNotario(ScalarMap):
     def __init__(
             self,
             curp: str,
@@ -214,7 +214,7 @@ class DatosNotario(XElement):
         })
         
 
-class DatosOperacion(XElement):
+class DatosOperacion(ScalarMap):
     """
     http://www.sat.gob.mx/notariospublicos
     Nodo para definir los detalles de la operación.
@@ -246,7 +246,7 @@ class DatosOperacion(XElement):
         })
         
 
-class DescInmueble(XElement):
+class DescInmueble(ScalarMap):
     """
     http://www.sat.gob.mx/notariospublicos
     Nodo para describir el inmueble o inmuebles objeto del acto otorgado.

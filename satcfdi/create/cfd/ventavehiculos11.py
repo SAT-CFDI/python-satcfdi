@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class TInformacionAduanera(XElement):
+class TInformacionAduanera(ScalarMap):
     """
     http://www.sat.gob.mx/ventavehiculos
     Tipo definido para expresar información aduanera
@@ -30,7 +30,7 @@ class TInformacionAduanera(XElement):
         })
         
 
-class Parte(XElement):
+class Parte(ScalarMap):
     """
     http://www.sat.gob.mx/ventavehiculos
     Nodo opcional para expresar las partes o componentes que integran la totalidad del concepto expresado en el CFDI.

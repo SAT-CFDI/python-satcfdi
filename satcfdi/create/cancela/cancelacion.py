@@ -5,10 +5,10 @@ from lxml import etree
 
 from .. import Signer
 from ..w3.signature import signature_c14n_sha1
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Folio(XElement):
+class Folio(ScalarMap):
     """
     http://cancelacfd.sat.gob.mx
     Folio fiscal (UUID) a ser cancelado.

@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class AportacionesODepositos(XElement):
+class AportacionesODepositos(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11
     Nodo para identificar el tipo de aportación o depósito que realiza el aportante a su plan de retiro, conforme a los artículos 151, 185 de la Ley el Impuesto sobre la Renta, y 258 del Reglamento de la Ley del Impuesto Sobre la Renta.

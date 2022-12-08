@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Domicilio(XElement):
+class Domicilio(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo opcional para registrar información del domicilio del(los) tipo(s) de figura transporte que intervenga(n) en el traslado de los bienes y/o mercancías.
@@ -51,7 +51,7 @@ class Domicilio(XElement):
         })
         
 
-class TiposFigura(XElement):
+class TiposFigura(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo condicional para indicar los datos del(los) tipo(s) de figura(s) que participan en el traslado de los bienes y/o mercancías en los distintos medios de transporte.
@@ -92,7 +92,7 @@ class TiposFigura(XElement):
         })
         
 
-class DerechosDePaso(XElement):
+class DerechosDePaso(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo opcional para registrar los tipos de derechos de paso cubiertos por el transportista en las vías férreas de las cuales no es concesionario o asignatario, así como la distancia establecida en kilómetros.
@@ -115,7 +115,7 @@ class DerechosDePaso(XElement):
         })
         
 
-class Contenedor(XElement):
+class Contenedor(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo condicional para especificar el tipo de contenedor o vagón en el que se trasladan los bienes y/o mercancías por vía férrea.
@@ -141,7 +141,7 @@ class Contenedor(XElement):
         })
         
 
-class Carro(XElement):
+class Carro(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo requerido para registrar la información que permite identificar el (los) carro(s) en el (los) que se trasladan los bienes y/o mercancías por vía férrea.
@@ -173,7 +173,7 @@ class Carro(XElement):
         })
         
 
-class TransporteFerroviario(XElement):
+class TransporteFerroviario(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo condicional para registrar la información que permita la identificación del carro o contenedor en el que se trasladan los bienes y/o mercancías por vía férrea.
@@ -208,7 +208,7 @@ class TransporteFerroviario(XElement):
         })
         
 
-class TransporteAereo(XElement):
+class TransporteAereo(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo condicional para registrar la información que permita la identificación del transporte aéreo por medio del cual se trasladan los bienes y/o mercancías.
@@ -261,7 +261,7 @@ class TransporteAereo(XElement):
         })
         
 
-class TransporteMaritimo(XElement):
+class TransporteMaritimo(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo condicional para registrar la información que permita la identificación de la embarcación a través de la cual se trasladan los bienes y/o mercancías por vía marítima.
@@ -344,7 +344,7 @@ class TransporteMaritimo(XElement):
         })
         
 
-class Remolque(XElement):
+class Remolque(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo requerido para expresar la información del(los) remolque(s) o semirremolque(s) que se adapta(n) al autotransporte para realizar el traslado de los bienes y/o mercancías.
@@ -367,7 +367,7 @@ class Remolque(XElement):
         })
         
 
-class Seguros(XElement):
+class Seguros(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo requerido para registrar los datos de las pólizas de seguro que cubren los riesgos en el traslado de los bienes y/o mercancías.
@@ -405,7 +405,7 @@ class Seguros(XElement):
         })
         
 
-class IdentificacionVehicular(XElement):
+class IdentificacionVehicular(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo requerido para registrar los datos de identificación del autotransporte en el que se trasladan los bienes y/o mercancías.
@@ -431,7 +431,7 @@ class IdentificacionVehicular(XElement):
         })
         
 
-class Autotransporte(XElement):
+class Autotransporte(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo condicional para registrar la información que permita la identificación del autotransporte de carga, por medio del cual se trasladan los bienes y/o mercancías, que transitan a través de las carreteras del territorio nacional.
@@ -463,7 +463,7 @@ class Autotransporte(XElement):
         })
         
 
-class DetalleMercancia(XElement):
+class DetalleMercancia(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo condicional para registrar especificaciones de los bienes y/o mercancías que se trasladan a través de los distintos medios de transporte.
@@ -495,7 +495,7 @@ class DetalleMercancia(XElement):
         })
         
 
-class CantidadTransporta(XElement):
+class CantidadTransporta(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo opcional para registrar la cantidad de los bienes y/o mercancías que se trasladan a través de los distintos medios de transporte, que será captada o distribuida en distintos puntos, a fin de identificar el punto de origen y destino correspondiente.
@@ -524,7 +524,7 @@ class CantidadTransporta(XElement):
         })
         
 
-class GuiasIdentificacion(XElement):
+class GuiasIdentificacion(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo condicional para registrar la información del(los) número(s) de guía(s) que se encuentre(n) asociado(s) al(los) paquete(s) que se traslada(n) dentro del territorio nacional.
@@ -550,7 +550,7 @@ class GuiasIdentificacion(XElement):
         })
         
 
-class Mercancia(XElement):
+class Mercancia(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo requerido para registrar detalladamente la información de los bienes y/o mercancías que se trasladan en los distintos medios de transporte.
@@ -627,7 +627,7 @@ class Mercancia(XElement):
         })
         
 
-class Mercancias(XElement):
+class Mercancias(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo requerido para registrar la información de los bienes y/o mercancías que se trasladan en los distintos medios de transporte.
@@ -674,7 +674,7 @@ class Mercancias(XElement):
         })
         
 
-class Ubicacion(XElement):
+class Ubicacion(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte20
     Nodo requerido para registrar la ubicación que sirve para indicar el domicilio del origen y/o destino parcial o final, que tienen los bienes y/o mercancías que se trasladan a través de los distintos medios de transporte.

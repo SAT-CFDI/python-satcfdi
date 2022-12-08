@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Beneficiario(XElement):
+class Beneficiario(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros
     Nodo opcional para precisar la información del representante para efectos fiscales en México
@@ -36,7 +36,7 @@ class Beneficiario(XElement):
         })
         
 
-class NoBeneficiario(XElement):
+class NoBeneficiario(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros
     Nodo opcional para expresar la información del residente extranjero efectivo del cobro

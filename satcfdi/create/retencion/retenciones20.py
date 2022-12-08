@@ -2,11 +2,12 @@ from collections.abc import *
 from datetime import datetime
 from decimal import Decimal
 
-from ...cfdi import CFDI, XElement, get_timezone
+from ... import CFDI, XElement, ScalarMap
 from ...create import Issuer
+from ...transform import get_timezone
 
 
-class CfdiRetenRelacionados(XElement):
+class CfdiRetenRelacionados(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/2
     Nodo opcional para precisar la información de los comprobantes relacionados.
@@ -30,7 +31,7 @@ class CfdiRetenRelacionados(XElement):
         })
 
 
-class ImpRetenidos(XElement):
+class ImpRetenidos(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/2
     Nodo opcional para expresar el total de los impuestos retenidos que se desprenden de los conceptos expresados en el comprobante que ampara retenciones e información de pagos.
@@ -60,7 +61,7 @@ class ImpRetenidos(XElement):
         })
 
 
-class Totales(XElement):
+class Totales(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/2
     Nodo requerido para expresar el total de las retenciones e información de los pagos efectuados en el período que ampara el comprobante.
@@ -99,7 +100,7 @@ class Totales(XElement):
         })
 
 
-class Periodo(XElement):
+class Periodo(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/2
     Nodo requerido para expresar el período que corresponde al comprobante que ampara retenciones e información de pagos.
@@ -126,7 +127,7 @@ class Periodo(XElement):
         })
 
 
-class Extranjero(XElement):
+class Extranjero(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/2
     Nodo requerido para expresar la información del contribuyente receptor del comprobante que ampara retenciones e información de pagos, cuando sea residente en el extranjero.
@@ -150,7 +151,7 @@ class Extranjero(XElement):
         })
 
 
-class Nacional(XElement):
+class Nacional(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/2
     Nodo requerido para expresar la información del contribuyente receptor en caso de que sea de nacionalidad mexicana.
@@ -180,7 +181,7 @@ class Nacional(XElement):
         })
 
 
-class Receptor(XElement):
+class Receptor(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/2
     Nodo requerido para expresar la información del contribuyente receptor del comprobante que ampara retenciones e información de pagos.

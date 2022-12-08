@@ -3,7 +3,7 @@ from datetime import datetime, date, time
 from collections.abc import *
 
 from ... import Signer
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 from ...transform import MEXICO_TZ
 
 

@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Determinado(XElement):
+class Determinado(ScalarMap):
     """
     http://www.sat.gob.mx/consumodecombustibles
     Nodo para la definición de información detallada de un impuesto específico
@@ -30,7 +30,7 @@ class Determinado(XElement):
         })
         
 
-class ConceptoConsumoDeCombustibles(XElement):
+class ConceptoConsumoDeCombustibles(ScalarMap):
     """
     http://www.sat.gob.mx/consumodecombustibles
     Nodo requerido para la expresión de una transacción para operaciones de compra de combustibles.

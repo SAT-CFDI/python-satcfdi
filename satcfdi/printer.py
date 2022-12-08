@@ -8,8 +8,6 @@ PDF_CSS = CSS(string="@page {margin: 1.0cm 1.27cm 1.1cm 0.85cm;}")
 
 
 class Representable:
-    tag = None
-
     def html_write(self, target, templates_path=None):
         if templates_path:
             env = PDFEnvironment(templates_path=templates_path)

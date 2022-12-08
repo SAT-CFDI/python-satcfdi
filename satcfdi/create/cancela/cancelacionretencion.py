@@ -4,10 +4,10 @@ from collections.abc import Sequence
 
 from ..w3.signature import signature_c14n_sha1
 from ... import Signer
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Folio(XElement):
+class Folio(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1
     Folio fiscal (UUID) a ser cancelado.

@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Concepto(XElement):
+class Concepto(ScalarMap):
     """
     http://www.sat.gob.mx/valesdedespensa
     Nodo requerido para la expresión de una transacción a ser reportada por el proveedor del monedero electrónico de vales de despensa.

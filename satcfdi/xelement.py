@@ -11,8 +11,6 @@ parser = etree.XMLParser(no_network=True, remove_comments=True, remove_blank_tex
 
 
 class XElement(ScalarMap, Representable):
-    __slots__ = ['tag']
-
     def to_xml(self, validate=False, include_schema_location=False) -> etree.Element:
         xml = cfdi_xmlify[self.tag](self)
 

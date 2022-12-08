@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Ctas(XElement):
+class Ctas(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion
     Nodo obligatorio para expresar el detalle de cada cuenta o subcuenta de la balanza de comprobación.

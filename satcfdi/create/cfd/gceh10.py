@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Pozos(XElement):
+class Pozos(ScalarMap):
     """
     http://www.sat.gob.mx/GastosHidrocarburos10
     Nodo opcional para registrar el centro de costos del Pozo al cual se encuentra relacionado el Yacimiento.
@@ -24,7 +24,7 @@ class Pozos(XElement):
         })
         
 
-class Yacimientos(XElement):
+class Yacimientos(ScalarMap):
     """
     http://www.sat.gob.mx/GastosHidrocarburos10
     Nodo opcional para registrar el centro de costos del yacimiento al cual se encuentra relacionado el campo.
@@ -47,7 +47,7 @@ class Yacimientos(XElement):
         })
         
 
-class CentroCostos(XElement):
+class CentroCostos(ScalarMap):
     """
     http://www.sat.gob.mx/GastosHidrocarburos10
     Nodo opcional para capturar los datos complementarios del centro de costos al cual se encuentra relacionado el costo, gasto o inversión, especificando el pozo, yacimiento, campo y área contractual correspondiente.
@@ -70,7 +70,7 @@ class CentroCostos(XElement):
         })
         
 
-class Tareas(XElement):
+class Tareas(ScalarMap):
     """
     http://www.sat.gob.mx/GastosHidrocarburos10
     Nodo opcional para registrar las tareas relacionadas a cada sub actividad petrolera.
@@ -90,7 +90,7 @@ class Tareas(XElement):
         })
         
 
-class SubActividades(XElement):
+class SubActividades(ScalarMap):
     """
     http://www.sat.gob.mx/GastosHidrocarburos10
     Nodo opcional para registrar las sub actividades relacionadas a cada actividad petrolera.
@@ -113,7 +113,7 @@ class SubActividades(XElement):
         })
         
 
-class Actividades(XElement):
+class Actividades(ScalarMap):
     """
     http://www.sat.gob.mx/GastosHidrocarburos10
     Nodo opcional para registrar las actividades petroleras.
@@ -136,7 +136,7 @@ class Actividades(XElement):
         })
         
 
-class DocumentoRelacionado(XElement):
+class DocumentoRelacionado(ScalarMap):
     """
     http://www.sat.gob.mx/GastosHidrocarburos10
     Nodo requerido para expresar la información del documento relacionado a la erogación.
@@ -198,7 +198,7 @@ class DocumentoRelacionado(XElement):
         })
         
 
-class Erogacion(XElement):
+class Erogacion(ScalarMap):
     """
     http://www.sat.gob.mx/GastosHidrocarburos10
     Nodo requerido para capturar los datos de la erogación.

@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Beneficiario(XElement):
+class Beneficiario(ScalarMap):
     """
     http://www.sat.gob.mx/spei
     Elemento para describir los datos del beneficiario del SPEI
@@ -45,7 +45,7 @@ class Beneficiario(XElement):
         })
         
 
-class Ordenante(XElement):
+class Ordenante(ScalarMap):
     """
     http://www.sat.gob.mx/spei
     Elemento para describir los datos del ordenante del SPEI
@@ -77,7 +77,7 @@ class Ordenante(XElement):
         })
         
 
-class SPEI_Tercero(XElement):
+class SPEI_Tercero(ScalarMap):
     """
     http://www.sat.gob.mx/spei
     Estándar aplicable a operaciones de SPEI a terceros

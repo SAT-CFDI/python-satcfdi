@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class DescripcionesEspecificas(XElement):
+class DescripcionesEspecificas(ScalarMap):
     """
     http://www.sat.gob.mx/ComercioExterior11
     Nodo opcional que indica la lista de descripciones específicas de la mercancía. Una mercancía puede tener más de una descripción específica.
@@ -33,7 +33,7 @@ class DescripcionesEspecificas(XElement):
         })
         
 
-class Mercancia(XElement):
+class Mercancia(ScalarMap):
     """
     http://www.sat.gob.mx/ComercioExterior11
     Nodo requerido para capturar la información de la declaración de cada mercancía exportada.
@@ -71,7 +71,7 @@ class Mercancia(XElement):
         })
         
 
-class Domicilio(XElement):
+class Domicilio(ScalarMap):
     """
     http://www.sat.gob.mx/ComercioExterior11
     Nodo requerido para expresar el domicilio del destinatario de la mercancía.
@@ -118,7 +118,7 @@ class Domicilio(XElement):
         })
         
 
-class Destinatario(XElement):
+class Destinatario(ScalarMap):
     """
     http://www.sat.gob.mx/ComercioExterior11
     Nodo opcional para capturar los datos del destinatario de la mercancía cuando éste sea distinto del receptor del CFDI.
@@ -144,7 +144,7 @@ class Destinatario(XElement):
         })
         
 
-class Receptor(XElement):
+class Receptor(ScalarMap):
     """
     http://www.sat.gob.mx/ComercioExterior11
     Nodo condicional para capturar los datos complementarios del receptor del CFDI.
@@ -167,7 +167,7 @@ class Receptor(XElement):
         })
         
 
-class Propietario(XElement):
+class Propietario(ScalarMap):
     """
     http://www.sat.gob.mx/ComercioExterior11
     Nodo condicional para capturar los datos del o los propietarios de la mercancía que se traslada y ésta no sea objeto de enajenación o siéndolo sea a título gratuito, cuando el emisor del CFDI es un tercero.
@@ -190,7 +190,7 @@ class Propietario(XElement):
         })
         
 
-class Emisor(XElement):
+class Emisor(ScalarMap):
     """
     http://www.sat.gob.mx/ComercioExterior11
     Nodo opcional para capturar los datos complementarios del emisor del comprobante.

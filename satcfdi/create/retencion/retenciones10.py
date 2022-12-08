@@ -3,10 +3,10 @@ from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 
 from .. import Issuer
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class ImpRetenidos(XElement):
+class ImpRetenidos(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1
     Nodo opcional para expresar el total de los impuestos retenidos que se desprenden de los conceptos expresados en el documento de retenciones e información de pagos.
@@ -35,7 +35,7 @@ class ImpRetenidos(XElement):
         })
         
 
-class Totales(XElement):
+class Totales(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1
     Nodo requerido para expresar el total de las retenciones e información de pagos efectuados en el período que ampara el documento.
@@ -67,7 +67,7 @@ class Totales(XElement):
         })
         
 
-class Periodo(XElement):
+class Periodo(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1
     Nodo requerido para expresar el periodo que ampara el documento de retenciones e información de pagos
@@ -93,7 +93,7 @@ class Periodo(XElement):
         })
         
 
-class Extranjero(XElement):
+class Extranjero(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1
     Nodo requerido para expresar la información del contribuyente receptor del documento cuando sea residente en el extranjero
@@ -116,7 +116,7 @@ class Extranjero(XElement):
         })
         
 
-class Nacional(XElement):
+class Nacional(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1
     Nodo requerido para expresar la información del contribuyente receptor en caso de que sea de nacionalidad mexicana
@@ -142,7 +142,7 @@ class Nacional(XElement):
         })
         
 
-class Receptor(XElement):
+class Receptor(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1
     Nodo requerido para expresar la información del contribuyente receptor del documento electrónico de retenciones e información de pagos.

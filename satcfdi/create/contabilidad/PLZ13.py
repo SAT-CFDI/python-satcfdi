@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class OtrMetodoPago(XElement):
+class OtrMetodoPago(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo
     Nodo opcional para relacionar otros métodos de pago o cobro de la transacción. Se convierte en requerido cuando la transacción involucra un método de pago o cobro diverso a cheque y/o transferencia.
@@ -42,7 +42,7 @@ class OtrMetodoPago(XElement):
         })
         
 
-class Transferencia(XElement):
+class Transferencia(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo
     Nodo opcional para relacionar el detalle de las transferencias bancarias que integran la póliza. Se convierte en requerido cuando exista una salida o entrada de recursos que involucre este método de pago o cobro por parte del contribuyente que envía los datos. Además se convierte en requerido cuando se realicen transacciones, entre las cuentas propias del contribuyente.
@@ -95,7 +95,7 @@ class Transferencia(XElement):
         })
         
 
-class Cheque(XElement):
+class Cheque(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo
     Nodo opcional para relacionar el detalle de los cheques que integran la póliza. Se convierte en requerido cuando exista una salida o entrada de recursos, que involucre este método de pago o cobro de la obligación contraída por parte del contribuyente que envía los datos.
@@ -142,7 +142,7 @@ class Cheque(XElement):
         })
         
 
-class CompExt(XElement):
+class CompExt(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo
     Nodo opcional para relacionar el detalle de los comprobantes de origen extranjero relacionados con la transacción. Se considera que se debe identificar, el soporte documental, tanto en la provisión, como en el pago y/o cobro de cada una de las cuentas y subcuentas que se vean afectadas. Se convierte en requerido cuando se cuente con la información.
@@ -174,7 +174,7 @@ class CompExt(XElement):
         })
         
 
-class CompNalOtr(XElement):
+class CompNalOtr(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo
     Nodo opcional para relacionar el detalle de los comprobantes de origen nacional relacionados con la transacción, diferente a CFDI, es decir, CFD y/o CBB. Se considera que se debe identificar, el soporte documental, tanto en la provisión, como en el pago y/o cobro de cada una de las cuentas y subcuentas que se vean afectadas. Se convierte en requerido cuando se cuente con la información.
@@ -209,7 +209,7 @@ class CompNalOtr(XElement):
         })
         
 
-class CompNal(XElement):
+class CompNal(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo
     Nodo opcional para relacionar el detalle de los comprobantes de origen nacional relacionados con la transacción. Se considera que se debe identificar, el soporte documental, tanto en la provisión, como en el pago y/o cobro de cada una de las cuentas y subcuentas que se vean afectadas. Se convierte en requerido cuando se cuente con la información.
@@ -241,7 +241,7 @@ class CompNal(XElement):
         })
         
 
-class Transaccion(XElement):
+class Transaccion(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo
     Nodo obligatorio para relacionar el detalle de cada transacción dentro de la póliza
@@ -291,7 +291,7 @@ class Transaccion(XElement):
         })
         
 
-class Poliza(XElement):
+class Poliza(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo
     Nodo obligatorio para relacionar el detalle de cada transacción dentro de la póliza.

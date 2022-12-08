@@ -5,10 +5,10 @@ from collections.abc import *
 from . import pago20
 from ..compute import make_impuestos_p
 from ... import iterate
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Traslado(XElement):
+class Traslado(ScalarMap):
     """
     http://www.sat.gob.mx/Pagos
     Nodo requerido para la información detallada de un traslado de impuesto específico.
@@ -38,7 +38,7 @@ class Traslado(XElement):
         })
 
 
-class Retencion(XElement):
+class Retencion(ScalarMap):
     """
     http://www.sat.gob.mx/Pagos
     Nodo requerido para registrar la información detallada de una retención de impuesto específico.
@@ -62,7 +62,7 @@ class Retencion(XElement):
         })
 
 
-class Impuestos(XElement):
+class Impuestos(ScalarMap):
     """
     http://www.sat.gob.mx/Pagos
     Nodo condicional para expresar el resumen de los impuestos aplicables cuando este documento sea un anticipo.
@@ -92,7 +92,7 @@ class Impuestos(XElement):
         })
 
 
-class DoctoRelacionado(XElement):
+class DoctoRelacionado(ScalarMap):
     """
     http://www.sat.gob.mx/Pagos
     Nodo condicional para expresar la lista de documentos relacionados con los pagos diferentes de anticipos. Por cada documento que se relacione se debe generar un nodo DoctoRelacionado.
@@ -137,7 +137,7 @@ class DoctoRelacionado(XElement):
         })
 
 
-class Pago(XElement):
+class Pago(ScalarMap):
     """
     http://www.sat.gob.mx/Pagos
     Elemento requerido para incorporar la información de la recepción de pagos.

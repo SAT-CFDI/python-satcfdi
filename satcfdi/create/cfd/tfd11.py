@@ -1,7 +1,7 @@
 from datetime import datetime
-
-from ...cfdi import CFDI, XElement, MEXICO_TZ
+from ... import CFDI, XElement, ScalarMap
 from ...models.signer import Signer
+from ...transform import MEXICO_TZ
 
 
 class TimbreFiscalDigital(CFDI):

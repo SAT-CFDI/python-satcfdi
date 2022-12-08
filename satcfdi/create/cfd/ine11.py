@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Entidad(XElement):
+class Entidad(ScalarMap):
     """
     http://www.sat.gob.mx/ine
     Nodo condicional para expresar los datos correspondientes a las entidades federativas o circunscripciones en las que se va a aplicar el gasto.

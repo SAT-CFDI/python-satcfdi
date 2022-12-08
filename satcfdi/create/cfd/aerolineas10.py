@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Cargo(XElement):
+class Cargo(ScalarMap):
     """
     http://www.sat.gob.mx/aerolineas
     Nodo para expresar la información detallada de un cargo.
@@ -27,7 +27,7 @@ class Cargo(XElement):
         })
         
 
-class OtrosCargos(XElement):
+class OtrosCargos(ScalarMap):
     """
     http://www.sat.gob.mx/aerolineas
     Nodo opcional para expresar otros cargos aplicables

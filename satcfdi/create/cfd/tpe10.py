@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class DatosTransito(XElement):
+class DatosTransito(ScalarMap):
     """
     http://www.sat.gob.mx/TuristaPasajeroExtranjero
     Elemento requerido para expresar la información de la operación realizada

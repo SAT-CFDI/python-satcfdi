@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class VehiculoNuvoSemEnajenadoFabAlPerm(XElement):
+class VehiculoNuvoSemEnajenadoFabAlPerm(ScalarMap):
     """
     http://www.sat.gob.mx/renovacionysustitucionvehiculos
     Datos del vehículo nuevo o seminuevo que enajena el fabricante, ensamblador o distribuidor autorizado al permisionario.
@@ -33,7 +33,7 @@ class VehiculoNuvoSemEnajenadoFabAlPerm(XElement):
         })
         
 
-class VehiculoUsadoEnajenadoPermAlFab(XElement):
+class VehiculoUsadoEnajenadoPermAlFab(ScalarMap):
     """
     http://www.sat.gob.mx/renovacionysustitucionvehiculos
     Datos del vehículo usado que enajena el permisionario a cuenta del precio del vehículo nuevo o seminuevo.
@@ -98,7 +98,7 @@ class VehiculoUsadoEnajenadoPermAlFab(XElement):
         })
         
 
-class DecretoSustitVehicular(XElement):
+class DecretoSustitVehicular(ScalarMap):
     """
     http://www.sat.gob.mx/renovacionysustitucionvehiculos
     Nodo opcional para expresar los datos aplicables al estimulo por la aplicación del Decreto por el que se otorgan medidas para la sustitución de vehículos de autotransporte de pasaje y carga.
@@ -124,7 +124,7 @@ class DecretoSustitVehicular(XElement):
         })
         
 
-class VehiculosUsadosEnajenadoPermAlFab(XElement):
+class VehiculosUsadosEnajenadoPermAlFab(ScalarMap):
     """
     http://www.sat.gob.mx/renovacionysustitucionvehiculos
     Datos del vehículo o vehículos usados que enajena el permisionario a cuenta del precio del vehículo nuevo o seminuevo (pueden enajenarse 1 o más vehículos, por lo que de ser 2 o más se deberán llenar tantos elementos como vehículos usados se enajenen).
@@ -186,7 +186,7 @@ class VehiculosUsadosEnajenadoPermAlFab(XElement):
         })
         
 
-class DecretoRenovVehicular(XElement):
+class DecretoRenovVehicular(ScalarMap):
     """
     http://www.sat.gob.mx/renovacionysustitucionvehiculos
     Nodo opcional para expresar los datos aplicables al estimulo por la aplicación del Decreto por el que se fomenta la renovación del parque vehicular del autotransporte.

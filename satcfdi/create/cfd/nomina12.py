@@ -3,10 +3,10 @@ from datetime import date
 from decimal import Decimal
 
 from ... import iterate
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Incapacidad(XElement):
+class Incapacidad(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo requerido para expresar información de las incapacidades.
@@ -33,7 +33,7 @@ class Incapacidad(XElement):
         })
 
 
-class CompensacionSaldosAFavor(XElement):
+class CompensacionSaldosAFavor(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo condicional para expresar la información referente a la compensación de saldos a favor de un trabajador.
@@ -60,7 +60,7 @@ class CompensacionSaldosAFavor(XElement):
         })
 
 
-class OtroPago(XElement):
+class OtroPago(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo requerido para expresar la información detallada del otro pago.
@@ -96,7 +96,7 @@ class OtroPago(XElement):
         })
 
 
-class Deduccion(XElement):
+class Deduccion(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo requerido para expresar la información detallada de una deducción.
@@ -126,7 +126,7 @@ class Deduccion(XElement):
         })
 
 
-class Deducciones(XElement):
+class Deducciones(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo opcional para expresar las deducciones aplicables.
@@ -147,7 +147,7 @@ class Deducciones(XElement):
         })
 
 
-class SeparacionIndemnizacion(XElement):
+class SeparacionIndemnizacion(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo condicional para expresar la información detallada de otros pagos por separación.
@@ -180,7 +180,7 @@ class SeparacionIndemnizacion(XElement):
         })
 
 
-class JubilacionPensionRetiro(XElement):
+class JubilacionPensionRetiro(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo condicional para expresar la información detallada de pagos por jubilación, pensiones o haberes de retiro.
@@ -213,7 +213,7 @@ class JubilacionPensionRetiro(XElement):
         })
 
 
-class HorasExtra(XElement):
+class HorasExtra(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo condicional para expresar las horas extra aplicables.
@@ -243,7 +243,7 @@ class HorasExtra(XElement):
         })
 
 
-class AccionesOTitulos(XElement):
+class AccionesOTitulos(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo condicional para expresar ingresos por acciones o títulos valor que representan bienes. Se vuelve requerido cuando existan ingresos por sueldos derivados de adquisición de acciones o títulos (Art. 94, fracción VII LISR).
@@ -267,7 +267,7 @@ class AccionesOTitulos(XElement):
         })
 
 
-class Percepcion(XElement):
+class Percepcion(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo requerido para expresar la información detallada de una percepción
@@ -306,7 +306,7 @@ class Percepcion(XElement):
         })
 
 
-class Percepciones(XElement):
+class Percepciones(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo condicional para expresar las percepciones aplicables.
@@ -332,7 +332,7 @@ class Percepciones(XElement):
         })
 
 
-class EntidadSNCF(XElement):
+class EntidadSNCF(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo condicional para que las entidades adheridas al Sistema Nacional de Coordinación Fiscal realicen la identificación del origen de los recursos utilizados en el pago de nómina del personal que presta o desempeña un servicio personal subordinado en las dependencias de la entidad federativa, del municipio o demarcación territorial de la Ciudad de México, así como en sus respectivos organismos autónomos y entidades paraestatales y paramunicipales
@@ -356,7 +356,7 @@ class EntidadSNCF(XElement):
         })
 
 
-class Emisor(XElement):
+class Emisor(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo condicional para expresar la información del contribuyente emisor del comprobante de nómina.
@@ -386,7 +386,7 @@ class Emisor(XElement):
         })
 
 
-class SubContratacion(XElement):
+class SubContratacion(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo condicional para expresar la lista de las personas que los subcontrataron.
@@ -410,7 +410,7 @@ class SubContratacion(XElement):
         })
 
 
-class Receptor(XElement):
+class Receptor(ScalarMap):
     """
     http://www.sat.gob.mx/nomina12
     Nodo requerido para precisar la información del contribuyente receptor del comprobante de nómina.

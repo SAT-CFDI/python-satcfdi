@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class FinanciamientoBursatilType(XElement):
+class FinanciamientoBursatilType(ScalarMap):
     def __init__(
             self,
             fecha_emision: date = None,
@@ -25,7 +25,7 @@ class FinanciamientoBursatilType(XElement):
         })
         
 
-class DetalleAcreedoresType(XElement):
+class DetalleAcreedoresType(ScalarMap):
     def __init__(
             self,
             tipo_persona_acreedor: TipoPersonaType | dict | Sequence[TipoPersonaType | dict] = None,
@@ -40,7 +40,7 @@ class DetalleAcreedoresType(XElement):
         })
         
 
-class DatosPrestamoNoFinType(XElement):
+class DatosPrestamoNoFinType(ScalarMap):
     def __init__(
             self,
             detalle_acreedores: DetalleAcreedoresType | dict,
@@ -64,7 +64,7 @@ class DatosPrestamoNoFinType(XElement):
         })
         
 
-class PrestamoNoFinancieroType(XElement):
+class PrestamoNoFinancieroType(ScalarMap):
     def __init__(
             self,
             datos_prestamo: DatosPrestamoNoFinType | dict | Sequence[DatosPrestamoNoFinType | dict] = None,
@@ -79,7 +79,7 @@ class PrestamoNoFinancieroType(XElement):
         })
         
 
-class DatosPrestamoType(XElement):
+class DatosPrestamoType(ScalarMap):
     def __init__(
             self,
             tipo_institucion: str = None,
@@ -109,7 +109,7 @@ class DatosPrestamoType(XElement):
         })
         
 
-class PrestamoFinancieroType(XElement):
+class PrestamoFinancieroType(ScalarMap):
     def __init__(
             self,
             datos_prestamo: DatosPrestamoType | dict | Sequence[DatosPrestamoType | dict] = None,
@@ -124,7 +124,7 @@ class PrestamoFinancieroType(XElement):
         })
         
 
-class AportacionNumerarioTercerosType(XElement):
+class AportacionNumerarioTercerosType(ScalarMap):
     def __init__(
             self,
             instrumento_monetario: str = None,
@@ -154,7 +154,7 @@ class AportacionNumerarioTercerosType(XElement):
         })
         
 
-class DatosAportacionTercerosType(XElement):
+class DatosAportacionTercerosType(ScalarMap):
     def __init__(
             self,
             aportacion_numerario: AportacionNumerarioTercerosType | dict = None,
@@ -172,7 +172,7 @@ class DatosAportacionTercerosType(XElement):
         })
         
 
-class TercerosAportacionType(XElement):
+class TercerosAportacionType(ScalarMap):
     def __init__(
             self,
             datos_aportacion: DatosAportacionTercerosType | dict,
@@ -187,7 +187,7 @@ class TercerosAportacionType(XElement):
         })
         
 
-class FideicomisoType(XElement):
+class FideicomisoType(ScalarMap):
     def __init__(
             self,
             denominacion_razon: str = None,
@@ -208,7 +208,7 @@ class FideicomisoType(XElement):
         })
         
 
-class PersonaMoralType(XElement):
+class PersonaMoralType(ScalarMap):
     def __init__(
             self,
             representante_apoderado: RepresentanteApoderadoType | dict,
@@ -238,7 +238,7 @@ class PersonaMoralType(XElement):
         })
         
 
-class PersonaFisicaType(XElement):
+class PersonaFisicaType(ScalarMap):
     def __init__(
             self,
             nombre: str = None,
@@ -274,7 +274,7 @@ class PersonaFisicaType(XElement):
         })
         
 
-class TipoPersonaType(XElement):
+class TipoPersonaType(ScalarMap):
     def __init__(
             self,
             persona_fisica: PersonaFisicaType | dict = None,
@@ -295,7 +295,7 @@ class TipoPersonaType(XElement):
         })
         
 
-class DatosTerceroType(XElement):
+class DatosTerceroType(ScalarMap):
     def __init__(
             self,
             tipo_persona_tercero: TipoPersonaType | dict,
@@ -319,7 +319,7 @@ class DatosTerceroType(XElement):
         })
         
 
-class DetalleTercerosType(XElement):
+class DetalleTercerosType(ScalarMap):
     def __init__(
             self,
             datos_tercero: DatosTerceroType | dict | Sequence[DatosTerceroType | dict] = None,
@@ -334,7 +334,7 @@ class DetalleTercerosType(XElement):
         })
         
 
-class TercerosType(XElement):
+class TercerosType(ScalarMap):
     def __init__(
             self,
             detalle_terceros: DetalleTercerosType | dict,
@@ -352,7 +352,7 @@ class TercerosType(XElement):
         })
         
 
-class DatosAportacionSociosType(XElement):
+class DatosAportacionSociosType(ScalarMap):
     def __init__(
             self,
             aportacion_numerario: AportacionNumerarioType | dict = None,
@@ -370,7 +370,7 @@ class DatosAportacionSociosType(XElement):
         })
         
 
-class SociosAportacionType(XElement):
+class SociosAportacionType(ScalarMap):
     def __init__(
             self,
             datos_aportacion: DatosAportacionSociosType | dict,
@@ -385,7 +385,7 @@ class SociosAportacionType(XElement):
         })
         
 
-class TelefonoType(XElement):
+class TelefonoType(ScalarMap):
     def __init__(
             self,
             clave_pais: str = None,
@@ -406,7 +406,7 @@ class TelefonoType(XElement):
         })
         
 
-class ExtranjeroType(XElement):
+class ExtranjeroType(ScalarMap):
     def __init__(
             self,
             pais: str = None,
@@ -442,7 +442,7 @@ class ExtranjeroType(XElement):
         })
         
 
-class NacionalType(XElement):
+class NacionalType(ScalarMap):
     def __init__(
             self,
             colonia: str = None,
@@ -469,7 +469,7 @@ class NacionalType(XElement):
         })
         
 
-class TipoDomicilioType(XElement):
+class TipoDomicilioType(ScalarMap):
     def __init__(
             self,
             nacional: NacionalType | dict = None,
@@ -487,7 +487,7 @@ class TipoDomicilioType(XElement):
         })
         
 
-class RepresentanteApoderadoType(XElement):
+class RepresentanteApoderadoType(ScalarMap):
     def __init__(
             self,
             nombre: str = None,
@@ -517,7 +517,7 @@ class RepresentanteApoderadoType(XElement):
         })
         
 
-class PersonaMoralSocioType(XElement):
+class PersonaMoralSocioType(ScalarMap):
     def __init__(
             self,
             representante_apoderado: RepresentanteApoderadoType | dict,
@@ -544,7 +544,7 @@ class PersonaMoralSocioType(XElement):
         })
         
 
-class PersonaFisicaSocioType(XElement):
+class PersonaFisicaSocioType(ScalarMap):
     def __init__(
             self,
             nombre: str = None,
@@ -577,7 +577,7 @@ class PersonaFisicaSocioType(XElement):
         })
         
 
-class TipoPersonaSocioType(XElement):
+class TipoPersonaSocioType(ScalarMap):
     def __init__(
             self,
             persona_fisica: PersonaFisicaSocioType | dict = None,
@@ -598,7 +598,7 @@ class TipoPersonaSocioType(XElement):
         })
         
 
-class DatosSocioType(XElement):
+class DatosSocioType(ScalarMap):
     def __init__(
             self,
             tipo_persona_socio: TipoPersonaSocioType | dict,
@@ -628,7 +628,7 @@ class DatosSocioType(XElement):
         })
         
 
-class DetalleSociosType(XElement):
+class DetalleSociosType(ScalarMap):
     def __init__(
             self,
             datos_socio: DatosSocioType | dict | Sequence[DatosSocioType | dict] = None,
@@ -643,7 +643,7 @@ class DetalleSociosType(XElement):
         })
         
 
-class SociosType(XElement):
+class SociosType(ScalarMap):
     def __init__(
             self,
             detalle_socios: DetalleSociosType | dict,
@@ -661,7 +661,7 @@ class SociosType(XElement):
         })
         
 
-class AportacionEspecieType(XElement):
+class AportacionEspecieType(ScalarMap):
     def __init__(
             self,
             descripcion_bien: str = None,
@@ -679,7 +679,7 @@ class AportacionEspecieType(XElement):
         })
         
 
-class AportacionNumerarioType(XElement):
+class AportacionNumerarioType(ScalarMap):
     def __init__(
             self,
             instrumento_monetario: str = None,
@@ -706,7 +706,7 @@ class AportacionNumerarioType(XElement):
         })
         
 
-class DatosAportacionType(XElement):
+class DatosAportacionType(ScalarMap):
     def __init__(
             self,
             aportacion_numerario: AportacionNumerarioType | dict = None,
@@ -724,7 +724,7 @@ class DatosAportacionType(XElement):
         })
         
 
-class RecursosPropiosType(XElement):
+class RecursosPropiosType(ScalarMap):
     def __init__(
             self,
             datos_aportacion: DatosAportacionType | dict | Sequence[DatosAportacionType | dict] = None,
@@ -739,7 +739,7 @@ class RecursosPropiosType(XElement):
         })
         
 
-class TipoAportacionType(XElement):
+class TipoAportacionType(ScalarMap):
     def __init__(
             self,
             recursos_propios: RecursosPropiosType | dict = None,
@@ -769,7 +769,7 @@ class TipoAportacionType(XElement):
         })
         
 
-class AportacionesType(XElement):
+class AportacionesType(ScalarMap):
     def __init__(
             self,
             fecha_aportacion: date = None,
@@ -787,7 +787,7 @@ class AportacionesType(XElement):
         })
         
 
-class CaracteristicasDesarrolloType(XElement):
+class CaracteristicasDesarrolloType(ScalarMap):
     def __init__(
             self,
             codigo_postal: str,
@@ -826,7 +826,7 @@ class CaracteristicasDesarrolloType(XElement):
         })
         
 
-class DatosDesarrolloType(XElement):
+class DatosDesarrolloType(ScalarMap):
     def __init__(
             self,
             objeto_aviso_anterior: str,
@@ -853,7 +853,7 @@ class DatosDesarrolloType(XElement):
         })
         
 
-class DesarrollosInmobiliariosType(XElement):
+class DesarrollosInmobiliariosType(ScalarMap):
     def __init__(
             self,
             datos_desarrollo: DatosDesarrolloType | dict | Sequence[DatosDesarrolloType | dict],
@@ -868,7 +868,7 @@ class DesarrollosInmobiliariosType(XElement):
         })
         
 
-class DatosOperacionType(XElement):
+class DatosOperacionType(ScalarMap):
     def __init__(
             self,
             tipo_operacion: str,
@@ -889,7 +889,7 @@ class DatosOperacionType(XElement):
         })
         
 
-class DetalleOperacionesType(XElement):
+class DetalleOperacionesType(ScalarMap):
     def __init__(
             self,
             datos_operacion: DatosOperacionType | dict | Sequence[DatosOperacionType | dict],
@@ -904,7 +904,7 @@ class DetalleOperacionesType(XElement):
         })
         
 
-class AlertaType(XElement):
+class AlertaType(ScalarMap):
     def __init__(
             self,
             tipo_alerta: str,
@@ -922,7 +922,7 @@ class AlertaType(XElement):
         })
         
 
-class ModificatorioType(XElement):
+class ModificatorioType(ScalarMap):
     def __init__(
             self,
             folio_modificacion: str,
@@ -940,7 +940,7 @@ class ModificatorioType(XElement):
         })
         
 
-class AvisoType(XElement):
+class AvisoType(ScalarMap):
     def __init__(
             self,
             referencia_aviso: str,
@@ -967,7 +967,7 @@ class AvisoType(XElement):
         })
         
 
-class SujetoObligadoType(XElement):
+class SujetoObligadoType(ScalarMap):
     def __init__(
             self,
             clave_sujeto_obligado: str,
@@ -991,7 +991,7 @@ class SujetoObligadoType(XElement):
         })
         
 
-class InformeType(XElement):
+class InformeType(ScalarMap):
     def __init__(
             self,
             mes_reportado: str,
@@ -1012,7 +1012,7 @@ class InformeType(XElement):
         })
         
 
-class ArchivoType(XElement):
+class ArchivoType(ScalarMap):
     def __init__(
             self,
             informe: InformeType | dict | Sequence[InformeType | dict],
@@ -1027,6 +1027,6 @@ class ArchivoType(XElement):
         })
         
 
-class Archivo(ArchivoType):
+class Archivo(ArchivoType, XElement):
     tag = '{http://www.uif.shcp.gob.mx/recepcion/din}archivo'
 

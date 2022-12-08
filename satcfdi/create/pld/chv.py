@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class DatosLiquidacionType(XElement):
+class DatosLiquidacionType(ScalarMap):
     def __init__(
             self,
             fecha_pago: date,
@@ -28,7 +28,7 @@ class DatosLiquidacionType(XElement):
         })
         
 
-class DatosChequeType(XElement):
+class DatosChequeType(ScalarMap):
     def __init__(
             self,
             numero_cheques: str,
@@ -46,7 +46,7 @@ class DatosChequeType(XElement):
         })
         
 
-class DatosOperacionType(XElement):
+class DatosOperacionType(ScalarMap):
     def __init__(
             self,
             fecha_operacion: date,
@@ -73,7 +73,7 @@ class DatosOperacionType(XElement):
         })
         
 
-class DetalleOperacionesType(XElement):
+class DetalleOperacionesType(ScalarMap):
     def __init__(
             self,
             datos_operacion: DatosOperacionType | dict | Sequence[DatosOperacionType | dict],
@@ -88,7 +88,7 @@ class DetalleOperacionesType(XElement):
         })
         
 
-class FideicomisoSimpleType(XElement):
+class FideicomisoSimpleType(ScalarMap):
     def __init__(
             self,
             denominacion_razon: str,
@@ -109,7 +109,7 @@ class FideicomisoSimpleType(XElement):
         })
         
 
-class PersonaMoralSimpleType(XElement):
+class PersonaMoralSimpleType(ScalarMap):
     def __init__(
             self,
             denominacion_razon: str,
@@ -133,7 +133,7 @@ class PersonaMoralSimpleType(XElement):
         })
         
 
-class PersonaFisicaSimpleType(XElement):
+class PersonaFisicaSimpleType(ScalarMap):
     def __init__(
             self,
             nombre: str,
@@ -166,7 +166,7 @@ class PersonaFisicaSimpleType(XElement):
         })
         
 
-class TipoPersonaSimpleType(XElement):
+class TipoPersonaSimpleType(ScalarMap):
     def __init__(
             self,
             persona_fisica: PersonaFisicaSimpleType | dict = None,
@@ -187,7 +187,7 @@ class TipoPersonaSimpleType(XElement):
         })
         
 
-class DuenoBeneficiarioType(XElement):
+class DuenoBeneficiarioType(ScalarMap):
     def __init__(
             self,
             tipo_persona: TipoPersonaSimpleType | dict,
@@ -202,7 +202,7 @@ class DuenoBeneficiarioType(XElement):
         })
         
 
-class TelefonoType(XElement):
+class TelefonoType(ScalarMap):
     def __init__(
             self,
             clave_pais: str = None,
@@ -223,7 +223,7 @@ class TelefonoType(XElement):
         })
         
 
-class ExtranjeroType(XElement):
+class ExtranjeroType(ScalarMap):
     def __init__(
             self,
             pais: str,
@@ -259,7 +259,7 @@ class ExtranjeroType(XElement):
         })
         
 
-class NacionalType(XElement):
+class NacionalType(ScalarMap):
     def __init__(
             self,
             colonia: str,
@@ -286,7 +286,7 @@ class NacionalType(XElement):
         })
         
 
-class TipoDomicilioType(XElement):
+class TipoDomicilioType(ScalarMap):
     def __init__(
             self,
             nacional: NacionalType | dict = None,
@@ -304,7 +304,7 @@ class TipoDomicilioType(XElement):
         })
         
 
-class RepresentanteApoderadoType(XElement):
+class RepresentanteApoderadoType(ScalarMap):
     def __init__(
             self,
             nombre: str,
@@ -334,7 +334,7 @@ class RepresentanteApoderadoType(XElement):
         })
         
 
-class FideicomisoType(XElement):
+class FideicomisoType(ScalarMap):
     def __init__(
             self,
             denominacion_razon: str,
@@ -358,7 +358,7 @@ class FideicomisoType(XElement):
         })
         
 
-class PersonaMoralType(XElement):
+class PersonaMoralType(ScalarMap):
     def __init__(
             self,
             denominacion_razon: str,
@@ -388,7 +388,7 @@ class PersonaMoralType(XElement):
         })
         
 
-class PersonaFisicaType(XElement):
+class PersonaFisicaType(ScalarMap):
     def __init__(
             self,
             nombre: str,
@@ -424,7 +424,7 @@ class PersonaFisicaType(XElement):
         })
         
 
-class TipoPersonaType(XElement):
+class TipoPersonaType(ScalarMap):
     def __init__(
             self,
             persona_fisica: PersonaFisicaType | dict = None,
@@ -445,7 +445,7 @@ class TipoPersonaType(XElement):
         })
         
 
-class PersonaAvisoType(XElement):
+class PersonaAvisoType(ScalarMap):
     def __init__(
             self,
             tipo_persona: TipoPersonaType | dict,
@@ -466,7 +466,7 @@ class PersonaAvisoType(XElement):
         })
         
 
-class AlertaType(XElement):
+class AlertaType(ScalarMap):
     def __init__(
             self,
             tipo_alerta: str,
@@ -484,7 +484,7 @@ class AlertaType(XElement):
         })
         
 
-class ModificatorioType(XElement):
+class ModificatorioType(ScalarMap):
     def __init__(
             self,
             folio_modificacion: str,
@@ -502,7 +502,7 @@ class ModificatorioType(XElement):
         })
         
 
-class AvisoType(XElement):
+class AvisoType(ScalarMap):
     def __init__(
             self,
             referencia_aviso: str,
@@ -535,7 +535,7 @@ class AvisoType(XElement):
         })
         
 
-class SujetoObligadoType(XElement):
+class SujetoObligadoType(ScalarMap):
     def __init__(
             self,
             clave_sujeto_obligado: str,
@@ -559,7 +559,7 @@ class SujetoObligadoType(XElement):
         })
         
 
-class InformeType(XElement):
+class InformeType(ScalarMap):
     def __init__(
             self,
             mes_reportado: str,
@@ -580,7 +580,7 @@ class InformeType(XElement):
         })
         
 
-class ArchivoType(XElement):
+class ArchivoType(ScalarMap):
     def __init__(
             self,
             informe: InformeType | dict | Sequence[InformeType | dict],
@@ -595,6 +595,6 @@ class ArchivoType(XElement):
         })
         
 
-class Archivo(ArchivoType):
+class Archivo(ArchivoType, XElement):
     tag = '{http://www.uif.shcp.gob.mx/recepcion/chv}archivo'
 

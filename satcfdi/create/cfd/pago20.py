@@ -4,10 +4,10 @@ from decimal import Decimal
 
 from ..compute import make_impuestos_p, make_pago_totales
 from ... import iterate
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class TrasladoDR(XElement):
+class TrasladoDR(ScalarMap):
     """
     http://www.sat.gob.mx/Pagos20
     Nodo requerido para asentar la información detallada de un traslado de impuesto específico conforme al monto del pago recibido.
@@ -39,7 +39,7 @@ class TrasladoDR(XElement):
         })
         
 
-class RetencionDR(XElement):
+class RetencionDR(ScalarMap):
     """
     http://www.sat.gob.mx/Pagos20
     Nodo requerido para registrar la información detallada de una retención de impuesto específico conforme al monto del pago recibido.
@@ -71,7 +71,7 @@ class RetencionDR(XElement):
         })
         
 
-class ImpuestosDR(XElement):
+class ImpuestosDR(ScalarMap):
     """
     http://www.sat.gob.mx/Pagos20
     Nodo condicional para registrar los impuestos aplicables conforme al monto del pago recibido, expresados a la moneda del documento relacionado.
@@ -94,7 +94,7 @@ class ImpuestosDR(XElement):
         })
         
 
-class DoctoRelacionado(XElement):
+class DoctoRelacionado(ScalarMap):
     """
     http://www.sat.gob.mx/Pagos20
     Nodo requerido para expresar la lista de documentos relacionados con los pagos. Por cada documento que se relacione se debe generar un nodo DoctoRelacionado.
@@ -141,7 +141,7 @@ class DoctoRelacionado(XElement):
         })
         
 
-class Pago(XElement):
+class Pago(ScalarMap):
     """
     http://www.sat.gob.mx/Pagos20
     Elemento requerido para incorporar la información de la recepción de pagos.

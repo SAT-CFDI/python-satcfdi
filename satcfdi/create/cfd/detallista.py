@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class TotalAllowanceCharge(XElement):
+class TotalAllowanceCharge(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica el monto total de cargos o descuentos
@@ -30,7 +30,7 @@ class TotalAllowanceCharge(XElement):
         })
         
 
-class TotalAmount(XElement):
+class TotalAmount(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica el monto total de las líneas de artículos.
@@ -50,7 +50,7 @@ class TotalAmount(XElement):
         })
         
 
-class TradeItemTaxAmount(XElement):
+class TradeItemTaxAmount(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica el importe o porcentaje del descuento
@@ -73,7 +73,7 @@ class TradeItemTaxAmount(XElement):
         })
         
 
-class TradeItemTaxInformation(XElement):
+class TradeItemTaxInformation(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica los impuestos por cada línea de artículo
@@ -102,7 +102,7 @@ class TradeItemTaxInformation(XElement):
         })
         
 
-class RatePerUnit(XElement):
+class RatePerUnit(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la Tarifa por unidad
@@ -122,7 +122,7 @@ class RatePerUnit(XElement):
         })
         
 
-class MonetaryAmountOrPercentage(XElement):
+class MonetaryAmountOrPercentage(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica la cantidad monetaria o descuento por linea de articulo
@@ -145,7 +145,7 @@ class MonetaryAmountOrPercentage(XElement):
         })
         
 
-class AllowanceCharge(XElement):
+class AllowanceCharge(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la información de los cargos o descuentos globales por línea de artículo
@@ -177,7 +177,7 @@ class AllowanceCharge(XElement):
         })
         
 
-class LotNumber(XElement):
+class LotNumber(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica el No. De lote
@@ -200,7 +200,7 @@ class LotNumber(XElement):
         })
         
 
-class Transport(XElement):
+class Transport(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica el pago de transporte de embalaje
@@ -220,7 +220,7 @@ class Transport(XElement):
         })
         
 
-class Description(XElement):
+class Description(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica la descripción del empaquetado
@@ -243,7 +243,7 @@ class Description(XElement):
         })
         
 
-class PalletInformation(XElement):
+class PalletInformation(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la información de empaquetado
@@ -269,7 +269,7 @@ class PalletInformation(XElement):
         })
         
 
-class SerialShippingContainerCode(XElement):
+class SerialShippingContainerCode(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica la información de Rangos de identificación de productos
@@ -292,7 +292,7 @@ class SerialShippingContainerCode(XElement):
         })
         
 
-class LogisticUnits(XElement):
+class LogisticUnits(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la información de identificación logística
@@ -312,7 +312,7 @@ class LogisticUnits(XElement):
         })
         
 
-class NameAndAddress(XElement):
+class NameAndAddress(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica la etiqueta padre que indica que se empezará a definir el nombre y dirección de la ubicación donde esta la aduana
@@ -332,7 +332,7 @@ class NameAndAddress(XElement):
         })
         
 
-class AlternatePartyIdentification(XElement):
+class AlternatePartyIdentification(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica la identificación del no. pedimento a nivel detalle
@@ -355,7 +355,7 @@ class AlternatePartyIdentification(XElement):
         })
         
 
-class Customs(XElement):
+class Customs(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la ubicación donde se especifica el identificador de la aduana
@@ -384,7 +384,7 @@ class Customs(XElement):
         })
         
 
-class ReferenceIdentification(XElement):
+class ReferenceIdentification(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la referencia adicional de los productos
@@ -407,7 +407,7 @@ class ReferenceIdentification(XElement):
         })
         
 
-class AdditionalInformation(XElement):
+class AdditionalInformation(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la información adicional de referencia en el detalle de productos
@@ -427,7 +427,7 @@ class AdditionalInformation(XElement):
         })
         
 
-class NetPrice(XElement):
+class NetPrice(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la declaración del precion neto
@@ -447,7 +447,7 @@ class NetPrice(XElement):
         })
         
 
-class GrossPrice(XElement):
+class GrossPrice(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la declaración del precio bruto
@@ -467,7 +467,7 @@ class GrossPrice(XElement):
         })
         
 
-class AditionalQuantity(XElement):
+class AditionalQuantity(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la cantidad que se esta declarando como adicional
@@ -490,7 +490,7 @@ class AditionalQuantity(XElement):
         })
         
 
-class TradeItemDescriptionInformation(XElement):
+class TradeItemDescriptionInformation(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica el inicio de la descripción del artículo
@@ -513,7 +513,7 @@ class TradeItemDescriptionInformation(XElement):
         })
         
 
-class AlternateTradeItemIdentification(XElement):
+class AlternateTradeItemIdentification(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica el numero de identificación adicional para el artículo.
@@ -536,7 +536,7 @@ class AlternateTradeItemIdentification(XElement):
         })
         
 
-class GrossAmount(XElement):
+class GrossAmount(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica el importe bruto
@@ -556,7 +556,7 @@ class GrossAmount(XElement):
         })
         
 
-class NetAmount(XElement):
+class NetAmount(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica el importe neto
@@ -576,7 +576,7 @@ class NetAmount(XElement):
         })
         
 
-class TotalLineAmount(XElement):
+class TotalLineAmount(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica los importes monetarios por línea de articulo
@@ -599,7 +599,7 @@ class TotalLineAmount(XElement):
         })
         
 
-class InvoicedQuantity(XElement):
+class InvoicedQuantity(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica la cantidad facturada del producto en la línea de articulo actual
@@ -622,7 +622,7 @@ class InvoicedQuantity(XElement):
         })
         
 
-class TradeItemIdentification(XElement):
+class TradeItemIdentification(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica la identificación de cada artículo
@@ -642,7 +642,7 @@ class TradeItemIdentification(XElement):
         })
         
 
-class LineItem(XElement):
+class LineItem(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la linea de detalle de la factura
@@ -710,7 +710,7 @@ class LineItem(XElement):
         })
         
 
-class Rate(XElement):
+class Rate(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la tarifa
@@ -733,7 +733,7 @@ class Rate(XElement):
         })
         
 
-class ShipmentDetail(XElement):
+class ShipmentDetail(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la información pertinente para el embarque de la mercancía.
@@ -750,7 +750,7 @@ class ShipmentDetail(XElement):
         })
         
 
-class DiscountPayment(XElement):
+class DiscountPayment(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica los descuentos por pago
@@ -773,7 +773,7 @@ class DiscountPayment(XElement):
         })
         
 
-class TimePeriodDue(XElement):
+class TimePeriodDue(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica el tiempo de pago
@@ -796,7 +796,7 @@ class TimePeriodDue(XElement):
         })
         
 
-class PaymentTimePeriod(XElement):
+class PaymentTimePeriod(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica el periodo de pago de la factura
@@ -816,7 +816,7 @@ class PaymentTimePeriod(XElement):
         })
         
 
-class NetPayment(XElement):
+class NetPayment(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica las condiciones de pago
@@ -839,7 +839,7 @@ class NetPayment(XElement):
         })
         
 
-class PaymentTerms(XElement):
+class PaymentTerms(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica los términos de pago de la factura
@@ -868,7 +868,7 @@ class PaymentTerms(XElement):
         })
         
 
-class Currency(XElement):
+class Currency(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica el tipo de divisa utilizada, para efectos de comprobantes fiscales digitales emitidos UNICAMENTE se podrá utilizar como divisa la moneda nacional (MXN), sin embargo dentro del complemento se podrá detallar en otra de forma informativa. Lo detallado en esta etiqueta deberá coincidir con lo declarado en las etiquetas del SAT considerando el tipo de cambio.
@@ -894,7 +894,7 @@ class Currency(XElement):
         })
         
 
-class InvoiceCreator(XElement):
+class InvoiceCreator(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la ubicación donde se especifica el identificador del emisor de la factura si es distinto del identificador del proveedor.
@@ -920,7 +920,7 @@ class InvoiceCreator(XElement):
         })
         
 
-class ShipTo(XElement):
+class ShipTo(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica la ubicación donde debe realizarse la entrega de la mercancía.
@@ -943,7 +943,7 @@ class ShipTo(XElement):
         })
         
 
-class Seller(XElement):
+class Seller(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica información del vendedor
@@ -966,7 +966,7 @@ class Seller(XElement):
         })
         
 
-class DeliveryNote(XElement):
+class DeliveryNote(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional donde se especifica información de recepción de mercancia.Información emitida por el comprador cuando recibe la mercancía que es facturada
@@ -989,7 +989,7 @@ class DeliveryNote(XElement):
         })
         
 
-class SpecialInstruction(XElement):
+class SpecialInstruction(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo opcional que especifica que tipo de instrucciones comerciales son enviadas
@@ -1012,7 +1012,7 @@ class SpecialInstruction(XElement):
         })
         
 
-class PersonOrDepartmentName(XElement):
+class PersonOrDepartmentName(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Etiqueta que especifica el contacto de compras
@@ -1032,7 +1032,7 @@ class PersonOrDepartmentName(XElement):
         })
         
 
-class ContactInformation(XElement):
+class ContactInformation(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica información del contacto de compras
@@ -1052,7 +1052,7 @@ class ContactInformation(XElement):
         })
         
 
-class Buyer(XElement):
+class Buyer(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica información del comprador
@@ -1075,7 +1075,7 @@ class Buyer(XElement):
         })
         
 
-class OrderIdentification(XElement):
+class OrderIdentification(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica información sobre la orden de compra a la que hace referencia la factura
@@ -1098,7 +1098,7 @@ class OrderIdentification(XElement):
         })
         
 
-class RequestForPaymentIdentification(XElement):
+class RequestForPaymentIdentification(ScalarMap):
     """
     http://www.sat.gob.mx/detallista
     Nodo requerido que especifica la transacción a utilizar

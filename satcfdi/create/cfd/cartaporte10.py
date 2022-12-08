@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Domicilio(XElement):
+class Domicilio(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo opcional para registrar el domicilio de la(s) persona(s) a quién(es) se debe notificar de la llegada del medio de transporte con los bienes o mercancías que se trasladan.
@@ -51,7 +51,7 @@ class Domicilio(XElement):
         })
         
 
-class Notificado(XElement):
+class Notificado(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo opcional para indicar los datos de identificación de la(s) persona(s) a quién(es) se debe notificar de la llegada del medio de transporte con los bienes o mercancías que se trasladan.
@@ -83,7 +83,7 @@ class Notificado(XElement):
         })
         
 
-class Arrendatario(XElement):
+class Arrendatario(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para indicar los datos del (los) arrendatario(s) del medio de transporte, siempre que el emisor del comprobante sea distinto al dueño del transporte.
@@ -115,7 +115,7 @@ class Arrendatario(XElement):
         })
         
 
-class Propietario(XElement):
+class Propietario(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para indicar los datos del (los) propietario(s) del medio de transporte, siempre que el emisor del comprobante sea distinto al dueño del transporte.
@@ -147,7 +147,7 @@ class Propietario(XElement):
         })
         
 
-class Operador(XElement):
+class Operador(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo requerido para indicar los datos del operador del autotransporte de carga federal en el que se trasladan los bienes o mercancías.
@@ -182,7 +182,7 @@ class Operador(XElement):
         })
         
 
-class Operadores(XElement):
+class Operadores(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para indicar los datos del(los) operador(es) del autotransporte de carga federal en el que se trasladan los bienes o mercancías.
@@ -202,7 +202,7 @@ class Operadores(XElement):
         })
         
 
-class FiguraTransporte(XElement):
+class FiguraTransporte(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo opcional para indicar los datos de la figura del transporte que interviene en el traslado de los bienes o mercancías, cuando el dueño del medio de transporte es diferente del emisor del comprobante con el complemento carta porte.
@@ -234,7 +234,7 @@ class FiguraTransporte(XElement):
         })
         
 
-class DerechosDePaso(XElement):
+class DerechosDePaso(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo opcional para registrar los tipos de derechos de paso cubiertos por el transportista en las vías férreas de las cuales no es concesionario o asignatario, así como la distancia establecida en kilómetros.
@@ -257,7 +257,7 @@ class DerechosDePaso(XElement):
         })
         
 
-class Contenedor(XElement):
+class Contenedor(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo opcional para especificar el tipo de contenedor o vagón en el que se trasladan los bienes o mercancías vía férrea.
@@ -283,7 +283,7 @@ class Contenedor(XElement):
         })
         
 
-class Carro(XElement):
+class Carro(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo requerido para registrar la información que permite identificar los carros en los que se trasladan los bienes o mercancías vía férrea.
@@ -315,7 +315,7 @@ class Carro(XElement):
         })
         
 
-class TransporteFerroviario(XElement):
+class TransporteFerroviario(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para registrar la información que permita la identificación del carro o contenedor en el que se transportan los bienes o mercancías vía férrea.
@@ -350,7 +350,7 @@ class TransporteFerroviario(XElement):
         })
         
 
-class TransporteAereo(XElement):
+class TransporteAereo(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para registrar la información que permita la identificación del transporte aéreo por medio del cual se trasladan los bienes o mercancías.
@@ -415,7 +415,7 @@ class TransporteAereo(XElement):
         })
         
 
-class TransporteMaritimo(XElement):
+class TransporteMaritimo(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para registrar la información que permita la identificación de la embarcación por medio del cual se transportan los bienes o mercancías, vía marítima.
@@ -498,7 +498,7 @@ class TransporteMaritimo(XElement):
         })
         
 
-class Remolque(XElement):
+class Remolque(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo requerido para expresar la información del remolque o semirremolques que se emplean con el autotransporte para el traslado de los bienes o mercancías.
@@ -521,7 +521,7 @@ class Remolque(XElement):
         })
         
 
-class IdentificacionVehicular(XElement):
+class IdentificacionVehicular(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo requerido para registrar los datos de identificación del autotransporte en el que se trasladan los bienes o mercancías.
@@ -547,7 +547,7 @@ class IdentificacionVehicular(XElement):
         })
         
 
-class AutotransporteFederal(XElement):
+class AutotransporteFederal(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para registrar la información que permita la identificación del autotransporte de carga federal, por medio del cual se transportan los bienes o mercancías, que transitan a través de las carreteras federales del territorio nacional.
@@ -582,7 +582,7 @@ class AutotransporteFederal(XElement):
         })
         
 
-class DetalleMercancia(XElement):
+class DetalleMercancia(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para registrar mayor detalle de los bienes o mercancías que se transportan y será requerido cuando el traslado sea vía marítima.
@@ -614,7 +614,7 @@ class DetalleMercancia(XElement):
         })
         
 
-class CantidadTransporta(XElement):
+class CantidadTransporta(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para registrar la cantidad de los bienes o mercancías que se trasladan en los distintos medios de transporte, que será distribuida o captada en distintos puntos, a fin de identificar el punto de origen y destino de dichos bienes o mercancías, y se podrá registrar este nodo tantas veces sea necesario.
@@ -643,7 +643,7 @@ class CantidadTransporta(XElement):
         })
         
 
-class Mercancia(XElement):
+class Mercancia(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo requerido para registrar información de los bienes o mercancías que se trasladan en los distintos medios de transporte.
@@ -714,7 +714,7 @@ class Mercancia(XElement):
         })
         
 
-class Mercancias(XElement):
+class Mercancias(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo requerido para registrar la información de los bienes o mercancías que se trasladan en los distintos medios de transporte.
@@ -761,7 +761,7 @@ class Mercancias(XElement):
         })
         
 
-class Destino(XElement):
+class Destino(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para registrar la información detallada del Destino de los bienes o mercancías que se trasladan.
@@ -805,7 +805,7 @@ class Destino(XElement):
         })
         
 
-class Origen(XElement):
+class Origen(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo condicional para registrar la información detallada del Origen de los bienes o mercancías que se trasladan.
@@ -849,7 +849,7 @@ class Origen(XElement):
         })
         
 
-class Ubicacion(XElement):
+class Ubicacion(ScalarMap):
     """
     http://www.sat.gob.mx/CartaPorte
     Nodo requerido para registrar la ubicación que sirve para reflejar el domicilio del origen y/o destino parcial o final que tienen los bienes o mercancías que se trasladan por distintos medios de transporte.

@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class ComprExt(XElement):
+class ComprExt(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios
     Nodo opcional para relacionar el detalle de los comprobantes de origen extranjero relacionados con la transacción. Se considera que se debe identificar, el soporte documental, tanto en la provisión, como en el pago y/o cobro de cada una de las cuentas y subcuentas que se vean afectadas. Se convierte en requerido cuando se cuente con la información.
@@ -39,7 +39,7 @@ class ComprExt(XElement):
         })
         
 
-class ComprNalOtr(XElement):
+class ComprNalOtr(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios
     Nodo opcional para relacionar el detalle de los comprobantes de origen nacional relacionados con la transacción, diferente a CFDI, es decir, CFD y/o CBB. Se considera que se debe identificar, el soporte documental, tanto en la provisión, como en el pago y/o cobro de cada una de las cuentas y subcuentas que se vean afectadas. Se convierte en requerido cuando se cuente con la información.
@@ -77,7 +77,7 @@ class ComprNalOtr(XElement):
         })
         
 
-class ComprNal(XElement):
+class ComprNal(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios
     Nodo opcional para relacionar el detalle de los comprobantes de origen nacional relacionados con la transacción. Se considera que se debe identificar, el soporte documental, tanto en la provisión, como en el pago y/o cobro de cada una de las cuentas y subcuentas que se vean afectadas. Se convierte en requerido cuando se cuente con la información.
@@ -112,7 +112,7 @@ class ComprNal(XElement):
         })
         
 
-class DetAuxFol(XElement):
+class DetAuxFol(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios
     Nodo opcional para expresar el detalle de los folios de los comprobantes fiscales que integran la póliza.

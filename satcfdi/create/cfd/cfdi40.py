@@ -7,9 +7,10 @@ from typing import Iterator
 from . import pago20
 from ..compute import make_impuestos, rounder, make_impuestos_dr, make_impuesto, \
     make_impuestos_dr_parcial
-from ...cfdi import CFDI, XElement, get_timezone
+from ... import CFDI, XElement, ScalarMap
 from ...create import Issuer
 from ...utils import iterate
+from ...transform import get_timezone
 
 _impuestos = {
     "ISR": "001",
@@ -18,7 +19,7 @@ _impuestos = {
 }
 
 
-class Impuesto(XElement):
+class Impuesto(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/4
     Nodo requerido para la información detallada de un traslado de impuesto específico.
@@ -60,7 +61,7 @@ class Impuesto(XElement):
         )
 
 
-class CfdiRelacionados(XElement):
+class CfdiRelacionados(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/4
     Nodo opcional para precisar la información de los comprobantes relacionados.
@@ -84,7 +85,7 @@ class CfdiRelacionados(XElement):
         })
 
 
-class InformacionGlobal(XElement):
+class InformacionGlobal(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/4
     Nodo condicional para precisar la información relacionada con el comprobante global.
@@ -111,7 +112,7 @@ class InformacionGlobal(XElement):
         })
 
 
-class Parte(XElement):
+class Parte(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/4
     Nodo opcional para expresar las partes o componentes que integran la totalidad del concepto expresado en el comprobante fiscal digital por Internet.
@@ -153,7 +154,7 @@ class Parte(XElement):
         })
 
 
-class ACuentaTerceros(XElement):
+class ACuentaTerceros(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/4
     Nodo opcional para registrar información del contribuyente Tercero, a cuenta del que se realiza la operación.
@@ -183,7 +184,7 @@ class ACuentaTerceros(XElement):
         })
 
 
-class Concepto(XElement):
+class Concepto(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/4
     Nodo requerido para registrar la información detallada de un bien o servicio amparado en el comprobante.
@@ -254,7 +255,7 @@ class Concepto(XElement):
         })
 
 
-class Receptor(XElement):
+class Receptor(ScalarMap):
     """
     http://www.sat.gob.mx/cfd/4
     Nodo requerido para precisar la información del contribuyente receptor del comprobante.

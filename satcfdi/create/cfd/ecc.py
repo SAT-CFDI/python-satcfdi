@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Traslado(XElement):
+class Traslado(ScalarMap):
     """
     http://www.sat.gob.mx/ecc
     Nodo para la definición de información detallada de un traslado de impuesto específico
@@ -30,7 +30,7 @@ class Traslado(XElement):
         })
         
 
-class ConceptoEstadoDeCuentaCombustible(XElement):
+class ConceptoEstadoDeCuentaCombustible(ScalarMap):
     """
     http://www.sat.gob.mx/ecc
     Nodo requerido para la expresión de una transacción a ser reportada en el estado de cuenta del proveedor de monedero electrónico para operaciones de compra de combustibles.

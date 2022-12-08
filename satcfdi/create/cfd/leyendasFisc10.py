@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Leyenda(XElement):
+class Leyenda(ScalarMap):
     """
     http://www.sat.gob.mx/leyendasFiscales
     Nodo para expresar la(s) leyenda(s) fiscal(es) que apliquen al comprobante

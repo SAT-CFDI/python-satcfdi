@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Inmueble(XElement):
+class Inmueble(ScalarMap):
     """
     http://www.sat.gob.mx/servicioparcialconstruccion
     Nodo requerido para expresar la información del inmueble en el que se proporcionan los servicios parciales de construcción.

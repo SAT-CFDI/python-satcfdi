@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class InformacionAduanera(XElement):
+class InformacionAduanera(ScalarMap):
     """
     http://www.sat.gob.mx/certificadodestruccion
     Nodo opcional para expresar la información aduanera aplicable cuando se trate de un vehículo importado que se destruyó.
@@ -30,7 +30,7 @@ class InformacionAduanera(XElement):
         })
         
 
-class VehiculoDestruido(XElement):
+class VehiculoDestruido(ScalarMap):
     """
     http://www.sat.gob.mx/certificadodestruccion
     Nodo requerido para expresar la información del vehículo que se destruyó.

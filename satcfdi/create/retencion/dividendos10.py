@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Remanente(XElement):
+class Remanente(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos
     Nodo opcional que expresa el resultado obtenido de la diferencia entre ingresos y egresos de las personas morales que distribuyan anticipos o rendimientos o sociedades de producción, sociedades y asociaciones civiles.
@@ -24,7 +24,7 @@ class Remanente(XElement):
         })
         
 
-class DividOUtil(XElement):
+class DividOUtil(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos
     Nodo opcional que expresa los dividendos o utilidades distribuidas del periodo o ejercicio

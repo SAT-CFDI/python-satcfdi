@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class RetEfectFideicomiso(XElement):
+class RetEfectFideicomiso(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial
     Nodo requerido para expresar las retenciones efectuadas al fideicomiso
@@ -27,7 +27,7 @@ class RetEfectFideicomiso(XElement):
         })
         
 
-class DeduccOSalidas(XElement):
+class DeduccOSalidas(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial
     Nodo requerido para expresar el importe de los egresos del periodo de fideicomisos que no realizan actividades empresariales
@@ -56,7 +56,7 @@ class DeduccOSalidas(XElement):
         })
         
 
-class IngresosOEntradas(XElement):
+class IngresosOEntradas(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial
     Nodo requerido para expresar el importe de los ingresos del periodo de fideicomisos que no realizan actividades empresariales

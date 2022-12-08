@@ -13,3 +13,4 @@ from .models import *
 from .utils import iterate
 from .xelement import XElement
 from .cfdi import CFDI
+from .utils import ScalarMap

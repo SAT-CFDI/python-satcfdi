@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Extra(XElement):
+class Extra(ScalarMap):
     """
     http://www.diverza.com/ns/addenda/diverza/1
     Tipo definido para determinar cualquier información útil que se requiera expresar en la versión impresa del Comprobante.
@@ -36,7 +36,7 @@ class Extra(XElement):
         })
         
 
-class DatosContacto(XElement):
+class DatosContacto(ScalarMap):
     """
     http://www.diverza.com/ns/addenda/diverza/1
     Tipo de dato para determinar información de datos de contacto como teléfono, email y otros.
@@ -65,7 +65,7 @@ class DatosContacto(XElement):
         })
         
 
-class Ubicacion(XElement):
+class Ubicacion(ScalarMap):
     """
     http://www.diverza.com/ns/addenda/diverza/1
     Tipo definido para expresar domicilios o direcciones
@@ -112,7 +112,7 @@ class Ubicacion(XElement):
         })
         
 
-class Concepto(XElement):
+class Concepto(ScalarMap):
     """
     http://www.diverza.com/ns/addenda/diverza/1
     Nodo de información para especificar información adicional a un concepto del Comprobante
@@ -171,7 +171,7 @@ class Concepto(XElement):
         })
         
 
-class Conceptos(XElement):
+class Conceptos(ScalarMap):
     def __init__(
             self,
             concepto: Concepto | dict | Sequence[Concepto | dict],
@@ -189,7 +189,7 @@ class Conceptos(XElement):
         })
         
 
-class Receptor(XElement):
+class Receptor(ScalarMap):
     """
     http://www.diverza.com/ns/addenda/diverza/1
     Nodo opcional para agregar información relacionada al receptor del documento.
@@ -221,7 +221,7 @@ class Receptor(XElement):
         })
         
 
-class SucursalE(XElement):
+class SucursalE(ScalarMap):
     """
     http://www.diverza.com/ns/addenda/diverza/1
     Nodo opcional para agregar información de la sucursal en la que fue expedido el documento
@@ -247,7 +247,7 @@ class SucursalE(XElement):
         })
         
 
-class Emisor(XElement):
+class Emisor(ScalarMap):
     """
     http://www.diverza.com/ns/addenda/diverza/1
     Nodo opcional para proporcionar información adicional relacionada al emisor.
@@ -288,7 +288,7 @@ class Emisor(XElement):
         })
         
 
-class ClavesDescripcion(XElement):
+class ClavesDescripcion(ScalarMap):
     """
     http://www.diverza.com/ns/addenda/diverza/1
     Nodo opcional para expresar las descripciones de los valores del Comprobante que tienen un catálogo oficial SAT relacionado.
@@ -332,7 +332,7 @@ class ClavesDescripcion(XElement):
         })
         
 
-class Generales(XElement):
+class Generales(ScalarMap):
     """
     http://www.diverza.com/ns/addenda/diverza/1
     Nodo opcional para proporcionar información general que aplique al documento.

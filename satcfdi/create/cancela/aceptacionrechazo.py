@@ -4,10 +4,10 @@ from collections.abc import Sequence
 
 from ..w3.signature import signature_c14n_sha1
 from ... import Signer
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class Folios(XElement):
+class Folios(ScalarMap):
     def __init__(
             self,
             respuesta: str,

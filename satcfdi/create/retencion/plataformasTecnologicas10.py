@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class ComisionDelServicio(XElement):
+class ComisionDelServicio(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10
     Nodo condicional para detallar la información de la comisión pagada por el uso de plataformas tecnológicas por cada servicio prestado o enajenación relacionado.
@@ -30,7 +30,7 @@ class ComisionDelServicio(XElement):
         })
         
 
-class ContribucionGubernamental(XElement):
+class ContribucionGubernamental(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10
     Nodo opcional para detallar la información de las contribuciones gubernamentales pagadas por los servicios realizados por personas físicas utilizando plataformas tecnológicas; por ejemplo, impuesto sobre hospedaje.
@@ -53,7 +53,7 @@ class ContribucionGubernamental(XElement):
         })
         
 
-class ImpuestosTrasladadosdelServicio(XElement):
+class ImpuestosTrasladadosdelServicio(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10
     Nodo condicional para detallar la información de los impuestos trasladados respecto de las operaciones realizadas por personas físicas o personas morales utilizando plataformas tecnológicas.
@@ -84,7 +84,7 @@ class ImpuestosTrasladadosdelServicio(XElement):
         })
         
 
-class DetallesDelServicio(XElement):
+class DetallesDelServicio(ScalarMap):
     """
     http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10
     Nodo requerido para detallar la información de la enajenación de bienes y los tipos de servicios realizadas por personas físicas o personas morales utilizando plataformas tecnológicas.

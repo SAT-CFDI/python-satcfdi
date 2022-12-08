@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class DocumentoRelacionado(XElement):
+class DocumentoRelacionado(ScalarMap):
     """
     http://www.sat.gob.mx/IngresosHidrocarburos10
     Nodo requerido para expresar la información del documento relacionado al ingreso.

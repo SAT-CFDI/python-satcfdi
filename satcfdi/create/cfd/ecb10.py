@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class MovimientoECBFiscal(XElement):
+class MovimientoECBFiscal(ScalarMap):
     """
     http://www.sat.gob.mx/ecb
     Nodo requerido para expresar las operaciones a ser detalladas en el estado de cuenta bancario con RFC con efecto fiscal.
@@ -45,7 +45,7 @@ class MovimientoECBFiscal(XElement):
         })
         
 
-class MovimientoECB(XElement):
+class MovimientoECB(ScalarMap):
     """
     http://www.sat.gob.mx/ecb
     Nodo requerido para expresar las operaciones a ser detalladas en el estado de cuenta bancario que no cuentan con un RFC
@@ -83,7 +83,7 @@ class MovimientoECB(XElement):
         })
         
 
-class Movimientos(XElement):
+class Movimientos(ScalarMap):
     """
     http://www.sat.gob.mx/ecb
     Nodo requerido para enlistar los conceptos cubiertos por Estado de Cuenta Bancario.

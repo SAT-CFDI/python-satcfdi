@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from collections.abc import Sequence
-from ...cfdi import CFDI, XElement
+from ... import CFDI, XElement, ScalarMap
 
 
-class TInformacionAduanera(XElement):
+class TInformacionAduanera(ScalarMap):
     """
     http://www.sat.gob.mx/vehiculousado
     Tipo definido para expresar información aduanera
