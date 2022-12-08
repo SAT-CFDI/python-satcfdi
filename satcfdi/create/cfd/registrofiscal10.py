@@ -7,7 +7,10 @@ from ... import CFDI, XElement, ScalarMap
 class CFDIRegistroFiscal(CFDI):
     """
     Complemento para incluir los datos de identificación de los CFDIs generados en Registro Fiscal.
+    
+    :param folio: Atributo requerido para expresar la relación del CFDI con el Registro Fiscal.
     """
+    
     tag = '{http://www.sat.gob.mx/registrofiscal}CFDIRegistroFiscal'
     version = '1.0'
     
@@ -15,12 +18,6 @@ class CFDIRegistroFiscal(CFDI):
             self,
             folio: str,
     ): 
-        """
-        Complemento para incluir los datos de identificación de los CFDIs generados en Registro Fiscal.
-        
-        :param folio: Atributo requerido para expresar la relación del CFDI con el Registro Fiscal.
-        """
-        
         super().__init__({
             'Version': self.version,
             'Folio': folio,

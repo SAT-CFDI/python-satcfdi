@@ -7,7 +7,17 @@ from ... import CFDI, XElement, ScalarMap
 class Obrasarteantiguedades(CFDI):
     """
     Complemento al Comprobante Fiscal Digital por Internet (CFDI) para el manejo de la enajenación de obras de artes plásticas y antigüedades.
+    
+    :param tipo_bien: Atributo requerido para expresar el tipo de bien enajenado de conformidad con el Catálogo publicado en el portal del SAT en Internet.
+    :param titulo_adquirido: Atributo requerido para expresar el titulo o forma por el que se adquirió la obra de arte plástica o antigüedades de conformidad con el Catálogo publicado en el portal del SAT en Internet.
+    :param fecha_adquisicion: Atributo requerido que indica la fecha en que se adquirió originalmente la obra de arte plástica o antigüedades.
+    :param caracteristicas_de_obra_o_pieza: Atributo requerido para expresar las características de la obra o pieza de arte plástica o antigüedades de conformidad con el Catálogo publicado en el portal del SAT en Internet.
+    :param otros_tipo_bien: Atributo opcional que sólo debe incluirse en caso de haber elegido “Otros” en el atributo TipoBien.
+    :param otros_titulo_adquirido: Atributo opcional que sólo debe incluirse en caso de haber elegido “Otros” en el atributo TituloAdquirido.
+    :param subtotal: Atributo opcional para expresar el monto o valor original de adquisición, en su caso.
+    :param iva: Atributo opcional para expresar el IVA del monto o valor original de adquisición, en su caso.
     """
+    
     tag = '{http://www.sat.gob.mx/arteantiguedades}obrasarteantiguedades'
     version = '1.0'
     
@@ -22,19 +32,6 @@ class Obrasarteantiguedades(CFDI):
             subtotal: Decimal | int = None,
             iva: Decimal | int = None,
     ): 
-        """
-        Complemento al Comprobante Fiscal Digital por Internet (CFDI) para el manejo de la enajenación de obras de artes plásticas y antigüedades.
-        
-        :param tipo_bien: Atributo requerido para expresar el tipo de bien enajenado de conformidad con el Catálogo publicado en el portal del SAT en Internet.
-        :param titulo_adquirido: Atributo requerido para expresar el titulo o forma por el que se adquirió la obra de arte plástica o antigüedades de conformidad con el Catálogo publicado en el portal del SAT en Internet.
-        :param fecha_adquisicion: Atributo requerido que indica la fecha en que se adquirió originalmente la obra de arte plástica o antigüedades.
-        :param caracteristicas_de_obra_o_pieza: Atributo requerido para expresar las características de la obra o pieza de arte plástica o antigüedades de conformidad con el Catálogo publicado en el portal del SAT en Internet.
-        :param otros_tipo_bien: Atributo opcional que sólo debe incluirse en caso de haber elegido “Otros” en el atributo TipoBien.
-        :param otros_titulo_adquirido: Atributo opcional que sólo debe incluirse en caso de haber elegido “Otros” en el atributo TituloAdquirido.
-        :param subtotal: Atributo opcional para expresar el monto o valor original de adquisición, en su caso.
-        :param iva: Atributo opcional para expresar el IVA del monto o valor original de adquisición, en su caso.
-        """
-        
         super().__init__({
             'Version': self.version,
             'TipoBien': tipo_bien,

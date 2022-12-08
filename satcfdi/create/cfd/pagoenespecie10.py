@@ -7,7 +7,15 @@ from ... import CFDI, XElement, ScalarMap
 class PagoEnEspecie(CFDI):
     """
     Complemento para la expedición de comprobantes fiscales por la donación en la facilidad fiscal de Pago en Especie
+    
+    :param cve_pic: Clave de inscripción al Padrón de Instituciones Culturales adheridas al Programa de Pago en Especie
+    :param folio_sol_don: Número de folio de la solicitud de donación
+    :param pza_art_nombre: Nombre de la pieza de arte
+    :param pza_art_tecn: Técnica de producción de la pieza de arte
+    :param pza_art_aprod: Año de producción de la pieza de arte
+    :param pza_art_dim: Dimensiones de la pieza de arte
     """
+    
     tag = '{http://www.sat.gob.mx/pagoenespecie}PagoEnEspecie'
     version = '1.0'
     
@@ -20,17 +28,6 @@ class PagoEnEspecie(CFDI):
             pza_art_aprod: str,
             pza_art_dim: str,
     ): 
-        """
-        Complemento para la expedición de comprobantes fiscales por la donación en la facilidad fiscal de Pago en Especie
-        
-        :param cve_pic: Clave de inscripción al Padrón de Instituciones Culturales adheridas al Programa de Pago en Especie
-        :param folio_sol_don: Número de folio de la solicitud de donación
-        :param pza_art_nombre: Nombre de la pieza de arte
-        :param pza_art_tecn: Técnica de producción de la pieza de arte
-        :param pza_art_aprod: Año de producción de la pieza de arte
-        :param pza_art_dim: Dimensiones de la pieza de arte
-        """
-        
         super().__init__({
             'Version': self.version,
             'CvePIC': cve_pic,

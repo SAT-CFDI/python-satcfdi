@@ -6,23 +6,19 @@ from ... import CFDI, XElement, ScalarMap
 
 class Traslado(ScalarMap):
     """
-    http://www.sat.gob.mx/EstadoDeCuentaCombustible
     Nodo para la definición de información detallada de un traslado de impuesto específico
+    
+    :param impuesto: Atributo requerido para definir el tipo de impuesto trasladado.
+    :param tasao_cuota: Atributo requerido para señalar la tasa o la cuota del impuesto que se traslada por cada concepto amparado en el comprobante. Cuando se registre un porcentaje, por ejemplo 16%, debe expresarse como 0.16 y no como 16.00
+    :param importe: Atributo requerido para definir el importe o monto del impuesto trasladado.
     """
+    
     def __init__(
             self,
             impuesto: str,
             tasao_cuota: Decimal | int,
             importe: Decimal | int,
     ): 
-        """
-        Nodo para la definición de información detallada de un traslado de impuesto específico
-        
-        :param impuesto: Atributo requerido para definir el tipo de impuesto trasladado.
-        :param tasao_cuota: Atributo requerido para señalar la tasa o la cuota del impuesto que se traslada por cada concepto amparado en el comprobante. Cuando se registre un porcentaje, por ejemplo 16%, debe expresarse como 0.16 y no como 16.00
-        :param importe: Atributo requerido para definir el importe o monto del impuesto trasladado.
-        """
-        
         super().__init__({
             'Impuesto': impuesto,
             'TasaoCuota': tasao_cuota,
@@ -32,9 +28,23 @@ class Traslado(ScalarMap):
 
 class ConceptoEstadoDeCuentaCombustible(ScalarMap):
     """
-    http://www.sat.gob.mx/EstadoDeCuentaCombustible
     Nodo requerido para la expresión de una transacción a ser reportada en el estado de cuenta del proveedor de monedero electrónico para operaciones de compra de combustibles.
+    
+    :param identificador: Atributo requerido para la expresión del identificador o número del monedero electrónico.
+    :param fecha: Atributo requerido para la expresión de la Fecha y hora de expedición de la operación reportada. Se expresa en la forma aaaa-mm-ddThh:mm:ss, de acuerdo con la especificación ISO 8601.
+    :param rfc: Atributo requerido del RFC del enajenante del combustible.
+    :param clave_estacion: Atributo requerido para expresar la clave de cliente de la estación de servicio, a 10 caracteres.
+    :param cantidad: Atributo requerido para definir el volumen de combustible adquirido.
+    :param no_identificacion: Atributo requerido para indicar la clave del producto del combustible.
+    :param nombre_combustible: Atributo requerido para expresar el nombre del combustible adquirido.
+    :param folio_operacion: Atributo requerido para referir el número de folio de cada operación realizada por cada monedero electrónico.
+    :param valor_unitario: Atributo requerido para definir el precio unitario del combustible adquirido.
+    :param importe: Atributo requerido para definir el monto total de consumo de combustible. Debe ser equivalente al resultado de multiplicar la cantidad por el valor unitario, redondeado a centésimas.
+    :param traslados: Nodo requerido para enlistar los impuestos trasladados aplicables de combustibles.
+    :param tar: Atributo condicional para expresar la clave de la Terminal de Almacenamiento y Reparto (CVE TAR), conforme al catálogo publicado en la página de Internet del SAT, mismo que servirá para identificar la cuota por litro conforme a las tablas que publique la Secretaría de Hacienda y Crédito Público para determinar el monto del estímulo fiscal.
+    :param unidad: Atributo condicional para precisar la unidad de medida.
     """
+    
     def __init__(
             self,
             identificador: str,
@@ -51,24 +61,6 @@ class ConceptoEstadoDeCuentaCombustible(ScalarMap):
             tar: str = None,
             unidad: str = None,
     ): 
-        """
-        Nodo requerido para la expresión de una transacción a ser reportada en el estado de cuenta del proveedor de monedero electrónico para operaciones de compra de combustibles.
-        
-        :param identificador: Atributo requerido para la expresión del identificador o número del monedero electrónico.
-        :param fecha: Atributo requerido para la expresión de la Fecha y hora de expedición de la operación reportada. Se expresa en la forma aaaa-mm-ddThh:mm:ss, de acuerdo con la especificación ISO 8601.
-        :param rfc: Atributo requerido del RFC del enajenante del combustible.
-        :param clave_estacion: Atributo requerido para expresar la clave de cliente de la estación de servicio, a 10 caracteres.
-        :param cantidad: Atributo requerido para definir el volumen de combustible adquirido.
-        :param no_identificacion: Atributo requerido para indicar la clave del producto del combustible.
-        :param nombre_combustible: Atributo requerido para expresar el nombre del combustible adquirido.
-        :param folio_operacion: Atributo requerido para referir el número de folio de cada operación realizada por cada monedero electrónico.
-        :param valor_unitario: Atributo requerido para definir el precio unitario del combustible adquirido.
-        :param importe: Atributo requerido para definir el monto total de consumo de combustible. Debe ser equivalente al resultado de multiplicar la cantidad por el valor unitario, redondeado a centésimas.
-        :param traslados: Nodo requerido para enlistar los impuestos trasladados aplicables de combustibles.
-        :param tar: Atributo condicional para expresar la clave de la Terminal de Almacenamiento y Reparto (CVE TAR), conforme al catálogo publicado en la página de Internet del SAT, mismo que servirá para identificar la cuota por litro conforme a las tablas que publique la Secretaría de Hacienda y Crédito Público para determinar el monto del estímulo fiscal.
-        :param unidad: Atributo condicional para precisar la unidad de medida.
-        """
-        
         super().__init__({
             'Identificador': identificador,
             'Fecha': fecha,
@@ -89,7 +81,13 @@ class ConceptoEstadoDeCuentaCombustible(ScalarMap):
 class EstadoDeCuentaCombustible(CFDI):
     """
     Complemento para el Comprobante Fiscal Digital por Internet (CFDI) para integrar la información aplicable al estado de cuenta emitido por un prestador de servicios de monedero electrónico
+    
+    :param numero_de_cuenta: Atributo requerido para expresar el número de cuenta del adquirente del monedero electrónico
+    :param sub_total: Atributo requerido para representar la suma de todos los importes tipo ConceptoEstadoDeCuentaCombustible.
+    :param total: Atributo requerido para expresar el monto total de consumo de combustible.
+    :param conceptos: Nodo requerido para enlistar los conceptos cubiertos por Estado de Cuenta de Combustible.
     """
+    
     tag = '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}EstadoDeCuentaCombustible'
     version = '1.1'
     tipo_operacion = 'Tarjeta'
@@ -101,15 +99,6 @@ class EstadoDeCuentaCombustible(CFDI):
             total: Decimal | int,
             conceptos: ConceptoEstadoDeCuentaCombustible | dict | Sequence[ConceptoEstadoDeCuentaCombustible | dict],
     ): 
-        """
-        Complemento para el Comprobante Fiscal Digital por Internet (CFDI) para integrar la información aplicable al estado de cuenta emitido por un prestador de servicios de monedero electrónico
-        
-        :param numero_de_cuenta: Atributo requerido para expresar el número de cuenta del adquirente del monedero electrónico
-        :param sub_total: Atributo requerido para representar la suma de todos los importes tipo ConceptoEstadoDeCuentaCombustible.
-        :param total: Atributo requerido para expresar el monto total de consumo de combustible.
-        :param conceptos: Nodo requerido para enlistar los conceptos cubiertos por Estado de Cuenta de Combustible.
-        """
-        
         super().__init__({
             'Version': self.version,
             'TipoOperacion': self.tipo_operacion,

@@ -7,7 +7,10 @@ from ... import CFDI, XElement, ScalarMap
 class Divisas(CFDI):
     """
     Complemento al Comprobante Fiscal Digital (CFD) y Comprobante Fiscal Digital por Internet (CFDI) para identificar las operaciones de compra y venta de divisas que realizan los centros cambiarios y las casa de cambio; haciendo mención expresa de que los comprobantes se expiden por la “compra”, o bien, por la “venta” de divisas.
+    
+    :param tipo_operacion: Elemento para definir el tipo de operación realizada. venta o compra de divisas
     """
+    
     tag = '{http://www.sat.gob.mx/divisas}Divisas'
     version = '1.0'
     
@@ -15,12 +18,6 @@ class Divisas(CFDI):
             self,
             tipo_operacion: str,
     ): 
-        """
-        Complemento al Comprobante Fiscal Digital (CFD) y Comprobante Fiscal Digital por Internet (CFDI) para identificar las operaciones de compra y venta de divisas que realizan los centros cambiarios y las casa de cambio; haciendo mención expresa de que los comprobantes se expiden por la “compra”, o bien, por la “venta” de divisas.
-        
-        :param tipo_operacion: Elemento para definir el tipo de operación realizada. venta o compra de divisas
-        """
-        
         super().__init__({
             'Version': self.version,
             'TipoOperacion': tipo_operacion,

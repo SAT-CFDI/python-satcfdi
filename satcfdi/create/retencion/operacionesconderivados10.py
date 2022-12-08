@@ -7,7 +7,11 @@ from ... import CFDI, XElement, ScalarMap
 class Operacionesconderivados(CFDI):
     """
     Complemento para incorporar información de las Operaciones Financieras Derivadas de Capital.
+    
+    :param mont_gan_acum: Atributo requerido para expresar el monto de la ganancia acumulable.
+    :param mont_perd_ded: Atributo requerido para expresar el monto de la pérdida deducible.
     """
+    
     tag = '{http://www.sat.gob.mx/esquemas/retencionpago/1/operacionesconderivados}Operacionesconderivados'
     version = '1.0'
     
@@ -16,13 +20,6 @@ class Operacionesconderivados(CFDI):
             mont_gan_acum: Decimal | int,
             mont_perd_ded: Decimal | int,
     ): 
-        """
-        Complemento para incorporar información de las Operaciones Financieras Derivadas de Capital.
-        
-        :param mont_gan_acum: Atributo requerido para expresar el monto de la ganancia acumulable.
-        :param mont_perd_ded: Atributo requerido para expresar el monto de la pérdida deducible.
-        """
-        
         super().__init__({
             'Version': self.version,
             'MontGanAcum': mont_gan_acum,

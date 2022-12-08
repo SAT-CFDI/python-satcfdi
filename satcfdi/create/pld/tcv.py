@@ -5,19 +5,19 @@ from ... import CFDI, XElement, ScalarMap
 
 
 class FideicomisoDestinatarioType(ScalarMap):
+    """
+    
+    :param denominacion_razon:
+    :param rfc:
+    :param identificador_fideicomiso:
+    """
+    
     def __init__(
             self,
             denominacion_razon: str,
             rfc: str = None,
             identificador_fideicomiso: str = None,
     ): 
-        """
-        
-        :param denominacion_razon:
-        :param rfc:
-        :param identificador_fideicomiso:
-        """
-        
         super().__init__({
             'DenominacionRazon': denominacion_razon,
             'Rfc': rfc,
@@ -26,19 +26,19 @@ class FideicomisoDestinatarioType(ScalarMap):
         
 
 class PersonaMoralDestinatarioType(ScalarMap):
+    """
+    
+    :param denominacion_razon:
+    :param fecha_constitucion:
+    :param rfc:
+    """
+    
     def __init__(
             self,
             denominacion_razon: str,
             fecha_constitucion: date = None,
             rfc: str = None,
     ): 
-        """
-        
-        :param denominacion_razon:
-        :param fecha_constitucion:
-        :param rfc:
-        """
-        
         super().__init__({
             'DenominacionRazon': denominacion_razon,
             'FechaConstitucion': fecha_constitucion,
@@ -47,6 +47,16 @@ class PersonaMoralDestinatarioType(ScalarMap):
         
 
 class PersonaFisicaDestinatarioType(ScalarMap):
+    """
+    
+    :param nombre:
+    :param apellido_paterno:
+    :param apellido_materno:
+    :param fecha_nacimiento:
+    :param rfc:
+    :param curp:
+    """
+    
     def __init__(
             self,
             nombre: str,
@@ -56,16 +66,6 @@ class PersonaFisicaDestinatarioType(ScalarMap):
             rfc: str = None,
             curp: str = None,
     ): 
-        """
-        
-        :param nombre:
-        :param apellido_paterno:
-        :param apellido_materno:
-        :param fecha_nacimiento:
-        :param rfc:
-        :param curp:
-        """
-        
         super().__init__({
             'Nombre': nombre,
             'ApellidoPaterno': apellido_paterno,
@@ -77,19 +77,19 @@ class PersonaFisicaDestinatarioType(ScalarMap):
         
 
 class TipoPersonaDestinatarioType(ScalarMap):
+    """
+    
+    :param persona_fisica:
+    :param persona_moral:
+    :param fideicomiso:
+    """
+    
     def __init__(
             self,
             persona_fisica: PersonaFisicaDestinatarioType | dict = None,
             persona_moral: PersonaMoralDestinatarioType | dict = None,
             fideicomiso: FideicomisoDestinatarioType | dict = None,
     ): 
-        """
-        
-        :param persona_fisica:
-        :param persona_moral:
-        :param fideicomiso:
-        """
-        
         super().__init__({
             'PersonaFisica': persona_fisica,
             'PersonaMoral': persona_moral,
@@ -98,17 +98,17 @@ class TipoPersonaDestinatarioType(ScalarMap):
         
 
 class DestinatarioType(ScalarMap):
+    """
+    
+    :param destinatario_persona_aviso:
+    :param tipo_persona:
+    """
+    
     def __init__(
             self,
             destinatario_persona_aviso: str,
             tipo_persona: TipoPersonaDestinatarioType | dict = None,
     ): 
-        """
-        
-        :param destinatario_persona_aviso:
-        :param tipo_persona:
-        """
-        
         super().__init__({
             'DestinatarioPersonaAviso': destinatario_persona_aviso,
             'TipoPersona': tipo_persona,
@@ -116,6 +116,14 @@ class DestinatarioType(ScalarMap):
         
 
 class ExtranjeroEntregaType(ScalarMap):
+    """
+    
+    :param pais:
+    :param estado_provincia:
+    :param ciudad_poblacion:
+    :param codigo_postal:
+    """
+    
     def __init__(
             self,
             pais: str,
@@ -123,14 +131,6 @@ class ExtranjeroEntregaType(ScalarMap):
             ciudad_poblacion: str,
             codigo_postal: str,
     ): 
-        """
-        
-        :param pais:
-        :param estado_provincia:
-        :param ciudad_poblacion:
-        :param codigo_postal:
-        """
-        
         super().__init__({
             'Pais': pais,
             'EstadoProvincia': estado_provincia,
@@ -140,32 +140,32 @@ class ExtranjeroEntregaType(ScalarMap):
         
 
 class NacionalEntregaType(ScalarMap):
+    """
+    
+    :param codigo_postal:
+    """
+    
     def __init__(
             self,
             codigo_postal: str,
     ): 
-        """
-        
-        :param codigo_postal:
-        """
-        
         super().__init__({
             'CodigoPostal': codigo_postal,
         })
         
 
 class TipoEntregaType(ScalarMap):
+    """
+    
+    :param nacional:
+    :param extranjero:
+    """
+    
     def __init__(
             self,
             nacional: NacionalEntregaType | dict = None,
             extranjero: ExtranjeroEntregaType | dict = None,
     ): 
-        """
-        
-        :param nacional:
-        :param extranjero:
-        """
-        
         super().__init__({
             'Nacional': nacional,
             'Extranjero': extranjero,
@@ -173,17 +173,17 @@ class TipoEntregaType(ScalarMap):
         
 
 class EntregaType(ScalarMap):
+    """
+    
+    :param fecha_entrega:
+    :param tipo_entrega:
+    """
+    
     def __init__(
             self,
             fecha_entrega: date,
             tipo_entrega: TipoEntregaType | dict,
     ): 
-        """
-        
-        :param fecha_entrega:
-        :param tipo_entrega:
-        """
-        
         super().__init__({
             'FechaEntrega': fecha_entrega,
             'TipoEntrega': tipo_entrega,
@@ -191,6 +191,15 @@ class EntregaType(ScalarMap):
         
 
 class DatosNoSucursalType(ScalarMap):
+    """
+    
+    :param colonia:
+    :param calle:
+    :param numero_exterior:
+    :param codigo_postal:
+    :param numero_interior:
+    """
+    
     def __init__(
             self,
             colonia: str,
@@ -199,15 +208,6 @@ class DatosNoSucursalType(ScalarMap):
             codigo_postal: str,
             numero_interior: str = None,
     ): 
-        """
-        
-        :param colonia:
-        :param calle:
-        :param numero_exterior:
-        :param codigo_postal:
-        :param numero_interior:
-        """
-        
         super().__init__({
             'Colonia': colonia,
             'Calle': calle,
@@ -218,32 +218,32 @@ class DatosNoSucursalType(ScalarMap):
         
 
 class DatosSucursalType(ScalarMap):
+    """
+    
+    :param codigo_postal:
+    """
+    
     def __init__(
             self,
             codigo_postal: str,
     ): 
-        """
-        
-        :param codigo_postal:
-        """
-        
         super().__init__({
             'CodigoPostal': codigo_postal,
         })
         
 
 class TipoCustodiaType(ScalarMap):
+    """
+    
+    :param datos_sucursal:
+    :param datos_no_sucursal:
+    """
+    
     def __init__(
             self,
             datos_sucursal: DatosSucursalType | dict = None,
             datos_no_sucursal: DatosNoSucursalType | dict = None,
     ): 
-        """
-        
-        :param datos_sucursal:
-        :param datos_no_sucursal:
-        """
-        
         super().__init__({
             'DatosSucursal': datos_sucursal,
             'DatosNoSucursal': datos_no_sucursal,
@@ -251,19 +251,19 @@ class TipoCustodiaType(ScalarMap):
         
 
 class CustodiaType(ScalarMap):
+    """
+    
+    :param fecha_inicio:
+    :param fecha_fin:
+    :param tipo_custodia:
+    """
+    
     def __init__(
             self,
             fecha_inicio: date,
             fecha_fin: date,
             tipo_custodia: TipoCustodiaType | dict,
     ): 
-        """
-        
-        :param fecha_inicio:
-        :param fecha_fin:
-        :param tipo_custodia:
-        """
-        
         super().__init__({
             'FechaInicio': fecha_inicio,
             'FechaFin': fecha_fin,
@@ -272,19 +272,19 @@ class CustodiaType(ScalarMap):
         
 
 class RecepcionType(ScalarMap):
+    """
+    
+    :param tipo_servicio:
+    :param fecha_recepcion:
+    :param codigo_postal:
+    """
+    
     def __init__(
             self,
             tipo_servicio: str,
             fecha_recepcion: date,
             codigo_postal: str,
     ): 
-        """
-        
-        :param tipo_servicio:
-        :param fecha_recepcion:
-        :param codigo_postal:
-        """
-        
         super().__init__({
             'TipoServicio': tipo_servicio,
             'FechaRecepcion': fecha_recepcion,
@@ -293,19 +293,19 @@ class RecepcionType(ScalarMap):
         
 
 class DatosValoresType(ScalarMap):
+    """
+    
+    :param tipo_valor:
+    :param valor_objeto:
+    :param descripcion:
+    """
+    
     def __init__(
             self,
             tipo_valor: str,
             valor_objeto: str,
             descripcion: str,
     ): 
-        """
-        
-        :param tipo_valor:
-        :param valor_objeto:
-        :param descripcion:
-        """
-        
         super().__init__({
             'TipoValor': tipo_valor,
             'ValorObjeto': valor_objeto,
@@ -314,19 +314,19 @@ class DatosValoresType(ScalarMap):
         
 
 class DatosEfectivoInstrumentosType(ScalarMap):
+    """
+    
+    :param instrumento_monetario:
+    :param moneda:
+    :param monto_operacion:
+    """
+    
     def __init__(
             self,
             instrumento_monetario: str,
             moneda: str,
             monto_operacion: str,
     ): 
-        """
-        
-        :param instrumento_monetario:
-        :param moneda:
-        :param monto_operacion:
-        """
-        
         super().__init__({
             'InstrumentoMonetario': instrumento_monetario,
             'Moneda': moneda,
@@ -335,17 +335,17 @@ class DatosEfectivoInstrumentosType(ScalarMap):
         
 
 class TipoBienType(ScalarMap):
+    """
+    
+    :param datos_efectivo_instrumentos:
+    :param datos_valores:
+    """
+    
     def __init__(
             self,
             datos_efectivo_instrumentos: DatosEfectivoInstrumentosType | dict = None,
             datos_valores: DatosValoresType | dict = None,
     ): 
-        """
-        
-        :param datos_efectivo_instrumentos:
-        :param datos_valores:
-        """
-        
         super().__init__({
             'DatosEfectivoInstrumentos': datos_efectivo_instrumentos,
             'DatosValores': datos_valores,
@@ -353,6 +353,17 @@ class TipoBienType(ScalarMap):
         
 
 class DatosOperacionType(ScalarMap):
+    """
+    
+    :param fecha_operacion:
+    :param tipo_operacion:
+    :param tipo_bien:
+    :param recepcion:
+    :param custodia:
+    :param entrega:
+    :param destinatario:
+    """
+    
     def __init__(
             self,
             fecha_operacion: date,
@@ -363,17 +374,6 @@ class DatosOperacionType(ScalarMap):
             entrega: EntregaType | dict = None,
             destinatario: DestinatarioType | dict = None,
     ): 
-        """
-        
-        :param fecha_operacion:
-        :param tipo_operacion:
-        :param tipo_bien:
-        :param recepcion:
-        :param custodia:
-        :param entrega:
-        :param destinatario:
-        """
-        
         super().__init__({
             'FechaOperacion': fecha_operacion,
             'TipoOperacion': tipo_operacion,
@@ -386,34 +386,34 @@ class DatosOperacionType(ScalarMap):
         
 
 class DetalleOperacionesType(ScalarMap):
+    """
+    
+    :param datos_operacion:
+    """
+    
     def __init__(
             self,
             datos_operacion: DatosOperacionType | dict | Sequence[DatosOperacionType | dict],
     ): 
-        """
-        
-        :param datos_operacion:
-        """
-        
         super().__init__({
             'DatosOperacion': datos_operacion,
         })
         
 
 class FideicomisoSimpleType(ScalarMap):
+    """
+    
+    :param denominacion_razon:
+    :param rfc:
+    :param identificador_fideicomiso:
+    """
+    
     def __init__(
             self,
             denominacion_razon: str,
             rfc: str = None,
             identificador_fideicomiso: str = None,
     ): 
-        """
-        
-        :param denominacion_razon:
-        :param rfc:
-        :param identificador_fideicomiso:
-        """
-        
         super().__init__({
             'DenominacionRazon': denominacion_razon,
             'Rfc': rfc,
@@ -422,6 +422,14 @@ class FideicomisoSimpleType(ScalarMap):
         
 
 class PersonaMoralSimpleType(ScalarMap):
+    """
+    
+    :param denominacion_razon:
+    :param fecha_constitucion:
+    :param rfc:
+    :param pais_nacionalidad:
+    """
+    
     def __init__(
             self,
             denominacion_razon: str,
@@ -429,14 +437,6 @@ class PersonaMoralSimpleType(ScalarMap):
             rfc: str = None,
             pais_nacionalidad: str = None,
     ): 
-        """
-        
-        :param denominacion_razon:
-        :param fecha_constitucion:
-        :param rfc:
-        :param pais_nacionalidad:
-        """
-        
         super().__init__({
             'DenominacionRazon': denominacion_razon,
             'FechaConstitucion': fecha_constitucion,
@@ -446,6 +446,17 @@ class PersonaMoralSimpleType(ScalarMap):
         
 
 class PersonaFisicaSimpleType(ScalarMap):
+    """
+    
+    :param nombre:
+    :param apellido_paterno:
+    :param apellido_materno:
+    :param fecha_nacimiento:
+    :param rfc:
+    :param curp:
+    :param pais_nacionalidad:
+    """
+    
     def __init__(
             self,
             nombre: str,
@@ -456,17 +467,6 @@ class PersonaFisicaSimpleType(ScalarMap):
             curp: str = None,
             pais_nacionalidad: str = None,
     ): 
-        """
-        
-        :param nombre:
-        :param apellido_paterno:
-        :param apellido_materno:
-        :param fecha_nacimiento:
-        :param rfc:
-        :param curp:
-        :param pais_nacionalidad:
-        """
-        
         super().__init__({
             'Nombre': nombre,
             'ApellidoPaterno': apellido_paterno,
@@ -479,19 +479,19 @@ class PersonaFisicaSimpleType(ScalarMap):
         
 
 class TipoPersonaSimpleType(ScalarMap):
+    """
+    
+    :param persona_fisica:
+    :param persona_moral:
+    :param fideicomiso:
+    """
+    
     def __init__(
             self,
             persona_fisica: PersonaFisicaSimpleType | dict = None,
             persona_moral: PersonaMoralSimpleType | dict = None,
             fideicomiso: FideicomisoSimpleType | dict = None,
     ): 
-        """
-        
-        :param persona_fisica:
-        :param persona_moral:
-        :param fideicomiso:
-        """
-        
         super().__init__({
             'PersonaFisica': persona_fisica,
             'PersonaMoral': persona_moral,
@@ -500,34 +500,34 @@ class TipoPersonaSimpleType(ScalarMap):
         
 
 class DuenoBeneficiarioType(ScalarMap):
+    """
+    
+    :param tipo_persona:
+    """
+    
     def __init__(
             self,
             tipo_persona: TipoPersonaSimpleType | dict,
     ): 
-        """
-        
-        :param tipo_persona:
-        """
-        
         super().__init__({
             'TipoPersona': tipo_persona,
         })
         
 
 class TelefonoType(ScalarMap):
+    """
+    
+    :param clave_pais:
+    :param numero_telefono:
+    :param correo_electronico:
+    """
+    
     def __init__(
             self,
             clave_pais: str = None,
             numero_telefono: str = None,
             correo_electronico: str = None,
     ): 
-        """
-        
-        :param clave_pais:
-        :param numero_telefono:
-        :param correo_electronico:
-        """
-        
         super().__init__({
             'ClavePais': clave_pais,
             'NumeroTelefono': numero_telefono,
@@ -536,6 +536,18 @@ class TelefonoType(ScalarMap):
         
 
 class ExtranjeroType(ScalarMap):
+    """
+    
+    :param pais:
+    :param estado_provincia:
+    :param ciudad_poblacion:
+    :param colonia:
+    :param calle:
+    :param numero_exterior:
+    :param codigo_postal:
+    :param numero_interior:
+    """
+    
     def __init__(
             self,
             pais: str,
@@ -547,18 +559,6 @@ class ExtranjeroType(ScalarMap):
             codigo_postal: str,
             numero_interior: str = None,
     ): 
-        """
-        
-        :param pais:
-        :param estado_provincia:
-        :param ciudad_poblacion:
-        :param colonia:
-        :param calle:
-        :param numero_exterior:
-        :param codigo_postal:
-        :param numero_interior:
-        """
-        
         super().__init__({
             'Pais': pais,
             'EstadoProvincia': estado_provincia,
@@ -572,6 +572,15 @@ class ExtranjeroType(ScalarMap):
         
 
 class NacionalType(ScalarMap):
+    """
+    
+    :param colonia:
+    :param calle:
+    :param numero_exterior:
+    :param codigo_postal:
+    :param numero_interior:
+    """
+    
     def __init__(
             self,
             colonia: str,
@@ -580,15 +589,6 @@ class NacionalType(ScalarMap):
             codigo_postal: str,
             numero_interior: str = None,
     ): 
-        """
-        
-        :param colonia:
-        :param calle:
-        :param numero_exterior:
-        :param codigo_postal:
-        :param numero_interior:
-        """
-        
         super().__init__({
             'Colonia': colonia,
             'Calle': calle,
@@ -599,17 +599,17 @@ class NacionalType(ScalarMap):
         
 
 class TipoDomicilioType(ScalarMap):
+    """
+    
+    :param nacional:
+    :param extranjero:
+    """
+    
     def __init__(
             self,
             nacional: NacionalType | dict = None,
             extranjero: ExtranjeroType | dict = None,
     ): 
-        """
-        
-        :param nacional:
-        :param extranjero:
-        """
-        
         super().__init__({
             'Nacional': nacional,
             'Extranjero': extranjero,
@@ -617,6 +617,16 @@ class TipoDomicilioType(ScalarMap):
         
 
 class RepresentanteApoderadoType(ScalarMap):
+    """
+    
+    :param nombre:
+    :param apellido_paterno:
+    :param apellido_materno:
+    :param fecha_nacimiento:
+    :param rfc:
+    :param curp:
+    """
+    
     def __init__(
             self,
             nombre: str,
@@ -626,16 +636,6 @@ class RepresentanteApoderadoType(ScalarMap):
             rfc: str = None,
             curp: str = None,
     ): 
-        """
-        
-        :param nombre:
-        :param apellido_paterno:
-        :param apellido_materno:
-        :param fecha_nacimiento:
-        :param rfc:
-        :param curp:
-        """
-        
         super().__init__({
             'Nombre': nombre,
             'ApellidoPaterno': apellido_paterno,
@@ -647,6 +647,14 @@ class RepresentanteApoderadoType(ScalarMap):
         
 
 class FideicomisoType(ScalarMap):
+    """
+    
+    :param denominacion_razon:
+    :param apoderado_delegado:
+    :param rfc:
+    :param identificador_fideicomiso:
+    """
+    
     def __init__(
             self,
             denominacion_razon: str,
@@ -654,14 +662,6 @@ class FideicomisoType(ScalarMap):
             rfc: str = None,
             identificador_fideicomiso: str = None,
     ): 
-        """
-        
-        :param denominacion_razon:
-        :param apoderado_delegado:
-        :param rfc:
-        :param identificador_fideicomiso:
-        """
-        
         super().__init__({
             'DenominacionRazon': denominacion_razon,
             'ApoderadoDelegado': apoderado_delegado,
@@ -671,6 +671,16 @@ class FideicomisoType(ScalarMap):
         
 
 class PersonaMoralType(ScalarMap):
+    """
+    
+    :param denominacion_razon:
+    :param pais_nacionalidad:
+    :param giro_mercantil:
+    :param representante_apoderado:
+    :param fecha_constitucion:
+    :param rfc:
+    """
+    
     def __init__(
             self,
             denominacion_razon: str,
@@ -680,16 +690,6 @@ class PersonaMoralType(ScalarMap):
             fecha_constitucion: date = None,
             rfc: str = None,
     ): 
-        """
-        
-        :param denominacion_razon:
-        :param pais_nacionalidad:
-        :param giro_mercantil:
-        :param representante_apoderado:
-        :param fecha_constitucion:
-        :param rfc:
-        """
-        
         super().__init__({
             'DenominacionRazon': denominacion_razon,
             'PaisNacionalidad': pais_nacionalidad,
@@ -701,6 +701,18 @@ class PersonaMoralType(ScalarMap):
         
 
 class PersonaFisicaType(ScalarMap):
+    """
+    
+    :param nombre:
+    :param apellido_paterno:
+    :param apellido_materno:
+    :param pais_nacionalidad:
+    :param actividad_economica:
+    :param fecha_nacimiento:
+    :param rfc:
+    :param curp:
+    """
+    
     def __init__(
             self,
             nombre: str,
@@ -712,18 +724,6 @@ class PersonaFisicaType(ScalarMap):
             rfc: str = None,
             curp: str = None,
     ): 
-        """
-        
-        :param nombre:
-        :param apellido_paterno:
-        :param apellido_materno:
-        :param pais_nacionalidad:
-        :param actividad_economica:
-        :param fecha_nacimiento:
-        :param rfc:
-        :param curp:
-        """
-        
         super().__init__({
             'Nombre': nombre,
             'ApellidoPaterno': apellido_paterno,
@@ -737,19 +737,19 @@ class PersonaFisicaType(ScalarMap):
         
 
 class TipoPersonaType(ScalarMap):
+    """
+    
+    :param persona_fisica:
+    :param persona_moral:
+    :param fideicomiso:
+    """
+    
     def __init__(
             self,
             persona_fisica: PersonaFisicaType | dict = None,
             persona_moral: PersonaMoralType | dict = None,
             fideicomiso: FideicomisoType | dict = None,
     ): 
-        """
-        
-        :param persona_fisica:
-        :param persona_moral:
-        :param fideicomiso:
-        """
-        
         super().__init__({
             'PersonaFisica': persona_fisica,
             'PersonaMoral': persona_moral,
@@ -758,19 +758,19 @@ class TipoPersonaType(ScalarMap):
         
 
 class PersonaAvisoType(ScalarMap):
+    """
+    
+    :param tipo_persona:
+    :param tipo_domicilio:
+    :param telefono:
+    """
+    
     def __init__(
             self,
             tipo_persona: TipoPersonaType | dict,
             tipo_domicilio: TipoDomicilioType | dict = None,
             telefono: TelefonoType | dict = None,
     ): 
-        """
-        
-        :param tipo_persona:
-        :param tipo_domicilio:
-        :param telefono:
-        """
-        
         super().__init__({
             'TipoPersona': tipo_persona,
             'TipoDomicilio': tipo_domicilio,
@@ -779,17 +779,17 @@ class PersonaAvisoType(ScalarMap):
         
 
 class AlertaType(ScalarMap):
+    """
+    
+    :param tipo_alerta:
+    :param descripcion_alerta:
+    """
+    
     def __init__(
             self,
             tipo_alerta: str,
             descripcion_alerta: str = None,
     ): 
-        """
-        
-        :param tipo_alerta:
-        :param descripcion_alerta:
-        """
-        
         super().__init__({
             'TipoAlerta': tipo_alerta,
             'DescripcionAlerta': descripcion_alerta,
@@ -797,17 +797,17 @@ class AlertaType(ScalarMap):
         
 
 class ModificatorioType(ScalarMap):
+    """
+    
+    :param folio_modificacion:
+    :param descripcion_modificacion:
+    """
+    
     def __init__(
             self,
             folio_modificacion: str,
             descripcion_modificacion: str,
     ): 
-        """
-        
-        :param folio_modificacion:
-        :param descripcion_modificacion:
-        """
-        
         super().__init__({
             'FolioModificacion': folio_modificacion,
             'DescripcionModificacion': descripcion_modificacion,
@@ -815,6 +815,17 @@ class ModificatorioType(ScalarMap):
         
 
 class AvisoType(ScalarMap):
+    """
+    
+    :param referencia_aviso:
+    :param prioridad:
+    :param alerta:
+    :param persona_aviso:
+    :param detalle_operaciones:
+    :param modificatorio:
+    :param dueno_beneficiario:
+    """
+    
     def __init__(
             self,
             referencia_aviso: str,
@@ -825,17 +836,6 @@ class AvisoType(ScalarMap):
             modificatorio: ModificatorioType | dict = None,
             dueno_beneficiario: DuenoBeneficiarioType | dict | Sequence[DuenoBeneficiarioType | dict] = None,
     ): 
-        """
-        
-        :param referencia_aviso:
-        :param prioridad:
-        :param alerta:
-        :param persona_aviso:
-        :param detalle_operaciones:
-        :param modificatorio:
-        :param dueno_beneficiario:
-        """
-        
         super().__init__({
             'ReferenciaAviso': referencia_aviso,
             'Prioridad': prioridad,
@@ -848,6 +848,14 @@ class AvisoType(ScalarMap):
         
 
 class SujetoObligadoType(ScalarMap):
+    """
+    
+    :param clave_sujeto_obligado:
+    :param clave_actividad:
+    :param clave_entidad_colegiada:
+    :param exento:
+    """
+    
     def __init__(
             self,
             clave_sujeto_obligado: str,
@@ -855,14 +863,6 @@ class SujetoObligadoType(ScalarMap):
             clave_entidad_colegiada: str = None,
             exento: str = None,
     ): 
-        """
-        
-        :param clave_sujeto_obligado:
-        :param clave_actividad:
-        :param clave_entidad_colegiada:
-        :param exento:
-        """
-        
         super().__init__({
             'ClaveSujetoObligado': clave_sujeto_obligado,
             'ClaveActividad': clave_actividad,
@@ -872,19 +872,19 @@ class SujetoObligadoType(ScalarMap):
         
 
 class InformeType(ScalarMap):
+    """
+    
+    :param mes_reportado:
+    :param sujeto_obligado:
+    :param aviso:
+    """
+    
     def __init__(
             self,
             mes_reportado: str,
             sujeto_obligado: SujetoObligadoType | dict,
             aviso: AvisoType | dict | Sequence[AvisoType | dict] = None,
     ): 
-        """
-        
-        :param mes_reportado:
-        :param sujeto_obligado:
-        :param aviso:
-        """
-        
         super().__init__({
             'MesReportado': mes_reportado,
             'SujetoObligado': sujeto_obligado,
@@ -893,15 +893,15 @@ class InformeType(ScalarMap):
         
 
 class ArchivoType(ScalarMap):
+    """
+    
+    :param informe:
+    """
+    
     def __init__(
             self,
             informe: InformeType | dict | Sequence[InformeType | dict],
     ): 
-        """
-        
-        :param informe:
-        """
-        
         super().__init__({
             'Informe': informe,
         })

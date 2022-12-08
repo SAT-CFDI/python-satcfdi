@@ -7,7 +7,12 @@ from ... import CFDI, XElement, ScalarMap
 class PFintegranteCoordinado(CFDI):
     """
     Este complemento permite incorporar a un Comprobante Fiscal Digital (CFD) o a un Comprobante Fiscal Digital a través de Internet (CFDI) los datos de identificación del vehículo que corresponda a personas físicas integrantes de coordinados, que opten por pagar el impuesto individualmente de conformidad con lo establecido por el artículo 83, séptimo párrafo de la Ley del Impuesto sobre la Renta.
+    
+    :param clave_vehicular: Atributo requerido para precisar Clave vehicular que corresponda a la versión del vehículo enajenado.
+    :param placa: Atributo requerido para señalar la placa o número de folio del permiso del vehículo que corresponda.
+    :param rfc_pf: Atributo opcional para precisar el RFC de la persona física integrante de coordinados, que opte por pagar el impuesto individualmente.
     """
+    
     tag = '{http://www.sat.gob.mx/pfic}PFintegranteCoordinado'
     version = '1.0'
     
@@ -17,14 +22,6 @@ class PFintegranteCoordinado(CFDI):
             placa: str,
             rfc_pf: str = None,
     ): 
-        """
-        Este complemento permite incorporar a un Comprobante Fiscal Digital (CFD) o a un Comprobante Fiscal Digital a través de Internet (CFDI) los datos de identificación del vehículo que corresponda a personas físicas integrantes de coordinados, que opten por pagar el impuesto individualmente de conformidad con lo establecido por el artículo 83, séptimo párrafo de la Ley del Impuesto sobre la Renta.
-        
-        :param clave_vehicular: Atributo requerido para precisar Clave vehicular que corresponda a la versión del vehículo enajenado.
-        :param placa: Atributo requerido para señalar la placa o número de folio del permiso del vehículo que corresponda.
-        :param rfc_pf: Atributo opcional para precisar el RFC de la persona física integrante de coordinados, que opte por pagar el impuesto individualmente.
-        """
-        
         super().__init__({
             'Version': self.version,
             'ClaveVehicular': clave_vehicular,

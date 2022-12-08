@@ -7,7 +7,15 @@ from ... import CFDI, XElement, ScalarMap
 class PrestadoresDeServiciosDeCFD(CFDI):
     """
     Complemento requerido para los Proveedores de Servicio de generación y envío de Comprobantes Fiscales Digitales.
+    
+    :param nombre: Atributo requerido para el nombre o razón social del proveedor de servicios autorizado que generó y envió el comprobante fiscal digital.
+    :param rfc: Atributo requerido para el Registro Federal de Contribuyentes del proveedor de servicios de generación y envío de comprobantes fiscales digitales.
+    :param no_certificado: Atributo requerido para expresar el número de serie del certificado de sello digital del proveedor del servicio autorizado que generó y envió el comprobante fiscal digital.
+    :param fecha_autorizacion: Atributo requerido para la expresión de la fecha y hora de autorización del proveedor del servicio que generó y envió el comprobante fiscal digital. Se expresa en la forma aaaa-mm-ddThh:mm:ss, de acuerdo con la especificación ISO 8601.
+    :param no_autorizacion: Atributo requerido para precisar el número de autorización del proveedor del servicio de generación y envío comprobantes autorizado por el SAT.
+    :param sello_del_psgecfd: Atributo requerido para contener el sello digital del proveedor del servicio de generación y envío de comprobantes fiscales digitales que generó y emitió el comprobante fiscal digital. El sello deberá ser expresado cómo una cadena de texto en formato Base 64.
     """
+    
     tag = '{http://www.sat.gob.mx/psgecfd}PrestadoresDeServiciosDeCFD'
     
     def __init__(
@@ -19,17 +27,6 @@ class PrestadoresDeServiciosDeCFD(CFDI):
             no_autorizacion: int,
             sello_del_psgecfd: str,
     ): 
-        """
-        Complemento requerido para los Proveedores de Servicio de generación y envío de Comprobantes Fiscales Digitales.
-        
-        :param nombre: Atributo requerido para el nombre o razón social del proveedor de servicios autorizado que generó y envió el comprobante fiscal digital.
-        :param rfc: Atributo requerido para el Registro Federal de Contribuyentes del proveedor de servicios de generación y envío de comprobantes fiscales digitales.
-        :param no_certificado: Atributo requerido para expresar el número de serie del certificado de sello digital del proveedor del servicio autorizado que generó y envió el comprobante fiscal digital.
-        :param fecha_autorizacion: Atributo requerido para la expresión de la fecha y hora de autorización del proveedor del servicio que generó y envió el comprobante fiscal digital. Se expresa en la forma aaaa-mm-ddThh:mm:ss, de acuerdo con la especificación ISO 8601.
-        :param no_autorizacion: Atributo requerido para precisar el número de autorización del proveedor del servicio de generación y envío comprobantes autorizado por el SAT.
-        :param sello_del_psgecfd: Atributo requerido para contener el sello digital del proveedor del servicio de generación y envío de comprobantes fiscales digitales que generó y emitió el comprobante fiscal digital. El sello deberá ser expresado cómo una cadena de texto en formato Base 64.
-        """
-        
         super().__init__({
             'Nombre': nombre,
             'Rfc': rfc,
