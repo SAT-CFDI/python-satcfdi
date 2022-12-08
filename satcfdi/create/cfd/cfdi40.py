@@ -507,7 +507,7 @@ class Comprobante(CFDI):
 
         :param emisor: Nodo requerido para expresar la información del contribuyente emisor del comprobante.
         :param lugar_expedicion: Atributo requerido para incorporar el código postal del lugar de expedición del comprobante (domicilio de la matriz o de la sucursal).
-        :param comprobantes: Sequence[Mapping[str, Any]]a de CFDIS de Comprobante de Ingreso para generar el pago por su monto total
+        :param comprobantes: CFDI(s) de Comprobante de Ingreso para generar el pago por su monto total o parcial usando PagoComprobante
         :param fecha_pago: Atributo requerido para expresar la fecha y hora en la que el beneficiario recibe el pago. Se expresa en la forma aaaa-mm-ddThh:mm:ss, de acuerdo con la especificación ISO 8601.En caso de no contar con la hora se debe registrar 12:00:00.
         :param serie: Atributo opcional para precisar la serie para control interno del contribuyente. Este atributo acepta una cadena de caracteres.
         :param folio: Atributo opcional para control interno del contribuyente que expresa el folio del comprobante, acepta una cadena de caracteres.
