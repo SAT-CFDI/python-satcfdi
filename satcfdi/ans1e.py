@@ -79,7 +79,7 @@ def _encode_object_identifier(oid: str) -> bytes:
     if len(cmps) < 2 or cmps[0] > 39 or cmps[1] > 39:
         raise ValueError('Illegal object identifier')
     return b"".join(
-        _number_7bit(n) for n in [40 * cmps[0] + cmps[1]] + cmps[2:]
+        _number_7bit(n) for n in (40 * cmps[0] + cmps[1], *cmps[2:])
     )
 
 
