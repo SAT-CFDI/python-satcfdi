@@ -205,5 +205,5 @@ class PAC:
     def pending(self, rfc: str) -> list[str]:
         raise NotImplementedError()
 
-    def list_69b(self, rfc: str) -> TaxpayerStatus:
+    def list_69b(self, rfc: str) -> TaxpayerStatus | None:
         raise NotImplementedError()

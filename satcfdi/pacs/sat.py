@@ -500,9 +500,12 @@ class SAT(PAC):
 
         return True
 
-    def list_69b(self, rfc: str) -> TaxpayerStatus:
+    def list_69b(self, rfc: str) -> TaxpayerStatus | None:
         listado = _get_listado_69b()
-        return TaxpayerStatus(listado[rfc])
+        r = listado.get(rfc)
+        if r:
+            return TaxpayerStatus(r)
+        return None
 
     def recover_comprobante_request(
             self,

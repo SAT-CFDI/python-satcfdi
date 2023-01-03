@@ -87,6 +87,12 @@ def test_sat_list_69b():
     assert res == TaxpayerStatus.DEFINITIVO
 
 
+def test_sat_list_69b_notfound():
+    sat_service = SAT(environment=Environment.TEST)
+    res = sat_service.list_69b('xxxx')
+    assert res is None
+
+
 def test_sat_service_authentication():
     signer = get_signer('xiqb891116qe4')
 

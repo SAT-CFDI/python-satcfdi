@@ -211,7 +211,7 @@ class SWSapien(PAC):
     def rfc_valid(self, rfc: str | list[str]) -> bool | list[bool]:
         raise NotImplementedError()
 
-    def list_69b(self, rfc: str) -> TaxpayerStatus:
+    def list_69b(self, rfc: str) -> TaxpayerStatus | None:
         res = self._request(
             path=f"taxpayers/{rfc}",
             method="get"
