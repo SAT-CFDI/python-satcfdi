@@ -75,6 +75,7 @@ def _filter_invoices_iter(
         estatus=None,
         fecha=None,
         invoice_type=InvoiceType.ALL,
+        payment_method=None
 ):
     for r in invoices.values():
         if not _compare(r["Emisor"]["Rfc"], rfc_emisor):
@@ -87,6 +88,9 @@ def _filter_invoices_iter(
             continue
 
         if not _compare(r["Fecha"], fecha):
+            continue
+
+        if not _compare(r.get("MetodoPago"), payment_method):
             continue
 
         match invoice_type:
@@ -104,8 +108,16 @@ def _filter_invoices_iter(
                 raise ValueError("Unknown Filter Settings")
 
 
-def filter_invoices_by(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, estatus=None, fecha=None, invoice_type=InvoiceType.ALL) -> Sequence[SatCFDI]:
-    filtered_invoices = list(_filter_invoices_iter(invoices, rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor, estatus=estatus, invoice_type=invoice_type, fecha=fecha))
+def filter_invoices_by(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, estatus=None, fecha=None, invoice_type=InvoiceType.ALL, payment_method=None) -> Sequence[SatCFDI]:
+    filtered_invoices = list(_filter_invoices_iter(
+        invoices,
+        rfc_emisor=rfc_emisor,
+        rfc_receptor=rfc_receptor,
+        estatus=estatus,
+        invoice_type=invoice_type,
+        fecha=fecha,
+        payment_method=payment_method
+    ))
     filtered_invoices.sort(key=lambda x: x["Fecha"])
 
     return filtered_invoices
