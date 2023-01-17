@@ -348,8 +348,9 @@ class PagoComprobante:
 
 def _make_conceptos(conceptos, rnd_fn):
     def make_concepto(concepto):
-        trasladados = [x if isinstance(x, dict) else Impuesto.parse(x) for x in iterate((concepto.get("Impuestos") or {}).get("Traslados"))]
-        retenciones = [x if isinstance(x, dict) else Impuesto.parse(x) for x in iterate((concepto.get("Impuestos") or {}).get("Retenciones"))]
+        impuestos = concepto.get("Impuestos") or {}
+        trasladados = [x if isinstance(x, dict) else Impuesto.parse(x) for x in iterate(impuestos.get("Traslados"))]
+        retenciones = [x if isinstance(x, dict) else Impuesto.parse(x) for x in iterate(impuestos.get("Retenciones"))]
 
         if concepto.get('_traslados_incluidos'):
             s_tasa = sum(c["TasaOCuota"] for c in trasladados if c["TipoFactor"] == "Tasa")
