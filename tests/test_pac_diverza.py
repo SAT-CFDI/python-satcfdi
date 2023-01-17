@@ -67,8 +67,10 @@ def test_diverza_stamp():
                 clave_unidad='E48',
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('15390.30'),
-                traslados=cfdi33.Impuesto.parse('002|Tasa|0.160000'),
-                retenciones=[cfdi33.Impuesto.parse('001|Tasa|0.100000'), cfdi33.Impuesto.parse('002|Tasa|0.106667')],
+                impuestos=cfdi33.Impuestos(
+                    traslados=cfdi33.Impuesto.parse('002|Tasa|0.160000'),
+                    retenciones=[cfdi33.Impuesto.parse('001|Tasa|0.100000'), cfdi33.Impuesto.parse('002|Tasa|0.106667')],
+                )
             )
         ]
     )
@@ -138,8 +140,10 @@ def test_diverza_stamp_v40():
                 clave_unidad='E48',
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('15390.30'),
-                traslados=cfdi40.Impuesto.parse('002|Tasa|0.160000'),
-                retenciones=[cfdi40.Impuesto.parse('001|Tasa|0.100000'), cfdi40.Impuesto.parse('002|Tasa|0.106667')],
+                impuestos=cfdi40.Impuestos(
+                    traslados=cfdi40.Impuesto.parse('002|Tasa|0.160000'),
+                    retenciones=[cfdi40.Impuesto.parse('001|Tasa|0.100000'), cfdi40.Impuesto.parse('002|Tasa|0.106667')],
+                )
             )
         ]
     )

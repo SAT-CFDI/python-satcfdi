@@ -42,8 +42,10 @@ ______________________
                 clave_unidad='E48',
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('1250.30'),
-                traslados='IVA|Tasa|0.160000',
-                retenciones=['ISR|Tasa|0.100000', 'IVA|Tasa|0.106667'],
+                impuestos=cfdi40.Impuestos(
+                    traslados='IVA|Tasa|0.160000',
+                    retenciones=['ISR|Tasa|0.100000', 'IVA|Tasa|0.106667'],
+                ),
                 _traslados_incluidos=False  # indica si el valor unitario incluye los traslados
             )
         ]
@@ -254,8 +256,10 @@ _______________________
                 clave_unidad='E48',
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('325.30'),
-                traslados='IVA|Tasa|0.160000',
-                retenciones=['ISR|Tasa|0.100000', 'IVA|Tasa|0.106667'],
+                impuestos=cfdi40.Impuestos(
+                    traslados='IVA|Tasa|0.160000',
+                    retenciones=['ISR|Tasa|0.100000', 'IVA|Tasa|0.106667'],
+                ),
                 _traslados_incluidos=False
             )
         ],

@@ -160,6 +160,81 @@ class ACuentaTerceros(ScalarMap):
         })
 
 
+class Traslado(ScalarMap):
+    """
+    Nodo requerido para la información detallada de un traslado de impuesto específico.
+
+    :param base: Atributo requerido para señalar la suma de los atributos Base de los conceptos del impuesto trasladado. No se permiten valores negativos.
+    :param impuesto: Atributo requerido para señalar la clave del tipo de impuesto retencion.
+    :param tipo_factor: Atributo requerido para señalar la clave del tipo de factor que se aplica a la base del impuesto.
+    :param tasa_o_cuota: Atributo condicional para señalar el valor de la tasa o cuota del impuesto que se traslada por los conceptos amparados en el comprobante.
+    :param importe: Atributo condicional para señalar la suma del importe del impuesto trasladado, agrupado por impuesto, TipoFactor y TasaOCuota. No se permiten valores negativos.
+    """
+
+    def __init__(
+            self,
+            base: Decimal | int,
+            impuesto: str,
+            tipo_factor: str,
+            tasa_o_cuota: Decimal | int = None,
+            importe: Decimal | int = None,
+    ):
+        super().__init__({
+            'Base': base,
+            'Impuesto': impuesto,
+            'TipoFactor': tipo_factor,
+            'TasaOCuota': tasa_o_cuota,
+            'Importe': importe,
+        })
+
+
+class Retencion(ScalarMap):
+    """
+    Nodo requerido para la información detallada de un traslado de impuesto específico.
+
+    :param base: Atributo requerido para señalar la suma de los atributos Base de los conceptos del impuesto trasladado. No se permiten valores negativos.
+    :param impuesto: Atributo requerido para señalar la clave del tipo de impuesto trasladado.
+    :param tipo_factor: Atributo requerido para señalar la clave del tipo de factor que se aplica a la base del impuesto.
+    :param tasa_o_cuota: Atributo condicional para señalar el valor de la tasa o cuota del impuesto que se traslada por los conceptos amparados en el comprobante.
+    :param importe: Atributo condicional para señalar la suma del importe del impuesto trasladado, agrupado por impuesto, TipoFactor y TasaOCuota. No se permiten valores negativos.
+    """
+
+    def __init__(
+            self,
+            base: Decimal | int,
+            impuesto: str,
+            tipo_factor: str,
+            tasa_o_cuota: Decimal | int = None,
+            importe: Decimal | int = None,
+    ):
+        super().__init__({
+            'Base': base,
+            'Impuesto': impuesto,
+            'TipoFactor': tipo_factor,
+            'TasaOCuota': tasa_o_cuota,
+            'Importe': importe,
+        })
+
+
+class Impuestos(ScalarMap):
+    """
+    Nodo condicional para expresar el resumen de los impuestos aplicables.
+
+    :param retenciones: Nodo condicional para capturar los impuestos retenidos aplicables. Es requerido cuando en los conceptos se registre algún impuesto retenido.
+    :param traslados: Nodo condicional para capturar los impuestos trasladados aplicables. Es requerido cuando en los conceptos se registre un impuesto trasladado.
+    """
+
+    def __init__(
+            self,
+            retenciones: Retencion | dict | str | Sequence[Retencion | dict | str] = None,
+            traslados: Traslado | dict | str | Sequence[Traslado | dict | str] = None,
+    ):
+        super().__init__({
+            'Retenciones': retenciones,
+            'Traslados': traslados,
+        })
+
+
 class Concepto(ScalarMap):
     """
     Nodo requerido para registrar la información detallada de un bien o servicio amparado en el comprobante.
@@ -178,8 +253,6 @@ class Concepto(ScalarMap):
     :param cuenta_predial: Nodo opcional para asentar el número de cuenta predial con el que fue registrado el inmueble, en el sistema catastral de la entidad federativa de que trate, o bien para incorporar los datos de identificación del certificado de participación inmobiliaria no amortizable.
     :param complemento_concepto: Nodo opcional donde se incluyen los nodos complementarios de extensión al concepto definidos por el SAT, de acuerdo con las disposiciones particulares para un sector o actividad específica.
     :param parte: Nodo opcional para expresar las partes o componentes que integran la totalidad del concepto expresado en el comprobante fiscal digital por Internet.
-    :param traslados: Traslados a aplicar.
-    :param retenciones: Retenciones a aplicar.
     :param _traslados_incluidos: si el valor valor_unitario ya incluye traslados.
     """
 
@@ -194,13 +267,12 @@ class Concepto(ScalarMap):
             no_identificacion: str = None,
             unidad: str = None,
             descuento: Decimal | int = None,
+            impuestos: Impuestos | dict = None,
             a_cuenta_terceros: ACuentaTerceros | dict = None,
             informacion_aduanera: str | Sequence[str] = None,
             cuenta_predial: str | Sequence[str] = None,
             complemento_concepto: CFDI | Sequence[CFDI] = None,
             parte: Parte | Sequence[Parte | dict] = None,
-            traslados: Impuesto | str | Sequence[Impuesto | str | dict] = None,
-            retenciones: Impuesto | str | Sequence[Impuesto | str | dict] = None,
             _traslados_incluidos: bool = False
     ):
         super().__init__({
@@ -213,15 +285,12 @@ class Concepto(ScalarMap):
             'NoIdentificacion': no_identificacion,
             'Unidad': unidad,
             'Descuento': descuento,
+            'Impuestos': impuestos,
             'ACuentaTerceros': a_cuenta_terceros,
             'InformacionAduanera': informacion_aduanera,
             'CuentaPredial': cuenta_predial,
             'ComplementoConcepto': complemento_concepto,
             'Parte': parte,
-            'Impuestos': {
-                'Traslados': traslados,
-                'Retenciones': retenciones
-            },
             '_traslados_incluidos': _traslados_incluidos
         })
 
@@ -279,8 +348,8 @@ class PagoComprobante:
 
 def _make_conceptos(conceptos, rnd_fn):
     def make_concepto(concepto):
-        trasladados = [x if isinstance(x, dict) else Impuesto.parse(x) for x in iterate(concepto.get("Impuestos", {}).get("Traslados"))]
-        retenciones = [x if isinstance(x, dict) else Impuesto.parse(x) for x in iterate(concepto.get("Impuestos", {}).get("Retenciones"))]
+        trasladados = [x if isinstance(x, dict) else Impuesto.parse(x) for x in iterate((concepto.get("Impuestos") or {}).get("Traslados"))]
+        retenciones = [x if isinstance(x, dict) else Impuesto.parse(x) for x in iterate((concepto.get("Impuestos") or {}).get("Retenciones"))]
 
         if concepto.get('_traslados_incluidos'):
             s_tasa = sum(c["TasaOCuota"] for c in trasladados if c["TipoFactor"] == "Tasa")

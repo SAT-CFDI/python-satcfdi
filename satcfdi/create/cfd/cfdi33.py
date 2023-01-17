@@ -70,6 +70,81 @@ class Parte(ScalarMap):
         })
 
 
+class Traslado(ScalarMap):
+    """
+    Nodo requerido para la información detallada de un traslado de impuesto específico.
+
+    :param base: Atributo requerido para señalar la suma de los atributos Base de los conceptos del impuesto trasladado. No se permiten valores negativos.
+    :param impuesto: Atributo requerido para señalar la clave del tipo de impuesto trasladado.
+    :param tipo_factor: Atributo requerido para señalar la clave del tipo de factor que se aplica a la base del impuesto.
+    :param tasa_o_cuota: Atributo condicional para señalar el valor de la tasa o cuota del impuesto que se traslada por los conceptos amparados en el comprobante.
+    :param importe: Atributo condicional para señalar la suma del importe del impuesto trasladado, agrupado por impuesto, TipoFactor y TasaOCuota. No se permiten valores negativos.
+    """
+
+    def __init__(
+            self,
+            base: Decimal | int,
+            impuesto: str,
+            tipo_factor: str,
+            tasa_o_cuota: Decimal | int = None,
+            importe: Decimal | int = None,
+    ):
+        super().__init__({
+            'Base': base,
+            'Impuesto': impuesto,
+            'TipoFactor': tipo_factor,
+            'TasaOCuota': tasa_o_cuota,
+            'Importe': importe,
+        })
+
+
+class Retencion(ScalarMap):
+    """
+    Nodo requerido para la información detallada de un traslado de impuesto específico.
+
+    :param base: Atributo requerido para señalar la suma de los atributos Base de los conceptos del impuesto trasladado. No se permiten valores negativos.
+    :param impuesto: Atributo requerido para señalar la clave del tipo de impuesto retencion.
+    :param tipo_factor: Atributo requerido para señalar la clave del tipo de factor que se aplica a la base del impuesto.
+    :param tasa_o_cuota: Atributo condicional para señalar el valor de la tasa o cuota del impuesto que se traslada por los conceptos amparados en el comprobante.
+    :param importe: Atributo condicional para señalar la suma del importe del impuesto trasladado, agrupado por impuesto, TipoFactor y TasaOCuota. No se permiten valores negativos.
+    """
+
+    def __init__(
+            self,
+            base: Decimal | int,
+            impuesto: str,
+            tipo_factor: str,
+            tasa_o_cuota: Decimal | int = None,
+            importe: Decimal | int = None,
+    ):
+        super().__init__({
+            'Base': base,
+            'Impuesto': impuesto,
+            'TipoFactor': tipo_factor,
+            'TasaOCuota': tasa_o_cuota,
+            'Importe': importe,
+        })
+
+
+class Impuestos(ScalarMap):
+    """
+    Nodo condicional para expresar el resumen de los impuestos aplicables.
+
+    :param retenciones: Nodo condicional para capturar los impuestos retenidos aplicables. Es requerido cuando en los conceptos se registre algún impuesto retenido.
+    :param traslados: Nodo condicional para capturar los impuestos trasladados aplicables. Es requerido cuando en los conceptos se registre un impuesto trasladado.
+    """
+
+    def __init__(
+            self,
+            retenciones: Retencion | dict | str | Sequence[Retencion | dict | str] = None,
+            traslados: Traslado | dict | str | Sequence[Traslado | dict | str] = None,
+    ):
+        super().__init__({
+            'Retenciones': retenciones,
+            'Traslados': traslados,
+        })
+
+
 class Concepto(ScalarMap):
     """
     Nodo requerido para registrar la información detallada de un bien o servicio amparado en el comprobante.
@@ -101,12 +176,11 @@ class Concepto(ScalarMap):
             no_identificacion: str = None,
             unidad: str = None,
             descuento: Decimal | int = None,
+            impuestos: Impuestos | dict = None,
             informacion_aduanera: str | Sequence[str] = None,
             cuenta_predial: str = None,
             complemento_concepto: Sequence[CFDI] = None,
             parte: Sequence[Parte | dict] = None,
-            traslados: Impuesto | str | Sequence[Impuesto | str | dict] = None,
-            retenciones: Impuesto | str | Sequence[Impuesto | str | dict] = None,
             _traslados_incluidos: bool = False
     ):
         super().__init__({
@@ -118,14 +192,11 @@ class Concepto(ScalarMap):
             'NoIdentificacion': no_identificacion,
             'Unidad': unidad,
             'Descuento': descuento,
+            'Impuestos': impuestos,
             'InformacionAduanera': informacion_aduanera,
             'CuentaPredial': cuenta_predial,
             'ComplementoConcepto': complemento_concepto,
             'Parte': parte,
-            'Impuestos': {
-                'Traslados': traslados,
-                'Retenciones': retenciones
-            },
             '_traslados_incluidos': _traslados_incluidos
         })
 

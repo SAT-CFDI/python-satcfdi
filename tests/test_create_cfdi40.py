@@ -73,8 +73,10 @@ def test_traslados_incluidos():
                     clave_unidad='E48',
                     descripcion='SERVICIOS DE FACTURACION',
                     valor_unitario=valor,
-                    traslados=cfdi40.Impuesto.parse('002|Tasa|0.160000'),
-                    retenciones=None,
+                    impuestos=cfdi40.Impuestos(
+                        traslados=cfdi40.Impuesto.parse('002|Tasa|0.160000'),
+                        retenciones=None,
+                    ),
                     _traslados_incluidos=True
                 )
             ]
@@ -112,8 +114,10 @@ def test_create_invoice_render(rfc, xml_file, traslados, retenciones, total, tra
                 clave_unidad='E48',
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('15390.30'),
-                traslados=traslados,
-                retenciones=retenciones,
+                impuestos=cfdi40.Impuestos(
+                    traslados=traslados,
+                    retenciones=retenciones,
+                ),
                 _traslados_incluidos=traslado_incluido,
             )
         ]
@@ -160,8 +164,10 @@ def test_create_invoice(rfc, xml_file, traslados, retenciones, total, traslado_i
                 clave_unidad='E48',
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('15390.30'),
-                traslados=traslados,
-                retenciones=retenciones,
+                impuestos=cfdi40.Impuestos(
+                    traslados=traslados,
+                    retenciones=retenciones,
+                ),
                 _traslados_incluidos=traslado_incluido
             )
         ]
