@@ -9,10 +9,11 @@ ______________________
     from satcfdi import CFDI
     
     # from file
-    cfdi = CFDI.from_file('comprobante.xml')
+    invoice = CFDI.from_file('comprobante.xml')
     
     # from string/bytes
-    cfdi = CFDI.from_string(open('comprobante.xml', 'rb').read())
+    invoice = CFDI.from_string(open('comprobante.xml', 'rb').read())
+    
     
 
 Export It
