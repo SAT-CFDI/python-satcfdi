@@ -172,51 +172,19 @@ ____________________
 
 .. code-block:: python
 
-    from decimal import Decimal
-    from satcfdi import Signer
-    from satcfdi.create.cfd import cfdi40
-    from satcfdi.create import Issuer
+    # XML
+    invoice.xml_write("my_invoice.xml")
     
-    # Load signing certificate
-    signer = Signer.load(
-        certificate=open('csd/xiqb891116qe4_csd.cer', 'rb').read(),
-        key=open('csd/xiqb891116qe4_csd.key', 'rb').read(),
-        password=open('csd/xiqb891116qe4_csd.txt', 'r').read()
-    )
+    # JSON
+    invoice.json_write("my_invoice.json", pretty_print=True)
     
-    # create an Emisor
-    emisor = Issuer(signer=signer, tax_system="606")
+    # HTML
+    invoice.html_write("my_invoice.html")
     
-    # create Comprobante
-    invoice = cfdi40.Comprobante(
-        emisor=emisor,
-        lugar_expedicion="56820",
-        receptor=cfdi40.Receptor(
-            rfc='KIJ0906199R1',
-            nombre='KIJ, S.A DE C.V.',
-            uso_cfdi='G03',
-            domicilio_fiscal_receptor="59820",
-            regimen_fiscal_receptor="601"
-        ),
-        metodo_pago='PPD',
-        serie="A",
-        folio="123456",
-        conceptos=[
-            cfdi40.Concepto(
-                clave_prod_serv='84111506',
-                cantidad=Decimal('1.00'),
-                clave_unidad='E48',
-                descripcion='SERVICIOS DE FACTURACION',
-                valor_unitario=Decimal('1250.30'),
-                impuestos=cfdi40.Impuestos(
-                    traslados='IVA|Tasa|0.160000',
-                    retenciones=['ISR|Tasa|0.100000', 'IVA|Tasa|0.106667'],
-                ),
-                _traslados_incluidos=False
-            )
-        ]
-    ).process()
+    # PDF
+    invoice.pdf_write("my_invoice.pdf")
     
+
 
 Contributing
 ____________________
