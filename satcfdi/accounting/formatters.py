@@ -100,7 +100,7 @@ def format_relaciones(cfdi: SatCFDI):
         response.append(str(c.comprobante.uuid))
         response.append(str("- " + c.comprobante.name))
 
-    return response.join("\n")
+    return "\n".join(response)
 
 
 def format_conceptos(cfdi):
