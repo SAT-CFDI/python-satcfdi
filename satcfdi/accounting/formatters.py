@@ -69,22 +69,20 @@ def format_estado_cfdi(cfdi: SatCFDI):
 
 
 def format_pagos(cfdi: SatCFDI):
+    response = []
+
     if cfdi["TipoDeComprobante"] == "P":
         for pago in cfdi["Complemento"]["Pagos"]["Pago"]:
-            response = ""
             for doc_rel in pago.get("DoctoRelacionado", []):
-                response += doc_rel["IdDocumento"] + '\n' + \
-                            '- ' + doc_rel.get("Serie", "") + doc_rel.get("Folio", "") + '\n'
-            return response[:-1]
+                response.append(doc_rel["IdDocumento"])
+                response.append('- ' + doc_rel.get("Serie", "") + doc_rel.get("Folio", ""))
 
-    if cfdi["TipoDeComprobante"] == "I":
-        payment_complements = cfdi.payments
-        if payment_complements:
-            response = ""
-            for p in payment_complements:
-                response += str(p.comprobante.uuid) + '\n' + \
-                            '- ' + p.comprobante.name + '\n'
-            return response[:-1]
+    if payment_complements := cfdi.payments:
+        for p in payment_complements:
+            response.append(str(p.comprobante.uuid))
+            response.append('- ' + p.comprobante.name)
+
+    return "\n".join(response)
 
 
 def format_relaciones(cfdi: SatCFDI):
@@ -104,4 +102,4 @@ def format_relaciones(cfdi: SatCFDI):
 
 
 def format_conceptos(cfdi):
-    return "\n".join([str(c["ClaveProdServ"]) + "\n- " + c['Descripcion'] for c in cfdi["Conceptos"]])
+    return "\n".join(str(c["ClaveProdServ"]) + "\n- " + c['Descripcion'] for c in cfdi["Conceptos"])
