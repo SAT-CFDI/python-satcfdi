@@ -1,6 +1,7 @@
 import logging
 
 from .models import Payment, PaymentsDetails, SatCFDI
+from .. import iterate
 
 logger = logging.getLogger(__name__)
 
@@ -87,18 +88,19 @@ def format_pagos(cfdi: SatCFDI):
 
 
 def format_relaciones(cfdi: SatCFDI):
-    response = ""
-    rel = cfdi.get("CfdiRelacionados")
-    if rel:
-        response += str(rel["TipoRelacion"]) + '\n'
+    response = []
+
+    for rel in iterate(cfdi.get("CfdiRelacionados")):
+        response.append(str(rel["TipoRelacion"]))
         for uuid in rel["CfdiRelacionado"]:
-            response += str(uuid) + '\n'
+            response.append(str(uuid))
 
     for c in cfdi.relations:
-        response += str(c.cfdi_relacionados["TipoRelacion"]) + '\n' + \
-                    str(c.comprobante.uuid) + '\n' + \
-                    "- " + c.comprobante.name + '\n'
-    return response[:-1]
+        response.append(str(c.cfdi_relacionados["TipoRelacion"]))
+        response.append(str(c.comprobante.uuid))
+        response.append(str("- " + c.comprobante.name))
+
+    return response.join("\n")
 
 
 def format_conceptos(cfdi):
