@@ -18,6 +18,7 @@ IVA = "002"
 IEPS = "003"
 
 IVA16 = "002|Tasa|0.160000"
+IVA08 = "002|Tasa|0.080000"
 
 RET_ISR = "01"
 RET_IVA = "02"
