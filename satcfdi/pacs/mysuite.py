@@ -40,9 +40,9 @@ class RequestTransaction(ScalarMap):
             entity: str = None,
             user: str = None,
             user_name: str = None,
-            data1: str = None,
-            data2: str = None,
-            data3: str = None,
+            data1: str | bytes = None,
+            data2: str | bytes = None,
+            data3: str | bytes = None,
     ):
         super().__init__({
             'Requestor': requestor,
@@ -110,7 +110,6 @@ class MYSuite(PAC):
         if accept & Accept.PDF:
             raise NotImplementedError("accept PDF not supported")
 
-        raw_cfdi = base64.b64encode(cfdi.xml_bytes())
         rfc = cfdi["Emisor"]["Rfc"]
         xml = soap_envelope(
             request_transaction(
@@ -121,7 +120,7 @@ class MYSuite(PAC):
                     entity=rfc,
                     user=self.requestor,
                     user_name=f"{self.country}.{rfc}.{self.user_name}",
-                    data1=raw_cfdi
+                    data1=base64.b64encode(cfdi.xml_bytes())
                 )
             )
         )
