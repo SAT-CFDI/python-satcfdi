@@ -110,7 +110,7 @@ class MYSuite(PAC):
         if accept & Accept.PDF:
             raise NotImplementedError("accept PDF not supported")
 
-        raw_cfdi = base64.b64encode(cfdi.xml_bytes()).decode()
+        raw_cfdi = base64.b64encode(cfdi.xml_bytes())
         rfc = cfdi["Emisor"]["Rfc"]
         xml = soap_envelope(
             request_transaction(
@@ -155,7 +155,7 @@ class MYSuite(PAC):
 
         timbre = CFDI.from_string(res_data_1)
 
-        if cfdi["Complemento"] is None:
+        if cfdi.get("Complemento") is None:
             cfdi["Complemento"] = {}
         cfdi["Complemento"]["TimbreFiscalDigital"] = timbre
 
