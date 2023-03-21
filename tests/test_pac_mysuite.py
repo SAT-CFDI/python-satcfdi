@@ -14,10 +14,9 @@ from utils import get_signer, verify_result
 
 def test_mysuite_test():
     mysuite = MYSuite(
-        contrato="ccde5231-5bfe-4cba-b991-a59424336d4d",
-        user="user",
-        password="password",
-        environment=Environment.PRODUCTION
+        requestor="0c320b03-d4f1-47bc-9fb4-77995f9bf33e",
+        country="MX",
+        user_name="Juan"
     )
 
     signer = get_signer('JES900109Q90')

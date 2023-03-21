@@ -95,29 +95,28 @@ class MYSuite(PAC):
     """
     RFC = "MSE090205D9A"
 
-    def __init__(self, user: str, password: str, contrato: str, environment=Environment.PRODUCTION):
+    def __init__(self, requestor: str, country: str, user_name: str, environment=Environment.PRODUCTION):
         super().__init__(environment=environment)
-        self.auth = HTTPBasicAuth(user, password)
-        self.contrato = contrato
+        self.requestor = requestor
+        self.country = country
+        self.user_name = user_name
 
     def issue(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
         raise NotImplementedError()
 
     def stamp(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
         raw_cfdi = base64.b64encode(cfdi.xml_bytes()).decode()
-
+        rfc = cfdi["Emisor"]["Rfc"]
         xml = soap_envelope(
             request_transaction(
                 data=RequestTransaction(
-                    requestor="0c320b03-d4f1-47bc-9fb4-77995f9bf33e",
+                    requestor=self.requestor,
                     transaction="TIMBRAR",
-                    country="MX",
-                    entity="JES900109Q90",
-                    user="0c320b03-d4f1-47bc-9fb4-77995f9bf33e",
-                    user_name="MX.JES900109Q90.Juan",
-                    data1=raw_cfdi,
-                    data2="",
-                    data3=""
+                    country=self.country,
+                    entity=rfc,
+                    user=self.requestor,
+                    user_name=f"{self.country}.{rfc}.{self.user_name}",
+                    data1=raw_cfdi
                 )
             )
         )
