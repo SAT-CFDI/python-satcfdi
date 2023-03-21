@@ -102,8 +102,8 @@ def test_mysuite_test():
         res = mysuite.stamp(
             cfdi=invoice
         )
-        print(res.xml[:40])
-        assert res.xml[:40] == b"<?xml version='1.0' encoding='UTF-8'?>\n<"
+        verify = verify_result(data=res.xml, filename="test_mysuite_stamp.xml")
+        assert verify
         assert not res.pdf
 
         assert mk.called
