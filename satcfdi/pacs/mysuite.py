@@ -1,17 +1,19 @@
 import base64
 
 import requests
-from lxml.etree import Element
 from lxml import etree
-from requests.auth import HTTPBasicAuth
+from lxml.etree import Element
 
 from . import PAC, Accept, Document, CancelReason, CancelationAcknowledgment, Environment, TaxpayerStatus, AcceptRejectAcknowledgment
+from .. import ResponseError
 from .. import ScalarMap
 from .. import __version__, Signer
 from ..cfdi import CFDI
 from ..create.cancela import cancelacionretencion, cancelacion
 from ..create.cancela.aceptacionrechazo import SolicitudAceptacionRechazo
 from ..transform.helpers import simple_element
+
+parser = etree.XMLParser(remove_blank_text=True, huge_tree=True)
 
 
 class RequestTransaction(ScalarMap):
@@ -120,9 +122,6 @@ class MYSuite(PAC):
                 )
             )
         )
-        xml = etree.tostring(xml, xml_declaration=False, encoding="UTF-8", pretty_print=True)
-        print(xml.decode())
-
         match self.environment:
             case Environment.PRODUCTION:
                 host = "https://www.mysuitecfdi.com"
@@ -138,10 +137,19 @@ class MYSuite(PAC):
                 "Content-Type": "text/xml; charset=utf-8",
                 "SOAPAction": "http://www.fact.com.mx/schema/ws/RequestTransaction"
             },
-            data=xml
+            data=etree.tostring(xml, xml_declaration=False, encoding="UTF-8", pretty_print=True)
         )
-        print(r.status_code)
-        print(r.text)
+
+        if not r.ok:
+            raise ResponseError(r)
+
+        result = etree.fromstring(
+            r.content,
+            parser=parser
+        )
+        print(result)
+        res = result.find('{*}Body/{*}RequestTransactionResponse/{*}RequestTransactionResult')
+        print(res)
 
         return Document(
             document_id="1234",
