@@ -16,7 +16,8 @@ def test_mysuite_test():
     mysuite = MYSuite(
         requestor="0c320b03-d4f1-47bc-9fb4-77995f9bf33e",
         country="MX",
-        user_name="Juan"
+        user_name="Juan",
+        environment=Environment.PRODUCTION
     )
 
     signer = get_signer('JES900109Q90')
