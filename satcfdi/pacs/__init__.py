@@ -194,16 +194,31 @@ class PAC:
         raise NotImplementedError()
 
     def cancel_comprobante(self, cancelation: cancelacion.Cancelacion) -> CancelationAcknowledgment:
+        """
+        Operation to Cancel a Comprobante
+        """
         raise NotImplementedError()
 
     def cancel_retencion(self, cancelation: cancelacionretencion.Cancelacion) -> CancelationAcknowledgment:
+        """
+        Operation to Cancel a Retencion
+        """
         raise NotImplementedError()
 
     def accept_reject(self, request: SolicitudAceptacionRechazo) -> AcceptRejectAcknowledgment:
+        """
+        Operation to Accept Reject a Cancellation Request
+        """
         raise NotImplementedError()
 
     def pending(self, rfc: str) -> list[str]:
+        """
+        Operation to get pending cancellations
+        """
         raise NotImplementedError()
 
     def list_69b(self, rfc: str) -> TaxpayerStatus | None:
+        """
+        Operation to get list69b status
+        """
         raise NotImplementedError()
