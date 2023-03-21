@@ -107,6 +107,9 @@ class MYSuite(PAC):
         raise NotImplementedError()
 
     def stamp(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
+        if accept & Accept.PDF:
+            raise NotImplementedError("accept PDF not supported")
+
         raw_cfdi = base64.b64encode(cfdi.xml_bytes()).decode()
         rfc = cfdi["Emisor"]["Rfc"]
         xml = soap_envelope(
@@ -147,14 +150,18 @@ class MYSuite(PAC):
             r.content,
             parser=parser
         )
-        print(result)
-        res = result.find('{*}Body/{*}RequestTransactionResponse/{*}RequestTransactionResult')
-        print(res)
+        res_data_1 = result.find('{*}Body/{*}RequestTransactionResponse/{*}RequestTransactionResult/{*}ResponseData/{*}ResponseData1').text
+        res_data_1 = base64.b64decode(res_data_1)
+
+        timbre = CFDI.from_string(res_data_1)
+
+        if cfdi["Complemento"] is None:
+            cfdi["Complemento"] = {}
+        cfdi["Complemento"]["TimbreFiscalDigital"] = timbre
 
         return Document(
-            document_id="1234",
-            xml=b"aaa" if accept & Accept.XML else None,
-            pdf=b"bbb" if accept & Accept.PDF else None
+            document_id=timbre['UUID'],
+            xml=cfdi.xml_bytes() if accept & Accept.XML else None,
         )
 
     def cancel(self, cfdi: CFDI, reason: CancelReason, substitution_id: str = None, signer: Signer = None) -> CancelationAcknowledgment:
