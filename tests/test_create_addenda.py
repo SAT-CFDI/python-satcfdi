@@ -73,3 +73,7 @@ def test_create_addenda():
     verify_invoice(invoice, f"{xml_file}")
 
     verify_invoice(invoice.process(), f"{xml_file}_process")
+
+    copy = invoice.copy()
+
+    copy.json_str(pretty_print=True)
