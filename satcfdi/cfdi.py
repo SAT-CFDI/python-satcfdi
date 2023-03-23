@@ -26,7 +26,9 @@ class CFDI(XElement):
         return CFDI.from_xml(self.to_xml(validate=validate))
 
     def copy(self) -> 'CFDI':
-        return CFDI(super().copy())
+        cfdi = CFDI(super().copy())
+        cfdi.tag = self.tag
+        return cfdi
 
     @property
     def verifica_url(self) -> str:

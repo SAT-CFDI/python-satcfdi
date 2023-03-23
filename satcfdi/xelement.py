@@ -11,6 +11,8 @@ parser = etree.XMLParser(no_network=True, remove_comments=True, remove_blank_tex
 
 
 class XElement(ScalarMap, Representable):
+    tag = None
+
     def to_xml(self, validate=False, include_schema_location=False) -> etree.Element:
         xml = cfdi_xmlify[self.tag](self)
 
@@ -26,6 +28,11 @@ class XElement(ScalarMap, Representable):
 
     def process(self, validate=False) -> 'XElement':
         return XElement.from_xml(self.to_xml(validate=validate))
+
+    def copy(self) -> 'XElement':
+        el = XElement(super().copy())
+        el.tag = self.tag
+        return el
 
     @classmethod
     def from_xml(cls, xml_root) -> 'XElement':

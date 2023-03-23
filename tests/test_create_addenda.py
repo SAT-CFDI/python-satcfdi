@@ -74,6 +74,44 @@ def test_create_addenda():
 
     verify_invoice(invoice.process(), f"{xml_file}_process")
 
+
+def test_copy_cfdi():
+    xml_file = "cfdi_copy"
+    signer = get_signer('h&e951128469')
+    emisor = cfdi40.Issuer(signer=signer, tax_system="606")
+
+    invoice = cfdi40.Comprobante(
+        emisor=emisor,
+        fecha=datetime.fromisoformat("2020-09-29T22:40:38"),
+        lugar_expedicion="56820",
+        receptor=cfdi40.Receptor(
+            rfc='KIJ0906199R1',
+            nombre='KIJ, S.A DE C.V.',
+            uso_cfdi='G03',
+            domicilio_fiscal_receptor="59820",
+            regimen_fiscal_receptor="601"
+        ),
+        metodo_pago='PPD',
+        serie="A",
+        folio="123456",
+        conceptos=[
+            cfdi40.Concepto(
+                cuenta_predial='1234567890',
+                clave_prod_serv='10101702',
+                cantidad=Decimal('1.00'),
+                clave_unidad='E48',
+                descripcion='SERVICIOS DE FACTURACION',
+                valor_unitario=Decimal('15390.30'),
+                impuestos=cfdi40.Impuestos(
+                    traslados=cfdi40.Impuesto.parse('002|Tasa|0.160000'),
+                    retenciones=[cfdi40.Impuesto.parse('001|Tasa|0.100000'), cfdi40.Impuesto.parse('002|Tasa|0.106667')],
+                ),
+                _traslados_incluidos=False
+            )
+        ]
+    )
+
     copy = invoice.copy()
+    verify_invoice(copy, f"{xml_file}")
 
     copy.json_str(pretty_print=True)
