@@ -17,6 +17,7 @@ from packaging import version
 import requests
 from lxml import etree
 from lxml.etree import QName
+from .. import Code
 
 from .. import CFDI, __version__, ResponseError, Signer, Certificate
 from . import PAC, Environment, TaxpayerStatus
@@ -243,7 +244,8 @@ class _CFDIVerificaSolicitudDescarga(_SATRequest):
             at = node.attrib.get('CodEstatus')
             if at is not None:
                 result['CodEstatus'] = at
-            result['EstadoSolicitud'] = int(node.attrib['EstadoSolicitud'])
+            estado_solicitud = int(node.attrib['EstadoSolicitud'])
+            result['EstadoSolicitud'] = Code(estado_solicitud, EstadoSolicitud(estado_solicitud).name)
             at = node.attrib.get('CodigoEstadoSolicitud')
             if at is not None:
                 result['CodigoEstadoSolicitud'] = at

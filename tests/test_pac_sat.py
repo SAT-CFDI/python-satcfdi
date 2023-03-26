@@ -6,7 +6,7 @@ from unittest import mock
 from satcfdi import __version__, CFDI
 from satcfdi.pacs import Environment
 from satcfdi.pacs import TaxpayerStatus
-from satcfdi.pacs.sat import _CFDISolicitaDescarga, _CFDIAutenticacion
+from satcfdi.pacs.sat import _CFDISolicitaDescarga, _CFDIAutenticacion, EstadoSolicitud
 from satcfdi.pacs.sat import SAT
 from satcfdi.pacs.sat import _get_listado_69b
 from tests.utils import get_signer, verify_result
@@ -132,3 +132,12 @@ def test_sat_service_solicitud():
 
         verify = verify_result(data=res, filename="test_sat_service_solicitud.xml")
         assert verify
+
+
+def test_status_code():
+    a = EstadoSolicitud.Aceptada
+    print(str(a))
+    print(str(a.name))
+    b = EstadoSolicitud(5)
+    print(str(b))
+    print(str(b.name))
