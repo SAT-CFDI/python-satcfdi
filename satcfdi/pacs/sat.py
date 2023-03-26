@@ -267,7 +267,18 @@ class _CFDIDescargaMasiva(_SATRequest):
     def process_response(self, response: etree.Element):
         paquete = response.find('{*}Body/{*}RespuestaDescargaMasivaTercerosSalida/{*}Paquete')
         header = response.find('{*}Header/{*}respuesta')
-        return header.attrib, paquete.text
+
+        def respuesta(node):
+            result = dict()
+            at = node.attrib.get('CodEstatus')
+            if at is not None:
+                result['CodEstatus'] = at
+            at = node.attrib.get('Mensaje')
+            if at is not None:
+                result['Mensaje'] = at
+            return result
+
+        return respuesta(header), paquete.text
 
 
 class _RetenAutenticacion(_CFDIAutenticacion):
