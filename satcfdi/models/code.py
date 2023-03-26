@@ -13,8 +13,8 @@ class Code:
         if self.description is None:
             return self.code
         if isinstance(self.description, list):
-            return self.code + " - " + "; ".join(self.description)
-        return self.code + " - " + str(self.description)
+            return str(self.code) + " - " + "; ".join(self.description)
+        return str(self.code) + " - " + str(self.description)
 
     def __repr__(self):
         # return '%s.%s(%s)' % (self.__class__.__module__,
@@ -29,7 +29,7 @@ class Code:
     def __eq__(self, other):
         if isinstance(other, Code):
             return self.code == other.code
-        if isinstance(other, str):
+        if isinstance(other, str) or isinstance(other, int):
             return self.code == other
         return NotImplemented
 

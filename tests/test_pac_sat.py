@@ -3,7 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 from unittest import mock
 
-from satcfdi import __version__, CFDI
+from satcfdi import __version__, CFDI, Code
 from satcfdi.pacs import Environment
 from satcfdi.pacs import TaxpayerStatus
 from satcfdi.pacs.sat import _CFDISolicitaDescarga, _CFDIAutenticacion, EstadoSolicitud
@@ -136,3 +136,9 @@ def test_sat_service_solicitud():
 
 def test_status_code():
     assert EstadoSolicitud(5).name == 'Rechazada'
+
+    est_code = Code(5, EstadoSolicitud(5).name)
+    alt_text = str(est_code)
+    assert alt_text == "5 - Rechazada"
+    assert EstadoSolicitud.Rechazada == est_code
+    assert est_code == EstadoSolicitud.Rechazada
