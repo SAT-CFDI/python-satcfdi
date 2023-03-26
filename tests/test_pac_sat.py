@@ -135,9 +135,4 @@ def test_sat_service_solicitud():
 
 
 def test_status_code():
-    a = EstadoSolicitud.Aceptada
-    print(str(a))
-    print(str(a.name))
-    b = EstadoSolicitud(5)
-    print(str(b))
-    print(str(b.name))
+    assert EstadoSolicitud(5).name == 'Rechazada'
