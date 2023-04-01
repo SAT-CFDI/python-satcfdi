@@ -1,4 +1,3 @@
-import operator
 from datetime import date
 
 

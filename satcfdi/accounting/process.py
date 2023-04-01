@@ -74,28 +74,14 @@ def filter_invoices_iter(
         pending_balance=None
 ):
     for r in invoices:
-        if not _compare(r["Emisor"]["Rfc"], rfc_emisor):
-            continue
-
-        if not _compare(r["Receptor"]["Rfc"], rfc_receptor):
-            continue
-
-        if not _compare(r.estatus, estatus):
-            continue
-
-        if not _compare(r["Fecha"], fecha):
-            continue
-
-        if not _compare(r.get("MetodoPago"), payment_method):
-            continue
-
-        if not _compare(r["TipoDeComprobante"], invoice_type):
-            continue
-
-        if not _compare(r.saldo_pendiente, pending_balance):
-            continue
-
-        yield r
+        if _compare(r["Emisor"]["Rfc"], rfc_emisor) \
+                and _compare(r["Receptor"]["Rfc"], rfc_receptor) \
+                and _compare(r.estatus, estatus) \
+                and _compare(r["Fecha"], fecha) \
+                and _compare(r.get("MetodoPago"), payment_method) \
+                and _compare(r["TipoDeComprobante"], invoice_type) \
+                and _compare(r.saldo_pendiente, pending_balance):
+            yield r
 
 
 def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, fecha=None) -> Sequence[PaymentsDetails]:
@@ -116,8 +102,6 @@ def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_
                                 docto_relacionado=dr,
                                 comprobante_pagado=invoices[UUID(dr["IdDocumento"])]
                             )
-            case _:
-                pass
 
 
 def filter_retenciones_iter(invoices: Mapping[UUID, SatCFDI], ejerc: int, rfc_emisor=None, rfc_receptor=None) -> Sequence[SatCFDI]:
