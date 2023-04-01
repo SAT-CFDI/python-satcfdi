@@ -1,15 +1,14 @@
 from collections.abc import Mapping, Sequence
 from datetime import date
-from enum import Enum, auto
 from itertools import groupby
+from typing import Iterable
 
 import xlsxwriter
-from .. import iterate
 from tabulate import tabulate
 
 from ._ansi_colors import *
-from .models import *
 from .formatters import *
+from .models import *
 
 logger = logging.getLogger(__name__)
 
@@ -23,11 +22,6 @@ IVA08 = "002|Tasa|0.080000"
 RET_ISR = "01"
 RET_IVA = "02"
 RET_IEPS = "03"
-
-
-class InvoiceType(Enum):
-    ALL = auto()
-    PAYMENT_PENDING = auto()
 
 
 def complement_invoices_data(invoices: Mapping[UUID, SatCFDI]):
@@ -69,16 +63,17 @@ def _compare(value, compare_value):
     return True
 
 
-def _filter_invoices_iter(
-        invoices: Mapping[UUID, SatCFDI],
+def filter_invoices_iter(
+        invoices: Iterable[SatCFDI],
         rfc_emisor=None,
         rfc_receptor=None,
         estatus=None,
         fecha=None,
-        invoice_type=InvoiceType.ALL,
-        payment_method=None
+        invoice_type=None,
+        payment_method=None,
+        pending_balance=None
 ):
-    for r in invoices.values():
+    for r in invoices:
         if not _compare(r["Emisor"]["Rfc"], rfc_emisor):
             continue
 
@@ -94,71 +89,44 @@ def _filter_invoices_iter(
         if not _compare(r.get("MetodoPago"), payment_method):
             continue
 
-        match invoice_type:
-            case InvoiceType.ALL:
-                yield r
+        if not _compare(r["TipoDeComprobante"], invoice_type):
+            continue
 
-            case InvoiceType.PAYMENT_PENDING:
-                if r['TipoDeComprobante'] != "I":
-                    continue
-                if r.saldo_pendiente == Decimal(0):
-                    continue
-                yield r
+        if not _compare(r.saldo_pendiente, pending_balance):
+            continue
 
+        yield r
+
+
+def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, fecha=None) -> Sequence[PaymentsDetails]:
+    for r in filter_invoices_iter(invoices.values(), rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor, estatus='1', fecha=None):
+        match r['TipoDeComprobante']:
+            case "I":
+                if r['MetodoPago'] == PUE:
+                    if not r.payments:
+                        if _compare(r["Fecha"], fecha):
+                            yield PaymentsDetails(comprobante=r)
+            case "P":
+                for p in r["Complemento"]["Pagos"]["Pago"]:
+                    if _compare(p['FechaPago'], fecha):
+                        for dr in p['DoctoRelacionado']:
+                            yield PaymentsDetails(
+                                comprobante=r,
+                                pago=p,
+                                docto_relacionado=dr,
+                                comprobante_pagado=invoices[UUID(dr["IdDocumento"])]
+                            )
             case _:
-                raise ValueError("Unknown Filter Settings")
+                pass
 
 
-def filter_invoices_by(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, estatus=None, fecha=None, invoice_type=InvoiceType.ALL, payment_method=None) -> Sequence[SatCFDI]:
-    filtered_invoices = list(_filter_invoices_iter(
-        invoices,
-        rfc_emisor=rfc_emisor,
-        rfc_receptor=rfc_receptor,
-        estatus=estatus,
-        invoice_type=invoice_type,
-        fecha=fecha,
-        payment_method=payment_method
-    ))
-    filtered_invoices.sort(key=lambda x: x["Fecha"])
+def filter_retenciones_iter(invoices: Mapping[UUID, SatCFDI], ejerc: int, rfc_emisor=None, rfc_receptor=None) -> Sequence[SatCFDI]:
+    for a in invoices.values():
+        if not _compare(a["Periodo"]["Ejerc"], ejerc):
+            continue
 
-    return filtered_invoices
-
-
-def filter_payments_by(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, fecha=None) -> Sequence[PaymentsDetails]:
-    def filter_payments_iter():
-        for r in _filter_invoices_iter(invoices, rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor, estatus='1', fecha=None):
-            match r['TipoDeComprobante']:
-                case "I":
-                    if r['MetodoPago'] == PUE:
-                        if not r.payments:
-                            if _compare(r["Fecha"], fecha):
-                                yield PaymentsDetails(comprobante=r)
-                case "P":
-                    for p in r["Complemento"]["Pagos"]["Pago"]:
-                        if _compare(p['FechaPago'], fecha):
-                            for dr in p['DoctoRelacionado']:
-                                yield PaymentsDetails(
-                                    comprobante=r,
-                                    pago=p,
-                                    docto_relacionado=dr,
-                                    comprobante_pagado=invoices[UUID(dr["IdDocumento"])]
-                                )
-                case _:
-                    pass
-
-    return list(filter_payments_iter())
-
-
-def filter_retenciones_by(invoices: Mapping[UUID, SatCFDI], ejerc: int, rfc_emisor=None, rfc_receptor=None) -> Sequence[SatCFDI]:
-    def row_iterate():
-        for a in invoices.values():
-            if not _compare(a["Periodo"]["Ejerc"], ejerc):
-                continue
-
-            if "Intereses" in a["Complemento"]:
-                yield a
-
-    return list(row_iterate())
+        if "Intereses" in a["Complemento"]:
+            yield a
 
 
 def invoice_def():

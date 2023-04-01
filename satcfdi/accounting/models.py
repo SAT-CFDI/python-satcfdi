@@ -30,7 +30,7 @@ class SatCFDI(CFDI):
         return self.get("Serie", "") + self.get("Folio", "")
 
     @property
-    def saldo_pendiente(self) -> Decimal:
+    def saldo_pendiente(self) -> Decimal | None:
         if self["TipoDeComprobante"] == "I":
             # Nota de crédito de los documentos relacionados
             credit_notes = sum(
