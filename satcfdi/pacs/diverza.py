@@ -42,7 +42,7 @@ class Diverza(PAC):
     Class to call Diverza API's
     see https://diverza.docs.apiary.io/ for more information
     """
-    RCF = "SNF171020F3A"
+    RFC = "SNF171020F3A"
 
     def __init__(self, rfc: str, id: str, token: str, environment=Environment.PRODUCTION):
         """
