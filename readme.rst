@@ -132,16 +132,13 @@ ____________________
         password=open('csd/xiqb891116qe4_csd.txt', 'r').read()
     )
     
-    # create an Emisor
-    emisor = cfdi40.Emisor(
-        rfc=signer.rfc,
-        nombre=signer.legal_name,
-        regimen_fiscal="601"
-    )
-    
     # create Comprobante
     invoice = cfdi40.Comprobante(
-        emisor=emisor,
+        emisor=cfdi40.Emisor(
+            rfc=signer.rfc,
+            nombre=signer.legal_name,
+            regimen_fiscal="601"
+        ),
         lugar_expedicion="56820",
         receptor=cfdi40.Receptor(
             rfc='KIJ0906199R1',

@@ -17,16 +17,13 @@ ______________________
         password=open('csd/xiqb891116qe4_csd.txt', 'r').read()
     )
     
-    # create an Emisor
-    emisor = cfdi40.Emisor(
-        rfc=signer.rfc,
-        nombre=signer.legal_name,
-        regimen_fiscal="601"
-    )
-    
     # create Comprobante
     invoice = cfdi40.Comprobante(
-        emisor=emisor,
+        emisor=cfdi40.Emisor(
+            rfc=signer.rfc,
+            nombre=signer.legal_name,
+            regimen_fiscal="601"
+        ),
         lugar_expedicion="56820",
         receptor=cfdi40.Receptor(
             rfc='KIJ0906199R1',
@@ -76,16 +73,13 @@ ______________________
         password=open('csd/xiqb891116qe4_csd.txt', 'r').read()
     )
     
-    # create an Emisor
-    emisor = cfdi40.Emisor(
-        rfc=signer.rfc,
-        nombre=signer.legal_name,
-        regimen_fiscal="601"
-    )
-    
     # create Comprobante
     invoice = cfdi40.Comprobante.nomina(
-        emisor=emisor,
+        emisor=cfdi40.Emisor(
+            rfc=signer.rfc,
+            nombre=signer.legal_name,
+            regimen_fiscal="601"
+        ),
         receptor=cfdi40.Receptor(
             rfc='KIJ0906199R1',
             nombre='KIJ, S.A DE C.V.',
@@ -155,16 +149,13 @@ ______________________
         password=open('csd/xiqb891116qe4_csd.txt', 'r').read()
     )
     
-    # create an Emisor
-    emisor = cfdi40.Emisor(
-        rfc=signer.rfc,
-        nombre=signer.legal_name,
-        regimen_fiscal="601"
-    )
-    
     # create Comprobante
     invoice = cfdi40.Comprobante.pago(
-        emisor=emisor,
+        emisor=cfdi40.Emisor(
+            rfc=signer.rfc,
+            nombre=signer.legal_name,
+            regimen_fiscal="601"
+        ),
         receptor=cfdi40.Receptor(
             rfc='KIJ0906199R1',
             nombre='KIJ, S.A DE C.V.',
@@ -213,19 +204,16 @@ __________________________________
         password=open('csd/xiqb891116qe4_csd.txt', 'r').read()
     )
     
-    # create an Emisor
-    emisor = cfdi40.Emisor(
-        rfc=signer.rfc,
-        nombre=signer.legal_name,
-        regimen_fiscal="601"
-    )
-    
     # load comprobante
     cfdi = CFDI.from_file('comprobante.xml')
     
     # create Comprobante
     invoice = cfdi40.Comprobante.pago_comprobantes(
-        emisor=emisor,
+        emisor=cfdi40.Emisor(
+            rfc=signer.rfc,
+            nombre=signer.legal_name,
+            regimen_fiscal="601"
+        ),
         lugar_expedicion="56820",
         comprobantes=cfdi,
         fecha_pago=datetime.now(),
@@ -254,16 +242,13 @@ _______________________
         password=open('csd/xiqb891116qe4_csd.txt', 'r').read()
     )
     
-    # create an Emisor
-    emisor = cfdi40.Emisor(
-        rfc=signer.rfc,
-        nombre=signer.legal_name,
-        regimen_fiscal="601"
-    )
-    
     # create Comprobante
     invoice = cfdi40.Comprobante(
-        emisor=emisor,
+        emisor=cfdi40.Emisor(
+            rfc=signer.rfc,
+            nombre=signer.legal_name,
+            regimen_fiscal="601"
+        ),
         lugar_expedicion="56820",
         receptor=cfdi40.Receptor(
             rfc='KIJ0906199R1',
