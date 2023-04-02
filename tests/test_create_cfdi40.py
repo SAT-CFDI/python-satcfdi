@@ -299,6 +299,21 @@ def test_create_pago_multiple(rfc, xml_file, traslados, retenciones, total, tras
 
     verify_invoice(invoice, f"mpago_{xml_file}")
 
+    invoice2 = cfdi40.Comprobante.pago_comprobantes(
+        lugar_expedicion="56820",
+        fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
+        comprobantes=[ingreso_invoice, ingreso_invoice],
+        fecha_pago=datetime.fromisoformat("2020-01-02T22:40:38"),
+        forma_pago="03",
+        serie="A",
+        folio="123456",
+    )
+    invoice2.sign(signer)
+
+    assert invoice2['Complemento']['Pago'][0]['Monto'] == Decimal(total) * 2
+
+    verify_invoice(invoice2, f"mpago2_{xml_file}")
+
 
 def test_nomina():
     xml_file = "invoice_nomina"
