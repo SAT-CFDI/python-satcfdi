@@ -15,8 +15,11 @@ sat = SAT()
 
 
 class SatCFDI(CFDI):
-    relations = None  # type: list[Relation]
-    payments = None  # type: list[Payment]
+    def __init__(self):
+        super().__init__()
+        self.relations = []  # type: list[Relation]
+        self.payments = []  # type: list[Payment]
+
     """
     SatCFDI is an extension of a CFDI to represent a CFDI that has been sent to SAT
     """

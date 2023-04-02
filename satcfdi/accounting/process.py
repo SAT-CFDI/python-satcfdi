@@ -26,10 +26,6 @@ RET_IEPS = "03"
 
 def complement_invoices_data(invoices: Mapping[UUID, SatCFDI]):
     for c in invoices.values():
-        c.relations = []
-        c.payments = []
-
-    for c in invoices.values():
         for cfdi_rel in iterate(c.get("CfdiRelacionados")):
             for uuid in cfdi_rel["CfdiRelacionado"]:
                 if cfdi := invoices.get(UUID(uuid)):
