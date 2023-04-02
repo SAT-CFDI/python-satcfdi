@@ -1,13 +1,9 @@
 """cfdi http://www.sat.gob.mx/cfd/3"""
-from decimal import Decimal
-from datetime import datetime, date, time
 from collections.abc import *
+from decimal import Decimal
 
 from . import cfdi40, pago10
-from .. import Issuer
-from ... import CFDI, XElement, ScalarMap
-
-_a = Issuer
+from ... import CFDI, ScalarMap
 
 
 class Impuesto(cfdi40.Impuesto):
@@ -226,6 +222,28 @@ class Receptor(ScalarMap):
             'Nombre': nombre,
             'ResidenciaFiscal': residencia_fiscal,
             'NumRegIdTrib': num_reg_id_trib,
+        })
+
+
+class Emisor(ScalarMap):
+    """
+    Nodo requerido para expresar la información del contribuyente emisor del comprobante.
+
+    :param rfc: Atributo requerido para registrar la Clave del Registro Federal de Contribuyentes correspondiente al contribuyente emisor del comprobante.
+    :param regimen_fiscal: Atributo requerido para incorporar la clave del régimen del contribuyente emisor al que aplicará el efecto fiscal de este comprobante.
+    :param nombre: Atributo opcional para registrar el nombre, denominación o razón social del contribuyente emisor del comprobante.
+    """
+
+    def __init__(
+            self,
+            rfc: str,
+            regimen_fiscal: str,
+            nombre: str = None,
+    ):
+        super().__init__({
+            'Rfc': rfc,
+            'RegimenFiscal': regimen_fiscal,
+            'Nombre': nombre,
         })
 
 

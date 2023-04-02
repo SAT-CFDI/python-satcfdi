@@ -124,7 +124,6 @@ ____________________
     from decimal import Decimal
     from satcfdi import Signer
     from satcfdi.create.cfd import cfdi40
-    from satcfdi.create import Issuer
     
     # Load signing certificate
     signer = Signer.load(
@@ -134,7 +133,11 @@ ____________________
     )
     
     # create an Emisor
-    emisor = Issuer(signer=signer, tax_system="606")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
     
     # create Comprobante
     invoice = cfdi40.Comprobante(
@@ -164,7 +167,9 @@ ____________________
                 _traslados_incluidos=False
             )
         ]
-    ).process()
+    )
+    invoice.sign(signer)
+    invoice = invoice.process()
     
 
 Output

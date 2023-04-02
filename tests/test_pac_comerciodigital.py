@@ -3,7 +3,6 @@ from datetime import datetime
 from decimal import Decimal
 from unittest import mock
 
-from satcfdi.create import Issuer
 from satcfdi.create.cfd import cfdi40
 from satcfdi.pacs import Environment
 from satcfdi.pacs.comerciodigital import ComercioDigital
@@ -18,7 +17,11 @@ def test_comercio_digital_test():
     )
 
     signer = get_signer('xia190128j61')
-    emisor = Issuer(signer=signer, tax_system="601")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
 
     invoice = cfdi40.Comprobante(
         emisor=emisor,
@@ -49,6 +52,7 @@ def test_comercio_digital_test():
             _traslados_incluidos=True
         )
     )
+    invoice.sign(signer)
 
     with mock.patch(f'requests.request') as mk:
         mk.return_value.ok = True

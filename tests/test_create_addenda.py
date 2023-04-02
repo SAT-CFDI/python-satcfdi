@@ -32,7 +32,11 @@ def verify_invoice(invoice, path, include_metadata=False):
 def test_create_addenda():
     xml_file = "cfdi_addenda"
     signer = get_signer('h&e951128469')
-    emisor = cfdi40.Issuer(signer=signer, tax_system="606")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="606",
+    )
 
     invoice = cfdi40.Comprobante(
         emisor=emisor,
@@ -69,6 +73,7 @@ def test_create_addenda():
             )
         )
     )
+    invoice.sign(signer=signer)
 
     verify_invoice(invoice, f"{xml_file}")
 
@@ -78,7 +83,11 @@ def test_create_addenda():
 def test_copy_cfdi():
     xml_file = "cfdi_copy"
     signer = get_signer('h&e951128469')
-    emisor = cfdi40.Issuer(signer=signer, tax_system="606")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="606",
+    )
 
     invoice = cfdi40.Comprobante(
         emisor=emisor,
@@ -110,6 +119,7 @@ def test_copy_cfdi():
             )
         ]
     )
+    invoice.sign(signer=signer)
 
     copy = invoice.copy()
     verify_invoice(copy, f"{xml_file}")

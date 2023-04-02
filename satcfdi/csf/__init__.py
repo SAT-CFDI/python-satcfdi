@@ -3,7 +3,7 @@ import requests
 import urllib3
 from bs4 import BeautifulSoup
 # noinspection PyUnresolvedReferences
-from satcfdi.transform.catalog import CATALOGS
+from ..transform.catalog import CATALOGS
 from .. import ResponseError, __version__, Code
 
 urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'

@@ -4,10 +4,8 @@ from datetime import datetime
 from decimal import Decimal
 from unittest import mock
 
-from requests.auth import HTTPBasicAuth
-from satcfdi import Signer
 
-from satcfdi.create import Issuer
+from satcfdi import Signer
 from satcfdi.create.cfd import cfdi40
 from satcfdi.pacs import Environment
 from satcfdi.pacs.mysuite import MYSuite
@@ -29,7 +27,11 @@ def test_mysuite_test():
         key=open(os.path.join(current_dir, f'csd/Certificado_Prueba_Vigente_SAT_JES900109Q90/30001000000400002436.key'), 'rb').read(),
         password=open(os.path.join(current_dir, f'csd/Certificado_Prueba_Vigente_SAT_JES900109Q90/pass.txt'), 'rb').read()
     )
-    emisor = Issuer(signer=signer, tax_system="601")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
 
     invoice = cfdi40.Comprobante(
         emisor=emisor,
@@ -60,6 +62,7 @@ def test_mysuite_test():
             _traslados_incluidos=True
         )
     )
+    invoice.sign(signer)
 
     with mock.patch(f'requests.post') as mk:
         mk.return_value.content = b"""<?xml version="1.0" encoding="utf-8"?>

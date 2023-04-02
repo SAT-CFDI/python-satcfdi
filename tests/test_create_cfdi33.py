@@ -42,7 +42,11 @@ def verify_invoice(invoice, path):
 @pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total, traslado_incluido', invoices)
 def test_create_invoice(rfc, xml_file, traslados, retenciones, total, traslado_incluido):
     signer = get_signer(rfc)
-    emisor = cfdi33.Issuer(signer=signer, tax_system="606")
+    emisor = cfdi33.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
 
     invoice = cfdi33.Comprobante(
         emisor=emisor,
@@ -71,6 +75,7 @@ def test_create_invoice(rfc, xml_file, traslados, retenciones, total, traslado_i
             )
         ]
     )
+    invoice.sign(signer)
     invoice.to_xml(validate=True)
     assert invoice["Total"] == Decimal(total)
 
@@ -97,7 +102,11 @@ def test_create_invoice(rfc, xml_file, traslados, retenciones, total, traslado_i
 @pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total, traslado_incluido', invoices)
 def test_create_pago(rfc, xml_file, traslados, retenciones, total, traslado_incluido):
     signer = get_signer(rfc)
-    emisor = cfdi33.Issuer(signer=signer, tax_system="606")
+    emisor = cfdi33.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
 
     ingreso_invoice = CFDI.from_file(os.path.join(current_dir, f"{current_filename}/{xml_file}_stamped.xml"))
 
@@ -111,6 +120,7 @@ def test_create_pago(rfc, xml_file, traslados, retenciones, total, traslado_incl
         serie="A",
         folio="123456",
     )
+    invoice.sign(signer)
 
     assert invoice['Complemento']['Pago'][0]['Monto'] == Decimal(total)
 
@@ -120,7 +130,11 @@ def test_create_pago(rfc, xml_file, traslados, retenciones, total, traslado_incl
 @pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total, traslado_incluido', invoices)
 def test_create_pago_parcial(rfc, xml_file, traslados, retenciones, total, traslado_incluido):
     signer = get_signer(rfc)
-    emisor = cfdi33.Issuer(signer=signer, tax_system="606")
+    emisor = cfdi33.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
 
     ingreso_invoice = CFDI.from_file(os.path.join(current_dir, f"{current_filename}/{xml_file}_stamped.xml"))
 
@@ -139,6 +153,7 @@ def test_create_pago_parcial(rfc, xml_file, traslados, retenciones, total, trasl
         serie="A",
         folio="123456",
     )
+    invoice.sign(signer)
 
     assert invoice['Complemento']['Pago'][0]['Monto'] == Decimal("3245.12")
 
@@ -148,7 +163,11 @@ def test_create_pago_parcial(rfc, xml_file, traslados, retenciones, total, trasl
 @pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total, traslado_incluido', invoices)
 def test_create_pago_multiple(rfc, xml_file, traslados, retenciones, total, traslado_incluido):
     signer = get_signer(rfc)
-    emisor = cfdi33.Issuer(signer=signer, tax_system="606")
+    emisor = cfdi33.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
 
     ingreso_invoice = CFDI.from_file(os.path.join(current_dir, f"{current_filename}/{xml_file}_stamped.xml"))
 
@@ -162,6 +181,7 @@ def test_create_pago_multiple(rfc, xml_file, traslados, retenciones, total, tras
         serie="A",
         folio="123456",
     )
+    invoice.sign(signer)
 
     assert invoice['Complemento']['Pago'][0]['Monto'] == Decimal(total) * 2
 
@@ -172,7 +192,11 @@ def test_nomina():
     xml_file = "invoice_nomina"
 
     signer = get_signer('xiqb891116qe4')
-    emisor = cfdi33.Issuer(signer=signer, tax_system="606")
+    emisor = cfdi33.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
 
     invoice = cfdi33.Comprobante.nomina(
         emisor=emisor,
@@ -263,5 +287,6 @@ def test_nomina():
         folio="123456",
         fecha=datetime.fromisoformat("2020-09-29T22:40:38")
     )
+    invoice.sign(signer)
 
     verify_invoice(invoice, f"{xml_file}")

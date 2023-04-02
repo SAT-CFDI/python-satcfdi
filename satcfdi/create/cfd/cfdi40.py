@@ -3,15 +3,14 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
-from typing import Iterator
 
+from .. import Signer
 from . import pago20
-from ..compute import make_impuestos, rounder, make_impuestos_dr, make_impuesto, \
+from ..compute import make_impuestos, rounder, make_impuesto, \
     make_impuestos_dr_parcial
-from ... import CFDI, XElement, ScalarMap
-from ...create import Issuer
-from ...utils import iterate
+from ... import CFDI, ScalarMap
 from ...transform import get_timezone
+from ...utils import iterate
 
 _impuestos = {
     "ISR": "001",
@@ -329,6 +328,31 @@ class Receptor(ScalarMap):
         })
 
 
+class Emisor(ScalarMap):
+    """
+    Nodo requerido para expresar la información del contribuyente emisor del comprobante.
+
+    :param rfc: Atributo requerido para registrar la Clave del Registro Federal de Contribuyentes correspondiente al contribuyente emisor del comprobante.
+    :param nombre: Atributo requerido para registrar el nombre, denominación o razón social del contribuyente inscrito en el RFC, del emisor del comprobante.
+    :param regimen_fiscal: Atributo requerido para incorporar la clave del régimen del contribuyente emisor al que aplicará el efecto fiscal de este comprobante.
+    :param fac_atr_adquirente: Atributo condicional para expresar el número de operación proporcionado por el SAT cuando se trate de un comprobante a través de un PCECFDI o un PCGCFDISP.
+    """
+
+    def __init__(
+            self,
+            rfc: str,
+            nombre: str,
+            regimen_fiscal: str,
+            fac_atr_adquirente: str = None,
+    ):
+        super().__init__({
+            'Rfc': rfc,
+            'Nombre': nombre,
+            'RegimenFiscal': regimen_fiscal,
+            'FacAtrAdquirente': fac_atr_adquirente,
+        })
+        
+
 @dataclass
 class PagoComprobante:
     comprobante: CFDI
@@ -417,7 +441,7 @@ class Comprobante(CFDI):
 
     def __init__(
             self,
-            emisor: Issuer,
+            emisor: Emisor | dict,
             lugar_expedicion: str,
             receptor: Receptor | dict,
             conceptos: Concepto | Sequence[Concepto | dict],
@@ -453,8 +477,6 @@ class Comprobante(CFDI):
         super().__init__({
             'Version': self.version,
             'Fecha': fecha,
-            'NoCertificado': emisor.certificate_number,
-            'Certificado': emisor.signer.certificate_base64() if emisor.signer else '',
             'Sello': '',
             'SubTotal': sub_total,
             'Moneda': moneda,
@@ -472,26 +494,25 @@ class Comprobante(CFDI):
             'Confirmacion': confirmacion,
             'InformacionGlobal': informacion_global,
             'CfdiRelacionados': cfdi_relacionados,
-            'Emisor': {
-                "Rfc": emisor.rfc,
-                "Nombre": emisor.legal_name,
-                "RegimenFiscal": emisor.tax_system
-            },
+            'Emisor': emisor,
             'Receptor': receptor,
             'Conceptos': conceptos,
             'Impuestos': impuestos,
             'Complemento': complemento,
             'Addenda': addenda,
         })
-        if emisor.signer:
-            self['Sello'] = emisor.signer.sign_sha256(
-                self.cadena_original().encode()
-            )
+
+    def sign(self, signer: Signer):
+        self['NoCertificado'] = signer.certificate_number
+        self['Certificado'] = signer.certificate_base64()
+        self['Sello'] = signer.sign_sha256(
+            self.cadena_original().encode()
+        )
 
     @classmethod
     def pago(
             cls,
-            emisor: Issuer,
+            emisor: Emisor | dict,
             lugar_expedicion: str,
             receptor: Receptor | dict,
             complemento_pago: CFDI,
@@ -559,7 +580,7 @@ class Comprobante(CFDI):
     @classmethod
     def pago_comprobantes(
             cls,
-            emisor: Issuer,
+            emisor: Emisor | dict,
             lugar_expedicion: str,
             comprobantes: CFDI | PagoComprobante | Sequence[CFDI | PagoComprobante],
             fecha_pago: datetime,
@@ -597,8 +618,8 @@ class Comprobante(CFDI):
 
         if not all(
                 c.comprobante["Moneda"] == moneda
-                and c.comprobante["Emisor"]["Rfc"] == emisor.rfc
-                and c.comprobante["Emisor"]["RegimenFiscal"] == emisor.tax_system
+                and c.comprobante["Emisor"]["Rfc"] == emisor["Rfc"]
+                and c.comprobante["Emisor"]["RegimenFiscal"] == emisor["RegimenFiscal"]
                 and c.comprobante["Receptor"]["Rfc"] == receptor["Rfc"]
                 and c.comprobante["Receptor"].get("RegimenFiscalReceptor") == receptor.get("RegimenFiscalReceptor")
                 for c in comprobantes
@@ -649,7 +670,7 @@ class Comprobante(CFDI):
     @classmethod
     def nomina(
             cls,
-            emisor: Issuer,
+            emisor: Emisor | dict,
             lugar_expedicion: str,
             receptor: Receptor | dict,
             complemento_nomina: CFDI,

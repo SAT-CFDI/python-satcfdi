@@ -2,8 +2,8 @@ from collections.abc import *
 from datetime import datetime
 from decimal import Decimal
 
+from .. import Signer
 from ... import CFDI, XElement, ScalarMap
-from ...create import Issuer
 from ...transform import get_timezone
 
 
@@ -208,6 +208,28 @@ class Receptor(ScalarMap):
         })
 
 
+class Emisor(ScalarMap):
+    """
+    Nodo requerido para expresar la información del contribuyente emisor del comprobante que ampara retenciones e información de pagos.
+
+    :param rfc_e: Atributo requerido para registrar la clave del Registro Federal de Contribuyentes correspondiente al contribuyente emisor del comprobante que ampara retenciones e información de pagos, sin guiones o espacios.
+    :param nom_den_raz_soc_e: Atributo requerido para registrar el nombre, denominación o razón social del contribuyente inscrito en el RFC, emisor del comprobante que ampara retenciones e información de pagos.
+    :param regimen_fiscal_e: Atributo requerido para incorporar la clave del régimen del contribuyente emisor del comprobante que ampara retenciones e información de pagos.
+    """
+
+    def __init__(
+            self,
+            rfc_e: str,
+            nom_den_raz_soc_e: str,
+            regimen_fiscal_e: str,
+    ):
+        super().__init__({
+            'RfcE': rfc_e,
+            'NomDenRazSocE': nom_den_raz_soc_e,
+            'RegimenFiscalE': regimen_fiscal_e,
+        })
+
+
 class Retenciones(CFDI):
     """
     Estándar del Comprobante Fiscal Digital por Internet que ampara retenciones e información de pagos. Los importes se expresan en la moneda de pesos mexicanos (MXN).
@@ -219,7 +241,7 @@ class Retenciones(CFDI):
             self,
             lugar_exp_retenc: str,
             cve_retenc: str,
-            emisor: Issuer | dict,
+            emisor: Emisor | dict,
             receptor: Receptor | dict,
             periodo: Periodo | dict,
             totales: Totales | dict,
@@ -254,26 +276,23 @@ class Retenciones(CFDI):
         super().__init__({
             'Version': self.version,
             'Sello': '',
-            'NoCertificado': emisor.certificate_number,
-            'Certificado': emisor.signer.certificate_base64(),
             'FechaExp': fecha_exp,
             'LugarExpRetenc': lugar_exp_retenc,
             'CveRetenc': cve_retenc,
             'FolioInt': folio_int,
             'DescRetenc': desc_retenc,
             'CfdiRetenRelacionados': cfdi_reten_relacionados,
-            'Emisor': {
-                "RfcE": emisor.rfc,
-                "NomDenRazSocE": emisor.legal_name,
-                "RegimenFiscalE": emisor.tax_system
-            },
+            'Emisor': emisor,
             'Receptor': receptor,
             'Periodo': periodo,
             'Totales': totales,
             'Complemento': complemento,
             'Addenda': addenda,
         })
-        if emisor.signer:
-            self['Sello'] = emisor.signer.sign_sha256(
-                self.cadena_original().encode()
-            )
+
+    def sign(self, signer: Signer):
+        self['NoCertificado'] = signer.certificate_number,
+        self['Certificado'] = signer.certificate_base64(),
+        self['Sello'] = signer.sign_sha256(
+            self.cadena_original().encode()
+        )

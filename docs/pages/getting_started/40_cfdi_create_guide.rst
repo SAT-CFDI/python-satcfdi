@@ -9,7 +9,6 @@ ______________________
     from decimal import Decimal
     from satcfdi import Signer
     from satcfdi.create.cfd import cfdi40
-    from satcfdi.create import Issuer
     
     # Load signing certificate
     signer = Signer.load(
@@ -19,7 +18,11 @@ ______________________
     )
     
     # create an Emisor
-    emisor = Issuer(signer=signer, tax_system="606")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
     
     # create Comprobante
     invoice = cfdi40.Comprobante(
@@ -49,7 +52,11 @@ ______________________
                 _traslados_incluidos=False  # indica si el valor unitario incluye los traslados
             )
         ]
-    ).process()
+    )
+    invoice.sign(signer)
+    invoice = invoice.process()
+    
+    print(invoice.json_str(pretty_print=True))
     
 
 Nomina
@@ -60,7 +67,6 @@ ______________________
     from datetime import date
     from decimal import Decimal
     from satcfdi import Signer
-    from satcfdi.create import Issuer
     from satcfdi.create.cfd import cfdi40, nomina12
     
     # Load signing certificate
@@ -71,7 +77,11 @@ ______________________
     )
     
     # create an Emisor
-    emisor = Issuer(signer=signer, tax_system="606")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
     
     # create Comprobante
     invoice = cfdi40.Comprobante.nomina(
@@ -122,7 +132,9 @@ ______________________
         ),
         serie="A",
         folio="123456"
-    ).process()
+    )
+    invoice.sign(signer)
+    invoice = invoice.process()
     
 
 Pago
@@ -135,7 +147,6 @@ ______________________
     
     from satcfdi import Signer
     from satcfdi.create.cfd import cfdi40, pago20
-    from satcfdi.create import Issuer
     
     # Load signing certificate
     signer = Signer.load(
@@ -145,7 +156,11 @@ ______________________
     )
     
     # create an Emisor
-    emisor = Issuer(signer=signer, tax_system="606")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
     
     # create Comprobante
     invoice = cfdi40.Comprobante.pago(
@@ -176,7 +191,10 @@ ______________________
         ),
         serie="A",
         folio="123456"
-    ).process()
+    )
+    invoice.sign(signer)
+    invoice = invoice.process()
+    
     
 
 Pago a partir de un Comprobante
@@ -186,7 +204,6 @@ __________________________________
 
     from datetime import datetime
     from satcfdi import Signer, CFDI
-    from satcfdi.create import Issuer
     from satcfdi.create.cfd import cfdi40
     
     # Load signing certificate
@@ -197,7 +214,11 @@ __________________________________
     )
     
     # create an Emisor
-    emisor = Issuer(signer=signer, tax_system="606")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
     
     # load comprobante
     cfdi = CFDI.from_file('comprobante.xml')
@@ -211,7 +232,9 @@ __________________________________
         forma_pago="03",
         serie="A",
         folio="123456"
-    ).process()
+    )
+    invoice.sign(signer)
+    invoice = invoice.process()
     
 
 Addenda
@@ -223,7 +246,6 @@ _______________________
     from satcfdi import Signer
     from satcfdi.create.addendas import dvz11
     from satcfdi.create.cfd import cfdi40
-    from satcfdi.create import Issuer
     
     # Load signing certificate
     signer = Signer.load(
@@ -233,7 +255,11 @@ _______________________
     )
     
     # create an Emisor
-    emisor = Issuer(signer=signer, tax_system="606")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
     
     # create Comprobante
     invoice = cfdi40.Comprobante(
@@ -268,5 +294,6 @@ _______________________
                 tipo_documento="Factura"
             )
         )
-    ).process()
-    
+    )
+    invoice.sign(signer)
+    invoice = invoice.process()

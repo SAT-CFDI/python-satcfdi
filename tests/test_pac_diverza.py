@@ -4,7 +4,6 @@ from datetime import datetime
 from decimal import Decimal
 from unittest import mock
 
-from satcfdi.create import Issuer
 from satcfdi.pacs import Environment
 from satcfdi.pacs.diverza import Diverza
 from satcfdi.create.cfd import cfdi33, cfdi40, pago20
@@ -38,7 +37,11 @@ def test_diverza_validate_rfc():
 
 def test_diverza_stamp():
     signer = get_signer('xiqb891116qe4')
-    emisor = Issuer(signer=signer, tax_system="601")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
 
     diverza = Diverza(
         rfc="AAA010101AAA",
@@ -74,6 +77,7 @@ def test_diverza_stamp():
             )
         ]
     )
+    cfdi.sign(signer)
 
     with mock.patch(f'requests.request') as mk:
         mk.return_value.json = mock.Mock(return_value={
@@ -109,7 +113,11 @@ def test_diverza_stamp():
 
 def test_diverza_stamp_v40():
     signer = get_signer('xiqb891116qe4')
-    emisor = Issuer(signer=signer, tax_system="601")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
 
     diverza = Diverza(
         rfc="AAA010101AAA",
@@ -147,6 +155,7 @@ def test_diverza_stamp_v40():
             )
         ]
     )
+    cfdi.sign(signer)
 
     with mock.patch(f'requests.request') as mk:
         mk.return_value.json = mock.Mock(return_value={
@@ -182,7 +191,11 @@ def test_diverza_stamp_v40():
 
 def test_diverza_stamp_pago_v40():
     signer = get_signer('xiqb891116qe4')
-    emisor = Issuer(signer=signer, tax_system="601")
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
 
     diverza = Diverza(
         rfc="AAA010101AAA",
@@ -221,6 +234,7 @@ def test_diverza_stamp_pago_v40():
         serie="A",
         folio="123456"
     )
+    cfdi.sign(signer)
 
     with mock.patch(f'requests.request') as mk:
         mk.return_value.json = mock.Mock(return_value={

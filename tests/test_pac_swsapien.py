@@ -4,7 +4,6 @@ from datetime import datetime
 from decimal import Decimal
 from unittest import mock
 from satcfdi import CFDI
-from satcfdi.create import Issuer
 from satcfdi.create.cancela import cancelacionretencion
 from satcfdi.create.cancela.aceptacionrechazo import SolicitudAceptacionRechazo, Folios
 from satcfdi.create.cancela.cancelacion import Cancelacion, Folio
@@ -25,8 +24,12 @@ swsapien = SWSapien(
 
 def test_swsapien_test():
     signer = get_signer('xia190128j61', get_csd=True)
-    emisor = Issuer(signer=signer, tax_system="601")
-    assert emisor.legal_name == "XENON INDUSTRIAL ARTICLES"
+    emisor = cfdi40.Emisor(
+        rfc=signer.rfc,
+        nombre=signer.legal_name,
+        regimen_fiscal="601"
+    )
+    assert emisor["Nombre"] == "XENON INDUSTRIAL ARTICLES"
 
     invoice = cfdi40.Comprobante(
         emisor=emisor,
@@ -57,6 +60,7 @@ def test_swsapien_test():
             _traslados_incluidos=True
         )
     )
+    invoice.sign(signer)
 
     with mock.patch(f'requests.request') as mk:
         mk.return_value.ok = True
