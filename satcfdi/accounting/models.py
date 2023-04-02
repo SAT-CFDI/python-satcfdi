@@ -15,8 +15,8 @@ sat = SAT()
 
 
 class SatCFDI(CFDI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.relations = []  # type: list[Relation]
         self.payments = []  # type: list[Payment]
 
