@@ -11,7 +11,7 @@
     <cfdi:CfdiRelacionados TipoRelacion="09">
         <cfdi:CfdiRelacionado UUID="F4F09AEF-57F2-4BE0-A828-87D1A80ED61C" />
     </cfdi:CfdiRelacionados>
-    <cfdi:Emisor Rfc=" AAA010101AAA" RegimenFiscal="622" Nombre="Esta es una demostración" />
+    <cfdi:Emisor Rfc="AAA010101AAA" RegimenFiscal="622" Nombre="Esta es una demostración" />
     <cfdi:Receptor Rfc="BASJ600902KL9" UsoCFDI="P01"  Nombre="Juanito Bananas De la Sierra"  DomicilioFiscalReceptor="99999" RegimenFiscalReceptor="630" />
     <cfdi:Conceptos>
       <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Descripcion"

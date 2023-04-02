@@ -15,14 +15,17 @@ sat = SAT()
 
 
 class SatCFDI(CFDI):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.relations = []  # type: list[Relation]
-        self.payments = []  # type: list[Payment]
-
     """
     SatCFDI is an extension of a CFDI to represent a CFDI that has been sent to SAT
     """
+
+    def __new__(cls, *args, **kwargs):
+        return super().__new__(cls, *args, **kwargs)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.relations = []  # type: list[Relation]
+        self.payments = []  # type: list[Payment]
 
     @property
     def uuid(self):

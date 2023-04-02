@@ -15,7 +15,7 @@
                 'ValorUnitario': Decimal('0')}],
  'Emisor': {'Nombre': 'Esta es una demostración',
             'RegimenFiscal': Code('622', 'Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras'),
-            'Rfc': ' AAA010101AAA'},
+            'Rfc': 'AAA010101AAA'},
  'Exportacion': Code('03', 'Temporal'),
  'Fecha': datetime.datetime(2021, 12, 8, 23, 59, 59),
  'FormaPago': Code('02', 'Cheque nominativo'),
