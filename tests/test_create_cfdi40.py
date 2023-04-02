@@ -278,7 +278,8 @@ def test_create_pago_multiple(rfc, xml_file, traslados, retenciones, total, tras
     emisor = cfdi40.Emisor(
         rfc=signer.rfc,
         nombre=signer.legal_name,
-        regimen_fiscal="601"
+        regimen_fiscal="601",
+        fac_atr_adquirente=None
     )
 
     ingreso_invoice = CFDI.from_file(os.path.join(current_dir, f"{current_filename}/{xml_file}_stamped.xml"))
@@ -299,8 +300,9 @@ def test_create_pago_multiple(rfc, xml_file, traslados, retenciones, total, tras
 
     verify_invoice(invoice, f"mpago_{xml_file}")
 
-    invoice2 = cfdi40.Comprobante.pago_comprobantes(
-        lugar_expedicion="56820",
+    # crear comprobante sin emisor
+    invoice = cfdi40.Comprobante.pago_comprobantes(
+        lugar_expedicion="56827",
         fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
         comprobantes=[ingreso_invoice, ingreso_invoice],
         fecha_pago=datetime.fromisoformat("2020-01-02T22:40:38"),
@@ -308,11 +310,11 @@ def test_create_pago_multiple(rfc, xml_file, traslados, retenciones, total, tras
         serie="A",
         folio="123456",
     )
-    invoice2.sign(signer)
+    invoice.sign(signer)
 
-    assert invoice2['Complemento']['Pago'][0]['Monto'] == Decimal(total) * 2
+    assert invoice['Complemento']['Pago'][0]['Monto'] == Decimal(total) * 2
 
-    verify_invoice(invoice2, f"mpago2_{xml_file}")
+    verify_invoice(invoice, f"mpago2_{xml_file}")
 
 
 def test_nomina():

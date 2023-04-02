@@ -11,10 +11,11 @@ from jinja2.filters import do_mark_safe
 from jinja2.runtime import Undefined
 from lxml.etree import QName
 
+
 # noinspection PyUnresolvedReferences
 from .catalog import CATALOGS
 from .helpers import desc, format_address, trans, iterate as h_iterate
-from ..models import py2html
+from ..models import py2html, Code
 
 current_dir = os.path.dirname(__file__)
 logger = logging.getLogger(__name__)
@@ -145,6 +146,12 @@ class PDFEnvironment(Environment):
         def baa(s):
             r = "&#8203;".join(html_escape(str(s)))
             return do_mark_safe(r)
+
+        @self.filter
+        def code(s):
+            if isinstance(s, Code):
+                return s.code
+            return s
 
 
 class PDFFIleSystemLoader(FileSystemLoader):

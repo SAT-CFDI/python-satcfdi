@@ -12,7 +12,7 @@
 		<td rowspan="13">
 			<div class="h cen"><b>{{ c.Emisor.Nombre }}</b></div>
 			{{ c.Emisor | simple('Rfc', 'RegimenFiscal')}}
-			<div><b>C.P.: </b>{{ c.LugarExpedicion.code }}</div>
+			<div><b>C.P.: </b>{{ c.LugarExpedicion | code }}</div>
 			<div><b>No. Certificado: </b>{{ c.NoCertificado }}</div>
 		</td>
 		<td rowspan="13">
