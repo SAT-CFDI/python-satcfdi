@@ -27,7 +27,11 @@ invoices = [
 ]
 
 
-def verify_invoice(invoice, path):
+def verify_invoice(invoice, path, include_metadata=False):
+    if include_metadata:
+        verify = verify_result(data=invoice.metadata, filename=f"{path}.txt")
+        assert verify
+
     pp = XElementPrettyPrinter()
     verify = verify_result(data=pp.pformat(invoice), filename=f"{path}.pretty.py")
     assert verify

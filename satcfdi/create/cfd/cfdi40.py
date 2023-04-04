@@ -461,26 +461,13 @@ class Comprobante(CFDI):
             addenda: CFDI | Sequence[CFDI] = None,
             fecha: datetime = None,
     ):
-        conceptos = _make_conceptos(conceptos, rnd_fn=rounder(moneda))
-        sub_total = sum(c['Importe'] for c in conceptos)
-        descuento = sum(c.get('Descuento') or 0 for c in conceptos)
-        impuestos = make_impuestos(conceptos)
-
-        total = sub_total - descuento
-        if impuestos:
-            total += impuestos.get('TotalImpuestosTrasladados', 0)
-            total -= impuestos.get('TotalImpuestosRetenidos', 0)
-
-        descuento = descuento or None
-        fecha = fecha or datetime.now(tz=get_timezone(lugar_expedicion)).replace(tzinfo=None)
-
         super().__init__({
-            'Version': self.version,
+            'Version': None,
             'Fecha': fecha,
             'Sello': '',
-            'SubTotal': sub_total,
+            'SubTotal': None,
             'Moneda': moneda,
-            'Total': total,
+            'Total': None,
             'TipoDeComprobante': tipo_de_comprobante,
             'Exportacion': exportacion,
             'LugarExpedicion': lugar_expedicion,
@@ -488,7 +475,7 @@ class Comprobante(CFDI):
             'Folio': folio,
             'FormaPago': forma_pago,
             'CondicionesDePago': condiciones_de_pago,
-            'Descuento': descuento,
+            'Descuento': None,
             'TipoCambio': tipo_cambio,
             'MetodoPago': metodo_pago,
             'Confirmacion': confirmacion,
@@ -497,10 +484,32 @@ class Comprobante(CFDI):
             'Emisor': emisor,
             'Receptor': receptor,
             'Conceptos': conceptos,
-            'Impuestos': impuestos,
+            'Impuestos': None,
             'Complemento': complemento,
             'Addenda': addenda,
         })
+        self.compute()
+
+    def compute(self):
+        self['Version'] = self.version
+        self['Fecha'] = self.get('Fecha') or datetime.now(tz=get_timezone(self['LugarExpedicion'])).replace(tzinfo=None)
+        self['Moneda'] = self.get('Moneda') or 'MXN'
+        self['Sello'] = ''
+        self['TipoDeComprobante'] = self.get('TipoDeComprobante') or 'I'
+        self['Exportacion'] = self.get('Exportacion') or '01'
+
+        self["Conceptos"] = conceptos = _make_conceptos(self["Conceptos"], rnd_fn=rounder(self["Moneda"]))
+        self["SubTotal"] = sub_total = sum(c['Importe'] for c in conceptos)
+        descuento = sum(c.get('Descuento') or 0 for c in conceptos)
+        self['Impuestos'] = impuestos = make_impuestos(conceptos)
+
+        total = sub_total - descuento
+        if impuestos:
+            total += impuestos.get('TotalImpuestosTrasladados', 0)
+            total -= impuestos.get('TotalImpuestosRetenidos', 0)
+
+        self['Total'] = total
+        self['Descuento'] = descuento or None
 
     def sign(self, signer: Signer):
         self['NoCertificado'] = signer.certificate_number
