@@ -589,11 +589,11 @@ class Comprobante(CFDI):
     @classmethod
     def pago_comprobantes(
             cls,
-            lugar_expedicion: str,
             comprobantes: CFDI | PagoComprobante | Sequence[CFDI | PagoComprobante],
             fecha_pago: datetime,
             forma_pago: str,
             emisor: Emisor | dict = None,
+            lugar_expedicion: str = None,
             tipo_cambio: Decimal | int = None,
             cfdi_relacionados: CfdiRelacionados | Sequence[CfdiRelacionados | dict] = None,
             confirmacion: str = None,
@@ -624,6 +624,7 @@ class Comprobante(CFDI):
         moneda = first_cfdi['Moneda']
         receptor = first_cfdi['Receptor'].copy()
         emisor = emisor or first_cfdi['Emisor'].copy()
+        lugar_expedicion = lugar_expedicion or first_cfdi['LugarExpedicion']
         tipo_cambio = cls._pago_tipo_cambio(moneda, tipo_cambio)
 
         if not all(
