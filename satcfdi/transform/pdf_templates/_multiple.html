@@ -1,0 +1,7 @@
+{% for k, c in c %}
+	{% include k + '.html' %}
+	{% if not loop.last %}
+		<div class="pagebreak"> </div>
+		<br>
+	{% endif %}
+{% endfor %}

@@ -17,6 +17,9 @@
 		font:7.47pt Arial;
 	}
 }
+@media print {
+    .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+}
 body {
 	font-family: Arial;
 	font-size: 9pt;
@@ -59,7 +62,6 @@ h5 {
 	letter-spacing: 2px;
 	font-weight: bold;
 }
-
 .h {
 	font-size: 9.89pt;
 	padding-top: 2px;
@@ -77,7 +79,6 @@ h5 {
 .ciii {
 	font-size: 5.65pt;
 }
-
 table {
 	font-size: 8.6pt;
 	width: 100%;
@@ -94,7 +95,6 @@ table table table {
 table table table table {
 	font-size: 5.65pt;
 }
-
 table th {
 	background-color:#e0e0e0;
 }
@@ -107,14 +107,12 @@ table table table th {
 table table table table th {
 	background-color:#f8f8f8;
 }
-
 .htd {
 	text-align: right;
 	width: 1px;
 	white-space: nowrap;
 	font-weight: bold;
 }
-
 .nb {
 	break-inside: avoid;
 }
@@ -128,7 +126,6 @@ table table table table th {
 	text-align: right;
 	border-top: 1px solid black;
 }
-
 th {
 	padding: 1px;
 	vertical-align: center;
@@ -138,7 +135,6 @@ th {
 th:last-child {
 	border-right: 0px solid white;
 }
-
 td {
 	vertical-align: top;
 	padding-right: 2px;
@@ -151,11 +147,9 @@ tr:last-child td {
 td:last-child {
 	padding-right: none;
 }
-
 tr {
 	break-inside: avoid;
 }
-
 .tot {
 	margin-left: 50%;
 	width: 50%;
@@ -167,7 +161,6 @@ table.tot {
 table.tot tr:first-child {
 	border-top: 1px solid;
 }
-
 hr {
 	border: none;
 	height: 1px;

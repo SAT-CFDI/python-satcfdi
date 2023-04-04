@@ -1,14 +1,21 @@
+import filecmp
 import glob
+import json
 import os
 from unittest import mock
 
 import xlsxwriter
+from lxml.etree import QName
+from satcfdi.printer import Representable
+
+from satcfdi.transform.pdf_environment import PDFEnvironment
 
 from satcfdi import DatePeriod
 from satcfdi.accounting._ansi_colors import *
 from satcfdi.accounting.formatters import SatCFDI
 from satcfdi.accounting.process import filter_invoices_iter, invoices_export, invoices_print, payments_print, \
     complement_invoices_data, payments_export, num2col, filter_payments_iter, payments_retentions_export, filter_retenciones_iter, retenciones_print
+from tests.utils import verify_result
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
 
@@ -91,3 +98,21 @@ def test_retenciones():
     retenciones = filter_retenciones_iter(all_invoices, ejerc=year)
     retenciones_print(retenciones)
 
+
+def test_single_html_file():
+    all_invoices = []
+    for f in glob.iglob(os.path.join(current_dir, "invoices", "*.xml")):
+        c = myCFDI.from_file(f)
+        all_invoices.append(c)
+
+    res = Representable.html_str_all(all_invoices)
+    verify_result(res, "multiple_invoices.html")
+
+    Representable.html_write_all(
+        objs=all_invoices,
+        target=os.path.join(current_dir, "test_accounting", "multiple_invoices2.html"),
+    )
+    assert filecmp.cmp(
+        os.path.join(current_dir, "test_accounting", "multiple_invoices.html"),
+        os.path.join(current_dir, "test_accounting", "multiple_invoices2.html")
+    )
