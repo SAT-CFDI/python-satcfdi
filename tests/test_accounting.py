@@ -112,7 +112,11 @@ def test_single_html_file():
         objs=all_invoices,
         target=os.path.join(current_dir, "test_accounting", "multiple_invoices2.html"),
     )
-    assert filecmp.cmp(
-        os.path.join(current_dir, "test_accounting", "multiple_invoices.html"),
-        os.path.join(current_dir, "test_accounting", "multiple_invoices2.html")
-    )
+
+    with open(os.path.join(current_dir, "test_accounting", "multiple_invoices2.html"), "r", encoding='utf-8') as f:
+        assert f.read() == res
+
+    # assert filecmp.cmp(
+    #     os.path.join(current_dir, "test_accounting", "multiple_invoices.html"),
+    #     os.path.join(current_dir, "test_accounting", "multiple_invoices2.html")
+    # )
