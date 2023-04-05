@@ -1,2 +1,0 @@
-<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_LENGTH_VALID: Element '{http://www.uif.shcp.gob.mx/recepcion/ari}mes_reportado': [facet 'length'] The value has a length of '8'; this differs from the allowed length of '6'.
-<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_PATTERN_VALID: Element '{http://www.uif.shcp.gob.mx/recepcion/ari}mes_reportado': [facet 'pattern'] The value '20221043' is not accepted by the pattern '\d{4}[0|1]\d{1}'.
