@@ -48,7 +48,7 @@
 					{% if c.Impuestos.Traslados %}
 					{% for v in iterate(c.Impuestos.Traslados) %}
 					<tr>
-						<td>{% if loop.first %}+ <b>Translados</b>{% endif %}</td>
+						<td>{% if loop.first %}<b>+&nbsp;Translados</b>{% endif %}</td>
 						<td>{{ v.Base }}</td>
 						<td>{{ v.Impuesto | desc }}</td>
 						<td>{{ tasa_cuota( v.TipoFactor, v.TasaOCuota) }}</td>
@@ -59,7 +59,7 @@
 					{% if c.Impuestos.Retenciones %}
 					{% for v in iterate(c.Impuestos.Retenciones) %}
 					<tr>
-						<td>{% if loop.first %}- <b>Retenciones</b>{% endif %}</td>
+						<td>{% if loop.first %}<b>-&nbsp;Retenciones</b>{% endif %}</td>
 						<td>{{ v.Base }}</td>
 						<td>{{ v.Impuesto | desc }}</td>
 						<td>{{ tasa_cuota( v.TipoFactor, v.TasaOCuota) }}</td>
@@ -96,7 +96,7 @@
 	<tr class="r">
 		<td>
 			{% if loop.first %}
-			+ <b>Translados</b>
+			<b>+&nbsp;Translados</b>
 			{% endif %}
 		</td>
 		<td>{{ v.Impuesto | desc }}</td>
@@ -110,7 +110,7 @@
 	<tr class="r">
 		<td>
 			{% if loop.first %}
-			- <b>Retenciones</b>
+			<b>-&nbsp;Retenciones</b>
 			{% endif %}
 		</td>
 		<td>{{ v.Impuesto | desc }}</td>
