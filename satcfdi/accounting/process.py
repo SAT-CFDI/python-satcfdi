@@ -164,7 +164,7 @@ def payment_def():
         'Factura Pagada': (12, False, lambda i: format_head(i.comprobante_pagado) if i.pago else "misma"),
         'Fecha de Pago': (12, False, lambda i: format_fecha_pago(i)),
 
-        'Pagado': (12, False, lambda i: i.docto_relacionado["ImpPagado"] if i.pago else i.comprobante["Total"]),
+        'Pagado': (12, False, lambda i: i.total),
         'Saldo Ant': (12, False, lambda i: i.docto_relacionado["ImpSaldoAnt"] if i.pago else i.comprobante["Total"]),
         'Saldo Insoluto': (12, False, lambda i: i.docto_relacionado["ImpSaldoInsoluto"] if i.pago else 0),
         'Parcialidad': (12, False, lambda i: i.docto_relacionado["NumParcialidad"] if i.pago else None),

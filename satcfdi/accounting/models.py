@@ -196,8 +196,10 @@ class PaymentsDetails(Payment):
 
             self.sub_total = calc_parcial("SubTotal")
             self.descuento = calc_parcial("Descuento")
+            self.total = self.docto_relacionado["ImpPagado"]
 
         else:
             self.impuestos = self.comprobante.get("Impuestos", {})
             self.sub_total = self.comprobante["SubTotal"]
             self.descuento = self.comprobante.get("Descuento")
+            self.total = self.comprobante["Total"]
