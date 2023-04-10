@@ -298,29 +298,38 @@ def retentions_export(workbook, name, retentions: Sequence[SatCFDI]):
 
 
 # EXPORT TO TXT
+def payments_groupby_receptor(payments: Sequence[PaymentsDetails]):
+    payment_columns = payment_def()
+    _, _, isr_ret = payment_columns['ISR Ret']
+    _, _, sub = payment_columns['Subtotal']
+    _, _, des = payment_columns['Descuento']
+
+    res = []
+    for receptor, group in groupby(
+            sorted(payments, key=lambda r: r.comprobante["Receptor"]["Rfc"]),
+            lambda r: r.comprobante["Receptor"]["Rfc"]
+    ):
+        p = list(group)
+        res.append({
+            "Receptor": receptor,
+            "SubTotal": sum(sub(p) for p in p),
+            "Descuento": sum(des(p) or 0 for p in p),
+            "ISR Ret": sum(isr_ret(p) or 0 for p in p)
+        })
+    return res
+
+
 def payments_retentions_export(file_name, payments: Sequence[PaymentsDetails]):
+    res = payments_groupby_receptor(payments)
     with open(file_name, "w", encoding="utf-8") as f:
         def write(line):
             f.write(line)
             f.write("\n")
 
-        payment_columns = payment_def()
-        _, _, isr_ret = payment_columns['ISR Ret']
-        _, _, sub = payment_columns['Subtotal']
-        _, _, des = payment_columns['Descuento']
-
-        def ingreso_recibido(i):
-            return sub(i) - (des(i) or 0)
-
         write("RFC retenedor|Monto del ingreso recibido|ISR retenido")
-        for receptor, group in groupby(
-                sorted(payments, key=lambda r: r.comprobante["Receptor"]["Rfc"]),
-                lambda r: r.comprobante["Receptor"]["Rfc"]
-        ):
-            p = list(group)
-            res = "{receptor}|{ingreso_recibido}|{isr_retenido}".format(
-                receptor=receptor,
-                ingreso_recibido=round(sum(ingreso_recibido(p) for p in p), 2),
-                isr_retenido=round(sum(isr_ret(p) or 0 for p in p), 2)
-            )
-            write(res)
+        for r in res:
+            write("{receptor}|{ingreso_recibido}|{isr_retenido}".format(
+                receptor=r["Receptor"],
+                ingreso_recibido=round(r["SubTotal"] - r["Descuento"], 2),
+                isr_retenido=round(r["ISR Ret"], 2)
+            ))
