@@ -299,11 +299,6 @@ def retentions_export(workbook, name, retentions: Sequence[SatCFDI]):
 
 # EXPORT TO TXT
 def payments_groupby_receptor(payments: Sequence[PaymentsDetails]):
-    payment_columns = payment_def()
-    _, _, isr_ret = payment_columns['ISR Ret']
-    _, _, sub = payment_columns['Subtotal']
-    _, _, des = payment_columns['Descuento']
-
     res = []
     for receptor, group in groupby(
             sorted(payments, key=lambda r: r.comprobante["Receptor"]["Rfc"]),
@@ -312,9 +307,9 @@ def payments_groupby_receptor(payments: Sequence[PaymentsDetails]):
         p = list(group)
         res.append({
             "Receptor": receptor,
-            "SubTotal": sum(sub(p) for p in p),
-            "Descuento": sum(des(p) or 0 for p in p),
-            "ISR Ret": sum(isr_ret(p) or 0 for p in p)
+            "SubTotal": sum(p.sub_total for p in p),
+            "Descuento": sum(p.descuento or 0 for p in p),
+            "ISR Ret": sum(p.impuestos.get("Retenciones", {}).get(ISR, {}).get("Importe") or 0 for p in p)
         })
     return res
 
