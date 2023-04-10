@@ -319,15 +319,14 @@ def payments_groupby_receptor(payments: Sequence[PaymentsDetails]):
     return res
 
 
-def payments_retentions_export(file_name, payments: Sequence[PaymentsDetails]):
-    res = payments_groupby_receptor(payments)
+def payments_retentions_export(file_name, grouped_payments: Sequence):
     with open(file_name, "w", encoding="utf-8") as f:
         def write(line):
             f.write(line)
             f.write("\n")
 
         write("RFC retenedor|Monto del ingreso recibido|ISR retenido")
-        for r in res:
+        for r in grouped_payments:
             write("{receptor}|{ingreso_recibido}|{isr_retenido}".format(
                 receptor=r["Receptor"],
                 ingreso_recibido=round(r["SubTotal"] - r["Descuento"], 2),

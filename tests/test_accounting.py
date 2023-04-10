@@ -14,7 +14,7 @@ from satcfdi import DatePeriod
 from satcfdi.accounting._ansi_colors import *
 from satcfdi.accounting.formatters import SatCFDI
 from satcfdi.accounting.process import filter_invoices_iter, invoices_export, invoices_print, payments_print, \
-    complement_invoices_data, payments_export, num2col, filter_payments_iter, payments_retentions_export, filter_retenciones_iter, retenciones_print
+    complement_invoices_data, payments_export, num2col, filter_payments_iter, payments_retentions_export, filter_retenciones_iter, retenciones_print, payments_groupby_receptor
 from tests.utils import verify_result
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
@@ -84,7 +84,8 @@ def test_cfdi():
         workbook.close()
 
         pagos = list(filter_payments_iter(invoices=all_invoices, fecha=dp, rfc_emisor=rfc))
-        payments_retentions_export(os.path.join(current_dir, "test_accounting", "retenciones.txt"), pagos)
+        pagos_agrupados = payments_groupby_receptor(pagos)
+        payments_retentions_export(os.path.join(current_dir, "test_accounting", "retenciones.txt"), pagos_agrupados)
 
 
 def test_retenciones():
