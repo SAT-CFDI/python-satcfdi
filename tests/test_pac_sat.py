@@ -1,18 +1,20 @@
 import os.path
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
+from pprint import PrettyPrinter
 from unittest import mock
 
 from satcfdi import __version__, CFDI, Code
 from satcfdi.pacs import Environment
 from satcfdi.pacs import TaxpayerStatus
-from satcfdi.pacs.sat import _CFDISolicitaDescarga, _CFDIAutenticacion, EstadoSolicitud
+from satcfdi.pacs.sat import _CFDISolicitaDescarga, _CFDIAutenticacion, EstadoSolicitud, TipoDescargaMasivaTerceros
 from satcfdi.pacs.sat import SAT
 from satcfdi.pacs.sat import _get_listado_69b
 from tests.utils import get_signer, verify_result
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)
+pp = PrettyPrinter()
 
 
 def test_pac_sat():
@@ -142,3 +144,32 @@ def test_status_code():
     assert alt_text == "5 - Rechazada"
     assert EstadoSolicitud.Rechazada == est_code
     assert est_code == EstadoSolicitud.Rechazada
+
+
+def test_pac_sat_uuid():
+    signer = get_signer('xiqb891116qe4')
+    sat_service = SAT(environment=Environment.TEST, signer=signer)
+
+    sat_service.token_comprobante = {
+        "Expires": datetime.utcnow() + timedelta(seconds=3600),
+        "AutenticaResult": "token_comprobante"
+    }
+
+    with open(os.path.join(current_dir, 'pac_sat_responses', 'response-with-id.xml'), 'rb') as f:
+        content = f.read()
+
+    with mock.patch(f'requests.post') as mk:
+        mk.return_value.ok = True
+        mk.return_value.content = content
+
+        res = sat_service.recover_comprobante_request(
+            tipo_solicitud=TipoDescargaMasivaTerceros.CFDI,
+            uuid="6114cfd0-87d2-45b8-99b1-7c19475c9cda",
+        )
+
+        mk.assert_called_once()
+        del mk.call_args.kwargs['headers']['User-Agent']
+
+        verify = verify_result(data=pp.pformat(mk.call_args.kwargs), filename=f"test_pac_sat_uuid.pretty.py")
+        assert verify
+

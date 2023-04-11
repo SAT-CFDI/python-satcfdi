@@ -556,14 +556,14 @@ class SAT(PAC):
             'FechaFinal': fecha_final,
             'FechaInicial': fecha_inicial,
             'RfcEmisor': rfc_emisor,
-            'RfcReceptores': [('RfcReceptor', r) for r in iterate(rfc_receptor)],
+            'RfcReceptores': [('RfcReceptor', r) for r in iterate(rfc_receptor)] if rfc_receptor else None,
             'RfcSolicitante': self.signer.rfc,
             'TipoSolicitud': tipo_solicitud,
             'TipoComprobante': tipo_comprobante,
             'EstadoComprobante': estado_comprobante,
             'RfcACuentaTerceros': rfc_a_cuenta_terceros,
             'Complemento': complemento,
-            'UUID': uuid,
+            'Folio': uuid,
         }
 
         return self._execute_req(
@@ -704,14 +704,14 @@ class SAT(PAC):
             'FechaFinal': fecha_final,
             'FechaInicial': fecha_inicial,
             'RfcEmisor': rfc_emisor,
-            'RfcReceptores': [('RfcReceptor', r) for r in iterate(rfc_receptor)],
+            'RfcReceptores': [('RfcReceptor', r) for r in iterate(rfc_receptor)] if rfc_receptor else None,
             'RfcSolicitante': self.signer.rfc,
             'TipoSolicitud': tipo_solicitud,
             'TipoComprobante': tipo_comprobante,
             'EstadoComprobante': estado_comprobante,
             'RfcACuentaTerceros': rfc_a_cuenta_terceros,
             'Complemento': complemento,
-            'UUID': uuid,
+            'Folio': uuid,
         }
 
         return self._execute_req(
