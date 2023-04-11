@@ -10,6 +10,7 @@ from satcfdi.pacs import TaxpayerStatus
 from satcfdi.pacs.sat import _CFDISolicitaDescarga, _CFDIAutenticacion, EstadoSolicitud, TipoDescargaMasivaTerceros
 from satcfdi.pacs.sat import SAT
 from satcfdi.pacs.sat import _get_listado_69b
+
 from tests.utils import get_signer, verify_result
 
 module = 'satcfdi'
@@ -170,6 +171,6 @@ def test_pac_sat_uuid():
         mk.assert_called_once()
         del mk.call_args.kwargs['headers']['User-Agent']
 
-        verify = verify_result(data=pp.pformat(mk.call_args.kwargs), filename=f"test_pac_sat_uuid.pretty.py")
+        verify = verify_result(data=pp.pformat(mk.call_args.kwargs), filename=f"pac_sat_uuid.pretty.py")
         assert verify
 
