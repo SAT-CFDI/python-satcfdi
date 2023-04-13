@@ -487,6 +487,8 @@ class Comprobante(CFDI):
             'Impuestos': None,
             'Complemento': complemento,
             'Addenda': addenda,
+            'NoCertificado': '',
+            'Certificado': '',
         })
         self.compute()
 
