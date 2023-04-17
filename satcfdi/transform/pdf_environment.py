@@ -27,11 +27,7 @@ complement_order = {
 
 def finalize(s):
     if isinstance(s, Decimal):
-        # format Decimal with at least 2 decimal places and coma separated
-        full_number = "{:0,}".format(s)
-        if "." in full_number:
-            full_number = full_number.rstrip("0")
-        return max("{:0,.2f}".format(s), full_number, key=len)
+        return s.__format__(",f")
 
     if isinstance(s, Undefined):
         return do_mark_safe("&nbsp;")

@@ -365,8 +365,8 @@ def test_nomina():
                         'TipoPercepcion': '001',
                         'Clave': '001',
                         'Concepto': 'SUELDO',
-                        'ImporteGravado': Decimal('1200'),
-                        'ImporteExento': Decimal('400')
+                        'ImporteGravado': Decimal('1200.00'),
+                        'ImporteExento': Decimal('400.00')
                     }
                 ]
             },
@@ -391,21 +391,21 @@ def test_nomina():
                     'TipoOtroPago': '999',
                     'Clave': '046',
                     'Concepto': 'REEMBOLSO DE GASTOS',
-                    'Importe': Decimal('456')
+                    'Importe': Decimal('456.00')
                 },
                 {
-                    'SubsidioAlEmpleo': Decimal('0'),
+                    'SubsidioAlEmpleo': Decimal('0.00'),
                     'TipoOtroPago': '002',
                     'Clave': '002',
                     'Concepto': 'SUBSIDIO EMPLEO',
-                    'Importe': Decimal('0')
+                    'Importe': Decimal('0.00')
                 }
             ],
             incapacidades=[
                 {
                     "DiasIncapacidad": 2,
                     'TipoIncapacidad': '02',
-                    'ImporteMonetario': Decimal(1000),
+                    'ImporteMonetario': Decimal('1000.00'),
                 }
             ],
             tipo_nomina='O',
