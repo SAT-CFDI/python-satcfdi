@@ -26,19 +26,22 @@ RET_IEPS = "03"
 
 def complement_invoices_data(invoices: Mapping[UUID, SatCFDI]):
     for c in invoices.values():
-        for cfdi_rel in iterate(c.get("CfdiRelacionados")):
-            for uuid in cfdi_rel["CfdiRelacionado"]:
-                if cfdi := invoices.get(UUID(uuid)):
-                    cfdi.relations.append(
-                        Relation(
-                            cfdi_relacionados=cfdi_rel,
-                            comprobante=c
-                        )
+        complement_invoices(invoices, c)
+
+
+def complement_invoices(invoices: Mapping[UUID, SatCFDI], invoice: SatCFDI):
+    c = invoice
+    for cfdi_rel in iterate(c.get("CfdiRelacionados")):
+        for uuid in cfdi_rel["CfdiRelacionado"]:
+            if cfdi := invoices.get(UUID(uuid)):
+                cfdi.relations.append(
+                    Relation(
+                        cfdi_relacionados=cfdi_rel,
+                        comprobante=c
                     )
+                )
 
-        if c['TipoDeComprobante'] != "P":
-            continue
-
+    if c['TipoDeComprobante'] == "P":
         for p in c["Complemento"]["Pagos"]["Pago"]:
             for doc_rel in p.get('DoctoRelacionado', []):
                 if cfdi := invoices.get(UUID(doc_rel["IdDocumento"])):
@@ -100,9 +103,10 @@ def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_
                             )
 
 
-def filter_retenciones_iter(invoices: Mapping[UUID, SatCFDI], ejerc: int, rfc_emisor=None, rfc_receptor=None) -> Sequence[SatCFDI]:
+def filter_retenciones_iter(invoices, ejerc: int):
     for a in invoices.values():
-        if not _compare(a["Periodo"]["Ejerc"], ejerc):
+        if (a["Version"] == "1.0" and a["Periodo"]["Ejerc"] != ejerc) or \
+                (a["Version"] == "2.0" and a["Periodo"]["Ejercicio"] != str(ejerc)):
             continue
 
         if "Intereses" in a["Complemento"]:
@@ -180,7 +184,7 @@ def payment_def():
 
 def retenciones_def():
     return {
-        'RFC de la Institucion': (12, False, lambda i: i["Emisor"]["RFCEmisor"]),
+        'RFC de la Institucion': (12, False, lambda i: i["Emisor"].get("RfcE") or i["Emisor"].get("RFCEmisor")),
         'Monto de los intereses nominales': (12, False, lambda i: i["Complemento"]["Intereses"]["MontIntNominal"]),
         'Monto de los intereses reales': (12, False, lambda i: i["Complemento"]["Intereses"]["MontIntReal"]),
         'Perdida': (12, False, lambda i: i["Complemento"]["Intereses"]["Perdida"]),

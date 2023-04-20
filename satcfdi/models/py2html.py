@@ -130,7 +130,7 @@ class PY2HTMLEncoder:
 
         yield "<table>"
         for k, v in dict_input.items():
-            if v:
+            if v is not None:
                 yield "<tr><td class='htd'>"
                 yield from self.encode(self.translate_keys(k) + ":")
                 yield "</td><td>"
