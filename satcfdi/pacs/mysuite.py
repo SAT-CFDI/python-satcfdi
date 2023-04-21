@@ -12,8 +12,7 @@ from ..cfdi import CFDI
 from ..create.cancela import cancelacionretencion, cancelacion
 from ..create.cancela.aceptacionrechazo import SolicitudAceptacionRechazo
 from ..transform.helpers import simple_element
-
-parser = etree.XMLParser(remove_blank_text=True, huge_tree=True)
+from ..utils import parser
 
 
 class RequestTransaction(ScalarMap):

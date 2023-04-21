@@ -14,6 +14,7 @@ from .xmlify import cfdi_xmlify
 from .xslt import TRANSFORMS
 from .. import SchemaValidationError, CFDIError, Certificate
 from ..models import CertificateStore
+from ..utils import parser
 
 __all__ = [
     'TRANSLATIONS',
@@ -35,7 +36,6 @@ current_dir = os.path.dirname(__file__)
 SCHEMA_ROOT = os.path.join(current_dir, "schemas")
 PDF_INIT_TEMPLATE = DefaultPDFEnvironment.get_template("_init.html")
 SAT_Certificate_Store = None
-parser = etree.XMLParser(no_network=True, remove_comments=True, remove_blank_text=True)
 
 
 def moneda_decimales(moneda):

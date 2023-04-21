@@ -3,11 +3,9 @@ from lxml import etree
 
 from .printer import Representable
 from .transform import SchemaCollector, cfdi_schemas, validate_xsd
-from .utils import ScalarMap
+from .utils import ScalarMap, parser
 from .transform.objectify import cfdi_objectify
 from .transform.xmlify import cfdi_xmlify
-
-parser = etree.XMLParser(no_network=True, remove_comments=True, remove_blank_text=True)
 
 
 class XElement(ScalarMap, Representable):

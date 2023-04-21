@@ -23,9 +23,8 @@ from .. import CFDI, __version__, ResponseError, Signer, Certificate
 from . import PAC, Environment, TaxpayerStatus
 from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes
 from ..transform import MEXICO_TZ, get_timezone, verify_certificate
-from ..utils import iterate, StrEnum
+from ..utils import iterate, StrEnum, parser
 
-parser = etree.XMLParser(remove_blank_text=True, huge_tree=True)
 logger = logging.getLogger(__name__)
 current_dir = os.path.dirname(__file__)
 
