@@ -20,5 +20,5 @@ def iterate(item):
 
 class StrEnum(str, enum.Enum):
     def __str__(self):
-        return str(self.value)
+        return self.value
 
