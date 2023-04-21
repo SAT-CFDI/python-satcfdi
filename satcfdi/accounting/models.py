@@ -7,11 +7,17 @@ from .. import CFDI, XElement, CFDIError
 from ..create.compute import make_impuestos_dr_parcial, rounder, group_impuestos, encode_impuesto, calculate_partial
 from ..pacs.sat import SAT
 from ..transform.helpers import fmt_decimal, strcode
+from ..utils import StrEnum
 
 PPD = "PPD"
 PUE = "PUE"
 
 sat = SAT()
+
+
+class CFDIEstatus(StrEnum):
+    Cancelado = "0"
+    Vigente = "1"
 
 
 class SatCFDI(CFDI):
@@ -128,7 +134,7 @@ class SatCFDI(CFDI):
                 raise CFDIError("No metadata")
 
     @property
-    def estatus(self) -> str:
+    def estatus(self) -> CFDIEstatus:
         """
         '0' = 'Cancelado'
         '1' = 'Vigente'
