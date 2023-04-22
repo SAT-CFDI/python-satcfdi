@@ -3,16 +3,12 @@ from datetime import datetime
 from decimal import Decimal
 from uuid import UUID
 
-from .. import CFDI, XElement, CFDIError
+from .. import CFDI, XElement
 from ..create.compute import make_impuestos_dr_parcial, rounder, group_impuestos, encode_impuesto, calculate_partial
-from ..pacs.sat import SAT
-from ..transform.helpers import fmt_decimal, strcode
 from ..utils import StrEnum
 
 PPD = "PPD"
 PUE = "PUE"
-
-sat = SAT()
 
 
 class CFDIEstatus(StrEnum):
@@ -73,65 +69,6 @@ class SatCFDI(CFDI):
 
     def consulta_estado(self):
         raise NotImplementedError()
-
-    @property
-    def metadata(self) -> str:
-        match self.tag:
-            case '{http://www.sat.gob.mx/cfd/3}Comprobante' | '{http://www.sat.gob.mx/cfd/4}Comprobante':
-                # Uuid~RfcEmisor~NombreEmisor~RfcReceptor~NombreReceptor~RfcPac~FechaEmision~FechaCertificacionSat~Monto~EfectoComprobante~Estatus~FechaCancelacion
-                return "{uuid}~{rfc_emisor}~{nombre_emisor}~{rfc_receptor}~{nombre_receptor}~{rfc_pac}~{fecha_emision}~{fecha_certificacion_sat}~{monto}~{efecto_comprobante}~{estatus}~{fecha_cancelacion}".format(
-                    uuid=self["Complemento"]["TimbreFiscalDigital"]["UUID"],
-                    rfc_emisor=self['Emisor']["Rfc"],
-                    nombre_emisor=self['Emisor']['Nombre'],
-                    rfc_receptor=self['Receptor']['Rfc'],
-                    nombre_receptor=self['Receptor'].get('Nombre', ''),
-                    rfc_pac=self["Complemento"]["TimbreFiscalDigital"]["RfcProvCertif"],
-                    fecha_emision=self["Fecha"],
-                    fecha_certificacion_sat=self["Complemento"]["TimbreFiscalDigital"]["FechaTimbrado"],
-                    monto=fmt_decimal(self["Total"]),
-                    efecto_comprobante=strcode(self["TipoDeComprobante"]),
-                    estatus=self.estatus,
-                    fecha_cancelacion=self.fecha_cancelacion or ''
-                )
-
-            case '{http://www.sat.gob.mx/esquemas/retencionpago/1}Retenciones':
-                # Uuid~RfcEmisor~NombreEmisor~RfcReceptor~NombreReceptor~RfcPac~FechaEmision~FechaCertificacionSat~MontoOp~MontoRet~Estatus~FechaCancelacion
-                cert_sat = sat.recover_certificate(
-                    no_certificado=self["Complemento"]["TimbreFiscalDigital"]["NoCertificadoSAT"]
-                )
-                return "{uuid}~{rfc_emisor}~{nombre_emisor}~{rfc_receptor}~{nombre_receptor}~{rfc_pac}~{fecha_emision}~{fecha_certificacion_sat}~{monto_op}~{monto_ret}~{estatus}~{fecha_cancelacion}".format(
-                    uuid=self["Complemento"]["TimbreFiscalDigital"]["UUID"],
-                    rfc_emisor=self["Emisor"]["RFCEmisor"],
-                    nombre_emisor=self['Emisor']['NomDenRazSocE'],
-                    rfc_receptor=self['Receptor']['Nacional']['RFCRecep'],
-                    nombre_receptor=self['Receptor']['Nacional']['NomDenRazSocR'],
-                    rfc_pac=cert_sat.rfc_pac,
-                    fecha_emision=self["FechaExp"],
-                    fecha_certificacion_sat=self["Complemento"]["TimbreFiscalDigital"]["FechaTimbrado"],
-                    monto_op=fmt_decimal(self["Totales"]["MontoTotOperacion"]),
-                    monto_ret=fmt_decimal(self["Totales"]["MontoTotRet"]),
-                    estatus=self.estatus,
-                    fecha_cancelacion=self.fecha_cancelacion or ''
-                )
-
-            case '{http://www.sat.gob.mx/esquemas/retencionpago/2}Retenciones':
-                # Uuid~RfcEmisor~NombreEmisor~RfcReceptor~NombreReceptor~RfcPac~FechaEmision~FechaCertificacionSat~MontoOp~MontoRet~Estatus~FechaCancelacion
-                return "{uuid}~{rfc_emisor}~{nombre_emisor}~{rfc_receptor}~{nombre_receptor}~{rfc_pac}~{fecha_emision}~{fecha_certificacion_sat}~{monto_op}~{monto_ret}~{estatus}~{fecha_cancelacion}".format(
-                    uuid=self["Complemento"]["TimbreFiscalDigital"]["UUID"],
-                    rfc_emisor=self["Emisor"]["RfcE"],
-                    nombre_emisor=self['Emisor']['NomDenRazSocE'],
-                    rfc_receptor=self['Receptor']['Nacional']['RfcR'],
-                    nombre_receptor=self['Receptor']['Nacional']['NomDenRazSocR'],
-                    rfc_pac=self["Complemento"]["TimbreFiscalDigital"]["RfcProvCertif"],
-                    fecha_emision=self["FechaExp"],
-                    fecha_certificacion_sat=self["Complemento"]["TimbreFiscalDigital"]["FechaTimbrado"],
-                    monto_op=fmt_decimal(self["Totales"]["MontoTotOperacion"]),
-                    monto_ret=fmt_decimal(self["Totales"]["MontoTotRet"]),
-                    estatus=self.estatus,
-                    fecha_cancelacion=self.fecha_cancelacion or ''
-                )
-            case _:
-                raise CFDIError("No metadata")
 
     @property
     def estatus(self) -> CFDIEstatus:
