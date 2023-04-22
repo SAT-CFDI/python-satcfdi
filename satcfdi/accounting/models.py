@@ -67,16 +67,11 @@ class SatCFDI(CFDI):
     def ultima_num_parcialidad(self) -> int:
         return max((c.docto_relacionado['NumParcialidad'] for c in self.payments), default=0)
 
-    def consulta_estado(self):
+    def consulta_estado(self) -> dict:
         raise NotImplementedError()
 
     @property
     def estatus(self) -> CFDIEstatus:
-        """
-        '0' = 'Cancelado'
-        '1' = 'Vigente'
-        :return:
-        """
         raise NotImplementedError()
 
     @property

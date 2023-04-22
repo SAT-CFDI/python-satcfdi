@@ -8,12 +8,12 @@ logger = logging.getLogger(__name__)
 
 def format_head(cfdi):
     return str(cfdi["TipoDeComprobante"]) + " " + cfdi["Version"] + "\n" + \
-           str(cfdi.uuid) + "\n- " + cfdi.name
+        str(cfdi.uuid) + "\n- " + cfdi.name
 
 
 def format_head_pre(cfdi):
     return str(cfdi["TipoDeComprobante"]) + " " + cfdi["Version"] + "\n" + \
-           "*" + cfdi["Serie"] + cfdi["Folio"]
+        "*" + cfdi["Serie"] + cfdi["Folio"]
 
 
 def format_fecha(cfdi):
@@ -32,8 +32,8 @@ def format_receptor(cfdi):
 
 def format_forma_pago(cfdi):
     return str(cfdi.get("FormaPago")) + "\n" + \
-           str(cfdi.get("MetodoPago")) + "\n" + \
-           str(cfdi["Moneda"])
+        str(cfdi.get("MetodoPago")) + "\n" + \
+        str(cfdi["Moneda"])
 
 
 def format_forma_pago_dr(payment: Payment):
@@ -41,8 +41,8 @@ def format_forma_pago_dr(payment: Payment):
         return format_forma_pago(payment.comprobante)
 
     return str(payment.pago["FormaDePagoP"]) + "\n" + \
-           str(payment.docto_relacionado.get("MetodoDePagoDR")) + "\n" + \
-           str(payment.docto_relacionado["MonedaDR"])
+        str(payment.docto_relacionado.get("MetodoDePagoDR")) + "\n" + \
+        str(payment.docto_relacionado["MonedaDR"])
 
 
 def format_fecha_pago(payment: PaymentsDetails):
@@ -57,15 +57,8 @@ def format_fecha_pago(payment: PaymentsDetails):
 
 
 def format_estado_cfdi(cfdi: SatCFDI):
-    estatus = cfdi.consulta_estado()
-    if not estatus:
-        return ""
-
-    return (
-            (estatus["Estado"] or "") + "\n" +
-            (estatus["EsCancelable"] or "") + "\n" +
-            (estatus["EstatusCancelacion"] or "")
-    )
+    if estatus := cfdi.consulta_estado():
+        return "\n".join(f"{k}: {v}" for k, v in estatus.items())
 
 
 def format_pagos(cfdi: SatCFDI):
