@@ -5,15 +5,15 @@ from uuid import UUID
 
 from .. import CFDI, XElement
 from ..create.compute import make_impuestos_dr_parcial, rounder, group_impuestos, encode_impuesto, calculate_partial
-from ..utils import StrEnum
+from ..utils import CodeEnum
 
 PPD = "PPD"
 PUE = "PUE"
 
 
-class CFDIEstatus(StrEnum):
-    Cancelado = "0"
-    Vigente = "1"
+class EstadoComprobante(CodeEnum):
+    Cancelado = '0'
+    Vigente = '1'
 
 
 class SatCFDI(CFDI):
@@ -71,7 +71,7 @@ class SatCFDI(CFDI):
         raise NotImplementedError()
 
     @property
-    def estatus(self) -> CFDIEstatus:
+    def estatus(self) -> EstadoComprobante:
         raise NotImplementedError()
 
     @property

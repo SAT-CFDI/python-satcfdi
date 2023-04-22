@@ -25,3 +25,8 @@ def iterate(item):
 class StrEnum(str, enum.Enum):
     def __str__(self):
         return self.value
+
+
+class CodeEnum(str, enum.Enum):
+    def __str__(self):
+        return str(self.value) + ' - ' + self.name
