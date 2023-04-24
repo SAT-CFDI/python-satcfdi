@@ -1,5 +1,5 @@
 import logging
-
+from enum import Enum
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +31,8 @@ class Code:
             return self.code == other.code
         if isinstance(other, str) or isinstance(other, int):
             return self.code == other
+        if isinstance(other, Enum):
+            return self.code == other.value
         return NotImplemented
 
     def __hash__(self):

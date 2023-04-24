@@ -1,12 +1,14 @@
 import logging
 import os
 from datetime import date, datetime
+from enum import Enum
 from itertools import chain
 from unittest import mock
 
 import pytest
 from OpenSSL import crypto
 
+from satcfdi import Code
 from satcfdi.models.certificate import CertificateType
 from satcfdi.models.certificate_request import CertificateSigningRequest
 from satcfdi.exceptions import CFDIError
@@ -249,3 +251,14 @@ def test_period():
         assert not period >= 1
     with pytest.raises(TypeError):
         assert not period <= 1
+
+
+def test_code():
+    class Salutaciones(Enum):
+        Hola = '01'
+        Adios = '02'
+
+    c = Code('01', 'Hola')
+    assert c == Salutaciones.Hola
+    assert c == '01'
+    assert c == Code('01', 'OtherHola')
