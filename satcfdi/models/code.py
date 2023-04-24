@@ -29,11 +29,9 @@ class Code:
     def __eq__(self, other):
         if isinstance(other, Code):
             return self.code == other.code
-        if isinstance(other, str) or isinstance(other, int):
-            return self.code == other
         if isinstance(other, Enum):
             return self.code == other.value
-        return NotImplemented
+        return self.code == other
 
     def __hash__(self):
         return self.code.__hash__()

@@ -1,7 +1,7 @@
 import logging
 import os
 from datetime import date, datetime
-from enum import Enum
+from enum import Enum, StrEnum
 from itertools import chain
 from unittest import mock
 
@@ -259,6 +259,9 @@ def test_code():
         Adios = '02'
 
     c = Code('01', 'Hola')
+
+    assert Salutaciones.Hola == c
     assert c == Salutaciones.Hola
     assert c == '01'
+    assert '01' == c
     assert c == Code('01', 'OtherHola')
