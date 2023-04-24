@@ -44,12 +44,14 @@ class SatCFDI(CFDI):
             credit_notes = sum(
                 c.comprobante["Total"]
                 for c in self.relations
-                if c.cfdi_relacionados["TipoRelacion"] == "01" and c.comprobante['TipoDeComprobante'] == "E" and c.comprobante.estatus != '0'
+                if c.cfdi_relacionados["TipoRelacion"] == "01"
+                and c.comprobante['TipoDeComprobante'] == "E"
+                and c.comprobante.estatus == EstadoComprobante.Vigente
             )
             insoluto = min(
                 (c.docto_relacionado['ImpSaldoInsoluto']
                  for c in self.payments
-                 if c.comprobante.estatus != '0'),
+                 if c.comprobante.estatus == EstadoComprobante.Vigente),
                 default=None
             )
             if insoluto is not None:
