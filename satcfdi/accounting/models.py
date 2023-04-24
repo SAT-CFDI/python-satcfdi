@@ -5,13 +5,13 @@ from uuid import UUID
 
 from .. import CFDI, XElement
 from ..create.compute import make_impuestos_dr_parcial, rounder, group_impuestos, encode_impuesto, calculate_partial
-from ..utils import CodeEnum
+from ..utils import StrEnum
 
 PPD = "PPD"
 PUE = "PUE"
 
 
-class EstadoComprobante(CodeEnum):
+class EstadoComprobante(StrEnum):
     Cancelado = '0'
     Vigente = '1'
 

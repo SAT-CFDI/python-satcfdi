@@ -27,6 +27,3 @@ class StrEnum(str, enum.Enum):
         return self.value
 
 
-class CodeEnum(str, enum.Enum):
-    def __str__(self):
-        return str(self.value) + ' - ' + self.name
