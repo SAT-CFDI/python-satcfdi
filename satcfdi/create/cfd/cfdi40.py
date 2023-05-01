@@ -596,6 +596,7 @@ class Comprobante(CFDI):
             forma_pago: str,
             emisor: Emisor | dict = None,
             lugar_expedicion: str = None,
+            receptor: Receptor | dict = None,
             tipo_cambio: Decimal | int = None,
             cfdi_relacionados: CfdiRelacionados | Sequence[CfdiRelacionados | dict] = None,
             confirmacion: str = None,
@@ -609,6 +610,7 @@ class Comprobante(CFDI):
 
         :param emisor: Nodo requerido para expresar la información del contribuyente emisor del comprobante.
         :param lugar_expedicion: Atributo requerido para incorporar el código postal del lugar de expedición del comprobante (domicilio de la matriz o de la sucursal).
+        :param receptor: Nodo requerido para precisar la información del contribuyente receptor del comprobante.
         :param comprobantes: CFDI(s) de Comprobante de Ingreso para generar el pago por su monto total o parcial usando PagoComprobante
         :param fecha_pago: Atributo requerido para expresar la fecha y hora en la que el beneficiario recibe el pago. Se expresa en la forma aaaa-mm-ddThh:mm:ss, de acuerdo con la especificación ISO 8601.En caso de no contar con la hora se debe registrar 12:00:00.
         :param serie: Atributo opcional para precisar la serie para control interno del contribuyente. Este atributo acepta una cadena de caracteres.
@@ -624,9 +626,11 @@ class Comprobante(CFDI):
         comprobantes = [c if isinstance(c, PagoComprobante) else PagoComprobante(comprobante=c) for c in iterate(comprobantes)]
         first_cfdi = comprobantes[0].comprobante
         moneda = first_cfdi['Moneda']
-        receptor = first_cfdi['Receptor'].copy()
+
         emisor = emisor or first_cfdi['Emisor'].copy()
         lugar_expedicion = lugar_expedicion or first_cfdi['LugarExpedicion']
+        receptor = receptor or first_cfdi['Receptor'].copy()
+
         tipo_cambio = cls._pago_tipo_cambio(moneda, tipo_cambio)
 
         if not all(
