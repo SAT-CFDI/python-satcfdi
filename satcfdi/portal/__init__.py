@@ -13,7 +13,10 @@ from .. import Signer, ResponseError
 class PortalManager(requests.Session):
     def __init__(self, signer: Signer):
         super().__init__()
-        urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
+        try:
+            urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
+        except:
+            pass
         self.signer = signer
 
         self.headers = CaseInsensitiveDict(

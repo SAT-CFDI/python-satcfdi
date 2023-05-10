@@ -6,7 +6,10 @@ from bs4 import BeautifulSoup
 from ..transform.catalog import CATALOGS
 from .. import ResponseError, __version__, Code
 
-urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
+try:
+    urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
+except:
+    pass
 
 
 def retrieve(rfc: str, id_cif: str):
