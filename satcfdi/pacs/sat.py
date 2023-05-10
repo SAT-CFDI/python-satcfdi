@@ -17,10 +17,13 @@ from packaging import version
 import requests
 from lxml import etree
 from lxml.etree import QName
+from satcfdi.create.cfd.catalogos import TipoDeComprobante
+
 from .. import Code
 
 from .. import CFDI, __version__, ResponseError, Signer, Certificate
 from . import PAC, Environment, TaxpayerStatus
+from ..create.catalogos import EstadoComprobante
 from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes
 from ..transform import MEXICO_TZ, get_timezone, verify_certificate
 from ..utils import iterate, StrEnum, parser
@@ -33,30 +36,17 @@ REFRESH_TIME = (15 * 86400)  # 15 Days
 
 
 class EstadoSolicitud(IntEnum):
-    Aceptada = 1
-    EnProceso = 2
-    Terminada = 3
-    Error = 4
-    Rechazada = 5
-    Vencida = 6
+    ACEPTADA = 1
+    EN_PROCESO = 2
+    TERMINADA = 3
+    ERROR = 4
+    RECHAZADA = 5
+    VENCIDA = 6
 
 
 class TipoDescargaMasivaTerceros(StrEnum):
     CFDI = 'CFDI'
-    Metadata = 'Metadata'
-
-
-class TipoDeComprobante(StrEnum):
-    Ingreso = 'I'
-    Egreso = 'E'
-    Traslado = 'T'
-    Nomina = 'N'
-    Pago = 'P'
-
-
-class EstadoComprobante(StrEnum):
-    Cancelado = '0'
-    Vigente = '1'
+    METADATA = 'Metadata'
 
 
 def _service_logger(response_type, response):
@@ -654,7 +644,7 @@ class SAT(PAC):
             )
             _service_logger("VerificaSolicitudDescargaResult", response)
             est = response["EstadoSolicitud"]
-            if est == EstadoSolicitud.Terminada:
+            if est == EstadoSolicitud.TERMINADA:
                 for id_paquete in response['IdsPaquetes']:
                     response, paquete = self.recover_comprobante_download(
                         id_paquete=id_paquete
@@ -662,7 +652,7 @@ class SAT(PAC):
                     _service_logger("RespuestaDescargaMasivaTercerosSalida", response)
                     yield id_paquete, base64.b64decode(paquete)
                 break
-            if est in [EstadoSolicitud.Aceptada, EstadoSolicitud.EnProceso]:
+            if est in [EstadoSolicitud.ACEPTADA, EstadoSolicitud.EN_PROCESO]:
                 time.sleep(self.wait_time)
                 continue
             break
@@ -802,7 +792,7 @@ class SAT(PAC):
             )
             _service_logger("VerificaSolicitudDescargaResult", response)
             est = response["EstadoSolicitud"]
-            if est == EstadoSolicitud.Terminada:
+            if est == EstadoSolicitud.TERMINADA:
                 for id_paquete in response['IdsPaquetes']:
                     response, paquete = self.recover_retencion_download(
                         id_paquete=id_paquete
@@ -810,7 +800,7 @@ class SAT(PAC):
                     _service_logger("RespuestaDescargaMasivaTercerosSalida", response)
                     yield id_paquete, base64.b64decode(paquete)
                 break
-            if est in [EstadoSolicitud.Aceptada, EstadoSolicitud.EnProceso]:
+            if est in [EstadoSolicitud.ACEPTADA, EstadoSolicitud.EN_PROCESO]:
                 time.sleep(self.wait_time)
                 continue
             break

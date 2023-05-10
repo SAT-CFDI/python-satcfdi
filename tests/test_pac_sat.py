@@ -138,13 +138,13 @@ def test_sat_service_solicitud():
 
 
 def test_status_code():
-    assert EstadoSolicitud(5).name == 'Rechazada'
+    assert EstadoSolicitud(5).name == 'RECHAZADA'
 
     est_code = Code(5, EstadoSolicitud(5).name)
     alt_text = str(est_code)
-    assert alt_text == "5 - Rechazada"
-    assert EstadoSolicitud.Rechazada == est_code
-    assert est_code == EstadoSolicitud.Rechazada
+    assert alt_text == "5 - RECHAZADA"
+    assert EstadoSolicitud.RECHAZADA == est_code
+    assert est_code == EstadoSolicitud.RECHAZADA
 
 
 def test_pac_sat_uuid():

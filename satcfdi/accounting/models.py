@@ -4,14 +4,9 @@ from decimal import Decimal
 from uuid import UUID
 
 from .. import CFDI, XElement
+from ..create.catalogos import EstadoComprobante
 from ..create.cfd.catalogos import MetodoPago, TipoDeComprobante, TipoRelacion
 from ..create.compute import make_impuestos_dr_parcial, rounder, group_impuestos, encode_impuesto, calculate_partial
-from ..utils import StrEnum
-
-
-class EstadoComprobante(StrEnum):
-    Cancelado = '0'
-    Vigente = '1'
 
 
 class SatCFDI(CFDI):
@@ -44,12 +39,12 @@ class SatCFDI(CFDI):
                 for c in self.relations
                 if c.cfdi_relacionados["TipoRelacion"] == TipoRelacion.NOTA_DE_CREDITO_DE_LOS_DOCUMENTOS_RELACIONADOS
                 and c.comprobante['TipoDeComprobante'] == TipoDeComprobante.EGRESO
-                and c.comprobante.estatus == EstadoComprobante.Vigente
+                and c.comprobante.estatus == EstadoComprobante.VIGENTE
             )
             insoluto = min(
                 (c.docto_relacionado['ImpSaldoInsoluto']
                  for c in self.payments
-                 if c.comprobante.estatus == EstadoComprobante.Vigente),
+                 if c.comprobante.estatus == EstadoComprobante.VIGENTE),
                 default=None
             )
             if insoluto is not None:
