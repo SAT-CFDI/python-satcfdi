@@ -9,6 +9,8 @@ ______________________
     from decimal import Decimal
     from satcfdi import Signer
     from satcfdi.create.cfd import cfdi40
+    from satcfdi.create.cfd.catalogos import RegimenFiscal, UsoCFDI, MetodoPago
+    
     
     # Load signing certificate
     signer = Signer.load(
@@ -22,17 +24,17 @@ ______________________
         emisor=cfdi40.Emisor(
             rfc=signer.rfc,
             nombre=signer.legal_name,
-            regimen_fiscal="601"
+            regimen_fiscal=RegimenFiscal.GENERAL_DE_LEY_PERSONAS_MORALES
         ),
         lugar_expedicion="56820",
         receptor=cfdi40.Receptor(
             rfc='KIJ0906199R1',
             nombre='KIJ, S.A DE C.V.',
-            uso_cfdi='G03',
+            uso_cfdi=UsoCFDI.GASTOS_EN_GENERAL,
             domicilio_fiscal_receptor="59820",
-            regimen_fiscal_receptor="601"
+            regimen_fiscal_receptor=RegimenFiscal.GENERAL_DE_LEY_PERSONAS_MORALES
         ),
-        metodo_pago='PPD',
+        metodo_pago=MetodoPago.PAGO_EN_PARCIALIDADES_O_DIFERIDO,
         serie="A",
         folio="123456",
         conceptos=[
