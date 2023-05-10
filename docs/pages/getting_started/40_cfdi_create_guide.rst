@@ -55,8 +55,6 @@ ______________________
     invoice.sign(signer)
     invoice = invoice.process()
     
-    print(invoice.json_str(pretty_print=True))
-    
 
 Nomina
 ______________________
