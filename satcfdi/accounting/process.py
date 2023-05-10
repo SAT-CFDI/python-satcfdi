@@ -9,19 +9,13 @@ from tabulate import tabulate
 from ._ansi_colors import *
 from .formatters import *
 from .models import *
+from ..create.cfd.catalogos import Impuesto
+from ..create.retencion.catalogos import TipoImpuesto
 
 logger = logging.getLogger(__name__)
 
-ISR = "001"
-IVA = "002"
-IEPS = "003"
-
 IVA16 = "002|Tasa|0.160000"
 IVA08 = "002|Tasa|0.080000"
-
-RET_ISR = "01"
-RET_IVA = "02"
-RET_IEPS = "03"
 
 
 def complement_invoices_data(invoices: Mapping[UUID, SatCFDI]):
@@ -125,8 +119,8 @@ def invoice_def():
         'SubTotal': (12, True, lambda i: i["SubTotal"]),
         'Descuento': (12, True, lambda i: i.get("Descuento")),
         'IVA16 Tras': (12, True, lambda i: i.get("Impuestos", {}).get("Traslados", {}).get(IVA16, {}).get("Importe")),
-        'IVA Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(IVA, {}).get("Importe")),
-        'ISR Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(ISR, {}).get("Importe")),
+        'IVA Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(Impuesto.IVA, {}).get("Importe")),
+        'ISR Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(Impuesto.ISR, {}).get("Importe")),
         'Total': (12, True, lambda i: i["Total"]),
         'Pendiente': (12, True, lambda i: i.saldo_pendiente or None),
         'Pagos': (35, False, format_pagos),
@@ -148,8 +142,8 @@ def invoice_confirm_def():
         'SubTotal': (12, True, lambda i: i["SubTotal"]),
         'Descuento': (12, True, lambda i: i.get("Descuento")),
         'IVA16 Tras': (12, True, lambda i: i.get("Impuestos", {}).get("Traslados", {}).get(IVA16, {}).get("Importe")),
-        'IVA Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(IVA, {}).get("Importe")),
-        'ISR Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(ISR, {}).get("Importe")),
+        'IVA Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(Impuesto.IVA, {}).get("Importe")),
+        'ISR Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(Impuesto.ISR, {}).get("Importe")),
         'Total': (12, True, lambda i: i["Total"]),
         'Conceptos': (60, False, format_conceptos),
     }
@@ -175,8 +169,8 @@ def payment_def():
         'Subtotal': (12, True, lambda i: i.sub_total),
         'Descuento': (12, True, lambda i: i.descuento),
         'IVA16 Tras': (12, True, lambda i: i.impuestos.get("Traslados", {}).get(IVA16, {}).get("Importe")),
-        'IVA Ret': (12, True, lambda i: i.impuestos.get("Retenciones", {}).get(IVA, {}).get("Importe")),
-        'ISR Ret': (12, True, lambda i: i.impuestos.get("Retenciones", {}).get(ISR, {}).get("Importe")),
+        'IVA Ret': (12, True, lambda i: i.impuestos.get("Retenciones", {}).get(Impuesto.IVA, {}).get("Importe")),
+        'ISR Ret': (12, True, lambda i: i.impuestos.get("Retenciones", {}).get(Impuesto.ISR, {}).get("Importe")),
 
         'Estatus SAT': (35, False, lambda i: format_estado_cfdi(i.comprobante)),
     }
@@ -188,7 +182,8 @@ def retenciones_def():
         'Monto de los intereses nominales': (12, False, lambda i: i["Complemento"]["Intereses"]["MontIntNominal"]),
         'Monto de los intereses reales': (12, False, lambda i: i["Complemento"]["Intereses"]["MontIntReal"]),
         'Perdida': (12, False, lambda i: i["Complemento"]["Intereses"]["Perdida"]),
-        'ISR Retenido': (12, False, lambda i: sum(x["MontoRet"] for x in i["Totales"]['ImpRetenidos'] if x.get("Impuesto") == RET_ISR) if 'ImpRetenidos' in i["Totales"] else None)
+        'ISR Retenido': (
+        12, False, lambda i: sum(x["MontoRet"] for x in i["Totales"]['ImpRetenidos'] if x.get("Impuesto") == TipoImpuesto.ISR) if 'ImpRetenidos' in i["Totales"] else None)
     }
 
 
@@ -313,7 +308,7 @@ def payments_groupby_receptor(payments: Sequence[PaymentsDetails]):
             "Receptor": receptor,
             "SubTotal": sum(p.sub_total for p in p),
             "Descuento": sum(p.descuento or 0 for p in p),
-            "ISR Ret": sum(p.impuestos.get("Retenciones", {}).get(ISR, {}).get("Importe") or 0 for p in p)
+            "ISR Ret": sum(p.impuestos.get("Retenciones", {}).get(Impuesto.ISR, {}).get("Importe") or 0 for p in p)
         })
     return res
 
