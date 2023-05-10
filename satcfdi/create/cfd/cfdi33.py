@@ -157,8 +157,6 @@ class Concepto(ScalarMap):
     :param cuenta_predial: Nodo opcional para asentar el número de cuenta predial con el que fue registrado el inmueble, en el sistema catastral de la entidad federativa de que trate, o bien para incorporar los datos de identificación del certificado de participación inmobiliaria no amortizable.
     :param complemento_concepto: Nodo opcional donde se incluyen los nodos complementarios de extensión al concepto definidos por el SAT, de acuerdo con las disposiciones particulares para un sector o actividad específica.
     :param parte: Nodo opcional para expresar las partes o componentes que integran la totalidad del concepto expresado en el comprobante fiscal digital por Internet.
-    :param traslados: Traslados a aplicar.
-    :param retenciones: Retenciones a aplicar.
     :param _traslados_incluidos: si el valor valor_unitario ya incluye traslados.
     """
 

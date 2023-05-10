@@ -11,12 +11,7 @@ from ..compute import make_impuestos, rounder, make_impuesto, \
 from ... import CFDI, ScalarMap
 from ...transform import get_timezone
 from ...utils import iterate
-
-_impuestos = {
-    "ISR": "001",
-    "IVA": "002",
-    "IEPS": "003",
-}
+from satcfdi.create.cfd.catalogos import Impuesto as CatImpuesto
 
 
 class Impuesto(ScalarMap):
@@ -40,7 +35,7 @@ class Impuesto(ScalarMap):
     ):
         super().__init__({
             'Base': base,
-            'Impuesto': _impuestos.get(impuesto, impuesto),
+            'Impuesto': CatImpuesto.get(impuesto, impuesto),
             'TipoFactor': tipo_factor,
             'TasaOCuota': tasa_o_cuota,
             'Importe': importe,

@@ -4,11 +4,9 @@ from decimal import Decimal
 from uuid import UUID
 
 from .. import CFDI, XElement
+from ..create.cfd.catalogos import MetodoPago
 from ..create.compute import make_impuestos_dr_parcial, rounder, group_impuestos, encode_impuesto, calculate_partial
 from ..utils import StrEnum
-
-PPD = "PPD"
-PUE = "PUE"
 
 
 class EstadoComprobante(StrEnum):
@@ -58,9 +56,9 @@ class SatCFDI(CFDI):
                 return insoluto - credit_notes
 
             insoluto = self["Total"] - credit_notes
-            if self["MetodoPago"] == PPD:
+            if self["MetodoPago"] == MetodoPago.PAGO_EN_PARCIALIDADES_O_DIFERIDO:
                 return insoluto
-            if self["MetodoPago"] == PUE:
+            if self["MetodoPago"] == MetodoPago.PAGO_EN_UNA_SOLA_EXHIBICION:
                 return Decimal(0)
 
         return None

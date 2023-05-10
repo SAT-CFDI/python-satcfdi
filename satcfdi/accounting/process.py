@@ -87,7 +87,7 @@ def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_
     for r in filter_invoices_iter(invoices.values(), rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor, estatus='1', fecha=None):
         match r['TipoDeComprobante']:
             case "I":
-                if r['MetodoPago'] == PUE:
+                if r['MetodoPago'] == MetodoPago.PAGO_EN_UNA_SOLA_EXHIBICION:
                     if not r.payments:
                         if _compare(r["Fecha"], fecha):
                             yield PaymentsDetails(comprobante=r)
