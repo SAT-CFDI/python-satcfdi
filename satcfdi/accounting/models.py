@@ -107,16 +107,15 @@ class PaymentsDetails(Payment):
                 "ImpuestosDR": self.impuestos
             }], pfx="DR", ofx="")
 
-            for imp in ('Traslados', 'Retenciones'):
-                if imps := self.impuestos.get(imp):
-                    self.impuestos[imp] = {
-                        encode_impuesto(
-                            impuesto=v['Impuesto'],
-                            tipo_factor=v.get("TipoFactor"),
-                            tasa_cuota=v.get('TasaOCuota')
-                        ): v
-                        for v in imps
-                    }
+            for imp, imps in self.impuestos.items():
+                self.impuestos[imp] = {
+                    encode_impuesto(
+                        impuesto=v['Impuesto'],
+                        tipo_factor=v.get("TipoFactor"),
+                        tasa_cuota=v.get('TasaOCuota')
+                    ): v
+                    for v in imps
+                }
 
             def calc_parcial(field):
                 return calculate_partial(
