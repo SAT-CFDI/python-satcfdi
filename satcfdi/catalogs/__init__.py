@@ -41,7 +41,7 @@ def split_at_upper(word: str):
 
 
 def trans(k):
-    c.execute(f"SELECT value FROM TTranslations WHERE key = ?", (k,))
+    c.execute(f"SELECT value FROM Translations WHERE key = ?", (k,))
     if res := c.fetchone():
         res = res[0]
 
@@ -65,8 +65,8 @@ def catalog_code(catalog_name, key, index=None):
 
 
 def moneda_decimales(moneda):
-    return select('Tae00f1168e4dd44ad14f604041a8e80bcade7279', moneda)[1]
+    return select('C756_c_Moneda', moneda)[1]
 
 
 def codigo_postal_uso_horario(codigo_postal):
-    return select('T1c22cc9094f6f89d8589f52d827f368d767db6b0', codigo_postal)[4]
+    return select('C756_c_CodigoPostal', codigo_postal)[4]

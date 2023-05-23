@@ -38,20 +38,16 @@ def test_moneda():
 
 
 def test_catalog(caplog):
-    # {http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_FormaPago Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b
-    code = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', "24")
+    code = catalog_code('C756_c_FormaPago', "24")
     assert code.code == "24"
     assert code.description == 'Confusión'
 
-    code = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', "-1")
+    code = catalog_code('C756_c_FormaPago', "-1")
     assert code.code == "-1"
     assert code.description is None
-    for record in caplog.records:
-        assert record.args == ('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b -1',)
 
 
 def test_huso_horario():
-    # {http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_CodigoPostal T1c22cc9094f6f89d8589f52d827f368d767db6b0
-    c = select_all("T1c22cc9094f6f89d8589f52d827f368d767db6b0")
+    c = select_all("C756_c_CodigoPostal")
     for i in c.values():
         assert i[4] in HUSO_HORARIOS

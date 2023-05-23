@@ -34,8 +34,7 @@ def _request_constancia(rfc: str, id_cif: str):
 
 
 def _find_regimen(regimen):
-    # {http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_RegimenFiscal Tee1adb7bc641ae4cb96d245454aab95bb456932a
-    for k, v in select_all('Tee1adb7bc641ae4cb96d245454aab95bb456932a').items():
+    for k, v in select_all('C756_c_RegimenFiscal').items():
         if regimen.endswith(v):
             return Code(k, v)
     return Code(None, regimen)
