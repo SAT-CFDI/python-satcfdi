@@ -53,7 +53,7 @@
                                                    'Impuesto': Code('002', 'IVA'),
                                                    'TasaOCuota': Decimal('1.600000'),
                                                    'TipoFactor': Code('Tasa', None)}}},
- 'LugarExpedicion': Code('45079', None),
+ 'LugarExpedicion': '45079',
  'MetodoPago': Code('PUE', 'Pago en una sola exhibición'),
  'Moneda': Code('MXN', 'Peso Mexicano'),
  'NoCertificado': '40001000000300000337',

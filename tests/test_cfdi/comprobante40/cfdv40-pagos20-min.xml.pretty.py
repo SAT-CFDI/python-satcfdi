@@ -24,7 +24,7 @@
             'Rfc': ' AAA010101AAA'},
  'Exportacion': Code('03', 'Temporal'),
  'Fecha': datetime.datetime(2021, 12, 8, 23, 59, 59),
- 'LugarExpedicion': Code('99999', None),
+ 'LugarExpedicion': '99999',
  'Moneda': Code('XXX', 'Los códigos asignados para las transacciones en que intervenga ninguna moneda'),
  'NoCertificado': '30001000000300023708',
  'Receptor': {'DomicilioFiscalReceptor': '99999',

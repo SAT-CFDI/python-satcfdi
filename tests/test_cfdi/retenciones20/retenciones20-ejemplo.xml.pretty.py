@@ -114,7 +114,7 @@
             'RfcE': 'AAAA010101AAA'},
  'FechaExp': datetime.datetime(2021, 12, 12, 12, 45, 29),
  'FolioInt': '1RETENCION',
- 'LugarExpRetenc': Code('99999', None),
+ 'LugarExpRetenc': '99999',
  'NoCertificado': '30001000000300023708',
  'Periodo': {'Ejercicio': Code('2027', None),
              'MesFin': Code('12', 'Diciembre'),

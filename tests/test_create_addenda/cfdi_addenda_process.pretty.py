@@ -41,7 +41,7 @@
                                                    'Impuesto': Code('002', 'IVA'),
                                                    'TasaOCuota': Decimal('0.160000'),
                                                    'TipoFactor': Code('Tasa', None)}}},
- 'LugarExpedicion': Code('56820', None),
+ 'LugarExpedicion': '56820',
  'MetodoPago': Code('PPD', 'Pago en parcialidades o diferido'),
  'Moneda': Code('MXN', 'Peso Mexicano'),
  'NoCertificado': '30001000000400002460',

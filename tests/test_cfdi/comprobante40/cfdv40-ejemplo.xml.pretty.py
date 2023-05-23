@@ -99,7 +99,7 @@
  'InformacionGlobal': {'Año': 2021,
                        'Meses': Code('18', 'Noviembre-Diciembre'),
                        'Periodicidad': Code('05', 'Bimestral')},
- 'LugarExpedicion': Code('99999', None),
+ 'LugarExpedicion': '99999',
  'MetodoPago': Code('PPD', 'Pago en parcialidades o diferido'),
  'Moneda': Code('MXN', 'Peso Mexicano'),
  'NoCertificado': '30001000000300023708',

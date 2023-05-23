@@ -9,7 +9,7 @@
             'Rfc': ' AAA010101AAA'},
  'Fecha': datetime.datetime(2017, 5, 1, 1, 23, 59),
  'FormaPago': Code('02', 'Cheque nominativo'),
- 'LugarExpedicion': Code('45079', None),
+ 'LugarExpedicion': '45079',
  'Moneda': Code('MXN', 'Peso Mexicano'),
  'NoCertificado': '40001000000300000337',
  'Receptor': {'Rfc': 'BASJ600902KL9',

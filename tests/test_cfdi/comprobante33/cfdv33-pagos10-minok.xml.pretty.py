@@ -14,7 +14,7 @@
  'Emisor': {'RegimenFiscal': Code('622', 'Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras'),
             'Rfc': 'AAA010101AAA'},
  'Fecha': datetime.datetime(2017, 9, 14, 1, 2, 3),
- 'LugarExpedicion': Code('45079', None),
+ 'LugarExpedicion': '45079',
  'Moneda': Code('XXX', 'Los códigos asignados para las transacciones en que intervenga ninguna moneda'),
  'NoCertificado': '40001000000300000337',
  'Receptor': {'Rfc': 'AAA010101AAA', 'UsoCFDI': Code('P01', 'Por definir')},

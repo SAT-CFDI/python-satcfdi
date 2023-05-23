@@ -12,7 +12,7 @@
  'Exportacion': Code('03', 'Temporal'),
  'Fecha': datetime.datetime(2021, 12, 7, 23, 59, 59),
  'FormaPago': Code('02', 'Cheque nominativo'),
- 'LugarExpedicion': Code('45079', None),
+ 'LugarExpedicion': '45079',
  'Moneda': Code('MXN', 'Peso Mexicano'),
  'NoCertificado': '30001000000300023708',
  'Receptor': {'DomicilioFiscalReceptor': '99999',

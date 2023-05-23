@@ -17,7 +17,7 @@ def format_head_pre(cfdi):
 
 
 def format_fecha(cfdi):
-    return str(cfdi["Fecha"]) + "\n" + cfdi["LugarExpedicion"].code + "\n" + str(cfdi["Receptor"]["UsoCFDI"])
+    return str(cfdi["Fecha"]) + "\n" + cfdi["LugarExpedicion"] + "\n" + str(cfdi["Receptor"]["UsoCFDI"])
 
 
 def format_emisor(cfdi):
