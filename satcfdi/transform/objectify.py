@@ -1,8 +1,9 @@
 from decimal import Decimal
 from datetime import datetime, date, time
-from .helpers import Xint, impuesto_index, default_objectify, catalog_code
+from .helpers import Xint, impuesto_index, default_objectify
 from .. import NamespaceMismatchError
 from ..utils import ScalarMap
+from ..catalogs import catalog_code
 
 def ubicacion0(cls, node):
     self = ScalarMap()

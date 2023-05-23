@@ -11,8 +11,9 @@ from jinja2.filters import do_mark_safe
 from jinja2.runtime import Undefined
 from lxml.etree import QName
 
-from .helpers import desc, format_address, trans, iterate as h_iterate
+from .helpers import desc, format_address, iterate as h_iterate
 from ..models import py2html, Code
+from ..catalogs import trans
 
 current_dir = os.path.dirname(__file__)
 logger = logging.getLogger(__name__)

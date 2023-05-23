@@ -1,7 +1,7 @@
 from collections import defaultdict
 from decimal import Decimal
 
-from ..transform import moneda_decimales
+from ..catalogs import moneda_decimales
 from ..transform.helpers import strcode
 from ..utils import iterate
 

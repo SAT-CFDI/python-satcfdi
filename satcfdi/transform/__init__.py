@@ -4,7 +4,7 @@ from functools import cache
 import pytz
 from lxml import etree
 
-from .helpers import SchemaCollector, codigo_postal_uso_horario, moneda_decimales
+from .helpers import SchemaCollector
 from .objectify import cfdi_objectify
 from .pdf_environment import DefaultPDFEnvironment
 from .schemas import cfdi_schemas
@@ -13,6 +13,7 @@ from .xslt import TRANSFORMS
 from .. import SchemaValidationError, CFDIError, Certificate
 from ..models import CertificateStore
 from ..utils import parser
+from ..catalogs import codigo_postal_uso_horario
 
 __all__ = [
     'SchemaCollector',
@@ -24,8 +25,7 @@ __all__ = [
     'get_timezone',
     'validate_xsd',
     'xslt_transform',
-    'verify_certificate',
-    'moneda_decimales'
+    'verify_certificate'
 ]
 
 current_dir = os.path.dirname(__file__)

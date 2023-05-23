@@ -3,7 +3,7 @@ import requests
 import urllib3
 from bs4 import BeautifulSoup
 from .. import ResponseError, __version__, Code
-from ..transform.helpers import select_all
+from ..catalogs import select_all
 
 try:
     urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'

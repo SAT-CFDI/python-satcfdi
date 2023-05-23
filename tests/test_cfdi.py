@@ -5,7 +5,7 @@ import pytest
 
 from satcfdi.cfdi import CFDI
 from satcfdi.transform import HUSO_HORARIOS
-from satcfdi.transform.helpers import catalog_code, select_all
+from satcfdi.catalogs import catalog_code, select_all
 from tests.constants import CFDI_FILES
 from tests.utils import verify_result, XElementPrettyPrinter
 

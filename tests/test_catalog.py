@@ -2,8 +2,7 @@ import os
 
 from satcfdi.create.cfd.catalogos import Impuesto
 from satcfdi.transform import HUSO_HORARIOS
-from satcfdi.transform import moneda_decimales
-from satcfdi.transform.helpers import catalog_code, select_all
+from satcfdi.catalogs import moneda_decimales, catalog_code, select_all
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)
