@@ -1,8 +1,11 @@
 from decimal import Decimal
 from datetime import datetime, date, time
+
 from .helpers import Xint, impuesto_index, default_objectify, catalog_code
 from .. import NamespaceMismatchError
 from ..utils import ScalarMap
+from ..models import Code
+
 
 def ubicacion0(cls, node):
     self = ScalarMap()
@@ -27,6 +30,8 @@ def ubicacion0(cls, node):
     if (a := node.attrib.get('codigoPostal')) is not None:
         self['CodigoPostal'] = a
     return self
+
+
 def datos_contacto0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('telefono')) is not None:
@@ -38,6 +43,8 @@ def datos_contacto0(cls, node):
     if (a := node.attrib.get('web')) is not None:
         self['Web'] = a
     return self
+
+
 def extra0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('indicador')) is not None:
@@ -51,10 +58,14 @@ def extra0(cls, node):
     if (a := node.attrib.get('sufijo')) is not None:
         self['Sufijo'] = a
     return self
+
+
 def archivo_type0(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/ari}informe')]
     return self
+
+
 def informe0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}mes_reportado')
@@ -65,6 +76,8 @@ def informe0(cls, node):
     if el is not None:
         self['Aviso'] = [aviso0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/ari}aviso')]
     return self
+
+
 def sujeto_obligado0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}clave_entidad_colegiada')
@@ -73,11 +86,13 @@ def sujeto_obligado0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}referencia_aviso')
@@ -86,7 +101,7 @@ def aviso0(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio0(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}alerta')
     self['Alerta'] = alerta0(cls, el)
     self['PersonaAviso'] = [persona_aviso0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/ari}persona_aviso')]
@@ -96,6 +111,8 @@ def aviso0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones0(cls, el)
     return self
+
+
 def modificatorio0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}folio_modificacion')
@@ -103,14 +120,18 @@ def modificatorio0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_aviso0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}tipo_persona')
@@ -122,6 +143,8 @@ def persona_aviso0(cls, node):
     if el is not None:
         self['Telefono'] = telefono0(cls, el)
     return self
+
+
 def tipo_persona0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}persona_fisica')
@@ -134,6 +157,8 @@ def tipo_persona0(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso0(cls, el)
     return self
+
+
 def persona_fisica0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}nombre')
@@ -152,10 +177,12 @@ def persona_fisica0(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}denominacion_razon')
@@ -167,12 +194,14 @@ def persona_moral0(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado0(cls, el)
     return self
+
+
 def fideicomiso0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}denominacion_razon')
@@ -186,6 +215,8 @@ def fideicomiso0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado0(cls, el)
     return self
+
+
 def representante_apoderado0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}nombre')
@@ -204,6 +235,8 @@ def representante_apoderado0(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilio0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}nacional')
@@ -213,6 +246,8 @@ def tipo_domicilio0(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero0(cls, el)
     return self
+
+
 def nacional0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}colonia')
@@ -227,10 +262,12 @@ def nacional0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}ciudad_poblacion')
@@ -247,11 +284,13 @@ def extranjero0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -259,11 +298,15 @@ def telefono0(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}tipo_persona')
     self['TipoPersona'] = tipo_persona1(cls, el)
     return self
+
+
 def tipo_persona1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}persona_fisica')
@@ -276,6 +319,8 @@ def tipo_persona1(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso1(cls, el)
     return self
+
+
 def persona_fisica1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}nombre')
@@ -295,8 +340,10 @@ def persona_fisica1(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}denominacion_razon')
@@ -309,8 +356,10 @@ def persona_moral1(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}denominacion_razon')
@@ -322,19 +371,25 @@ def fideicomiso1(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operaciones0(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/ari}datos_operacion')]
     return self
+
+
 def datos_operacion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}fecha_operacion')
     self['FechaOperacion'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     self['Caracteristicas'] = [caracteristicas0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/ari}caracteristicas')]
     self['DatosLiquidacion'] = [datos_liquidacion0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/ari}datos_liquidacion')]
     return self
+
+
 def caracteristicas0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}fecha_inicio')
@@ -342,7 +397,7 @@ def caracteristicas0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}fecha_termino')
     self['FechaTermino'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}valor_referencia')
     self['ValorReferencia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}colonia')
@@ -359,23 +414,29 @@ def caracteristicas0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}folio_real')
     self['FolioReal'] = el.text
     return self
+
+
 def datos_liquidacion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}forma_pago')
-    self['FormaPago'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}forma_pago_type', el.text)
+    self['FormaPago'] = catalog_code('T50dfda1d9460b356fe21d1d8a03e63d9b2a3f072', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/ari}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def archivo_type1(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/avi}informe')]
     return self
+
+
 def informe1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}mes_reportado')
@@ -386,6 +447,8 @@ def informe1(cls, node):
     if el is not None:
         self['Aviso'] = [aviso1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/avi}aviso')]
     return self
+
+
 def sujeto_obligado1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}clave_entidad_colegiada')
@@ -394,19 +457,21 @@ def sujeto_obligado1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}exento')
     if el is not None:
         self['Exento'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}dominio_plataforma')
     self['DominioPlataforma'] = el.text
     return self
+
+
 def aviso1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}referencia_aviso')
     self['ReferenciaAviso'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}modificatorio')
     if el is not None:
         self['Modificatorio'] = modificatorio1(cls, el)
@@ -415,6 +480,8 @@ def aviso1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}operaciones_persona')
     self['OperacionesPersona'] = operaciones_persona0(cls, el)
     return self
+
+
 def modificatorio1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}folio_modificacion')
@@ -422,14 +489,18 @@ def modificatorio1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def operaciones_persona0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}persona_aviso')
@@ -440,6 +511,8 @@ def operaciones_persona0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones1(cls, el)
     return self
+
+
 def persona_aviso1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}datos_cuenta_plataforma')
@@ -453,6 +526,8 @@ def persona_aviso1(cls, node):
     if el is not None:
         self['Telefono'] = telefono1(cls, el)
     return self
+
+
 def datos_cuenta_plataforma0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}id_usuario')
@@ -465,6 +540,8 @@ def datos_cuenta_plataforma0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}moneda_cuenta')
     self['MonedaCuenta'] = Xint(el.text)
     return self
+
+
 def tipo_persona2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}persona_fisica')
@@ -477,6 +554,8 @@ def tipo_persona2(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso2(cls, el)
     return self
+
+
 def persona_fisica2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}nombre')
@@ -495,12 +574,14 @@ def persona_fisica2(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}documento_identificacion')
     self['DocumentoIdentificacion'] = documento_identificacion0(cls, el)
     return self
+
+
 def persona_moral2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}denominacion_razon')
@@ -512,12 +593,14 @@ def persona_moral2(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado1(cls, el)
     return self
+
+
 def fideicomiso2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}denominacion_razon')
@@ -531,6 +614,8 @@ def fideicomiso2(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado1(cls, el)
     return self
+
+
 def representante_apoderado1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}nombre')
@@ -551,6 +636,8 @@ def representante_apoderado1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}documento_identificacion')
     self['DocumentoIdentificacion'] = documento_identificacion0(cls, el)
     return self
+
+
 def documento_identificacion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}tipo_identificacion')
@@ -558,6 +645,8 @@ def documento_identificacion0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}numero_identificacion')
     self['NumeroIdentificacion'] = el.text
     return self
+
+
 def tipo_domicilio1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}nacional')
@@ -567,6 +656,8 @@ def tipo_domicilio1(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero1(cls, el)
     return self
+
+
 def nacional1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}colonia')
@@ -581,10 +672,12 @@ def nacional1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}ciudad_poblacion')
@@ -601,20 +694,26 @@ def extranjero1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}clave_pais')
-    self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}numero_telefono')
     self['NumeroTelefono'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}correo_electronico')
     self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiario1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}tipo_persona')
     self['TipoPersona'] = tipo_persona3(cls, el)
     return self
+
+
 def tipo_persona3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}persona_fisica')
@@ -627,6 +726,8 @@ def tipo_persona3(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso3(cls, el)
     return self
+
+
 def persona_fisica3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}nombre')
@@ -645,8 +746,10 @@ def persona_fisica3(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}denominacion_razon')
@@ -658,8 +761,10 @@ def persona_moral3(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}denominacion_razon')
@@ -671,6 +776,8 @@ def fideicomiso3(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operaciones1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}operaciones_compra')
@@ -689,18 +796,26 @@ def detalle_operaciones1(cls, node):
     if el is not None:
         self['OperacionesFondos'] = operaciones_fondos0(cls, el)
     return self
+
+
 def operaciones_compra0(cls, node):
     self = ScalarMap()
     self['Compra'] = [compra0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/avi}compra')]
     return self
+
+
 def operaciones_venta0(cls, node):
     self = ScalarMap()
     self['Venta'] = [venta0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/avi}venta')]
     return self
+
+
 def operaciones_intercambio0(cls, node):
     self = ScalarMap()
     self['Intercambio'] = [intercambio0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/avi}intercambio')]
     return self
+
+
 def operaciones_transferencia0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}transferencias_enviadas')
@@ -710,14 +825,20 @@ def operaciones_transferencia0(cls, node):
     if el is not None:
         self['TransferenciasRecibidas'] = transferencias_recibidas0(cls, el)
     return self
+
+
 def transferencias_enviadas0(cls, node):
     self = ScalarMap()
     self['Envio'] = [envio0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/avi}envio')]
     return self
+
+
 def transferencias_recibidas0(cls, node):
     self = ScalarMap()
     self['Recepcion'] = [recepcion0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/avi}recepcion')]
     return self
+
+
 def operaciones_fondos0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}fondos_retirados')
@@ -727,14 +848,20 @@ def operaciones_fondos0(cls, node):
     if el is not None:
         self['FondosDepositados'] = fondos_depositados0(cls, el)
     return self
+
+
 def fondos_retirados0(cls, node):
     self = ScalarMap()
     self['Retiro'] = [retiro0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/avi}retiro')]
     return self
+
+
 def fondos_depositados0(cls, node):
     self = ScalarMap()
     self['Deposito'] = [deposito0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/avi}deposito')]
     return self
+
+
 def compra0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion')
@@ -748,6 +875,8 @@ def compra0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}hash_operacion')
     self['HashOperacion'] = el.text
     return self
+
+
 def venta0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion')
@@ -761,6 +890,8 @@ def venta0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}hash_operacion')
     self['HashOperacion'] = el.text
     return self
+
+
 def intercambio0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion')
@@ -772,6 +903,8 @@ def intercambio0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}hash_operacion')
     self['HashOperacion'] = el.text
     return self
+
+
 def envio0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion')
@@ -783,6 +916,8 @@ def envio0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}hash_operacion')
     self['HashOperacion'] = el.text
     return self
+
+
 def recepcion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion')
@@ -794,12 +929,14 @@ def recepcion0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}hash_operacion')
     self['HashOperacion'] = el.text
     return self
+
+
 def retiro0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion')
     self['FechaHoraOperacion'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}moneda_operacion')
     self['MonedaOperacion'] = Xint(el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}monto_operacion')
@@ -807,12 +944,14 @@ def retiro0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}datos_beneficiario')
     self['DatosBeneficiario'] = datos_beneficiario0(cls, el)
     return self
+
+
 def deposito0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}fecha_hora_operacion')
     self['FechaHoraOperacion'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}moneda_operacion')
     self['MonedaOperacion'] = Xint(el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}monto_operacion')
@@ -820,6 +959,8 @@ def deposito0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}datos_ordenante')
     self['DatosOrdenante'] = datos_beneficiario0(cls, el)
     return self
+
+
 def activo_virtual0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}activo_virtual_operado')
@@ -832,6 +973,8 @@ def activo_virtual0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}cantidad_activo_virtual')
     self['CantidadActivoVirtual'] = el.text
     return self
+
+
 def activo_virtual_enviado0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}activo_virtual')
@@ -839,6 +982,8 @@ def activo_virtual_enviado0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}monto_operacion_mn')
     self['MontoOperacionMn'] = el.text
     return self
+
+
 def datos_beneficiario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}tipo_persona')
@@ -846,6 +991,8 @@ def datos_beneficiario0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}nacionalidad_cuenta')
     self['NacionalidadCuenta'] = nacionalidad_cuenta0(cls, el)
     return self
+
+
 def tipo_persona4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}persona_fisica')
@@ -855,6 +1002,8 @@ def tipo_persona4(cls, node):
     if el is not None:
         self['PersonaMoral'] = persona_moral4(cls, el)
     return self
+
+
 def persona_fisica4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}nombre')
@@ -864,11 +1013,15 @@ def persona_fisica4(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}apellido_materno')
     self['ApellidoMaterno'] = el.text
     return self
+
+
 def persona_moral4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}denominacion_razon')
     self['DenominacionRazon'] = el.text
     return self
+
+
 def nacionalidad_cuenta0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}nacional')
@@ -878,6 +1031,8 @@ def nacionalidad_cuenta0(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero2(cls, el)
     return self
+
+
 def nacional2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}clabe_destino')
@@ -885,6 +1040,8 @@ def nacional2(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}clave_institucion_financiera')
     self['ClaveInstitucionFinanciera'] = Xint(el.text)
     return self
+
+
 def extranjero2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}numero_cuenta')
@@ -892,10 +1049,14 @@ def extranjero2(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/avi}nombre_banco')
     self['NombreBanco'] = el.text
     return self
+
+
 def archivo_type2(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe2(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/bli}informe')]
     return self
+
+
 def informe2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}mes_reportado')
@@ -906,6 +1067,8 @@ def informe2(cls, node):
     if el is not None:
         self['Aviso'] = [aviso2(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/bli}aviso')]
     return self
+
+
 def sujeto_obligado2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}clave_entidad_colegiada')
@@ -914,11 +1077,13 @@ def sujeto_obligado2(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}referencia_aviso')
@@ -927,7 +1092,7 @@ def aviso2(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio2(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}alerta')
     self['Alerta'] = alerta2(cls, el)
     self['PersonaAviso'] = [persona_aviso2(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/bli}persona_aviso')]
@@ -937,6 +1102,8 @@ def aviso2(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones2(cls, el)
     return self
+
+
 def modificatorio2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}folio_modificacion')
@@ -944,14 +1111,18 @@ def modificatorio2(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_aviso2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}tipo_persona')
@@ -963,6 +1134,8 @@ def persona_aviso2(cls, node):
     if el is not None:
         self['Telefono'] = telefono2(cls, el)
     return self
+
+
 def tipo_persona5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}persona_fisica')
@@ -975,6 +1148,8 @@ def tipo_persona5(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso4(cls, el)
     return self
+
+
 def persona_fisica5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}nombre')
@@ -993,10 +1168,12 @@ def persona_fisica5(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}denominacion_razon')
@@ -1008,12 +1185,14 @@ def persona_moral5(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado2(cls, el)
     return self
+
+
 def fideicomiso4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}denominacion_razon')
@@ -1027,6 +1206,8 @@ def fideicomiso4(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado2(cls, el)
     return self
+
+
 def representante_apoderado2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}nombre')
@@ -1045,6 +1226,8 @@ def representante_apoderado2(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilio2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}nacional')
@@ -1054,6 +1237,8 @@ def tipo_domicilio2(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero3(cls, el)
     return self
+
+
 def nacional3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}colonia')
@@ -1068,10 +1253,12 @@ def nacional3(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}ciudad_poblacion')
@@ -1088,11 +1275,13 @@ def extranjero3(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -1100,11 +1289,15 @@ def telefono2(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiario2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}tipo_persona')
     self['TipoPersona'] = tipo_persona6(cls, el)
     return self
+
+
 def tipo_persona6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}persona_fisica')
@@ -1117,6 +1310,8 @@ def tipo_persona6(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso5(cls, el)
     return self
+
+
 def persona_fisica6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}nombre')
@@ -1136,8 +1331,10 @@ def persona_fisica6(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}denominacion_razon')
@@ -1150,8 +1347,10 @@ def persona_moral6(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}denominacion_razon')
@@ -1163,10 +1362,14 @@ def fideicomiso5(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operaciones2(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/bli}datos_operacion')]
     return self
+
+
 def datos_operacion1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}fecha_operacion')
@@ -1174,11 +1377,13 @@ def datos_operacion1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}tipo_bien')
     self['TipoBien'] = tipo_bien0(cls, el)
     self['DatosLiquidacion'] = [datos_liquidacion1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/bli}datos_liquidacion')]
     return self
+
+
 def tipo_bien0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}datos_vehiculo_terrestre')
@@ -1188,6 +1393,8 @@ def tipo_bien0(cls, node):
     if el is not None:
         self['DatosInmueble'] = datos_inmueble0(cls, el)
     return self
+
+
 def datos_vehiculo_terrestre0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}marca_fabricante')
@@ -1210,6 +1417,8 @@ def datos_vehiculo_terrestre0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}nivel_blindaje')
     self['NivelBlindaje'] = el.text
     return self
+
+
 def datos_inmueble0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}tipo_inmueble')
@@ -1218,6 +1427,8 @@ def datos_inmueble0(cls, node):
     self['CodigoPostal'] = el.text
     self['DatosParteBlindada'] = [datos_parte_blindada0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/bli}datos_parte_blindada')]
     return self
+
+
 def datos_parte_blindada0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}parte_blindada')
@@ -1225,21 +1436,27 @@ def datos_parte_blindada0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}nivel_blindaje')
     self['NivelBlindaje'] = el.text
     return self
+
+
 def datos_liquidacion1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/bli}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def archivo_type3(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe3(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/chv}informe')]
     return self
+
+
 def informe3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}mes_reportado')
@@ -1250,6 +1467,8 @@ def informe3(cls, node):
     if el is not None:
         self['Aviso'] = [aviso3(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/chv}aviso')]
     return self
+
+
 def sujeto_obligado3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}clave_entidad_colegiada')
@@ -1258,11 +1477,13 @@ def sujeto_obligado3(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}referencia_aviso')
@@ -1271,7 +1492,7 @@ def aviso3(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio3(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}alerta')
     self['Alerta'] = alerta3(cls, el)
     self['PersonaAviso'] = [persona_aviso3(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/chv}persona_aviso')]
@@ -1281,6 +1502,8 @@ def aviso3(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones3(cls, el)
     return self
+
+
 def modificatorio3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}folio_modificacion')
@@ -1288,14 +1511,18 @@ def modificatorio3(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_aviso3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}tipo_persona')
@@ -1307,6 +1534,8 @@ def persona_aviso3(cls, node):
     if el is not None:
         self['Telefono'] = telefono3(cls, el)
     return self
+
+
 def tipo_persona7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}persona_fisica')
@@ -1319,6 +1548,8 @@ def tipo_persona7(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso6(cls, el)
     return self
+
+
 def persona_fisica7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}nombre')
@@ -1337,10 +1568,12 @@ def persona_fisica7(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}denominacion_razon')
@@ -1352,12 +1585,14 @@ def persona_moral7(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado3(cls, el)
     return self
+
+
 def fideicomiso6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}denominacion_razon')
@@ -1371,6 +1606,8 @@ def fideicomiso6(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado3(cls, el)
     return self
+
+
 def representante_apoderado3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}nombre')
@@ -1389,6 +1626,8 @@ def representante_apoderado3(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilio3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}nacional')
@@ -1398,6 +1637,8 @@ def tipo_domicilio3(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero4(cls, el)
     return self
+
+
 def nacional4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}colonia')
@@ -1412,10 +1653,12 @@ def nacional4(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}ciudad_poblacion')
@@ -1432,11 +1675,13 @@ def extranjero4(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -1444,11 +1689,15 @@ def telefono3(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiario3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}tipo_persona')
     self['TipoPersona'] = tipo_persona8(cls, el)
     return self
+
+
 def tipo_persona8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}persona_fisica')
@@ -1461,6 +1710,8 @@ def tipo_persona8(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso7(cls, el)
     return self
+
+
 def persona_fisica8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}nombre')
@@ -1480,8 +1731,10 @@ def persona_fisica8(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}denominacion_razon')
@@ -1494,8 +1747,10 @@ def persona_moral8(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}denominacion_razon')
@@ -1507,10 +1762,14 @@ def fideicomiso7(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operaciones3(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion2(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/chv}datos_operacion')]
     return self
+
+
 def datos_operacion2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}fecha_operacion')
@@ -1518,10 +1777,12 @@ def datos_operacion2(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     self['DatosCheque'] = [datos_cheque0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/chv}datos_cheque')]
     self['DatosLiquidacion'] = [datos_liquidacion2(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/chv}datos_liquidacion')]
     return self
+
+
 def datos_cheque0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}numero_cheques')
@@ -1529,21 +1790,27 @@ def datos_cheque0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}moneda_cheques')
     self['MonedaCheques'] = el.text
     return self
+
+
 def datos_liquidacion2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/chv}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def archivo_type4(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe4(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}informe')]
     return self
+
+
 def informe4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}mes_reportado')
@@ -1554,6 +1821,8 @@ def informe4(cls, node):
     if el is not None:
         self['Aviso'] = [aviso4(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}aviso')]
     return self
+
+
 def sujeto_obligado4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}clave_entidad_colegiada')
@@ -1562,11 +1831,13 @@ def sujeto_obligado4(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}referencia_aviso')
@@ -1575,12 +1846,14 @@ def aviso4(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio4(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}alerta')
     self['Alerta'] = alerta4(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones4(cls, el)
     return self
+
+
 def modificatorio4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}folio_modificacion')
@@ -1588,31 +1861,41 @@ def modificatorio4(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def detalle_operaciones4(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion3(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}datos_operacion')]
     return self
+
+
 def datos_operacion3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}desarrollos_inmobiliarios')
     self['DesarrollosInmobiliarios'] = desarrollos_inmobiliarios0(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}aportaciones')
     self['Aportaciones'] = aportaciones0(cls, el)
     return self
+
+
 def desarrollos_inmobiliarios0(cls, node):
     self = ScalarMap()
     self['DatosDesarrollo'] = [datos_desarrollo0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}datos_desarrollo')]
     return self
+
+
 def datos_desarrollo0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}objeto_aviso_anterior')
@@ -1625,6 +1908,8 @@ def datos_desarrollo0(cls, node):
     self['RegistroLicencia'] = el.text
     self['CaracteristicasDesarrollo'] = [caracteristicas_desarrollo0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}caracteristicas_desarrollo')]
     return self
+
+
 def caracteristicas_desarrollo0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}codigo_postal')
@@ -1647,6 +1932,8 @@ def caracteristicas_desarrollo0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}otras_empresas')
     self['OtrasEmpresas'] = el.text
     return self
+
+
 def aportaciones0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}fecha_aportacion')
@@ -1656,6 +1943,8 @@ def aportaciones0(cls, node):
     if el is not None:
         self['TipoAportacion'] = [tipo_aportacion0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_aportacion')]
     return self
+
+
 def tipo_aportacion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}recursos_propios')
@@ -1677,12 +1966,16 @@ def tipo_aportacion0(cls, node):
     if el is not None:
         self['FinanciamientoBursatil'] = financiamiento_bursatil0(cls, el)
     return self
+
+
 def recursos_propios0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}datos_aportacion')
     if el is not None:
         self['DatosAportacion'] = [datos_aportacion0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}datos_aportacion')]
     return self
+
+
 def datos_aportacion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}aportacion_numerario')
@@ -1692,14 +1985,16 @@ def datos_aportacion0(cls, node):
     if el is not None:
         self['AportacionEspecie'] = aportacion_especie0(cls, el)
     return self
+
+
 def aportacion_numerario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}instrumento_monetario')
     if el is not None:
-        self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+        self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}moneda')
     if el is not None:
-        self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+        self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}monto_aportacion')
     if el is not None:
         self['MontoAportacion'] = el.text
@@ -1710,6 +2005,8 @@ def aportacion_numerario0(cls, node):
     if el is not None:
         self['NombreInstitucion'] = el.text
     return self
+
+
 def aportacion_especie0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}descripcion_bien')
@@ -1719,6 +2016,8 @@ def aportacion_especie0(cls, node):
     if el is not None:
         self['MontoEstimado'] = el.text
     return self
+
+
 def socios0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}numero_socios')
@@ -1727,12 +2026,16 @@ def socios0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}detalle_socios')
     self['DetalleSocios'] = detalle_socios0(cls, el)
     return self
+
+
 def detalle_socios0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}datos_socio')
     if el is not None:
         self['DatosSocio'] = [datos_socio0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}datos_socio')]
     return self
+
+
 def datos_socio0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}aportacion_anterior_socio')
@@ -1751,6 +2054,8 @@ def datos_socio0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}detalle_aportaciones')
     self['DetalleAportaciones'] = detalle_aportaciones0(cls, el)
     return self
+
+
 def tipo_persona_socio0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}persona_fisica')
@@ -1763,6 +2068,8 @@ def tipo_persona_socio0(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso8(cls, el)
     return self
+
+
 def persona_fisica9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}nombre')
@@ -1782,11 +2089,13 @@ def persona_fisica9(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}actividad_economica')
     if el is not None:
-        self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+        self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}denominacion_razon')
@@ -1797,13 +2106,15 @@ def persona_moral9(cls, node):
         self['FechaConstitucion'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}giro_mercantil')
     if el is not None:
-        self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+        self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado4(cls, el)
     return self
+
+
 def representante_apoderado4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}nombre')
@@ -1825,6 +2136,8 @@ def representante_apoderado4(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilio_socio0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}nacional')
@@ -1834,6 +2147,8 @@ def tipo_domicilio_socio0(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero5(cls, el)
     return self
+
+
 def nacional5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}colonia')
@@ -1852,11 +2167,13 @@ def nacional5(cls, node):
     if el is not None:
         self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}pais')
     if el is not None:
-        self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}estado_provincia')
     if el is not None:
         self['EstadoProvincia'] = el.text
@@ -1879,11 +2196,13 @@ def extranjero5(cls, node):
     if el is not None:
         self['CodigoPostal'] = el.text
     return self
+
+
 def telefono4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -1891,11 +2210,15 @@ def telefono4(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def detalle_aportaciones0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}datos_aportacion')
     self['DatosAportacion'] = datos_aportacion1(cls, el)
     return self
+
+
 def datos_aportacion1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}aportacion_numerario')
@@ -1905,6 +2228,8 @@ def datos_aportacion1(cls, node):
     if el is not None:
         self['AportacionEspecie'] = aportacion_especie0(cls, el)
     return self
+
+
 def terceros0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}numero_terceros')
@@ -1913,12 +2238,16 @@ def terceros0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}detalle_terceros')
     self['DetalleTerceros'] = detalle_terceros0(cls, el)
     return self
+
+
 def detalle_terceros0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}datos_tercero')
     if el is not None:
         self['DatosTercero'] = [datos_tercero0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}datos_tercero')]
     return self
+
+
 def datos_tercero0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_tercero')
@@ -1932,6 +2261,8 @@ def datos_tercero0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}detalle_aportaciones')
     self['DetalleAportaciones'] = detalle_aportaciones1(cls, el)
     return self
+
+
 def tipo_persona_tercero0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}persona_fisica')
@@ -1944,6 +2275,8 @@ def tipo_persona_tercero0(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso8(cls, el)
     return self
+
+
 def persona_fisicaa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}nombre')
@@ -1966,11 +2299,13 @@ def persona_fisicaa(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}actividad_economica')
     if el is not None:
-        self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+        self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_morala(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}denominacion_razon')
@@ -1984,13 +2319,15 @@ def persona_morala(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}giro_mercantil')
     if el is not None:
-        self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+        self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado4(cls, el)
     return self
+
+
 def fideicomiso8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}denominacion_razon')
@@ -2003,11 +2340,15 @@ def fideicomiso8(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_aportaciones1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}datos_aportacion')
     self['DatosAportacion'] = datos_aportacion2(cls, el)
     return self
+
+
 def datos_aportacion2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}aportacion_numerario')
@@ -2017,14 +2358,16 @@ def datos_aportacion2(cls, node):
     if el is not None:
         self['AportacionEspecie'] = aportacion_especie0(cls, el)
     return self
+
+
 def aportacion_numerario1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}instrumento_monetario')
     if el is not None:
-        self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+        self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}moneda')
     if el is not None:
-        self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+        self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}monto_aportacion')
     if el is not None:
         self['MontoAportacion'] = el.text
@@ -2038,12 +2381,16 @@ def aportacion_numerario1(cls, node):
     if el is not None:
         self['ValorInmueblePreventa'] = el.text
     return self
+
+
 def prestamo_financiero0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}datos_prestamo')
     if el is not None:
         self['DatosPrestamo'] = [datos_prestamo0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}datos_prestamo')]
     return self
+
+
 def datos_prestamo0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_institucion')
@@ -2060,17 +2407,21 @@ def datos_prestamo0(cls, node):
         self['MontoPrestamo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}moneda')
     if el is not None:
-        self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+        self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}plazo_meses')
     if el is not None:
         self['PlazoMeses'] = el.text
     return self
+
+
 def prestamo_no_financiero0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}datos_prestamo')
     if el is not None:
         self['DatosPrestamo'] = [datos_prestamo1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}datos_prestamo')]
     return self
+
+
 def datos_prestamo1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}monto_prestamo')
@@ -2078,19 +2429,23 @@ def datos_prestamo1(cls, node):
         self['MontoPrestamo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}moneda')
     if el is not None:
-        self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+        self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}plazo_meses')
     if el is not None:
         self['PlazoMeses'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}detalle_acreedores')
     self['DetalleAcreedores'] = detalle_acreedores0(cls, el)
     return self
+
+
 def detalle_acreedores0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_persona_acreedor')
     if el is not None:
         self['TipoPersonaAcreedor'] = [tipo_persona_tercero0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/din}tipo_persona_acreedor')]
     return self
+
+
 def financiamiento_bursatil0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/din}fecha_emision')
@@ -2103,10 +2458,14 @@ def financiamiento_bursatil0(cls, node):
     if el is not None:
         self['MontoRecibido'] = el.text
     return self
+
+
 def archivo_type5(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe5(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/don}informe')]
     return self
+
+
 def informe5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}mes_reportado')
@@ -2117,6 +2476,8 @@ def informe5(cls, node):
     if el is not None:
         self['Aviso'] = [aviso5(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/don}aviso')]
     return self
+
+
 def sujeto_obligado5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}clave_entidad_colegiada')
@@ -2125,11 +2486,13 @@ def sujeto_obligado5(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}referencia_aviso')
@@ -2138,7 +2501,7 @@ def aviso5(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio5(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}alerta')
     self['Alerta'] = alerta5(cls, el)
     self['PersonaAviso'] = [persona_aviso4(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/don}persona_aviso')]
@@ -2148,6 +2511,8 @@ def aviso5(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones5(cls, el)
     return self
+
+
 def modificatorio5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}folio_modificacion')
@@ -2155,14 +2520,18 @@ def modificatorio5(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_aviso4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}tipo_persona')
@@ -2174,6 +2543,8 @@ def persona_aviso4(cls, node):
     if el is not None:
         self['Telefono'] = telefono5(cls, el)
     return self
+
+
 def tipo_persona9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}persona_fisica')
@@ -2186,6 +2557,8 @@ def tipo_persona9(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso9(cls, el)
     return self
+
+
 def persona_fisicab(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}nombre')
@@ -2204,10 +2577,12 @@ def persona_fisicab(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moralb(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}denominacion_razon')
@@ -2219,12 +2594,14 @@ def persona_moralb(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado5(cls, el)
     return self
+
+
 def fideicomiso9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}denominacion_razon')
@@ -2238,6 +2615,8 @@ def fideicomiso9(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado5(cls, el)
     return self
+
+
 def representante_apoderado5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}nombre')
@@ -2256,6 +2635,8 @@ def representante_apoderado5(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilio4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}nacional')
@@ -2265,6 +2646,8 @@ def tipo_domicilio4(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero6(cls, el)
     return self
+
+
 def nacional6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}colonia')
@@ -2279,10 +2662,12 @@ def nacional6(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}ciudad_poblacion')
@@ -2299,11 +2684,13 @@ def extranjero6(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -2311,11 +2698,15 @@ def telefono5(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiario4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}tipo_persona')
     self['TipoPersona'] = tipo_personaa(cls, el)
     return self
+
+
 def tipo_personaa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}persona_fisica')
@@ -2328,6 +2719,8 @@ def tipo_personaa(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomisoa(cls, el)
     return self
+
+
 def persona_fisicac(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}nombre')
@@ -2347,8 +2740,10 @@ def persona_fisicac(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moralc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}denominacion_razon')
@@ -2361,8 +2756,10 @@ def persona_moralc(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomisoa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}denominacion_razon')
@@ -2374,10 +2771,14 @@ def fideicomisoa(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operaciones5(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion4(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/don}datos_operacion')]
     return self
+
+
 def datos_operacion4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}fecha_operacion')
@@ -2385,14 +2786,18 @@ def datos_operacion4(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}datos_donativo')
     self['DatosDonativo'] = datos_donativo0(cls, el)
     return self
+
+
 def datos_donativo0(cls, node):
     self = ScalarMap()
     self['TipoDonativo'] = [tipo_donativo0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/don}tipo_donativo')]
     return self
+
+
 def tipo_donativo0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}liquidacion_numerario')
@@ -2402,29 +2807,35 @@ def tipo_donativo0(cls, node):
     if el is not None:
         self['LiquidacionEspecie'] = liquidacion_especie0(cls, el)
     return self
+
+
 def liquidacion_numerario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def liquidacion_especie0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}monto_operacion')
     self['MontoOperacion'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}bien_donado')
     self['BienDonado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}datos_bien_donado')
     if el is not None:
         self['DatosBienDonado'] = datos_bien_donado0(cls, el)
     return self
+
+
 def datos_bien_donado0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}datos_inmueble')
@@ -2434,20 +2845,26 @@ def datos_bien_donado0(cls, node):
     if el is not None:
         self['DatosOtro'] = datos_otro0(cls, el)
     return self
+
+
 def datos_inmueble1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}folio_real')
     self['FolioReal'] = el.text
     return self
+
+
 def datos_otro0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/don}descripcion_bien_donado')
     self['DescripcionBienDonado'] = el.text
     return self
+
+
 def tipo_persona_1_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_movimiento_fideicomisario')
@@ -2462,10 +2879,14 @@ def tipo_persona_1_type0(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomisob(cls, el)
     return self
+
+
 def archivo_type6(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe6(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}informe')]
     return self
+
+
 def informe6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}mes_reportado')
@@ -2476,6 +2897,8 @@ def informe6(cls, node):
     if el is not None:
         self['Aviso'] = [aviso6(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}aviso')]
     return self
+
+
 def sujeto_obligado6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}clave_entidad_colegiada')
@@ -2484,11 +2907,13 @@ def sujeto_obligado6(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}referencia_aviso')
@@ -2497,13 +2922,15 @@ def aviso6(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio6(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}alerta')
     self['Alerta'] = alerta6(cls, el)
     self['PersonaAviso'] = [persona_aviso5(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}persona_aviso')]
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones6(cls, el)
     return self
+
+
 def modificatorio6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}folio_modificacion')
@@ -2511,14 +2938,18 @@ def modificatorio6(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_aviso5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}nombre')
@@ -2537,10 +2968,14 @@ def persona_aviso5(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def detalle_operaciones6(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion5(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_operacion')]
     return self
+
+
 def datos_operacion5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}instrumento_publico')
@@ -2550,6 +2985,8 @@ def datos_operacion5(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_actividad')
     self['TipoActividad'] = tipo_actividad0(cls, el)
     return self
+
+
 def tipo_actividad0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}otorgamiento_poder')
@@ -2583,16 +3020,22 @@ def tipo_actividad0(cls, node):
     if el is not None:
         self['Avaluo'] = avaluo0(cls, el)
     return self
+
+
 def otorgamiento_poder0(cls, node):
     self = ScalarMap()
     self['DatosPoderdante'] = [datos_poderdante0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_poderdante')]
     self['DatosApoderado'] = [datos_apoderado0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_apoderado')]
     return self
+
+
 def datos_poderdante0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona')
     self['TipoPersona'] = tipo_personab(cls, el)
     return self
+
+
 def datos_apoderado0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_poder')
@@ -2600,6 +3043,8 @@ def datos_apoderado0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona')
     self['TipoPersona'] = tipo_personac(cls, el)
     return self
+
+
 def tipo_personab(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}persona_fisica')
@@ -2612,6 +3057,8 @@ def tipo_personab(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomisob(cls, el)
     return self
+
+
 def persona_fisicad(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}nombre')
@@ -2630,10 +3077,12 @@ def persona_fisicad(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_morald(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
@@ -2645,10 +3094,12 @@ def persona_morald(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     return self
+
+
 def fideicomisob(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
@@ -2660,6 +3111,8 @@ def fideicomisob(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def tipo_personac(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}persona_fisica')
@@ -2672,6 +3125,8 @@ def tipo_personac(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomisob(cls, el)
     return self
+
+
 def persona_morale(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
@@ -2683,8 +3138,10 @@ def persona_morale(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_fisicae(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}nombre')
@@ -2703,8 +3160,10 @@ def persona_fisicae(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def constitucion_personas_morales0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona_moral')
@@ -2715,7 +3174,7 @@ def constitucion_personas_morales0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
     self['DenominacionRazon'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}folio_mercantil')
     if el is not None:
         self['FolioMercantil'] = el.text
@@ -2734,6 +3193,8 @@ def constitucion_personas_morales0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_social')
     self['CapitalSocial'] = capital_social0(cls, el)
     return self
+
+
 def datos_accionista0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}cargo_accionista')
@@ -2743,6 +3204,8 @@ def datos_accionista0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}numero_acciones')
     self['NumeroAcciones'] = el.text
     return self
+
+
 def capital_social0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_fijo')
@@ -2751,6 +3214,8 @@ def capital_social0(cls, node):
     if el is not None:
         self['CapitalVariable'] = el.text
     return self
+
+
 def modificacion_patrimonial0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}persona_moral_modifica')
@@ -2758,6 +3223,8 @@ def modificacion_patrimonial0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_modificacion')
     self['DatosModificacion'] = datos_modificacion0(cls, el)
     return self
+
+
 def persona_moral_modifica0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
@@ -2769,9 +3236,9 @@ def persona_moral_modifica0(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}numero_total_acciones')
     self['NumeroTotalAcciones'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}motivo_modificacion')
@@ -2780,6 +3247,8 @@ def persona_moral_modifica0(cls, node):
     if el is not None:
         self['InstrumentoPublico'] = el.text
     return self
+
+
 def datos_modificacion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_modificacion_capital_fijo')
@@ -2796,6 +3265,8 @@ def datos_modificacion0(cls, node):
     self['FinalCapitalVariable'] = el.text
     self['DatosAccionista'] = [datos_accionista1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_accionista')]
     return self
+
+
 def datos_accionista1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona')
@@ -2803,6 +3274,8 @@ def datos_accionista1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}numero_acciones')
     self['NumeroAcciones'] = el.text
     return self
+
+
 def fusion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_fusion')
@@ -2812,10 +3285,14 @@ def fusion0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_fusionante')
     self['DatosFusionante'] = datos_fusionante0(cls, el)
     return self
+
+
 def datos_fusionadas0(cls, node):
     self = ScalarMap()
     self['DatosFusionada'] = [datos_fusionada0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_fusionada')]
     return self
+
+
 def datos_fusionada0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
@@ -2827,9 +3304,9 @@ def datos_fusionada0(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_social_fijo')
     self['CapitalSocialFijo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_social_variable')
@@ -2839,6 +3316,8 @@ def datos_fusionada0(cls, node):
     if el is not None:
         self['FolioMercantil'] = el.text
     return self
+
+
 def datos_fusionante0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}fusionante_determinadas')
@@ -2847,6 +3326,8 @@ def datos_fusionante0(cls, node):
     if el is not None:
         self['Fusionante'] = fusionante0(cls, el)
     return self
+
+
 def fusionante0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
@@ -2858,9 +3339,9 @@ def fusionante0(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_social_fijo')
     self['CapitalSocialFijo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_social_variable')
@@ -2873,6 +3354,8 @@ def fusionante0(cls, node):
     self['NumeroTotalAcciones'] = el.text
     self['DatosAccionista'] = [datos_accionista1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_accionista')]
     return self
+
+
 def escision0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_escindente')
@@ -2880,6 +3363,8 @@ def escision0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_escindidas')
     self['DatosEscindidas'] = datos_escindidas0(cls, el)
     return self
+
+
 def datos_escindente0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
@@ -2891,9 +3376,9 @@ def datos_escindente0(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_social_fijo')
     self['CapitalSocialFijo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_social_variable')
@@ -2908,6 +3393,8 @@ def datos_escindente0(cls, node):
     if el is not None:
         self['DatosAccionistaEscindente'] = [datos_accionista1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_accionista_escindente')]
     return self
+
+
 def datos_escindidas0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}escindidas_determinadas')
@@ -2916,6 +3403,8 @@ def datos_escindidas0(cls, node):
     if el is not None:
         self['DatoEscindida'] = [dato_escindida0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}dato_escindida')]
     return self
+
+
 def dato_escindida0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
@@ -2927,9 +3416,9 @@ def dato_escindida0(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_social_fijo')
     self['CapitalSocialFijo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}capital_social_variable')
@@ -2942,6 +3431,8 @@ def dato_escindida0(cls, node):
     self['NumeroTotalAcciones'] = el.text
     self['DatosAccionista'] = [datos_accionista1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_accionista')]
     return self
+
+
 def compra_venta_acciones0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_operacion')
@@ -2949,6 +3440,8 @@ def compra_venta_acciones0(cls, node):
     self['PersonaMoralAcciones'] = [persona_moral_acciones0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}persona_moral_acciones')]
     self['DatosLiquidacion'] = [datos_liquidacion3(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_liquidacion')]
     return self
+
+
 def persona_moral_acciones0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
@@ -2960,7 +3453,7 @@ def persona_moral_acciones0(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}valor_nominal')
     self['ValorNominal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}numero_acciones')
@@ -2968,6 +3461,8 @@ def persona_moral_acciones0(cls, node):
     self['DatosVendedor'] = [datos_vendedor0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_vendedor')]
     self['DatosComprador'] = [datos_comprador0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_comprador')]
     return self
+
+
 def datos_vendedor0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}numero_acciones_vendidas')
@@ -2975,6 +3470,8 @@ def datos_vendedor0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona')
     self['TipoPersona'] = tipo_personac(cls, el)
     return self
+
+
 def datos_comprador0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}numero_acciones_compradas')
@@ -2982,18 +3479,22 @@ def datos_comprador0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona')
     self['TipoPersona'] = tipo_personac(cls, el)
     return self
+
+
 def datos_liquidacion3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}instrumento_monetario')
     if el is not None:
-        self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+        self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def constitucion_modificacion_fideicomiso0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_movimiento')
@@ -3021,6 +3522,8 @@ def constitucion_modificacion_fideicomiso0(cls, node):
     if el is not None:
         self['DatosMiembroComiteTecnico'] = datos_miembro_comite_tecnico0(cls, el)
     return self
+
+
 def datos_fideicomitente0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_movimiento_fideicomitente')
@@ -3031,6 +3534,8 @@ def datos_fideicomitente0(cls, node):
     if el is not None:
         self['DatosTipoPatrimonio'] = [datos_tipo_patrimonio0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_tipo_patrimonio')]
     return self
+
+
 def datos_tipo_patrimonio0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}patrimonio_monetario')
@@ -3043,17 +3548,21 @@ def datos_tipo_patrimonio0(cls, node):
     if el is not None:
         self['PatrimonioOtroBien'] = patrimonio_otro_bien0(cls, el)
     return self
+
+
 def patrimonio_monetario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def patrimonio_inmueble0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}folio_real')
@@ -3061,6 +3570,8 @@ def patrimonio_inmueble0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}importe_garantia')
     self['ImporteGarantia'] = el.text
     return self
+
+
 def patrimonio_otro_bien0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}descripcion')
@@ -3068,6 +3579,8 @@ def patrimonio_otro_bien0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}valor_bien')
     self['ValorBien'] = el.text
     return self
+
+
 def datos_fideicomisarios0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_fideicomisarios_determinados')
@@ -3076,6 +3589,8 @@ def datos_fideicomisarios0(cls, node):
     if el is not None:
         self['TipoPersona'] = [tipo_persona_1_type0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona')]
     return self
+
+
 def cesion_derechos_fideicomitente_fideicomisario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}identificador_fideicomiso')
@@ -3095,21 +3610,29 @@ def cesion_derechos_fideicomitente_fideicomisario0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_cesion')
     self['DatosCesion'] = datos_cesion0(cls, el)
     return self
+
+
 def datos_cedente0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona')
     self['TipoPersona'] = tipo_personab(cls, el)
     return self
+
+
 def datos_cesionario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona')
     self['TipoPersona'] = tipo_personab(cls, el)
     return self
+
+
 def datos_cesion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}monto_cesion')
     self['MontoCesion'] = el.text
     return self
+
+
 def contrato_mutuo_credito0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_otorgamiento')
@@ -3121,16 +3644,22 @@ def contrato_mutuo_credito0(cls, node):
         self['DatosGarantia'] = [datos_garantia0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_garantia')]
     self['DatosLiquidacion'] = [datos_liquidacion4(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_liquidacion')]
     return self
+
+
 def datos_acreedor0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona')
     self['TipoPersona'] = tipo_personab(cls, el)
     return self
+
+
 def datos_deudor0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_persona')
     self['TipoPersona'] = tipo_personab(cls, el)
     return self
+
+
 def datos_garantia0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_garantia')
@@ -3142,6 +3671,8 @@ def datos_garantia0(cls, node):
     if el is not None:
         self['TipoPersona'] = tipo_personad(cls, el)
     return self
+
+
 def datos_bien_mutuo0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_inmueble')
@@ -3151,10 +3682,12 @@ def datos_bien_mutuo0(cls, node):
     if el is not None:
         self['DatosOtro'] = datos_otro1(cls, el)
     return self
+
+
 def datos_inmueble2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}valor_referencia')
     self['ValorReferencia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}codigo_postal')
@@ -3162,11 +3695,15 @@ def datos_inmueble2(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}folio_real')
     self['FolioReal'] = el.text
     return self
+
+
 def datos_otro1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}descripcion_garantia')
     self['DescripcionGarantia'] = el.text
     return self
+
+
 def tipo_personad(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}persona_fisica')
@@ -3179,6 +3716,8 @@ def tipo_personad(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomisob(cls, el)
     return self
+
+
 def persona_fisicaf(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}nombre')
@@ -3197,6 +3736,8 @@ def persona_fisicaf(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def persona_moralf(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}denominacion_razon')
@@ -3208,13 +3749,17 @@ def persona_moralf(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     return self
+
+
 def datos_liquidacion4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def avaluo0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}tipo_bien')
@@ -3227,6 +3772,8 @@ def avaluo0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}datos_propietario')
     self['DatosPropietario'] = datos_propietario0(cls, el)
     return self
+
+
 def datos_propietario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}propietario_solicita')
@@ -3235,6 +3782,8 @@ def datos_propietario0(cls, node):
     if el is not None:
         self['TipoPersona'] = tipo_personac(cls, el)
     return self
+
+
 def datos_miembro_comite_tecnico0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}comite_tecnico')
@@ -3242,6 +3791,8 @@ def datos_miembro_comite_tecnico0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fep}modificacion_comite_tecnico')
     self['ModificacionComiteTecnico'] = el.text
     return self
+
+
 def administrativo1_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}organo')
@@ -3251,6 +3802,8 @@ def administrativo1_type0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}instrumento_publico_oficio')
     self['InstrumentoPublicoOficio'] = el.text
     return self
+
+
 def persona_moral_simple_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon')
@@ -3262,8 +3815,10 @@ def persona_moral_simple_type0(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_fisica_simple_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}nombre')
@@ -3282,8 +3837,10 @@ def persona_fisica_simple_type0(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso_simple_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon')
@@ -3295,6 +3852,8 @@ def fideicomiso_simple_type0(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def representante_apoderado_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}nombre')
@@ -3313,6 +3872,8 @@ def representante_apoderado_type0(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def informe_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}mes_reportado')
@@ -3326,14 +3887,20 @@ def informe_type0(cls, node):
     if el is not None:
         self['Version'] = el.text
     return self
+
+
 def archivo_type7(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe_type0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fes}informe')]
     return self
+
+
 def operaciones_type0(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion6(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fes}datos_operacion')]
     return self
+
+
 def datos_operacion6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}fecha_operacion')
@@ -3341,6 +3908,8 @@ def datos_operacion6(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_actividad')
     self['TipoActividad'] = tipo_actividad1(cls, el)
     return self
+
+
 def modificatorio_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}folio_modificacion')
@@ -3348,6 +3917,8 @@ def modificatorio_type0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def aviso7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}referencia_aviso')
@@ -3356,12 +3927,14 @@ def aviso7(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio_type0(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}alerta')
     self['Alerta'] = alerta7(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}detalle_operaciones')
     self['DetalleOperaciones'] = operaciones_type0(cls, el)
     return self
+
+
 def tipo_actividad1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}derechos_inmuebles')
@@ -3383,6 +3956,8 @@ def tipo_actividad1(cls, node):
     if el is not None:
         self['Avaluo'] = avaluo1(cls, el)
     return self
+
+
 def derechos_inmuebles0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}organo')
@@ -3403,6 +3978,8 @@ def derechos_inmuebles0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}personas_acto')
     self['PersonasActo'] = personas_acto0(cls, el)
     return self
+
+
 def otorgamiento_poder1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}autoridad')
@@ -3412,6 +3989,8 @@ def otorgamiento_poder1(cls, node):
     self['DatosPoderdante'] = [datos_poderdante1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fes}datos_poderdante')]
     self['DatosApoderado'] = [datos_apoderado1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fes}datos_apoderado')]
     return self
+
+
 def constitucion_personas_morales1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}autoridad')
@@ -3421,6 +4000,8 @@ def constitucion_personas_morales1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}persona_moral_constitucion')
     self['PersonaMoralConstitucion'] = persona_moral_constitucion0(cls, el)
     return self
+
+
 def modificacion_patrimonial1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}autoridad')
@@ -3430,6 +4011,8 @@ def modificacion_patrimonial1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}datos_modificacion')
     self['DatosModificacion'] = datos_modificacion1(cls, el)
     return self
+
+
 def contrato_mutuo_credito1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}autoridad')
@@ -3445,6 +4028,8 @@ def contrato_mutuo_credito1(cls, node):
         self['DatosGarantia'] = [datos_garantia1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fes}datos_garantia')]
     self['DatosLiquidacion'] = [datos_liquidacion5(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fes}datos_liquidacion')]
     return self
+
+
 def avaluo1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}organo')
@@ -3465,14 +4050,18 @@ def avaluo1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}datos_propietario')
     self['DatosPropietario'] = datos_propietario1(cls, el)
     return self
+
+
 def datos_inmuebles0(cls, node):
     self = ScalarMap()
     self['CaracteristicasInmueble'] = [caracteristicas_inmueble0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fes}caracteristicas_inmueble')]
     return self
+
+
 def caracteristicas_inmueble0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}valor_catastral')
     self['ValorCatastral'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}colonia')
@@ -3493,10 +4082,14 @@ def caracteristicas_inmueble0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}folio_real')
     self['FolioReal'] = el.text
     return self
+
+
 def personas_acto0(cls, node):
     self = ScalarMap()
     self['DatosPersonaActo'] = [datos_persona_acto0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fes}datos_persona_acto')]
     return self
+
+
 def tipo_persona_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}persona_fisica')
@@ -3509,6 +4102,8 @@ def tipo_persona_type0(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomisoc(cls, el)
     return self
+
+
 def persona_solicita0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}nombre')
@@ -3527,8 +4122,10 @@ def persona_solicita0(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon')
@@ -3540,10 +4137,12 @@ def persona_moral10(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado_type0(cls, el)
     return self
+
+
 def fideicomisoc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon')
@@ -3557,6 +4156,8 @@ def fideicomisoc(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado_type0(cls, el)
     return self
+
+
 def datos_persona_acto0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}caracter')
@@ -3573,6 +4174,8 @@ def datos_persona_acto0(cls, node):
     if el is not None:
         self['Telefono'] = telefono6(cls, el)
     return self
+
+
 def tipo_domicilio5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}nacional')
@@ -3582,6 +4185,8 @@ def tipo_domicilio5(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero7(cls, el)
     return self
+
+
 def nacional7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}colonia')
@@ -3596,10 +4201,12 @@ def nacional7(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}ciudad_poblacion')
@@ -3616,17 +4223,21 @@ def extranjero7(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}numero_telefono')
     self['NumeroTelefono'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}correo_electronico')
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def administrativo_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}organo')
@@ -3636,6 +4247,8 @@ def administrativo_type0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}instrumento_publico')
     self['InstrumentoPublico'] = el.text
     return self
+
+
 def jurisdiccional_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}organo')
@@ -3647,6 +4260,8 @@ def jurisdiccional_type0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}expediente')
     self['Expediente'] = el.text
     return self
+
+
 def tipo_autoridad_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}administrativo')
@@ -3656,6 +4271,8 @@ def tipo_autoridad_type0(cls, node):
     if el is not None:
         self['Jurisdiccional'] = jurisdiccional_type0(cls, el)
     return self
+
+
 def domicilio_oficina_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}nacional')
@@ -3665,6 +4282,8 @@ def domicilio_oficina_type0(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero7(cls, el)
     return self
+
+
 def autoridad0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_autoridad')
@@ -3673,6 +4292,8 @@ def autoridad0(cls, node):
     if el is not None:
         self['DomicilioOficina'] = domicilio_oficina_type0(cls, el)
     return self
+
+
 def tipo_persona_simple_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}persona_fisica')
@@ -3685,11 +4306,15 @@ def tipo_persona_simple_type0(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso_simple_type0(cls, el)
     return self
+
+
 def datos_poderdante1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_persona')
     self['TipoPersona'] = tipo_persona_simple_type0(cls, el)
     return self
+
+
 def datos_apoderado1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_poder')
@@ -3697,6 +4322,8 @@ def datos_apoderado1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_persona')
     self['TipoPersona'] = tipo_persona_simple_type0(cls, el)
     return self
+
+
 def tipo_autoridad1_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}administrativo')
@@ -3706,6 +4333,8 @@ def tipo_autoridad1_type0(cls, node):
     if el is not None:
         self['Jurisdiccional'] = jurisdiccional_type0(cls, el)
     return self
+
+
 def autoridad1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_autoridad')
@@ -3714,6 +4343,8 @@ def autoridad1(cls, node):
     if el is not None:
         self['DomicilioOficina'] = domicilio_oficina_type0(cls, el)
     return self
+
+
 def persona_moral_constitucion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_persona_moral')
@@ -3724,7 +4355,7 @@ def persona_moral_constitucion0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon')
     self['DenominacionRazon'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}folio_mercantil')
     if el is not None:
         self['FolioMercantil'] = el.text
@@ -3744,6 +4375,8 @@ def persona_moral_constitucion0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}capital_social')
     self['CapitalSocial'] = capital_social1(cls, el)
     return self
+
+
 def datos_accionista2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}cargo_accionista')
@@ -3753,6 +4386,8 @@ def datos_accionista2(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}numero_acciones')
     self['NumeroAcciones'] = el.text
     return self
+
+
 def capital_social1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}capital_fijo')
@@ -3761,6 +4396,8 @@ def capital_social1(cls, node):
     if el is not None:
         self['CapitalVariable'] = el.text
     return self
+
+
 def datos_accionista1_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_persona')
@@ -3768,6 +4405,8 @@ def datos_accionista1_type0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}numero_acciones')
     self['NumeroAcciones'] = el.text
     return self
+
+
 def persona_moral_modifica1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon')
@@ -3779,9 +4418,9 @@ def persona_moral_modifica1(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}numero_total_acciones')
     self['NumeroTotalAcciones'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}motivo_modificacion')
@@ -3790,6 +4429,8 @@ def persona_moral_modifica1(cls, node):
     if el is not None:
         self['InstrumentoPublico'] = el.text
     return self
+
+
 def datos_modificacion1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_modificacion_capital_fijo')
@@ -3806,16 +4447,22 @@ def datos_modificacion1(cls, node):
     self['FinalCapitalVariable'] = el.text
     self['DatosAccionista'] = [datos_accionista1_type0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fes}datos_accionista')]
     return self
+
+
 def datos_acreedor1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_persona')
     self['TipoPersona'] = tipo_persona_simple_type0(cls, el)
     return self
+
+
 def datos_deudor1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_persona')
     self['TipoPersona'] = tipo_persona_simple_type0(cls, el)
     return self
+
+
 def garante_fisica_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}nombre')
@@ -3834,6 +4481,8 @@ def garante_fisica_type0(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def garante_moral_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon')
@@ -3845,6 +4494,8 @@ def garante_moral_type0(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     return self
+
+
 def garante_fideicomiso_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}denominacion_razon')
@@ -3856,6 +4507,8 @@ def garante_fideicomiso_type0(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def tipo_garante_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}persona_fisica')
@@ -3868,10 +4521,12 @@ def tipo_garante_type0(cls, node):
     if el is not None:
         self['Fideicomiso'] = garante_fideicomiso_type0(cls, el)
     return self
+
+
 def garantia_inmueble_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}valor_referencia')
     self['ValorReferencia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}codigo_postal')
@@ -3879,11 +4534,15 @@ def garantia_inmueble_type0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}folio_real')
     self['FolioReal'] = el.text
     return self
+
+
 def garantia_otro_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}descripcion_garantia')
     self['DescripcionGarantia'] = el.text
     return self
+
+
 def bien_garantia_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}datos_inmueble')
@@ -3893,6 +4552,8 @@ def bien_garantia_type0(cls, node):
     if el is not None:
         self['DatosOtro'] = garantia_otro_type0(cls, el)
     return self
+
+
 def datos_garantia1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_garantia')
@@ -3904,13 +4565,17 @@ def datos_garantia1(cls, node):
     if el is not None:
         self['TipoPersona'] = tipo_garante_type0(cls, el)
     return self
+
+
 def datos_liquidacion5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def datos_propietario1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}propietario_solicita')
@@ -3919,30 +4584,40 @@ def datos_propietario1(cls, node):
     if el is not None:
         self['DatoPropietario'] = [dato_propietario0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/fes}dato_propietario')]
     return self
+
+
 def dato_propietario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_persona')
     self['TipoPersona'] = tipo_persona_simple_type0(cls, el)
     return self
+
+
 def tribunal_dependencia0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}clave_tribunal_dependencia')
     self['ClaveTribunalDependencia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     return self
+
+
 def alerta7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/fes}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def archivo_type8(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe7(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/inm}informe')]
     return self
+
+
 def informe7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}mes_reportado')
@@ -3953,6 +4628,8 @@ def informe7(cls, node):
     if el is not None:
         self['Aviso'] = [aviso8(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/inm}aviso')]
     return self
+
+
 def sujeto_obligado7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}clave_entidad_colegiada')
@@ -3961,11 +4638,13 @@ def sujeto_obligado7(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}referencia_aviso')
@@ -3974,7 +4653,7 @@ def aviso8(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio7(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}alerta')
     self['Alerta'] = alerta8(cls, el)
     self['PersonaAviso'] = [persona_aviso6(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/inm}persona_aviso')]
@@ -3984,6 +4663,8 @@ def aviso8(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones7(cls, el)
     return self
+
+
 def modificatorio7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}folio_modificacion')
@@ -3991,14 +4672,18 @@ def modificatorio7(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_aviso6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}tipo_persona')
@@ -4010,6 +4695,8 @@ def persona_aviso6(cls, node):
     if el is not None:
         self['Telefono'] = telefono7(cls, el)
     return self
+
+
 def tipo_personae(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}persona_fisica')
@@ -4022,6 +4709,8 @@ def tipo_personae(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomisod(cls, el)
     return self
+
+
 def persona_fisica10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}nombre')
@@ -4040,10 +4729,12 @@ def persona_fisica10(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}denominacion_razon')
@@ -4055,12 +4746,14 @@ def persona_moral11(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado6(cls, el)
     return self
+
+
 def fideicomisod(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}denominacion_razon')
@@ -4074,6 +4767,8 @@ def fideicomisod(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado6(cls, el)
     return self
+
+
 def representante_apoderado6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}nombre')
@@ -4092,6 +4787,8 @@ def representante_apoderado6(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilio6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}nacional')
@@ -4101,6 +4798,8 @@ def tipo_domicilio6(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero8(cls, el)
     return self
+
+
 def nacional8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}colonia')
@@ -4115,10 +4814,12 @@ def nacional8(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}ciudad_poblacion')
@@ -4135,11 +4836,13 @@ def extranjero8(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -4147,11 +4850,15 @@ def telefono7(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiario5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}tipo_persona')
     self['TipoPersona'] = tipo_personaf(cls, el)
     return self
+
+
 def tipo_personaf(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}persona_fisica')
@@ -4164,6 +4871,8 @@ def tipo_personaf(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomisoe(cls, el)
     return self
+
+
 def persona_fisica11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}nombre')
@@ -4183,8 +4892,10 @@ def persona_fisica11(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral12(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}denominacion_razon')
@@ -4197,8 +4908,10 @@ def persona_moral12(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomisoe(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}denominacion_razon')
@@ -4210,16 +4923,20 @@ def fideicomisoe(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operaciones7(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion7(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/inm}datos_operacion')]
     return self
+
+
 def datos_operacion7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}fecha_operacion')
     self['FechaOperacion'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}figura_cliente')
     self['FiguraCliente'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}figura_so')
@@ -4234,15 +4951,19 @@ def datos_operacion7(cls, node):
     if el is not None:
         self['DatosLiquidacion'] = [datos_liquidacion6(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/inm}datos_liquidacion')]
     return self
+
+
 def datos_contraparte0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}tipo_persona')
     self['TipoPersona'] = tipo_personaf(cls, el)
     return self
+
+
 def caracteristicas_inmueble1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}valor_pactado')
     self['ValorPactado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}colonia')
@@ -4263,6 +4984,8 @@ def caracteristicas_inmueble1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}folio_real')
     self['FolioReal'] = el.text
     return self
+
+
 def contrato_instrumento_publico0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}datos_instrumento_publico')
@@ -4272,6 +4995,8 @@ def contrato_instrumento_publico0(cls, node):
     if el is not None:
         self['DatosContrato'] = datos_contrato0(cls, el)
     return self
+
+
 def datos_instrumento_publico0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}numero_instrumento_publico')
@@ -4285,29 +5010,37 @@ def datos_instrumento_publico0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}valor_avaluo_catastral')
     self['ValorAvaluoCatastral'] = el.text
     return self
+
+
 def datos_contrato0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}fecha_contrato')
     self['FechaContrato'] = datetime.strptime(el.text, '%Y%m%d').date()
     return self
+
+
 def datos_liquidacion6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}forma_pago')
-    self['FormaPago'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}forma_pago_type', el.text)
+    self['FormaPago'] = catalog_code('T50dfda1d9460b356fe21d1d8a03e63d9b2a3f072', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}instrumento_monetario')
     if el is not None:
-        self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+        self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/inm}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def archivo_type9(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe8(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/jys}informe')]
     return self
+
+
 def informe8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}mes_reportado')
@@ -4318,6 +5051,8 @@ def informe8(cls, node):
     if el is not None:
         self['Aviso'] = [aviso9(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/jys}aviso')]
     return self
+
+
 def sujeto_obligado8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}clave_entidad_colegiada')
@@ -4326,11 +5061,13 @@ def sujeto_obligado8(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}referencia_aviso')
@@ -4339,7 +5076,7 @@ def aviso9(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio8(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}alerta')
     self['Alerta'] = alerta9(cls, el)
     self['PersonaAviso'] = [persona_aviso7(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/jys}persona_aviso')]
@@ -4349,6 +5086,8 @@ def aviso9(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones8(cls, el)
     return self
+
+
 def modificatorio8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}folio_modificacion')
@@ -4356,14 +5095,18 @@ def modificatorio8(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_aviso7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}tipo_persona')
@@ -4375,6 +5118,8 @@ def persona_aviso7(cls, node):
     if el is not None:
         self['Telefono'] = telefono8(cls, el)
     return self
+
+
 def tipo_persona10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}persona_fisica')
@@ -4387,6 +5132,8 @@ def tipo_persona10(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomisof(cls, el)
     return self
+
+
 def persona_fisica12(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}nombre')
@@ -4405,10 +5152,12 @@ def persona_fisica12(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral13(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}denominacion_razon')
@@ -4420,12 +5169,14 @@ def persona_moral13(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado7(cls, el)
     return self
+
+
 def fideicomisof(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}denominacion_razon')
@@ -4439,6 +5190,8 @@ def fideicomisof(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado7(cls, el)
     return self
+
+
 def representante_apoderado7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}nombre')
@@ -4457,6 +5210,8 @@ def representante_apoderado7(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilio7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}nacional')
@@ -4466,6 +5221,8 @@ def tipo_domicilio7(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero9(cls, el)
     return self
+
+
 def nacional9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}colonia')
@@ -4480,10 +5237,12 @@ def nacional9(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}ciudad_poblacion')
@@ -4500,11 +5259,13 @@ def extranjero9(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -4512,11 +5273,15 @@ def telefono8(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiario6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}tipo_persona')
     self['TipoPersona'] = tipo_persona11(cls, el)
     return self
+
+
 def tipo_persona11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}persona_fisica')
@@ -4529,6 +5294,8 @@ def tipo_persona11(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso10(cls, el)
     return self
+
+
 def persona_fisica13(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}nombre')
@@ -4548,8 +5315,10 @@ def persona_fisica13(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral14(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}denominacion_razon')
@@ -4562,8 +5331,10 @@ def persona_moral14(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}denominacion_razon')
@@ -4575,10 +5346,14 @@ def fideicomiso10(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operaciones8(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion8(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/jys}datos_operacion')]
     return self
+
+
 def datos_operacion8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}fecha_operacion')
@@ -4586,13 +5361,15 @@ def datos_operacion8(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}tipo_sucursal')
     self['TipoSucursal'] = tipo_sucursal0(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}linea_negocio')
     self['LineaNegocio'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}medio_operacion')
     self['MedioOperacion'] = el.text
     self['DatosLiquidacion'] = [datos_liquidacion7(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/jys}datos_liquidacion')]
     return self
+
+
 def tipo_sucursal0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}datos_sucursal_propia')
@@ -4602,11 +5379,15 @@ def tipo_sucursal0(cls, node):
     if el is not None:
         self['DatosSucursalOperador'] = datos_sucursal_operador0(cls, el)
     return self
+
+
 def datos_sucursal_propia0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def datos_sucursal_operador0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}nombre_operador')
@@ -4614,6 +5395,8 @@ def datos_sucursal_operador0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def datos_liquidacion7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}liquidacion_numerario')
@@ -4623,29 +5406,35 @@ def datos_liquidacion7(cls, node):
     if el is not None:
         self['LiquidacionEspecie'] = liquidacion_especie1(cls, el)
     return self
+
+
 def liquidacion_numerario1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def liquidacion_especie1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}valor_bien')
     self['ValorBien'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}bien_liquidacion')
     self['BienLiquidacion'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}datos_bien_liquidacion')
     if el is not None:
         self['DatosBienLiquidacion'] = datos_bien_liquidacion0(cls, el)
     return self
+
+
 def datos_bien_liquidacion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}datos_inmueble')
@@ -4655,6 +5444,8 @@ def datos_bien_liquidacion0(cls, node):
     if el is not None:
         self['DatosOtro'] = datos_otro2(cls, el)
     return self
+
+
 def datos_inmueble3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}tipo_inmueble')
@@ -4664,15 +5455,21 @@ def datos_inmueble3(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}folio_real')
     self['FolioReal'] = el.text
     return self
+
+
 def datos_otro2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/jys}descripcion_bien_liquidacion')
     self['DescripcionBienLiquidacion'] = el.text
     return self
+
+
 def archivo_typea(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe9(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mjr}informe')]
     return self
+
+
 def informe9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}mes_reportado')
@@ -4683,6 +5480,8 @@ def informe9(cls, node):
     if el is not None:
         self['Aviso'] = [avisoa(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mjr}aviso')]
     return self
+
+
 def sujeto_obligado9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}clave_entidad_colegiada')
@@ -4691,11 +5490,13 @@ def sujeto_obligado9(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def avisoa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}referencia_aviso')
@@ -4704,7 +5505,7 @@ def avisoa(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio9(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}alerta')
     self['Alerta'] = alertaa(cls, el)
     self['PersonaAviso'] = [persona_aviso8(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mjr}persona_aviso')]
@@ -4714,6 +5515,8 @@ def avisoa(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones9(cls, el)
     return self
+
+
 def modificatorio9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}folio_modificacion')
@@ -4721,14 +5524,18 @@ def modificatorio9(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alertaa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_aviso8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}tipo_persona')
@@ -4740,6 +5547,8 @@ def persona_aviso8(cls, node):
     if el is not None:
         self['Telefono'] = telefono9(cls, el)
     return self
+
+
 def tipo_persona12(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}persona_fisica')
@@ -4752,6 +5561,8 @@ def tipo_persona12(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso11(cls, el)
     return self
+
+
 def persona_fisica14(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}nombre')
@@ -4770,10 +5581,12 @@ def persona_fisica14(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral15(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}denominacion_razon')
@@ -4785,12 +5598,14 @@ def persona_moral15(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado8(cls, el)
     return self
+
+
 def fideicomiso11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}denominacion_razon')
@@ -4804,6 +5619,8 @@ def fideicomiso11(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado8(cls, el)
     return self
+
+
 def representante_apoderado8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}nombre')
@@ -4822,6 +5639,8 @@ def representante_apoderado8(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilio8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}nacional')
@@ -4831,6 +5650,8 @@ def tipo_domicilio8(cls, node):
     if el is not None:
         self['Extranjero'] = extranjeroa(cls, el)
     return self
+
+
 def nacionala(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}colonia')
@@ -4845,10 +5666,12 @@ def nacionala(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjeroa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}ciudad_poblacion')
@@ -4865,11 +5688,13 @@ def extranjeroa(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -4877,11 +5702,15 @@ def telefono9(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiario7(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}tipo_persona')
     self['TipoPersona'] = tipo_persona13(cls, el)
     return self
+
+
 def tipo_persona13(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}persona_fisica')
@@ -4894,6 +5723,8 @@ def tipo_persona13(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso12(cls, el)
     return self
+
+
 def persona_fisica15(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}nombre')
@@ -4913,8 +5744,10 @@ def persona_fisica15(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral16(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}denominacion_razon')
@@ -4927,8 +5760,10 @@ def persona_moral16(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso12(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}denominacion_razon')
@@ -4940,10 +5775,14 @@ def fideicomiso12(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operaciones9(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion9(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mjr}datos_operacion')]
     return self
+
+
 def datos_operacion9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}fecha_operacion')
@@ -4951,10 +5790,12 @@ def datos_operacion9(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     self['DatosBien'] = [datos_bien0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mjr}datos_bien')]
     self['DatosLiquidacion'] = [datos_liquidacion8(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mjr}datos_liquidacion')]
     return self
+
+
 def datos_bien0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}tipo_bien')
@@ -4964,23 +5805,29 @@ def datos_bien0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}cantidad_comercializada')
     self['CantidadComercializada'] = el.text
     return self
+
+
 def datos_liquidacion8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}forma_pago')
-    self['FormaPago'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}forma_pago_type', el.text)
+    self['FormaPago'] = catalog_code('T50dfda1d9460b356fe21d1d8a03e63d9b2a3f072', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mjr}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def archivo_typeb(cls, node):
     self = ScalarMap()
     self['Informe'] = [informea(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mpc}informe')]
     return self
+
+
 def informea(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}mes_reportado')
@@ -4991,6 +5838,8 @@ def informea(cls, node):
     if el is not None:
         self['Aviso'] = [avisob(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mpc}aviso')]
     return self
+
+
 def sujeto_obligadoa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}clave_entidad_colegiada')
@@ -4999,11 +5848,13 @@ def sujeto_obligadoa(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def avisob(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}referencia_aviso')
@@ -5012,7 +5863,7 @@ def avisob(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorioa(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}alerta')
     self['Alerta'] = alertab(cls, el)
     self['PersonaAviso'] = [persona_aviso9(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mpc}persona_aviso')]
@@ -5022,6 +5873,8 @@ def avisob(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operacionesa(cls, el)
     return self
+
+
 def modificatorioa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}folio_modificacion')
@@ -5029,14 +5882,18 @@ def modificatorioa(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alertab(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_aviso9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}tipo_persona')
@@ -5048,6 +5905,8 @@ def persona_aviso9(cls, node):
     if el is not None:
         self['Telefono'] = telefonoa(cls, el)
     return self
+
+
 def tipo_persona14(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}persona_fisica')
@@ -5060,6 +5919,8 @@ def tipo_persona14(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso13(cls, el)
     return self
+
+
 def persona_fisica16(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}nombre')
@@ -5078,10 +5939,12 @@ def persona_fisica16(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral17(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon')
@@ -5093,12 +5956,14 @@ def persona_moral17(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado9(cls, el)
     return self
+
+
 def fideicomiso13(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon')
@@ -5112,6 +5977,8 @@ def fideicomiso13(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado9(cls, el)
     return self
+
+
 def representante_apoderado9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}nombre')
@@ -5130,6 +5997,8 @@ def representante_apoderado9(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilio9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}nacional')
@@ -5139,6 +6008,8 @@ def tipo_domicilio9(cls, node):
     if el is not None:
         self['Extranjero'] = extranjerob(cls, el)
     return self
+
+
 def nacionalb(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}colonia')
@@ -5153,10 +6024,12 @@ def nacionalb(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjerob(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}ciudad_poblacion')
@@ -5173,11 +6046,13 @@ def extranjerob(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefonoa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -5185,11 +6060,15 @@ def telefonoa(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiario8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}tipo_persona')
     self['TipoPersona'] = tipo_persona15(cls, el)
     return self
+
+
 def tipo_persona15(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}persona_fisica')
@@ -5202,6 +6081,8 @@ def tipo_persona15(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso14(cls, el)
     return self
+
+
 def persona_fisica17(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}nombre')
@@ -5221,8 +6102,10 @@ def persona_fisica17(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral18(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon')
@@ -5235,8 +6118,10 @@ def persona_moral18(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso14(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon')
@@ -5248,10 +6133,14 @@ def fideicomiso14(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operacionesa(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operaciona(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mpc}datos_operacion')]
     return self
+
+
 def datos_operaciona(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}fecha_operacion')
@@ -5259,12 +6148,14 @@ def datos_operaciona(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}datos_garantia')
     if el is not None:
         self['DatosGarantia'] = [datos_garantia2(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mpc}datos_garantia')]
     self['DatosLiquidacion'] = [datos_liquidacion9(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/mpc}datos_liquidacion')]
     return self
+
+
 def datos_garantia2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}tipo_garantia')
@@ -5276,6 +6167,8 @@ def datos_garantia2(cls, node):
     if el is not None:
         self['TipoPersona'] = tipo_persona16(cls, el)
     return self
+
+
 def datos_bien_mutuo1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}datos_inmueble')
@@ -5285,10 +6178,12 @@ def datos_bien_mutuo1(cls, node):
     if el is not None:
         self['DatosOtro'] = datos_otro3(cls, el)
     return self
+
+
 def datos_inmueble4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}valor_referencia')
     self['ValorReferencia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}codigo_postal')
@@ -5296,11 +6191,15 @@ def datos_inmueble4(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}folio_real')
     self['FolioReal'] = el.text
     return self
+
+
 def datos_otro3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}descripcion_garantia')
     self['DescripcionGarantia'] = el.text
     return self
+
+
 def tipo_persona16(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}persona_fisica')
@@ -5313,6 +6212,8 @@ def tipo_persona16(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso15(cls, el)
     return self
+
+
 def persona_fisica18(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}nombre')
@@ -5331,6 +6232,8 @@ def persona_fisica18(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def persona_moral19(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon')
@@ -5342,6 +6245,8 @@ def persona_moral19(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     return self
+
+
 def fideicomiso15(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}denominacion_razon')
@@ -5353,35 +6258,43 @@ def fideicomiso15(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def datos_liquidacion9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}fecha_disposicion')
     self['FechaDisposicion'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/mpc}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def datos_liquidacion_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}forma_pago')
-    self['FormaPago'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}forma_pago_type', el.text)
+    self['FormaPago'] = catalog_code('T50dfda1d9460b356fe21d1d8a03e63d9b2a3f072', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}instrumento_monetario')
     if el is not None:
-        self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+        self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def detalle_operaciones_type0(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacionb(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/oba}datos_operacion')]
     return self
+
+
 def datos_operacionb(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}fecha_operacion')
@@ -5389,10 +6302,12 @@ def datos_operacionb(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     self['DatosObjeto'] = [datos_objeto0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/oba}datos_objeto')]
     self['DatosLiquidacion'] = [datos_liquidacion_type0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/oba}datos_liquidacion')]
     return self
+
+
 def datos_objeto0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}tipo_objeto')
@@ -5406,10 +6321,14 @@ def datos_objeto0(cls, node):
     if el is not None:
         self['ValorReferencia'] = el.text
     return self
+
+
 def archivo_typec(cls, node):
     self = ScalarMap()
     self['Informe'] = [informeb(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/oba}informe')]
     return self
+
+
 def informeb(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}mes_reportado')
@@ -5420,6 +6339,8 @@ def informeb(cls, node):
     if el is not None:
         self['Aviso'] = [avisoc(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/oba}aviso')]
     return self
+
+
 def sujeto_obligadob(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}clave_entidad_colegiada')
@@ -5428,11 +6349,13 @@ def sujeto_obligadob(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def avisoc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}referencia_aviso')
@@ -5441,7 +6364,7 @@ def avisoc(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatoriob(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}alerta')
     self['Alerta'] = alertac(cls, el)
     self['PersonaAviso'] = [persona_avisoa(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/oba}persona_aviso')]
@@ -5451,6 +6374,8 @@ def avisoc(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones_type0(cls, el)
     return self
+
+
 def modificatoriob(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}folio_modificacion')
@@ -5458,14 +6383,18 @@ def modificatoriob(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alertac(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_avisoa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}tipo_persona')
@@ -5477,6 +6406,8 @@ def persona_avisoa(cls, node):
     if el is not None:
         self['Telefono'] = telefonob(cls, el)
     return self
+
+
 def tipo_persona17(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}persona_fisica')
@@ -5489,6 +6420,8 @@ def tipo_persona17(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso16(cls, el)
     return self
+
+
 def persona_fisica19(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}nombre')
@@ -5507,10 +6440,12 @@ def persona_fisica19(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral1a(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}denominacion_razon')
@@ -5522,12 +6457,14 @@ def persona_moral1a(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderadoa(cls, el)
     return self
+
+
 def fideicomiso16(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}denominacion_razon')
@@ -5541,6 +6478,8 @@ def fideicomiso16(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderadoa(cls, el)
     return self
+
+
 def representante_apoderadoa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}nombre')
@@ -5559,6 +6498,8 @@ def representante_apoderadoa(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilioa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}nacional')
@@ -5568,6 +6509,8 @@ def tipo_domicilioa(cls, node):
     if el is not None:
         self['Extranjero'] = extranjeroc(cls, el)
     return self
+
+
 def nacionalc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}colonia')
@@ -5582,10 +6525,12 @@ def nacionalc(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjeroc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}ciudad_poblacion')
@@ -5602,11 +6547,13 @@ def extranjeroc(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefonob(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -5614,11 +6561,15 @@ def telefonob(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiario9(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}tipo_persona')
     self['TipoPersona'] = tipo_persona18(cls, el)
     return self
+
+
 def tipo_persona18(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}persona_fisica')
@@ -5631,6 +6582,8 @@ def tipo_persona18(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso17(cls, el)
     return self
+
+
 def persona_fisica1a(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}nombre')
@@ -5650,8 +6603,10 @@ def persona_fisica1a(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral1b(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}denominacion_razon')
@@ -5664,8 +6619,10 @@ def persona_moral1b(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso17(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/oba}denominacion_razon')
@@ -5677,10 +6634,14 @@ def fideicomiso17(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def archivo_typed(cls, node):
     self = ScalarMap()
     self['Informe'] = [informec(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}informe')]
     return self
+
+
 def informec(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}mes_reportado')
@@ -5691,6 +6652,8 @@ def informec(cls, node):
     if el is not None:
         self['Aviso'] = [avisod(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}aviso')]
     return self
+
+
 def sujeto_obligadoc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}clave_entidad_colegiada')
@@ -5702,11 +6665,13 @@ def sujeto_obligadoc(cls, node):
     if el is not None:
         self['Ocupacion'] = ocupacion0(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def ocupacion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_ocupacion')
@@ -5715,6 +6680,8 @@ def ocupacion0(cls, node):
     if el is not None:
         self['DescripcionOtraOcupacion'] = el.text
     return self
+
+
 def avisod(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}referencia_aviso')
@@ -5723,7 +6690,7 @@ def avisod(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorioc(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}alerta')
     self['Alerta'] = alertad(cls, el)
     self['PersonaAviso'] = [persona_avisob(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}persona_aviso')]
@@ -5733,6 +6700,8 @@ def avisod(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operacionesb(cls, el)
     return self
+
+
 def modificatorioc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_modificacion')
@@ -5740,14 +6709,18 @@ def modificatorioc(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alertad(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_avisob(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_persona')
@@ -5759,6 +6732,8 @@ def persona_avisob(cls, node):
     if el is not None:
         self['Telefono'] = telefonoc(cls, el)
     return self
+
+
 def tipo_persona19(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}persona_fisica')
@@ -5771,6 +6746,8 @@ def tipo_persona19(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso18(cls, el)
     return self
+
+
 def persona_fisica1b(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}nombre')
@@ -5789,13 +6766,15 @@ def persona_fisica1b(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}representante_apoderado')
     if el is not None:
         self['RepresentanteApoderado'] = [representante_apoderadob(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}representante_apoderado')]
     return self
+
+
 def persona_moral1c(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
@@ -5807,11 +6786,13 @@ def persona_moral1c(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     self['RepresentanteApoderado'] = [representante_apoderadob(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}representante_apoderado')]
     return self
+
+
 def fideicomiso18(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
@@ -5824,6 +6805,8 @@ def fideicomiso18(cls, node):
         self['IdentificadorFideicomiso'] = el.text
     self['ApoderadoDelegado'] = [representante_apoderadob(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}apoderado_delegado')]
     return self
+
+
 def representante_apoderadob(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}nombre')
@@ -5842,6 +6825,8 @@ def representante_apoderadob(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domiciliob(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}nacional')
@@ -5851,6 +6836,8 @@ def tipo_domiciliob(cls, node):
     if el is not None:
         self['Extranjero'] = extranjerod(cls, el)
     return self
+
+
 def nacionald(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}colonia')
@@ -5865,10 +6852,12 @@ def nacionald(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjerod(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}ciudad_poblacion')
@@ -5885,11 +6874,13 @@ def extranjerod(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefonoc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -5897,11 +6888,15 @@ def telefonoc(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiarioa(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_persona')
     self['TipoPersona'] = tipo_persona1a(cls, el)
     return self
+
+
 def tipo_persona1a(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}persona_fisica')
@@ -5914,6 +6909,8 @@ def tipo_persona1a(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso19(cls, el)
     return self
+
+
 def persona_fisica1c(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}nombre')
@@ -5933,8 +6930,10 @@ def persona_fisica1c(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral1d(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
@@ -5947,8 +6946,10 @@ def persona_moral1d(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso19(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
@@ -5960,10 +6961,14 @@ def fideicomiso19(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operacionesb(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacionc(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_operacion')]
     return self
+
+
 def datos_operacionc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}fecha_operacion')
@@ -5972,6 +6977,8 @@ def datos_operacionc(cls, node):
     self['TipoActividad'] = tipo_actividad2(cls, el)
     self['DatosOperacionFinanciera'] = [datos_operacion_financiera0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_operacion_financiera')]
     return self
+
+
 def tipo_actividad2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}compra_venta_inmuebles')
@@ -6005,6 +7012,8 @@ def tipo_actividad2(cls, node):
     if el is not None:
         self['CompraVentaEntidadesMercantiles'] = compra_venta_entidades_mercantiles0(cls, el)
     return self
+
+
 def compra_venta_inmuebles0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_operacion')
@@ -6014,11 +7023,15 @@ def compra_venta_inmuebles0(cls, node):
     self['DatosContraparte'] = [datos_contraparte1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_contraparte')]
     self['CaracteristicasInmueble'] = [caracteristicas_inmueble2(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}caracteristicas_inmueble')]
     return self
+
+
 def datos_contraparte1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_persona')
     self['TipoPersona'] = tipo_persona1b(cls, el)
     return self
+
+
 def tipo_persona1b(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}persona_fisica')
@@ -6031,6 +7044,8 @@ def tipo_persona1b(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso19(cls, el)
     return self
+
+
 def persona_fisica1d(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}nombre')
@@ -6049,8 +7064,10 @@ def persona_fisica1d(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral1e(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
@@ -6062,12 +7079,14 @@ def persona_moral1e(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def caracteristicas_inmueble2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}colonia')
     self['Colonia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}calle')
@@ -6088,6 +7107,8 @@ def caracteristicas_inmueble2(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}contrato_instrumento_publico')
     self['ContratoInstrumentoPublico'] = contrato_instrumento_publico1(cls, el)
     return self
+
+
 def contrato_instrumento_publico1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_instrumento_publico')
@@ -6097,6 +7118,8 @@ def contrato_instrumento_publico1(cls, node):
     if el is not None:
         self['Contrato'] = contrato0(cls, el)
     return self
+
+
 def datos_instrumento_publico1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_instrumento_publico')
@@ -6110,6 +7133,8 @@ def datos_instrumento_publico1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_referencia')
     self['ValorReferencia'] = el.text
     return self
+
+
 def contrato0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}fecha_contrato')
@@ -6117,6 +7142,8 @@ def contrato0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_referencia')
     self['ValorReferencia'] = el.text
     return self
+
+
 def cesion_derechos_inmuebles0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}figura_cliente')
@@ -6126,10 +7153,12 @@ def cesion_derechos_inmuebles0(cls, node):
     self['DatosContraparte'] = [datos_contraparte1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_contraparte')]
     self['CaracteristicasInmueble'] = [caracteristicas_inmueble3(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}caracteristicas_inmueble')]
     return self
+
+
 def caracteristicas_inmueble3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_referencia')
     self['ValorReferencia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}colonia')
@@ -6150,12 +7179,16 @@ def caracteristicas_inmueble3(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_real')
     self['FolioReal'] = el.text
     return self
+
+
 def administracion_recursos0(cls, node):
     self = ScalarMap()
     self['TipoActivo'] = [tipo_activo0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_activo')]
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_operaciones')
     self['NumeroOperaciones'] = Xint(el.text)
     return self
+
+
 def tipo_activo0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}activo_banco')
@@ -6171,6 +7204,8 @@ def tipo_activo0(cls, node):
     if el is not None:
         self['ActivoOtros'] = activo_otros0(cls, el)
     return self
+
+
 def activo_banco0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}estatus_manejo')
@@ -6182,10 +7217,12 @@ def activo_banco0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_cuenta')
     self['NumeroCuenta'] = el.text
     return self
+
+
 def activo_inmobiliario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_referencia')
     self['ValorReferencia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}colonia')
@@ -6202,6 +7239,8 @@ def activo_inmobiliario0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_real')
     self['FolioReal'] = el.text
     return self
+
+
 def activo_outsourcing0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}area_servicio')
@@ -6211,6 +7250,8 @@ def activo_outsourcing0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_empleados')
     self['NumeroEmpleados'] = Xint(el.text)
     return self
+
+
 def area_servicio0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_area_servicio')
@@ -6219,6 +7260,8 @@ def area_servicio0(cls, node):
     if el is not None:
         self['DescripcionOtroAreaServicio'] = el.text
     return self
+
+
 def activo_administrado0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_activo_administrado')
@@ -6227,11 +7270,15 @@ def activo_administrado0(cls, node):
     if el is not None:
         self['DescripcionOtroActivoAdministrado'] = el.text
     return self
+
+
 def activo_otros0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion_activo_administrado')
     self['DescripcionActivoAdministrado'] = el.text
     return self
+
+
 def constitucion_sociedades_mercantiles0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_persona_moral')
@@ -6242,7 +7289,7 @@ def constitucion_sociedades_mercantiles0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
     self['DenominacionRazon'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_mercantil')
     if el is not None:
         self['FolioMercantil'] = el.text
@@ -6261,6 +7308,8 @@ def constitucion_sociedades_mercantiles0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_social')
     self['CapitalSocial'] = capital_social2(cls, el)
     return self
+
+
 def datos_accionista3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}cargo_accionista')
@@ -6270,6 +7319,8 @@ def datos_accionista3(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_acciones')
     self['NumeroAcciones'] = el.text
     return self
+
+
 def capital_social2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_fijo')
@@ -6278,18 +7329,24 @@ def capital_social2(cls, node):
     if el is not None:
         self['CapitalVariable'] = el.text
     return self
+
+
 def organizacion_aportaciones0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}motivo_aportacion')
     self['MotivoAportacion'] = el.text
     self['DatosAportacion'] = [datos_aportacion3(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_aportacion')]
     return self
+
+
 def datos_aportacion3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_persona_aporta')
     self['DatosPersonaAporta'] = datos_persona_aporta0(cls, el)
     self['DatosTipoAportacion'] = [datos_tipo_aportacion0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_tipo_aportacion')]
     return self
+
+
 def datos_persona_aporta0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}persona_fisica')
@@ -6302,6 +7359,8 @@ def datos_persona_aporta0(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso19(cls, el)
     return self
+
+
 def persona_fisica1e(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}nombre')
@@ -6320,10 +7379,12 @@ def persona_fisica1e(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral1f(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
@@ -6335,10 +7396,12 @@ def persona_moral1f(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     return self
+
+
 def datos_tipo_aportacion0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}aportacion_monetaria')
@@ -6351,19 +7414,23 @@ def datos_tipo_aportacion0(cls, node):
     if el is not None:
         self['AportacionOtroBien'] = aportacion_otro_bien0(cls, el)
     return self
+
+
 def aportacion_monetaria0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def aportacion_inmueble0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_real')
@@ -6371,6 +7438,8 @@ def aportacion_inmueble0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_aportacion')
     self['ValorAportacion'] = el.text
     return self
+
+
 def aportacion_otro_bien0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion')
@@ -6378,6 +7447,8 @@ def aportacion_otro_bien0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_aportacion')
     self['ValorAportacion'] = el.text
     return self
+
+
 def fusion1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_fusion')
@@ -6387,10 +7458,14 @@ def fusion1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_fusionante')
     self['DatosFusionante'] = datos_fusionante1(cls, el)
     return self
+
+
 def datos_fusionadas1(cls, node):
     self = ScalarMap()
     self['DatosFusionada'] = [datos_fusionada1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_fusionada')]
     return self
+
+
 def datos_fusionada1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
@@ -6402,9 +7477,9 @@ def datos_fusionada1(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_social_fijo')
     self['CapitalSocialFijo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_social_variable')
@@ -6414,6 +7489,8 @@ def datos_fusionada1(cls, node):
     if el is not None:
         self['FolioMercantil'] = el.text
     return self
+
+
 def datos_fusionante1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}fusionante_determinadas')
@@ -6422,6 +7499,8 @@ def datos_fusionante1(cls, node):
     if el is not None:
         self['Fusionante'] = fusionante1(cls, el)
     return self
+
+
 def fusionante1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
@@ -6433,9 +7512,9 @@ def fusionante1(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_social_fijo')
     self['CapitalSocialFijo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_social_variable')
@@ -6448,6 +7527,8 @@ def fusionante1(cls, node):
     self['NumeroTotalAcciones'] = el.text
     self['DatosAccionista'] = [datos_accionista4(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_accionista')]
     return self
+
+
 def datos_accionista4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_persona')
@@ -6455,6 +7536,8 @@ def datos_accionista4(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_acciones')
     self['NumeroAcciones'] = el.text
     return self
+
+
 def escision1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_escindente')
@@ -6462,6 +7545,8 @@ def escision1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_escindidas')
     self['DatosEscindidas'] = datos_escindidas1(cls, el)
     return self
+
+
 def datos_escindente1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
@@ -6473,9 +7558,9 @@ def datos_escindente1(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_social_fijo')
     self['CapitalSocialFijo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_social_variable')
@@ -6490,6 +7575,8 @@ def datos_escindente1(cls, node):
     if el is not None:
         self['DatosAccionistaEscindente'] = [datos_accionista_escindente0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_accionista_escindente')]
     return self
+
+
 def datos_accionista_escindente0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_persona')
@@ -6497,6 +7584,8 @@ def datos_accionista_escindente0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}numero_acciones')
     self['NumeroAcciones'] = el.text
     return self
+
+
 def datos_escindidas1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}escindidas_determinadas')
@@ -6505,6 +7594,8 @@ def datos_escindidas1(cls, node):
     if el is not None:
         self['DatoEscindida'] = [dato_escindida1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}dato_escindida')]
     return self
+
+
 def dato_escindida1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
@@ -6516,9 +7607,9 @@ def dato_escindida1(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_social_fijo')
     self['CapitalSocialFijo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}capital_social_variable')
@@ -6531,6 +7622,8 @@ def dato_escindida1(cls, node):
     self['NumeroTotalAcciones'] = el.text
     self['DatosAccionista'] = [datos_accionista4(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_accionista')]
     return self
+
+
 def administracion_personas_morales0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_administracion')
@@ -6543,6 +7636,8 @@ def administracion_personas_morales0(cls, node):
     if el is not None:
         self['TipoPersona'] = tipo_persona1c(cls, el)
     return self
+
+
 def tipo_persona1c(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}persona_moral')
@@ -6552,6 +7647,8 @@ def tipo_persona1c(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso19(cls, el)
     return self
+
+
 def constitucion_fideicomiso0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}rfc')
@@ -6571,12 +7668,16 @@ def constitucion_fideicomiso0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_miembro_comite_tecnico')
     self['DatosMiembroComiteTecnico'] = datos_miembro_comite_tecnico1(cls, el)
     return self
+
+
 def datos_fideicomitente1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_persona')
     self['TipoPersona'] = tipo_persona1b(cls, el)
     self['DatosTipoPatrimonio'] = [datos_tipo_patrimonio1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_tipo_patrimonio')]
     return self
+
+
 def datos_tipo_patrimonio1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}patrimonio_monetario')
@@ -6589,17 +7690,21 @@ def datos_tipo_patrimonio1(cls, node):
     if el is not None:
         self['PatrimonioOtroBien'] = patrimonio_otro_bien1(cls, el)
     return self
+
+
 def patrimonio_monetario1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def patrimonio_inmueble1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_inmueble')
-    self['TipoInmueble'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_inmueble_type', el.text)
+    self['TipoInmueble'] = catalog_code('T8a279e0b59188c03f1567c483e3fe576bb39a5e2', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_real')
@@ -6607,6 +7712,8 @@ def patrimonio_inmueble1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}importe_garantia')
     self['ImporteGarantia'] = el.text
     return self
+
+
 def patrimonio_otro_bien1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}descripcion')
@@ -6614,6 +7721,8 @@ def patrimonio_otro_bien1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}valor_bien')
     self['ValorBien'] = el.text
     return self
+
+
 def datos_fideicomisario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_fideicomisarios_determinados')
@@ -6622,23 +7731,29 @@ def datos_fideicomisario0(cls, node):
     if el is not None:
         self['TipoPersona'] = tipo_persona1b(cls, el)
     return self
+
+
 def datos_miembro_comite_tecnico1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}comite_tecnico')
     self['ComiteTecnico'] = el.text
     return self
+
+
 def compra_venta_entidades_mercantiles0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_operacion')
     self['TipoOperacion'] = el.text
     self['DatosSociedadMercantil'] = [datos_sociedad_mercantil0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_sociedad_mercantil')]
     return self
+
+
 def datos_sociedad_mercantil0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}denominacion_razon')
     self['DenominacionRazon'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}fecha_constitucion')
     if el is not None:
         self['FechaConstitucion'] = datetime.strptime(el.text, '%Y%m%d').date()
@@ -6646,7 +7761,7 @@ def datos_sociedad_mercantil0(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}folio_mercantil')
     if el is not None:
         self['FolioMercantil'] = el.text
@@ -6657,22 +7772,26 @@ def datos_sociedad_mercantil0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}datos_contraparte')
     self['DatosContraparte'] = tipo_persona1b(cls, el)
     return self
+
+
 def datos_operacion_financiera0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}fecha_pago')
     if el is not None:
         self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}activo_virtual')
     if el is not None:
         self['ActivoVirtual'] = activo_virtual1(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}moneda')
     if el is not None:
-        self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+        self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def activo_virtual1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}tipo_activo_virtual')
@@ -6683,10 +7802,14 @@ def activo_virtual1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/spr}cantidad_activo_virtual')
     self['CantidadActivoVirtual'] = el.text
     return self
+
+
 def archivo_typee(cls, node):
     self = ScalarMap()
     self['Informe'] = [informed(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tcv}informe')]
     return self
+
+
 def informed(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}mes_reportado')
@@ -6697,6 +7820,8 @@ def informed(cls, node):
     if el is not None:
         self['Aviso'] = [avisoe(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tcv}aviso')]
     return self
+
+
 def sujeto_obligadod(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}clave_entidad_colegiada')
@@ -6705,11 +7830,13 @@ def sujeto_obligadod(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def avisoe(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}referencia_aviso')
@@ -6718,7 +7845,7 @@ def avisoe(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatoriod(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}alerta')
     self['Alerta'] = alertae(cls, el)
     self['PersonaAviso'] = [persona_avisoc(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tcv}persona_aviso')]
@@ -6728,6 +7855,8 @@ def avisoe(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operacionesc(cls, el)
     return self
+
+
 def modificatoriod(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}folio_modificacion')
@@ -6735,14 +7864,18 @@ def modificatoriod(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alertae(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_avisoc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_persona')
@@ -6754,6 +7887,8 @@ def persona_avisoc(cls, node):
     if el is not None:
         self['Telefono'] = telefonod(cls, el)
     return self
+
+
 def tipo_persona1d(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}persona_fisica')
@@ -6766,6 +7901,8 @@ def tipo_persona1d(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso1a(cls, el)
     return self
+
+
 def persona_fisica1f(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}nombre')
@@ -6784,10 +7921,12 @@ def persona_fisica1f(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral20(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon')
@@ -6799,12 +7938,14 @@ def persona_moral20(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderadoc(cls, el)
     return self
+
+
 def fideicomiso1a(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon')
@@ -6818,6 +7959,8 @@ def fideicomiso1a(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderadoc(cls, el)
     return self
+
+
 def representante_apoderadoc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}nombre')
@@ -6836,6 +7979,8 @@ def representante_apoderadoc(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilioc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}nacional')
@@ -6845,6 +7990,8 @@ def tipo_domicilioc(cls, node):
     if el is not None:
         self['Extranjero'] = extranjeroe(cls, el)
     return self
+
+
 def nacionale(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}colonia')
@@ -6859,10 +8006,12 @@ def nacionale(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjeroe(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}ciudad_poblacion')
@@ -6879,11 +8028,13 @@ def extranjeroe(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefonod(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -6891,11 +8042,15 @@ def telefonod(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiariob(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_persona')
     self['TipoPersona'] = tipo_persona1e(cls, el)
     return self
+
+
 def tipo_persona1e(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}persona_fisica')
@@ -6908,6 +8063,8 @@ def tipo_persona1e(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso1b(cls, el)
     return self
+
+
 def persona_fisica20(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}nombre')
@@ -6927,8 +8084,10 @@ def persona_fisica20(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral21(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon')
@@ -6941,8 +8100,10 @@ def persona_moral21(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso1b(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon')
@@ -6954,16 +8115,20 @@ def fideicomiso1b(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operacionesc(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operaciond(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tcv}datos_operacion')]
     return self
+
+
 def datos_operaciond(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}fecha_operacion')
     self['FechaOperacion'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     self['TipoBien'] = [tipo_bien1(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_bien')]
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}recepcion')
     if el is not None:
@@ -6978,6 +8143,8 @@ def datos_operaciond(cls, node):
     if el is not None:
         self['Destinatario'] = destinatario0(cls, el)
     return self
+
+
 def tipo_bien1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}datos_efectivo_instrumentos')
@@ -6987,15 +8154,19 @@ def tipo_bien1(cls, node):
     if el is not None:
         self['DatosValores'] = datos_valores0(cls, el)
     return self
+
+
 def datos_efectivo_instrumentos0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def datos_valores0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_valor')
@@ -7005,6 +8176,8 @@ def datos_valores0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}descripcion')
     self['Descripcion'] = el.text
     return self
+
+
 def recepcion1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_servicio')
@@ -7014,6 +8187,8 @@ def recepcion1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def custodia0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}fecha_inicio')
@@ -7023,6 +8198,8 @@ def custodia0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_custodia')
     self['TipoCustodia'] = tipo_custodia0(cls, el)
     return self
+
+
 def tipo_custodia0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}datos_sucursal')
@@ -7032,11 +8209,15 @@ def tipo_custodia0(cls, node):
     if el is not None:
         self['DatosNoSucursal'] = datos_no_sucursal0(cls, el)
     return self
+
+
 def datos_sucursal0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def datos_no_sucursal0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}colonia')
@@ -7051,6 +8232,8 @@ def datos_no_sucursal0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def entrega0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}fecha_entrega')
@@ -7058,6 +8241,8 @@ def entrega0(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}tipo_entrega')
     self['TipoEntrega'] = tipo_entrega0(cls, el)
     return self
+
+
 def tipo_entrega0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}nacional')
@@ -7067,15 +8252,19 @@ def tipo_entrega0(cls, node):
     if el is not None:
         self['Extranjero'] = extranjerof(cls, el)
     return self
+
+
 def nacionalf(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjerof(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}ciudad_poblacion')
@@ -7083,6 +8272,8 @@ def extranjerof(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def destinatario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}destinatario_persona_aviso')
@@ -7091,6 +8282,8 @@ def destinatario0(cls, node):
     if el is not None:
         self['TipoPersona'] = tipo_persona1f(cls, el)
     return self
+
+
 def tipo_persona1f(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}persona_fisica')
@@ -7103,6 +8296,8 @@ def tipo_persona1f(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso1c(cls, el)
     return self
+
+
 def persona_fisica21(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}nombre')
@@ -7121,6 +8316,8 @@ def persona_fisica21(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def persona_moral22(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon')
@@ -7132,6 +8329,8 @@ def persona_moral22(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     return self
+
+
 def fideicomiso1c(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tcv}denominacion_razon')
@@ -7143,10 +8342,14 @@ def fideicomiso1c(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def archivo_typef(cls, node):
     self = ScalarMap()
     self['Informe'] = [informee(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tdr}informe')]
     return self
+
+
 def informee(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}mes_reportado')
@@ -7157,6 +8360,8 @@ def informee(cls, node):
     if el is not None:
         self['Aviso'] = [avisof(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tdr}aviso')]
     return self
+
+
 def sujeto_obligadoe(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}clave_entidad_colegiada')
@@ -7165,11 +8370,13 @@ def sujeto_obligadoe(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def avisof(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}referencia_aviso')
@@ -7178,7 +8385,7 @@ def avisof(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorioe(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}alerta')
     self['Alerta'] = alertaf(cls, el)
     self['PersonaAviso'] = [persona_avisod(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tdr}persona_aviso')]
@@ -7188,6 +8395,8 @@ def avisof(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operacionesd(cls, el)
     return self
+
+
 def modificatorioe(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}folio_modificacion')
@@ -7195,14 +8404,18 @@ def modificatorioe(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alertaf(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_avisod(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}tipo_persona')
@@ -7214,6 +8427,8 @@ def persona_avisod(cls, node):
     if el is not None:
         self['Telefono'] = telefonoe(cls, el)
     return self
+
+
 def tipo_persona20(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}persona_fisica')
@@ -7226,6 +8441,8 @@ def tipo_persona20(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso1d(cls, el)
     return self
+
+
 def persona_fisica22(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}nombre')
@@ -7244,10 +8461,12 @@ def persona_fisica22(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral23(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}denominacion_razon')
@@ -7259,12 +8478,14 @@ def persona_moral23(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderadod(cls, el)
     return self
+
+
 def fideicomiso1d(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}denominacion_razon')
@@ -7278,6 +8499,8 @@ def fideicomiso1d(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderadod(cls, el)
     return self
+
+
 def representante_apoderadod(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}nombre')
@@ -7296,6 +8519,8 @@ def representante_apoderadod(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domiciliod(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}nacional')
@@ -7305,6 +8530,8 @@ def tipo_domiciliod(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero10(cls, el)
     return self
+
+
 def nacional10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}colonia')
@@ -7319,10 +8546,12 @@ def nacional10(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}ciudad_poblacion')
@@ -7339,11 +8568,13 @@ def extranjero10(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefonoe(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -7351,11 +8582,15 @@ def telefonoe(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiarioc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}tipo_persona')
     self['TipoPersona'] = tipo_persona21(cls, el)
     return self
+
+
 def tipo_persona21(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}persona_fisica')
@@ -7368,6 +8603,8 @@ def tipo_persona21(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso1e(cls, el)
     return self
+
+
 def persona_fisica23(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}nombre')
@@ -7387,8 +8624,10 @@ def persona_fisica23(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral24(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}denominacion_razon')
@@ -7401,8 +8640,10 @@ def persona_moral24(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso1e(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}denominacion_razon')
@@ -7414,10 +8655,14 @@ def fideicomiso1e(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operacionesd(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacione(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tdr}datos_operacion')]
     return self
+
+
 def datos_operacione(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}fecha_operacion')
@@ -7425,22 +8670,28 @@ def datos_operacione(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}cantidad')
     self['Cantidad'] = el.text
     self['DatosLiquidacion'] = [datos_liquidaciona(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tdr}datos_liquidacion')]
     return self
+
+
 def datos_liquidaciona(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tdr}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def archivo_type10(cls, node):
     self = ScalarMap()
     self['Informe'] = [informef(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tpp}informe')]
     return self
+
+
 def informef(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}mes_reportado')
@@ -7451,6 +8702,8 @@ def informef(cls, node):
     if el is not None:
         self['Aviso'] = [aviso10(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tpp}aviso')]
     return self
+
+
 def sujeto_obligadof(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}clave_entidad_colegiada')
@@ -7459,11 +8712,13 @@ def sujeto_obligadof(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}referencia_aviso')
@@ -7472,7 +8727,7 @@ def aviso10(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatoriof(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}alerta')
     self['Alerta'] = alerta10(cls, el)
     self['PersonaAviso'] = [persona_avisoe(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tpp}persona_aviso')]
@@ -7482,6 +8737,8 @@ def aviso10(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operacionese(cls, el)
     return self
+
+
 def modificatoriof(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}folio_modificacion')
@@ -7489,14 +8746,18 @@ def modificatoriof(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_avisoe(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}tipo_persona')
@@ -7508,6 +8769,8 @@ def persona_avisoe(cls, node):
     if el is not None:
         self['Telefono'] = telefonof(cls, el)
     return self
+
+
 def tipo_persona22(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}persona_fisica')
@@ -7520,6 +8783,8 @@ def tipo_persona22(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso1f(cls, el)
     return self
+
+
 def persona_fisica24(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}nombre')
@@ -7538,10 +8803,12 @@ def persona_fisica24(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral25(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}denominacion_razon')
@@ -7553,12 +8820,14 @@ def persona_moral25(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderadoe(cls, el)
     return self
+
+
 def fideicomiso1f(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}denominacion_razon')
@@ -7572,6 +8841,8 @@ def fideicomiso1f(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderadoe(cls, el)
     return self
+
+
 def representante_apoderadoe(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}nombre')
@@ -7590,6 +8861,8 @@ def representante_apoderadoe(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilioe(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}nacional')
@@ -7599,6 +8872,8 @@ def tipo_domicilioe(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero11(cls, el)
     return self
+
+
 def nacional11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}colonia')
@@ -7613,10 +8888,12 @@ def nacional11(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}ciudad_poblacion')
@@ -7633,11 +8910,13 @@ def extranjero11(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefonof(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -7645,11 +8924,15 @@ def telefonof(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiariod(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}tipo_persona')
     self['TipoPersona'] = tipo_persona23(cls, el)
     return self
+
+
 def tipo_persona23(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}persona_fisica')
@@ -7662,6 +8945,8 @@ def tipo_persona23(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso20(cls, el)
     return self
+
+
 def persona_fisica25(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}nombre')
@@ -7681,8 +8966,10 @@ def persona_fisica25(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral26(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}denominacion_razon')
@@ -7695,8 +8982,10 @@ def persona_moral26(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso20(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}denominacion_razon')
@@ -7708,10 +8997,14 @@ def fideicomiso20(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operacionese(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacionf(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tpp}datos_operacion')]
     return self
+
+
 def datos_operacionf(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}fecha_operacion')
@@ -7719,32 +9012,38 @@ def datos_operacionf(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}cantidad')
     self['Cantidad'] = el.text
     self['DatosLiquidacion'] = [datos_liquidacionb(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tpp}datos_liquidacion')]
     return self
+
+
 def datos_liquidacionb(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}instrumento_monetario')
-    self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+    self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tpp}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def detalle_operaciones_type1(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion10(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tsc}datos_operacion')]
     return self
+
+
 def datos_operacion10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}fecha_periodo')
     self['FechaPeriodo'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}tipo_tarjeta')
     self['TipoTarjeta'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}numero_identificador')
@@ -7752,10 +9051,14 @@ def datos_operacion10(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}monto_gasto')
     self['MontoGasto'] = el.text
     return self
+
+
 def archivo_type11(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe10(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tsc}informe')]
     return self
+
+
 def informe10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}mes_reportado')
@@ -7766,6 +9069,8 @@ def informe10(cls, node):
     if el is not None:
         self['Aviso'] = [aviso11(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tsc}aviso')]
     return self
+
+
 def sujeto_obligado10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}clave_entidad_colegiada')
@@ -7774,11 +9079,13 @@ def sujeto_obligado10(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}referencia_aviso')
@@ -7787,7 +9094,7 @@ def aviso11(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio10(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}alerta')
     self['Alerta'] = alerta11(cls, el)
     self['PersonaAviso'] = [persona_avisof(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/tsc}persona_aviso')]
@@ -7797,6 +9104,8 @@ def aviso11(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operaciones_type1(cls, el)
     return self
+
+
 def modificatorio10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}folio_modificacion')
@@ -7804,14 +9113,18 @@ def modificatorio10(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_avisof(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}tipo_persona')
@@ -7823,6 +9136,8 @@ def persona_avisof(cls, node):
     if el is not None:
         self['Telefono'] = telefono10(cls, el)
     return self
+
+
 def tipo_persona24(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}persona_fisica')
@@ -7835,6 +9150,8 @@ def tipo_persona24(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso21(cls, el)
     return self
+
+
 def persona_fisica26(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}nombre')
@@ -7853,10 +9170,12 @@ def persona_fisica26(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral27(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}denominacion_razon')
@@ -7868,12 +9187,14 @@ def persona_moral27(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderadof(cls, el)
     return self
+
+
 def fideicomiso21(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}denominacion_razon')
@@ -7887,6 +9208,8 @@ def fideicomiso21(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderadof(cls, el)
     return self
+
+
 def representante_apoderadof(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}nombre')
@@ -7905,6 +9228,8 @@ def representante_apoderadof(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domiciliof(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}nacional')
@@ -7914,6 +9239,8 @@ def tipo_domiciliof(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero12(cls, el)
     return self
+
+
 def nacional12(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}colonia')
@@ -7928,10 +9255,12 @@ def nacional12(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero12(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}ciudad_poblacion')
@@ -7948,11 +9277,13 @@ def extranjero12(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -7960,11 +9291,15 @@ def telefono10(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiarioe(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}tipo_persona')
     self['TipoPersona'] = tipo_persona25(cls, el)
     return self
+
+
 def tipo_persona25(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}persona_fisica')
@@ -7977,6 +9312,8 @@ def tipo_persona25(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso22(cls, el)
     return self
+
+
 def persona_fisica27(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}nombre')
@@ -7996,8 +9333,10 @@ def persona_fisica27(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral28(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}denominacion_razon')
@@ -8010,8 +9349,10 @@ def persona_moral28(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso22(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/tsc}denominacion_razon')
@@ -8023,10 +9364,14 @@ def fideicomiso22(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def archivo_type12(cls, node):
     self = ScalarMap()
     self['Informe'] = [informe11(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/veh}informe')]
     return self
+
+
 def informe11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}mes_reportado')
@@ -8037,6 +9382,8 @@ def informe11(cls, node):
     if el is not None:
         self['Aviso'] = [aviso12(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/veh}aviso')]
     return self
+
+
 def sujeto_obligado11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}clave_entidad_colegiada')
@@ -8045,11 +9392,13 @@ def sujeto_obligado11(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}clave_sujeto_obligado')
     self['ClaveSujetoObligado'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}clave_actividad')
-    self['ClaveActividad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}clave_actividad_type', el.text)
+    self['ClaveActividad'] = catalog_code('T7a66b494e832ac8ce4ba3c5f8d21914792263dcf', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}exento')
     if el is not None:
         self['Exento'] = el.text
     return self
+
+
 def aviso12(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}referencia_aviso')
@@ -8058,7 +9407,7 @@ def aviso12(cls, node):
     if el is not None:
         self['Modificatorio'] = modificatorio11(cls, el)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}prioridad')
-    self['Prioridad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}prioridad_type', el.text)
+    self['Prioridad'] = catalog_code('T7434004a3cc7093fe18b7c7a478eab0c8cc97c4a', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}alerta')
     self['Alerta'] = alerta12(cls, el)
     self['PersonaAviso'] = [persona_aviso10(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/veh}persona_aviso')]
@@ -8068,6 +9417,8 @@ def aviso12(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}detalle_operaciones')
     self['DetalleOperaciones'] = detalle_operacionesf(cls, el)
     return self
+
+
 def modificatorio11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}folio_modificacion')
@@ -8075,14 +9426,18 @@ def modificatorio11(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}descripcion_modificacion')
     self['DescripcionModificacion'] = el.text
     return self
+
+
 def alerta12(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}tipo_alerta')
-    self['TipoAlerta'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_alerta_type', el.text)
+    self['TipoAlerta'] = catalog_code('T2d9a3a944524e8788382e0be45eddaf0537dc8ba', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}descripcion_alerta')
     if el is not None:
         self['DescripcionAlerta'] = el.text
     return self
+
+
 def persona_aviso10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}tipo_persona')
@@ -8094,6 +9449,8 @@ def persona_aviso10(cls, node):
     if el is not None:
         self['Telefono'] = telefono11(cls, el)
     return self
+
+
 def tipo_persona26(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}persona_fisica')
@@ -8106,6 +9463,8 @@ def tipo_persona26(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso23(cls, el)
     return self
+
+
 def persona_fisica28(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}nombre')
@@ -8124,10 +9483,12 @@ def persona_fisica28(cls, node):
     if el is not None:
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}actividad_economica')
-    self['ActividadEconomica'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}actividad_economica_type', el.text)
+    self['ActividadEconomica'] = catalog_code('T0aac6a6b82680365774768efba453f631d49b216', el.text)
     return self
+
+
 def persona_moral29(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}denominacion_razon')
@@ -8139,12 +9500,14 @@ def persona_moral29(cls, node):
     if el is not None:
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}pais_nacionalidad')
-    self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}giro_mercantil')
-    self['GiroMercantil'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}giro_mercantil_type', el.text)
+    self['GiroMercantil'] = catalog_code('T29c47cd7e613e56de701e894c94d02059c3d2600', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}representante_apoderado')
     self['RepresentanteApoderado'] = representante_apoderado10(cls, el)
     return self
+
+
 def fideicomiso23(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}denominacion_razon')
@@ -8158,6 +9521,8 @@ def fideicomiso23(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}apoderado_delegado')
     self['ApoderadoDelegado'] = representante_apoderado10(cls, el)
     return self
+
+
 def representante_apoderado10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}nombre')
@@ -8176,6 +9541,8 @@ def representante_apoderado10(cls, node):
     if el is not None:
         self['Curp'] = el.text
     return self
+
+
 def tipo_domicilio10(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}nacional')
@@ -8185,6 +9552,8 @@ def tipo_domicilio10(cls, node):
     if el is not None:
         self['Extranjero'] = extranjero13(cls, el)
     return self
+
+
 def nacional13(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}colonia')
@@ -8199,10 +9568,12 @@ def nacional13(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def extranjero13(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}pais')
-    self['Pais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+    self['Pais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}estado_provincia')
     self['EstadoProvincia'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}ciudad_poblacion')
@@ -8219,11 +9590,13 @@ def extranjero13(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}codigo_postal')
     self['CodigoPostal'] = el.text
     return self
+
+
 def telefono11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}clave_pais')
     if el is not None:
-        self['ClavePais'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['ClavePais'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}numero_telefono')
     if el is not None:
         self['NumeroTelefono'] = el.text
@@ -8231,11 +9604,15 @@ def telefono11(cls, node):
     if el is not None:
         self['CorreoElectronico'] = el.text
     return self
+
+
 def dueno_beneficiariof(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}tipo_persona')
     self['TipoPersona'] = tipo_persona27(cls, el)
     return self
+
+
 def tipo_persona27(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}persona_fisica')
@@ -8248,6 +9625,8 @@ def tipo_persona27(cls, node):
     if el is not None:
         self['Fideicomiso'] = fideicomiso24(cls, el)
     return self
+
+
 def persona_fisica29(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}nombre')
@@ -8267,8 +9646,10 @@ def persona_fisica29(cls, node):
         self['Curp'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def persona_moral2a(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}denominacion_razon')
@@ -8281,8 +9662,10 @@ def persona_moral2a(cls, node):
         self['Rfc'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}pais_nacionalidad')
     if el is not None:
-        self['PaisNacionalidad'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['PaisNacionalidad'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     return self
+
+
 def fideicomiso24(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}denominacion_razon')
@@ -8294,10 +9677,14 @@ def fideicomiso24(cls, node):
     if el is not None:
         self['IdentificadorFideicomiso'] = el.text
     return self
+
+
 def detalle_operacionesf(cls, node):
     self = ScalarMap()
     self['DatosOperacion'] = [datos_operacion11(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/veh}datos_operacion')]
     return self
+
+
 def datos_operacion11(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}fecha_operacion')
@@ -8305,12 +9692,14 @@ def datos_operacion11(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}codigo_postal')
     self['CodigoPostal'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}tipo_operacion')
-    self['TipoOperacion'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}tipo_operacion_type', el.text)
+    self['TipoOperacion'] = catalog_code('T2826b0f887a6f4ade2808d00f9f8bc90d0bee029', el.text)
     self['TipoVehiculo'] = [tipo_vehiculo0(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/veh}tipo_vehiculo')]
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}datos_liquidacion')
     if el is not None:
         self['DatosLiquidacion'] = [datos_liquidacionc(cls, n) for n in node.iterfind('{http://www.uif.shcp.gob.mx/recepcion/veh}datos_liquidacion')]
     return self
+
+
 def tipo_vehiculo0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}datos_vehiculo_terrestre')
@@ -8323,6 +9712,8 @@ def tipo_vehiculo0(cls, node):
     if el is not None:
         self['DatosVehiculoAereo'] = datos_vehiculo_aereo0(cls, el)
     return self
+
+
 def datos_vehiculo_terrestre1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}marca_fabricante')
@@ -8343,6 +9734,8 @@ def datos_vehiculo_terrestre1(cls, node):
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}nivel_blindaje')
     self['NivelBlindaje'] = el.text
     return self
+
+
 def datos_vehiculo_maritimo0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}marca_fabricante')
@@ -8355,13 +9748,15 @@ def datos_vehiculo_maritimo0(cls, node):
     self['NumeroSerie'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}bandera')
     if el is not None:
-        self['Bandera'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['Bandera'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}matricula')
     if el is not None:
         self['Matricula'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}nivel_blindaje')
     self['NivelBlindaje'] = el.text
     return self
+
+
 def datos_vehiculo_aereo0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}marca_fabricante')
@@ -8374,27 +9769,31 @@ def datos_vehiculo_aereo0(cls, node):
     self['NumeroSerie'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}bandera')
     if el is not None:
-        self['Bandera'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}pais_type', el.text)
+        self['Bandera'] = catalog_code('Te372109396ff6018439c4d5b58affd040d586073', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}matricula')
     if el is not None:
         self['Matricula'] = el.text
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}nivel_blindaje')
     self['NivelBlindaje'] = el.text
     return self
+
+
 def datos_liquidacionc(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}fecha_pago')
     self['FechaPago'] = datetime.strptime(el.text, '%Y%m%d').date()
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}forma_pago')
-    self['FormaPago'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}forma_pago_type', el.text)
+    self['FormaPago'] = catalog_code('T50dfda1d9460b356fe21d1d8a03e63d9b2a3f072', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}instrumento_monetario')
     if el is not None:
-        self['InstrumentoMonetario'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}instrumento_monetario_type', el.text)
+        self['InstrumentoMonetario'] = catalog_code('T27d048bc6e6457378a88a54fbc8c25763ba53a58', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}moneda')
-    self['Moneda'] = catalog_code('{http://www.uif.shcp.gob.mx/recepcion}moneda_type', el.text)
+    self['Moneda'] = catalog_code('T356e6718ef5386a38dd15b7d6487467ed2b62c0d', el.text)
     el = node.find('{http://www.uif.shcp.gob.mx/recepcion/veh}monto_operacion')
     self['MontoOperacion'] = el.text
     return self
+
+
 def t_ubicacion0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('calle')) is not None:
@@ -8417,6 +9816,8 @@ def t_ubicacion0(cls, node):
     if (a := node.attrib.get('codigoPostal')) is not None:
         self['CodigoPostal'] = a
     return self
+
+
 def t_ubicacion_fiscal0(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['calle']
@@ -8435,6 +9836,8 @@ def t_ubicacion_fiscal0(cls, node):
     self['Pais'] = node.attrib['pais']
     self['CodigoPostal'] = node.attrib['codigoPostal']
     return self
+
+
 def t_informacion_aduanera0(cls, node):
     self = ScalarMap()
     self['Numero'] = node.attrib['numero']
@@ -8442,6 +9845,8 @@ def t_informacion_aduanera0(cls, node):
     if (a := node.attrib.get('aduana')) is not None:
         self['Aduana'] = a
     return self
+
+
 def t_ubicacion_fiscal1(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['calle']
@@ -8460,6 +9865,8 @@ def t_ubicacion_fiscal1(cls, node):
     self['Pais'] = node.attrib['pais']
     self['CodigoPostal'] = node.attrib['codigoPostal']
     return self
+
+
 def t_informacion_aduanera1(cls, node):
     self = ScalarMap()
     self['Numero'] = node.attrib['numero']
@@ -8467,6 +9874,8 @@ def t_informacion_aduanera1(cls, node):
     if (a := node.attrib.get('aduana')) is not None:
         self['Aduana'] = a
     return self
+
+
 def t_informacion_aduanera2(cls, node):
     self = ScalarMap()
     self['Numero'] = node.attrib['numero']
@@ -8474,6 +9883,8 @@ def t_informacion_aduanera2(cls, node):
     if (a := node.attrib.get('aduana')) is not None:
         self['Aduana'] = a
     return self
+
+
 def t_informacion_aduanera3(cls, node):
     self = ScalarMap()
     self['Numero'] = node.attrib['numero']
@@ -8481,6 +9892,8 @@ def t_informacion_aduanera3(cls, node):
     if (a := node.attrib.get('aduana')) is not None:
         self['Aduana'] = a
     return self
+
+
 def signature_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}SignedInfo')
@@ -8494,12 +9907,16 @@ def signature_type0(cls, node):
     if (a := node.attrib.get('Id')) is not None:
         self['Id'] = a
     return self
+
+
 def signature_value0(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     if (a := node.attrib.get('Id')) is not None:
         self['Id'] = a
     return self
+
+
 def signed_info0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}CanonicalizationMethod')
@@ -8511,10 +9928,14 @@ def signed_info0(cls, node):
     if (a := node.attrib.get('Id')) is not None:
         self['Id'] = a
     return self
+
+
 def canonicalization_method0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     self['Algorithm'] = node.attrib['Algorithm']
     return self
+
+
 def signature_method0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}HMACOutputLength')
@@ -8522,6 +9943,8 @@ def signature_method0(cls, node):
         self['HMACOutputLength'] = Xint(el.text)
     self['Algorithm'] = node.attrib['Algorithm']
     return self
+
+
 def reference0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}Transforms')
@@ -8537,11 +9960,15 @@ def reference0(cls, node):
     if (a := node.attrib.get('Type')) is not None:
         self['Type'] = a
     return self
+
+
 def transforms0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}Transform')
     self['Transform'] = transform0(cls, el)
     return self
+
+
 def transform0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}XPath')
@@ -8549,10 +9976,14 @@ def transform0(cls, node):
         self['XPath'] = el.text
     self['Algorithm'] = node.attrib['Algorithm']
     return self
+
+
 def digest_method0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     self['Algorithm'] = node.attrib['Algorithm']
     return self
+
+
 def key_info0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}KeyName')
@@ -8579,6 +10010,8 @@ def key_info0(cls, node):
     if (a := node.attrib.get('Id')) is not None:
         self['Id'] = a
     return self
+
+
 def key_value0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}DSAKeyValue')
@@ -8588,6 +10021,8 @@ def key_value0(cls, node):
     if el is not None:
         self['RSAKeyValue'] = rsakey_value0(cls, el)
     return self
+
+
 def retrieval_method0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}Transforms')
@@ -8597,6 +10032,8 @@ def retrieval_method0(cls, node):
     if (a := node.attrib.get('Type')) is not None:
         self['Type'] = a
     return self
+
+
 def x509data0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}X509IssuerSerial')
@@ -8615,6 +10052,8 @@ def x509data0(cls, node):
     if el is not None:
         self['X509CRL'] = el.text
     return self
+
+
 def x509issuer_serial0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}X509IssuerName')
@@ -8622,6 +10061,8 @@ def x509issuer_serial0(cls, node):
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}X509SerialNumber')
     self['X509SerialNumber'] = Xint(el.text)
     return self
+
+
 def pgpdata0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}PGPKeyID')
@@ -8632,11 +10073,15 @@ def pgpdata0(cls, node):
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}PGPKeyPacket')
     self['PGPKeyPacket'] = el.text
     return self
+
+
 def spkid_ata0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}SPKISexp')
     self['SPKISexp'] = el.text
     return self
+
+
 def object0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     if (a := node.attrib.get('Id')) is not None:
@@ -8646,6 +10091,8 @@ def object0(cls, node):
     if (a := node.attrib.get('Encoding')) is not None:
         self['Encoding'] = a
     return self
+
+
 def manifest_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}Reference')
@@ -8653,6 +10100,8 @@ def manifest_type0(cls, node):
     if (a := node.attrib.get('Id')) is not None:
         self['Id'] = a
     return self
+
+
 def signature_properties_type0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}SignatureProperty')
@@ -8660,12 +10109,16 @@ def signature_properties_type0(cls, node):
     if (a := node.attrib.get('Id')) is not None:
         self['Id'] = a
     return self
+
+
 def signature_property0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     self['Target'] = node.attrib['Target']
     if (a := node.attrib.get('Id')) is not None:
         self['Id'] = a
     return self
+
+
 def dsakey_value0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}P')
@@ -8685,6 +10138,8 @@ def dsakey_value0(cls, node):
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}PgenCounter')
     self['PgenCounter'] = el.text
     return self
+
+
 def rsakey_value0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}Modulus')
@@ -8692,6 +10147,8 @@ def rsakey_value0(cls, node):
     el = node.find('{http://www.w3.org/2000/09/xmldsig#}Exponent')
     self['Exponent'] = el.text
     return self
+
+
 def cancelacion0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -8702,6 +10159,8 @@ def cancelacion0(cls, node):
     self['RfcEmisor'] = node.attrib['RfcEmisor']
     self['Fecha'] = datetime.fromisoformat(node.attrib['Fecha'])
     return self
+
+
 def folio0(cls, node):
     self = ScalarMap()
     self['UUID'] = node.attrib['UUID']
@@ -8709,6 +10168,8 @@ def folio0(cls, node):
     if (a := node.attrib.get('FolioSustitucion')) is not None:
         self['FolioSustitucion'] = a
     return self
+
+
 def cancelacion1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -8719,6 +10180,8 @@ def cancelacion1(cls, node):
     self['RfcEmisor'] = node.attrib['RfcEmisor']
     self['Fecha'] = datetime.fromisoformat(node.attrib['Fecha'])
     return self
+
+
 def folio1(cls, node):
     self = ScalarMap()
     self['UUID'] = node.attrib['UUID']
@@ -8726,6 +10189,8 @@ def folio1(cls, node):
     if (a := node.attrib.get('FolioSustitucion')) is not None:
         self['FolioSustitucion'] = a
     return self
+
+
 def solicitud_aceptacion_rechazo0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -8740,6 +10205,8 @@ def solicitud_aceptacion_rechazo0(cls, node):
         self['RfcPacEnviaSolicitud'] = a
     self['Fecha'] = datetime.fromisoformat(node.attrib['Fecha'])
     return self
+
+
 def folios0(cls, node):
     self = ScalarMap()
     el = node.find('{http://cancelacfd.sat.gob.mx}UUID')
@@ -8748,6 +10215,8 @@ def folios0(cls, node):
     el = node.find('{http://cancelacfd.sat.gob.mx}Respuesta')
     self['Respuesta'] = el.text
     return self
+
+
 def diverza0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -8771,6 +10240,8 @@ def diverza0(cls, node):
         self['Complemento'] = [extra0(cls, n) for n in el.iterfind('{http://www.diverza.com/ns/addenda/diverza/1}datosExtra')]
     self['Version'] = node.attrib['version']
     return self
+
+
 def generales0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('tipoDocumento')) is not None:
@@ -8794,6 +10265,8 @@ def generales0(cls, node):
     if (a := node.attrib.get('fechaTipoCambio')) is not None:
         self['FechaTipoCambio'] = date.fromisoformat(a)
     return self
+
+
 def claves_descripcion0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('c_FormaPago')) is not None:
@@ -8815,6 +10288,8 @@ def claves_descripcion0(cls, node):
     if (a := node.attrib.get('c_UsoCFDI')) is not None:
         self['CUsoCFDI'] = a
     return self
+
+
 def emisor0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.diverza.com/ns/addenda/diverza/1}datosContactoE')
@@ -8838,6 +10313,8 @@ def emisor0(cls, node):
     if (a := node.attrib.get('gln')) is not None:
         self['Gln'] = a
     return self
+
+
 def sucursal_e0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.diverza.com/ns/addenda/diverza/1}domicilioSucursal')
@@ -8849,6 +10326,8 @@ def sucursal_e0(cls, node):
     if (a := node.attrib.get('alias')) is not None:
         self['Alias'] = a
     return self
+
+
 def receptor0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.diverza.com/ns/addenda/diverza/1}datosContactoR')
@@ -8865,12 +10344,16 @@ def receptor0(cls, node):
     if (a := node.attrib.get('numCliente')) is not None:
         self['NumCliente'] = a
     return self
+
+
 def conceptos0(cls, node):
     self = ScalarMap()
     self['Concepto'] = [concepto0(cls, n) for n in node.iterfind('{http://www.diverza.com/ns/addenda/diverza/1}concepto')]
     if (a := node.attrib.get('numeroConceptos')) is not None:
         self['NumeroConceptos'] = Xint(a)
     return self
+
+
 def concepto0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.diverza.com/ns/addenda/diverza/1}datosExtraC')
@@ -8903,6 +10386,8 @@ def concepto0(cls, node):
     if (a := node.attrib.get('fechaEntregaC')) is not None:
         self['FechaEntregaC'] = date.fromisoformat(a)
     return self
+
+
 def auxiliar_ctas0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -8923,6 +10408,8 @@ def auxiliar_ctas0(cls, node):
     if (a := node.attrib.get('Certificado')) is not None:
         self['Certificado'] = a
     return self
+
+
 def cuenta0(cls, node):
     self = ScalarMap()
     self['DetalleAux'] = [detalle_aux0(cls, n) for n in node.iterfind('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarCtas}DetalleAux')]
@@ -8931,6 +10418,8 @@ def cuenta0(cls, node):
     self['SaldoIni'] = Decimal(node.attrib['SaldoIni'])
     self['SaldoFin'] = Decimal(node.attrib['SaldoFin'])
     return self
+
+
 def detalle_aux0(cls, node):
     self = ScalarMap()
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
@@ -8939,6 +10428,8 @@ def detalle_aux0(cls, node):
     self['Debe'] = Decimal(node.attrib['Debe'])
     self['Haber'] = Decimal(node.attrib['Haber'])
     return self
+
+
 def rep_aux_fol0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -8961,6 +10452,8 @@ def rep_aux_fol0(cls, node):
     if (a := node.attrib.get('Certificado')) is not None:
         self['Certificado'] = a
     return self
+
+
 def det_aux_fol0(cls, node):
     self = ScalarMap()
     el = node.find('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/AuxiliarFolios}ComprNal')
@@ -8975,18 +10468,22 @@ def det_aux_fol0(cls, node):
     self['NumUnIdenPol'] = node.attrib['NumUnIdenPol']
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
     return self
+
+
 def compr_nal0(cls, node):
     self = ScalarMap()
     self['UUID_CFDI'] = node.attrib['UUID_CFDI']
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     self['RFC'] = node.attrib['RFC']
     if (a := node.attrib.get('MetPagoAux')) is not None:
-        self['MetPagoAux'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_MetPagos', a)
+        self['MetPagoAux'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', a)
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def compr_nal_otr0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('CFD_CBB_Serie')) is not None:
@@ -8995,12 +10492,14 @@ def compr_nal_otr0(cls, node):
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     self['RFC'] = node.attrib['RFC']
     if (a := node.attrib.get('MetPagoAux')) is not None:
-        self['MetPagoAux'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_MetPagos', a)
+        self['MetPagoAux'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', a)
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def compr_ext0(cls, node):
     self = ScalarMap()
     self['NumFactExt'] = node.attrib['NumFactExt']
@@ -9008,12 +10507,14 @@ def compr_ext0(cls, node):
         self['TaxID'] = a
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     if (a := node.attrib.get('MetPagoAux')) is not None:
-        self['MetPagoAux'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_MetPagos', a)
+        self['MetPagoAux'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', a)
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def balanza0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9032,6 +10533,8 @@ def balanza0(cls, node):
     if (a := node.attrib.get('Certificado')) is not None:
         self['Certificado'] = a
     return self
+
+
 def ctas0(cls, node):
     self = ScalarMap()
     self['NumCta'] = node.attrib['NumCta']
@@ -9040,6 +10543,8 @@ def ctas0(cls, node):
     self['Haber'] = Decimal(node.attrib['Haber'])
     self['SaldoFin'] = Decimal(node.attrib['SaldoFin'])
     return self
+
+
 def catalogo0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9055,9 +10560,11 @@ def catalogo0(cls, node):
     if (a := node.attrib.get('Certificado')) is not None:
         self['Certificado'] = a
     return self
+
+
 def ctas1(cls, node):
     self = ScalarMap()
-    self['CodAgrup'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_CodAgrup', node.attrib['CodAgrup'])
+    self['CodAgrup'] = catalog_code('Tf5b347b138b3f79bc17e5a646764663de6f5fd5a', node.attrib['CodAgrup'])
     self['NumCta'] = node.attrib['NumCta']
     self['Desc'] = node.attrib['Desc']
     if (a := node.attrib.get('SubCtaDe')) is not None:
@@ -9065,6 +10572,8 @@ def ctas1(cls, node):
     self['Nivel'] = Xint(node.attrib['Nivel'])
     self['Natur'] = node.attrib['Natur']
     return self
+
+
 def polizas0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9085,6 +10594,8 @@ def polizas0(cls, node):
     if (a := node.attrib.get('Certificado')) is not None:
         self['Certificado'] = a
     return self
+
+
 def poliza0(cls, node):
     self = ScalarMap()
     self['Transaccion'] = [transaccion0(cls, n) for n in node.iterfind('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo}Transaccion')]
@@ -9092,6 +10603,8 @@ def poliza0(cls, node):
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
     self['Concepto'] = node.attrib['Concepto']
     return self
+
+
 def transaccion0(cls, node):
     self = ScalarMap()
     el = node.find('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo}CompNal')
@@ -9118,16 +10631,20 @@ def transaccion0(cls, node):
     self['Debe'] = Decimal(node.attrib['Debe'])
     self['Haber'] = Decimal(node.attrib['Haber'])
     return self
+
+
 def comp_nal0(cls, node):
     self = ScalarMap()
     self['UUID_CFDI'] = node.attrib['UUID_CFDI']
     self['RFC'] = node.attrib['RFC']
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def comp_nal_otr0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('CFD_CBB_Serie')) is not None:
@@ -9136,10 +10653,12 @@ def comp_nal_otr0(cls, node):
     self['RFC'] = node.attrib['RFC']
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def comp_ext0(cls, node):
     self = ScalarMap()
     self['NumFactExt'] = node.attrib['NumFactExt']
@@ -9147,14 +10666,16 @@ def comp_ext0(cls, node):
         self['TaxID'] = a
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def cheque0(cls, node):
     self = ScalarMap()
     self['Num'] = node.attrib['Num']
-    self['BanEmisNal'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Banco', node.attrib['BanEmisNal'])
+    self['BanEmisNal'] = catalog_code('Te1e094b9e1834cb8e42087383a467eb81354d5a1', node.attrib['BanEmisNal'])
     if (a := node.attrib.get('BanEmisExt')) is not None:
         self['BanEmisExt'] = a
     self['CtaOri'] = node.attrib['CtaOri']
@@ -9163,19 +10684,21 @@ def cheque0(cls, node):
     self['RFC'] = node.attrib['RFC']
     self['Monto'] = Decimal(node.attrib['Monto'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def transferencia0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('CtaOri')) is not None:
         self['CtaOri'] = a
-    self['BancoOriNal'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Banco', node.attrib['BancoOriNal'])
+    self['BancoOriNal'] = catalog_code('Te1e094b9e1834cb8e42087383a467eb81354d5a1', node.attrib['BancoOriNal'])
     if (a := node.attrib.get('BancoOriExt')) is not None:
         self['BancoOriExt'] = a
     self['CtaDest'] = node.attrib['CtaDest']
-    self['BancoDestNal'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Banco', node.attrib['BancoDestNal'])
+    self['BancoDestNal'] = catalog_code('Te1e094b9e1834cb8e42087383a467eb81354d5a1', node.attrib['BancoDestNal'])
     if (a := node.attrib.get('BancoDestExt')) is not None:
         self['BancoDestExt'] = a
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
@@ -9183,22 +10706,26 @@ def transferencia0(cls, node):
     self['RFC'] = node.attrib['RFC']
     self['Monto'] = Decimal(node.attrib['Monto'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def otr_metodo_pago0(cls, node):
     self = ScalarMap()
-    self['MetPagoPol'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_MetPagos', node.attrib['MetPagoPol'])
+    self['MetPagoPol'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', node.attrib['MetPagoPol'])
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
     self['Benef'] = node.attrib['Benef']
     self['RFC'] = node.attrib['RFC']
     self['Monto'] = Decimal(node.attrib['Monto'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def auxiliar_ctas1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9219,6 +10746,8 @@ def auxiliar_ctas1(cls, node):
     if (a := node.attrib.get('Certificado')) is not None:
         self['Certificado'] = a
     return self
+
+
 def cuenta1(cls, node):
     self = ScalarMap()
     self['DetalleAux'] = [detalle_aux1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas}DetalleAux')]
@@ -9227,6 +10756,8 @@ def cuenta1(cls, node):
     self['SaldoIni'] = Decimal(node.attrib['SaldoIni'])
     self['SaldoFin'] = Decimal(node.attrib['SaldoFin'])
     return self
+
+
 def detalle_aux1(cls, node):
     self = ScalarMap()
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
@@ -9235,6 +10766,8 @@ def detalle_aux1(cls, node):
     self['Debe'] = Decimal(node.attrib['Debe'])
     self['Haber'] = Decimal(node.attrib['Haber'])
     return self
+
+
 def rep_aux_fol1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9257,6 +10790,8 @@ def rep_aux_fol1(cls, node):
     if (a := node.attrib.get('Certificado')) is not None:
         self['Certificado'] = a
     return self
+
+
 def det_aux_fol1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios}ComprNal')
@@ -9271,18 +10806,22 @@ def det_aux_fol1(cls, node):
     self['NumUnIdenPol'] = node.attrib['NumUnIdenPol']
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
     return self
+
+
 def compr_nal1(cls, node):
     self = ScalarMap()
     self['UUID_CFDI'] = node.attrib['UUID_CFDI']
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     self['RFC'] = node.attrib['RFC']
     if (a := node.attrib.get('MetPagoAux')) is not None:
-        self['MetPagoAux'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_MetPagos', a)
+        self['MetPagoAux'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', a)
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def compr_nal_otr1(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('CFD_CBB_Serie')) is not None:
@@ -9291,12 +10830,14 @@ def compr_nal_otr1(cls, node):
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     self['RFC'] = node.attrib['RFC']
     if (a := node.attrib.get('MetPagoAux')) is not None:
-        self['MetPagoAux'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_MetPagos', a)
+        self['MetPagoAux'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', a)
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def compr_ext1(cls, node):
     self = ScalarMap()
     self['NumFactExt'] = node.attrib['NumFactExt']
@@ -9304,12 +10845,14 @@ def compr_ext1(cls, node):
         self['TaxID'] = a
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     if (a := node.attrib.get('MetPagoAux')) is not None:
-        self['MetPagoAux'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_MetPagos', a)
+        self['MetPagoAux'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', a)
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def balanza1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9328,6 +10871,8 @@ def balanza1(cls, node):
     if (a := node.attrib.get('Certificado')) is not None:
         self['Certificado'] = a
     return self
+
+
 def ctas2(cls, node):
     self = ScalarMap()
     self['NumCta'] = node.attrib['NumCta']
@@ -9336,6 +10881,8 @@ def ctas2(cls, node):
     self['Haber'] = Decimal(node.attrib['Haber'])
     self['SaldoFin'] = Decimal(node.attrib['SaldoFin'])
     return self
+
+
 def catalogo1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9351,9 +10898,11 @@ def catalogo1(cls, node):
     if (a := node.attrib.get('Certificado')) is not None:
         self['Certificado'] = a
     return self
+
+
 def ctas3(cls, node):
     self = ScalarMap()
-    self['CodAgrup'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_CodAgrup', node.attrib['CodAgrup'])
+    self['CodAgrup'] = catalog_code('Tf5b347b138b3f79bc17e5a646764663de6f5fd5a', node.attrib['CodAgrup'])
     self['NumCta'] = node.attrib['NumCta']
     self['Desc'] = node.attrib['Desc']
     if (a := node.attrib.get('SubCtaDe')) is not None:
@@ -9361,6 +10910,8 @@ def ctas3(cls, node):
     self['Nivel'] = Xint(node.attrib['Nivel'])
     self['Natur'] = node.attrib['Natur']
     return self
+
+
 def polizas1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9381,6 +10932,8 @@ def polizas1(cls, node):
     if (a := node.attrib.get('Certificado')) is not None:
         self['Certificado'] = a
     return self
+
+
 def poliza1(cls, node):
     self = ScalarMap()
     self['Transaccion'] = [transaccion1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo}Transaccion')]
@@ -9388,6 +10941,8 @@ def poliza1(cls, node):
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
     self['Concepto'] = node.attrib['Concepto']
     return self
+
+
 def transaccion1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo}CompNal')
@@ -9414,16 +10969,20 @@ def transaccion1(cls, node):
     self['Debe'] = Decimal(node.attrib['Debe'])
     self['Haber'] = Decimal(node.attrib['Haber'])
     return self
+
+
 def comp_nal1(cls, node):
     self = ScalarMap()
     self['UUID_CFDI'] = node.attrib['UUID_CFDI']
     self['RFC'] = node.attrib['RFC']
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def comp_nal_otr1(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('CFD_CBB_Serie')) is not None:
@@ -9432,10 +10991,12 @@ def comp_nal_otr1(cls, node):
     self['RFC'] = node.attrib['RFC']
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def comp_ext1(cls, node):
     self = ScalarMap()
     self['NumFactExt'] = node.attrib['NumFactExt']
@@ -9443,14 +11004,16 @@ def comp_ext1(cls, node):
         self['TaxID'] = a
     self['MontoTotal'] = Decimal(node.attrib['MontoTotal'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def cheque1(cls, node):
     self = ScalarMap()
     self['Num'] = node.attrib['Num']
-    self['BanEmisNal'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Banco', node.attrib['BanEmisNal'])
+    self['BanEmisNal'] = catalog_code('Te1e094b9e1834cb8e42087383a467eb81354d5a1', node.attrib['BanEmisNal'])
     if (a := node.attrib.get('BanEmisExt')) is not None:
         self['BanEmisExt'] = a
     self['CtaOri'] = node.attrib['CtaOri']
@@ -9459,19 +11022,21 @@ def cheque1(cls, node):
     self['RFC'] = node.attrib['RFC']
     self['Monto'] = Decimal(node.attrib['Monto'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def transferencia1(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('CtaOri')) is not None:
         self['CtaOri'] = a
-    self['BancoOriNal'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Banco', node.attrib['BancoOriNal'])
+    self['BancoOriNal'] = catalog_code('Te1e094b9e1834cb8e42087383a467eb81354d5a1', node.attrib['BancoOriNal'])
     if (a := node.attrib.get('BancoOriExt')) is not None:
         self['BancoOriExt'] = a
     self['CtaDest'] = node.attrib['CtaDest']
-    self['BancoDestNal'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Banco', node.attrib['BancoDestNal'])
+    self['BancoDestNal'] = catalog_code('Te1e094b9e1834cb8e42087383a467eb81354d5a1', node.attrib['BancoDestNal'])
     if (a := node.attrib.get('BancoDestExt')) is not None:
         self['BancoDestExt'] = a
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
@@ -9479,22 +11044,26 @@ def transferencia1(cls, node):
     self['RFC'] = node.attrib['RFC']
     self['Monto'] = Decimal(node.attrib['Monto'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def otr_metodo_pago1(cls, node):
     self = ScalarMap()
-    self['MetPagoPol'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_MetPagos', node.attrib['MetPagoPol'])
+    self['MetPagoPol'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', node.attrib['MetPagoPol'])
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
     self['Benef'] = node.attrib['Benef']
     self['RFC'] = node.attrib['RFC']
     self['Monto'] = Decimal(node.attrib['Monto'])
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+
+
 def sello_digital_cont_elec0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9507,13 +11076,15 @@ def sello_digital_cont_elec0(cls, node):
     self['NoCertificadoSAT'] = node.attrib['noCertificadoSAT']
     self['SelloSAT'] = node.attrib['selloSAT']
     return self
+
+
 def servicios_plataformas_tecnologicas0(cls, node):
     self = cls()
     self.tag = node.tag
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10}Servicios')
     self['Servicios'] = [detalles_del_servicio0(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10}DetallesDelServicio')]
     self['Version'] = node.attrib['Version']
-    self['Periodicidad'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_Periodicidad', node.attrib['Periodicidad'])
+    self['Periodicidad'] = catalog_code('T5b6e694e5124022ecae8985d5a36d63de855b13b', node.attrib['Periodicidad'])
     self['NumServ'] = Xint(node.attrib['NumServ'])
     self['MonTotServSIVA'] = Decimal(node.attrib['MonTotServSIVA'])
     self['TotalIVATrasladado'] = Decimal(node.attrib['TotalIVATrasladado'])
@@ -9524,6 +11095,8 @@ def servicios_plataformas_tecnologicas0(cls, node):
     if (a := node.attrib.get('MonTotalContribucionGubernamental')) is not None:
         self['MonTotalContribucionGubernamental'] = Decimal(a)
     return self
+
+
 def detalles_del_servicio0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10}ImpuestosTrasladadosdelServicio')
@@ -9535,28 +11108,34 @@ def detalles_del_servicio0(cls, node):
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10}ComisionDelServicio')
     if el is not None:
         self['ComisionDelServicio'] = comision_del_servicio0(cls, el)
-    self['FormaPagoServ'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10/catalogos}c_FormaPagoServ', node.attrib['FormaPagoServ'])
-    self['TipoDeServ'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10/catalogos}c_TipoDeServ', node.attrib['TipoDeServ'])
+    self['FormaPagoServ'] = catalog_code('T751ff748aaf931166d672f7f879c2fafcd866efc', node.attrib['FormaPagoServ'])
+    self['TipoDeServ'] = catalog_code('T28b5dcf145455a00b53c43e0d4c63cdc94ddd744', node.attrib['TipoDeServ'])
     if (a := node.attrib.get('SubTipServ')) is not None:
-        self['SubTipServ'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10/catalogos}c_SubTipoServ', a)
+        self['SubTipServ'] = catalog_code('T7926169248880d93d4deb4af5f1778c7c7b7b4bd', a)
     if (a := node.attrib.get('RFCTerceroAutorizado')) is not None:
         self['RFCTerceroAutorizado'] = a
     self['FechaServ'] = date.fromisoformat(node.attrib['FechaServ'])
     self['PrecioServSinIVA'] = Decimal(node.attrib['PrecioServSinIVA'])
     return self
+
+
 def impuestos_trasladadosdel_servicio0(cls, node):
     self = ScalarMap()
     self['Base'] = Decimal(node.attrib['Base'])
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_TipoImpuesto', node.attrib['Impuesto'])
+    self['Impuesto'] = catalog_code('Ta24b1994c47a9f7827e1acc19bff43ee2393f5dd', node.attrib['Impuesto'])
     self['TipoFactor'] = node.attrib['TipoFactor']
-    self['TasaCuota'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10/catalogos}c_TasaCuota', node.attrib['TasaCuota'])
+    self['TasaCuota'] = catalog_code('T4d13638d71c6dd8032d4c30829ace330870d472a', node.attrib['TasaCuota'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def contribucion_gubernamental0(cls, node):
     self = ScalarMap()
     self['ImpContrib'] = Decimal(node.attrib['ImpContrib'])
-    self['EntidadDondePagaLaContribucion'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_EntidadesFederativas', node.attrib['EntidadDondePagaLaContribucion'])
+    self['EntidadDondePagaLaContribucion'] = catalog_code('T814f0618a5a55cbfa33a426fa588164ced6ec0e1', node.attrib['EntidadDondePagaLaContribucion'])
     return self
+
+
 def comision_del_servicio0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('Base')) is not None:
@@ -9565,6 +11144,8 @@ def comision_del_servicio0(cls, node):
         self['Porcentaje'] = Decimal(a)
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def arrendamientoenfideicomiso0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9581,6 +11162,8 @@ def arrendamientoenfideicomiso0(cls, node):
     if (a := node.attrib.get('DescrMontOtrosConceptDistr')) is not None:
         self['DescrMontOtrosConceptDistr'] = a
     return self
+
+
 def dividendos0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9592,9 +11175,11 @@ def dividendos0(cls, node):
         self['Remanente'] = remanente0(cls, el)
     self['Version'] = node.attrib['Version']
     return self
+
+
 def divid_o_util0(cls, node):
     self = ScalarMap()
-    self['CveTipDivOUtil'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_TipoDividendoOUtilidadDistribuida', node.attrib['CveTipDivOUtil'])
+    self['CveTipDivOUtil'] = catalog_code('T42d560783bf4a6ebab785239f8f3f189320a06d5', node.attrib['CveTipDivOUtil'])
     self['MontISRAcredRetMexico'] = Decimal(node.attrib['MontISRAcredRetMexico'])
     self['MontISRAcredRetExtranjero'] = Decimal(node.attrib['MontISRAcredRetExtranjero'])
     if (a := node.attrib.get('MontRetExtDivExt')) is not None:
@@ -9607,11 +11192,15 @@ def divid_o_util0(cls, node):
     if (a := node.attrib.get('MontDivAcumExt')) is not None:
         self['MontDivAcumExt'] = Decimal(a)
     return self
+
+
 def remanente0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('ProporcionRem')) is not None:
         self['ProporcionRem'] = Decimal(a)
     return self
+
+
 def enajenacionde_acciones0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9620,6 +11209,8 @@ def enajenacionde_acciones0(cls, node):
     self['Ganancia'] = Decimal(node.attrib['Ganancia'])
     self['Perdida'] = Decimal(node.attrib['Perdida'])
     return self
+
+
 def fideicomisonoempresarial0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9631,6 +11222,8 @@ def fideicomisonoempresarial0(cls, node):
     self['RetEfectFideicomiso'] = ret_efect_fideicomiso0(cls, el)
     self['Version'] = node.attrib['Version']
     return self
+
+
 def ingresos_oentradas0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial}IntegracIngresos')
@@ -9639,8 +11232,12 @@ def ingresos_oentradas0(cls, node):
     self['PartPropAcumDelFideicom'] = Decimal(node.attrib['PartPropAcumDelFideicom'])
     self['PropDelMontTot'] = Decimal(node.attrib['PropDelMontTot'])
     return self
+
+
 def integrac_ingresos0(cls, node):
     return node.attrib['Concepto']
+
+
 def deducc_osalidas0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial}IntegracEgresos')
@@ -9649,13 +11246,19 @@ def deducc_osalidas0(cls, node):
     self['PartPropDelFideicom'] = Decimal(node.attrib['PartPropDelFideicom'])
     self['PropDelMontTot'] = Decimal(node.attrib['PropDelMontTot'])
     return self
+
+
 def integrac_egresos0(cls, node):
     return node.attrib['ConceptoS']
+
+
 def ret_efect_fideicomiso0(cls, node):
     self = ScalarMap()
     self['MontRetRelPagFideic'] = Decimal(node.attrib['MontRetRelPagFideic'])
     self['DescRetRelPagFideic'] = node.attrib['DescRetRelPagFideic']
     return self
+
+
 def intereses0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9667,6 +11270,8 @@ def intereses0(cls, node):
     self['MontIntReal'] = Decimal(node.attrib['MontIntReal'])
     self['Perdida'] = Decimal(node.attrib['Perdida'])
     return self
+
+
 def intereseshipotecarios0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9684,6 +11289,8 @@ def intereseshipotecarios0(cls, node):
     if (a := node.attrib.get('NumContrato')) is not None:
         self['NumContrato'] = a
     return self
+
+
 def operacionesconderivados0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9691,6 +11298,8 @@ def operacionesconderivados0(cls, node):
     self['MontGanAcum'] = Decimal(node.attrib['MontGanAcum'])
     self['MontPerdDed'] = Decimal(node.attrib['MontPerdDed'])
     return self
+
+
 def pagosaextranjeros0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9703,26 +11312,33 @@ def pagosaextranjeros0(cls, node):
     self['Version'] = node.attrib['Version']
     self['EsBenefEfectDelCobro'] = node.attrib['EsBenefEfectDelCobro']
     return self
+
+
 def no_beneficiario0(cls, node):
     self = ScalarMap()
-    self['PaisDeResidParaEfecFisc'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_Pais', node.attrib['PaisDeResidParaEfecFisc'])
-    self['ConceptoPago'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_TipoContribuyenteSujetoRetencion', node.attrib['ConceptoPago'])
+    self['PaisDeResidParaEfecFisc'] = catalog_code('T9557d6f209f1d388db8eb3caf5b6673eedc394b7', node.attrib['PaisDeResidParaEfecFisc'])
+    self['ConceptoPago'] = catalog_code('T09d227b08769948114eb1c90eef1a52b34d93fe5', node.attrib['ConceptoPago'])
     self['DescripcionConcepto'] = node.attrib['DescripcionConcepto']
     return self
+
+
 def beneficiario0(cls, node):
     self = ScalarMap()
     self['RFC'] = node.attrib['RFC']
     self['CURP'] = node.attrib['CURP']
     self['NomDenRazSocB'] = node.attrib['NomDenRazSocB']
-    self['ConceptoPago'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_TipoContribuyenteSujetoRetencion', node.attrib['ConceptoPago'])
+    self['ConceptoPago'] = catalog_code('T09d227b08769948114eb1c90eef1a52b34d93fe5', node.attrib['ConceptoPago'])
     self['DescripcionConcepto'] = node.attrib['DescripcionConcepto']
     return self
+
+
 def planesderetiro0(cls, node):
     self = cls()
     self.tag = node.tag
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}AportacionesODepositos')
     if el is not None:
-        self['AportacionesODepositos'] = [aportaciones_odepositos0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}AportacionesODepositos')]
+        self['AportacionesODepositos'] = [aportaciones_odepositos0(cls, n) for n in
+                                          node.iterfind('{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}AportacionesODepositos')]
     self['Version'] = node.attrib['Version']
     self['SistemaFinanc'] = node.attrib['SistemaFinanc']
     if (a := node.attrib.get('MontTotAportAnioInmAnterior')) is not None:
@@ -9741,13 +11357,17 @@ def planesderetiro0(cls, node):
     if (a := node.attrib.get('NumReferencia')) is not None:
         self['NumReferencia'] = a
     return self
+
+
 def aportaciones_odepositos0(cls, node):
     self = ScalarMap()
-    self['TipoAportacionODeposito'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11/catalogos}c_TipoAportODep', node.attrib['TipoAportacionODeposito'])
+    self['TipoAportacionODeposito'] = catalog_code('Tfc20a0cf165645434e06cce0b85cb73b8ef6ad45', node.attrib['TipoAportacionODeposito'])
     self['MontAportODep'] = Decimal(node.attrib['MontAportODep'])
     if (a := node.attrib.get('RFCFiduciaria')) is not None:
         self['RFCFiduciaria'] = a
     return self
+
+
 def planesderetiro1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9767,15 +11387,19 @@ def planesderetiro1(cls, node):
     if (a := node.attrib.get('MontTotRetiradoAnioInmAnt')) is not None:
         self['MontTotRetiradoAnioInmAnt'] = Decimal(a)
     return self
+
+
 def premios0(cls, node):
     self = cls()
     self.tag = node.tag
     self['Version'] = node.attrib['Version']
-    self['EntidadFederativa'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_EntidadesFederativas', node.attrib['EntidadFederativa'])
+    self['EntidadFederativa'] = catalog_code('T814f0618a5a55cbfa33a426fa588164ced6ec0e1', node.attrib['EntidadFederativa'])
     self['MontTotPago'] = Decimal(node.attrib['MontTotPago'])
     self['MontTotPagoGrav'] = Decimal(node.attrib['MontTotPagoGrav'])
     self['MontTotPagoExent'] = Decimal(node.attrib['MontTotPagoExent'])
     return self
+
+
 def retenciones0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9800,10 +11424,12 @@ def retenciones0(cls, node):
     self['NumCert'] = node.attrib['NumCert']
     self['Cert'] = node.attrib['Cert']
     self['FechaExp'] = datetime.fromisoformat(node.attrib['FechaExp'])
-    self['CveRetenc'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_Retenciones', node.attrib['CveRetenc'])
+    self['CveRetenc'] = catalog_code('Ta824bc10690bd477ebacd347cb42e30d7e4c633f', node.attrib['CveRetenc'])
     if (a := node.attrib.get('DescRetenc')) is not None:
         self['DescRetenc'] = a
     return self
+
+
 def emisor1(cls, node):
     self = ScalarMap()
     self['RFCEmisor'] = node.attrib['RFCEmisor']
@@ -9812,6 +11438,8 @@ def emisor1(cls, node):
     if (a := node.attrib.get('CURPE')) is not None:
         self['CURPE'] = a
     return self
+
+
 def receptor1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/1}Nacional')
@@ -9822,6 +11450,8 @@ def receptor1(cls, node):
         self['Extranjero'] = extranjero14(cls, el)
     self['Nacionalidad'] = node.attrib['Nacionalidad']
     return self
+
+
 def nacional14(cls, node):
     self = ScalarMap()
     self['RFCRecep'] = node.attrib['RFCRecep']
@@ -9830,18 +11460,24 @@ def nacional14(cls, node):
     if (a := node.attrib.get('CURPR')) is not None:
         self['CURPR'] = a
     return self
+
+
 def extranjero14(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
     self['NomDenRazSocR'] = node.attrib['NomDenRazSocR']
     return self
+
+
 def periodo0(cls, node):
     self = ScalarMap()
     self['MesIni'] = Xint(node.attrib['MesIni'])
     self['MesFin'] = Xint(node.attrib['MesFin'])
     self['Ejerc'] = Xint(node.attrib['Ejerc'])
     return self
+
+
 def totales0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/1}ImpRetenidos')
@@ -9852,21 +11488,29 @@ def totales0(cls, node):
     self['MontoTotExent'] = Decimal(node.attrib['montoTotExent'])
     self['MontoTotRet'] = Decimal(node.attrib['montoTotRet'])
     return self
+
+
 def imp_retenidos0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('BaseRet')) is not None:
         self['BaseRet'] = Decimal(a)
     if (a := node.attrib.get('Impuesto')) is not None:
-        self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_TipoImpuesto', a)
+        self['Impuesto'] = catalog_code('Ta24b1994c47a9f7827e1acc19bff43ee2393f5dd', a)
     self['MontoRet'] = Decimal(node.attrib['montoRet'])
     self['TipoPagoRet'] = node.attrib['TipoPagoRet']
     return self
+
+
 def complemento0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def addenda0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def sector_financiero0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9876,6 +11520,8 @@ def sector_financiero0(cls, node):
         self['NomFideicom'] = a
     self['DescripFideicom'] = node.attrib['DescripFideicom']
     return self
+
+
 def retenciones1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9903,22 +11549,28 @@ def retenciones1(cls, node):
     self['NoCertificado'] = node.attrib['NoCertificado']
     self['Certificado'] = node.attrib['Certificado']
     self['FechaExp'] = datetime.fromisoformat(node.attrib['FechaExp'])
-    self['LugarExpRetenc'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_CodigoPostal', node.attrib['LugarExpRetenc'], None)
-    self['CveRetenc'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_CveRetenc', node.attrib['CveRetenc'])
+    self['LugarExpRetenc'] = Code(node.attrib['LugarExpRetenc'], None)
+    self['CveRetenc'] = catalog_code('T85fef9cf311e85f8f65f6e231e536fcb4c0c8006', node.attrib['CveRetenc'])
     if (a := node.attrib.get('DescRetenc')) is not None:
         self['DescRetenc'] = a
     return self
+
+
 def cfdi_reten_relacionados0(cls, node):
     self = ScalarMap()
-    self['TipoRelacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoRelacion', node.attrib['TipoRelacion'])
+    self['TipoRelacion'] = catalog_code('T6811a705103c6e40efb95fea601c1bc7faccfcb4', node.attrib['TipoRelacion'])
     self['UUID'] = node.attrib['UUID']
     return self
+
+
 def emisor2(cls, node):
     self = ScalarMap()
     self['RfcE'] = node.attrib['RfcE']
     self['NomDenRazSocE'] = node.attrib['NomDenRazSocE']
-    self['RegimenFiscalE'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_RegimenFiscal', node.attrib['RegimenFiscalE'])
+    self['RegimenFiscalE'] = catalog_code('Tee1adb7bc641ae4cb96d245454aab95bb456932a', node.attrib['RegimenFiscalE'])
     return self
+
+
 def receptor2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/2}Nacional')
@@ -9929,6 +11581,8 @@ def receptor2(cls, node):
         self['Extranjero'] = extranjero15(cls, el)
     self['NacionalidadR'] = node.attrib['NacionalidadR']
     return self
+
+
 def nacional15(cls, node):
     self = ScalarMap()
     self['RfcR'] = node.attrib['RfcR']
@@ -9937,18 +11591,24 @@ def nacional15(cls, node):
         self['CurpR'] = a
     self['DomicilioFiscalR'] = node.attrib['DomicilioFiscalR']
     return self
+
+
 def extranjero15(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('NumRegIdTribR')) is not None:
         self['NumRegIdTribR'] = a
     self['NomDenRazSocR'] = node.attrib['NomDenRazSocR']
     return self
+
+
 def periodo1(cls, node):
     self = ScalarMap()
-    self['MesIni'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_Periodo', node.attrib['MesIni'])
-    self['MesFin'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_Periodo', node.attrib['MesFin'])
-    self['Ejercicio'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_Ejercicio', node.attrib['Ejercicio'])
+    self['MesIni'] = catalog_code('Tffa158df97be8e649b6bcbc77b284017b7fcfd7c', node.attrib['MesIni'])
+    self['MesFin'] = catalog_code('Tffa158df97be8e649b6bcbc77b284017b7fcfd7c', node.attrib['MesFin'])
+    self['Ejercicio'] = catalog_code('T97b2c2073fd3fcf7346b56a5b0878a06ebb8be22', node.attrib['Ejercicio'])
     return self
+
+
 def totales1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/2}ImpRetenidos')
@@ -9963,21 +11623,29 @@ def totales1(cls, node):
     if (a := node.attrib.get('ISRCorrespondiente')) is not None:
         self['ISRCorrespondiente'] = Decimal(a)
     return self
+
+
 def imp_retenidos1(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('BaseRet')) is not None:
         self['BaseRet'] = Decimal(a)
     if (a := node.attrib.get('ImpuestoRet')) is not None:
-        self['ImpuestoRet'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', a)
+        self['ImpuestoRet'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', a)
     self['MontoRet'] = Decimal(node.attrib['MontoRet'])
-    self['TipoPagoRet'] = catalog_code('{http://www.sat.gob.mx/esquemas/retencionpago/1/catalogos}c_TipoPagoRet', node.attrib['TipoPagoRet'])
+    self['TipoPagoRet'] = catalog_code('T46436e10a6abbd424ed77f484c5171c1f2903cfc', node.attrib['TipoPagoRet'])
     return self
+
+
 def complemento1(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def addenda1(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def comprobante0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -10031,6 +11699,8 @@ def comprobante0(cls, node):
     if (a := node.attrib.get('MontoFolioFiscalOrig')) is not None:
         self['MontoFolioFiscalOrig'] = Decimal(a)
     return self
+
+
 def emisor3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/3}DomicilioFiscal')
@@ -10044,8 +11714,12 @@ def emisor3(cls, node):
     if (a := node.attrib.get('nombre')) is not None:
         self['Nombre'] = a
     return self
+
+
 def regimen_fiscal0(cls, node):
     return node.attrib['Regimen']
+
+
 def receptor3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/3}Domicilio')
@@ -10055,6 +11729,8 @@ def receptor3(cls, node):
     if (a := node.attrib.get('nombre')) is not None:
         self['Nombre'] = a
     return self
+
+
 def concepto1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/3}InformacionAduanera')
@@ -10077,11 +11753,17 @@ def concepto1(cls, node):
     self['ValorUnitario'] = Decimal(node.attrib['valorUnitario'])
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def cuenta_predial0(cls, node):
     return node.attrib['numero']
+
+
 def complemento_concepto0(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def parte0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/3}InformacionAduanera')
@@ -10098,6 +11780,8 @@ def parte0(cls, node):
     if (a := node.attrib.get('importe')) is not None:
         self['Importe'] = Decimal(a)
     return self
+
+
 def impuestos0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/3}Retenciones')
@@ -10111,23 +11795,33 @@ def impuestos0(cls, node):
     if (a := node.attrib.get('totalImpuestosTrasladados')) is not None:
         self['TotalImpuestosTrasladados'] = Decimal(a)
     return self
+
+
 def retencion0(cls, node):
     self = ScalarMap()
     self['Impuesto'] = node.attrib['impuesto']
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def traslado0(cls, node):
     self = ScalarMap()
     self['Impuesto'] = node.attrib['impuesto']
     self['Tasa'] = Decimal(node.attrib['tasa'])
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def complemento2(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def addenda2(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def comprobante1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -10157,7 +11851,7 @@ def comprobante1(cls, node):
     self['Fecha'] = datetime.fromisoformat(node.attrib['Fecha'])
     self['Sello'] = node.attrib['Sello']
     if (a := node.attrib.get('FormaPago')) is not None:
-        self['FormaPago'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_FormaPago', a)
+        self['FormaPago'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', a)
     self['NoCertificado'] = node.attrib['NoCertificado']
     self['Certificado'] = node.attrib['Certificado']
     if (a := node.attrib.get('CondicionesDePago')) is not None:
@@ -10165,42 +11859,52 @@ def comprobante1(cls, node):
     self['SubTotal'] = Decimal(node.attrib['SubTotal'])
     if (a := node.attrib.get('Descuento')) is not None:
         self['Descuento'] = Decimal(a)
-    self['Moneda'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Moneda', node.attrib['Moneda'], 0)
+    self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', node.attrib['Moneda'], 0)
     if (a := node.attrib.get('TipoCambio')) is not None:
         self['TipoCambio'] = Decimal(a)
     self['Total'] = Decimal(node.attrib['Total'])
-    self['TipoDeComprobante'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoDeComprobante', node.attrib['TipoDeComprobante'])
+    self['TipoDeComprobante'] = catalog_code('T1ff2335bfe2d18fac75119dda16abc746970a13b', node.attrib['TipoDeComprobante'])
     if (a := node.attrib.get('MetodoPago')) is not None:
-        self['MetodoPago'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_MetodoPago', a)
-    self['LugarExpedicion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_CodigoPostal', node.attrib['LugarExpedicion'], None)
+        self['MetodoPago'] = catalog_code('Ta3c596e4e2bc45eca9281839ca98df1d26d5b2b1', a)
+    self['LugarExpedicion'] = Code(node.attrib['LugarExpedicion'], None)
     if (a := node.attrib.get('Confirmacion')) is not None:
         self['Confirmacion'] = a
     return self
+
+
 def cfdi_relacionados0(cls, node):
     self = ScalarMap()
     self['CfdiRelacionado'] = [cfdi_relacionado0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/cfd/3}CfdiRelacionado')]
-    self['TipoRelacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoRelacion', node.attrib['TipoRelacion'])
+    self['TipoRelacion'] = catalog_code('T6811a705103c6e40efb95fea601c1bc7faccfcb4', node.attrib['TipoRelacion'])
     return self
+
+
 def cfdi_relacionado0(cls, node):
     return node.attrib['UUID']
+
+
 def emisor4(cls, node):
     self = ScalarMap()
     self['Rfc'] = node.attrib['Rfc']
     if (a := node.attrib.get('Nombre')) is not None:
         self['Nombre'] = a
-    self['RegimenFiscal'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_RegimenFiscal', node.attrib['RegimenFiscal'])
+    self['RegimenFiscal'] = catalog_code('Tee1adb7bc641ae4cb96d245454aab95bb456932a', node.attrib['RegimenFiscal'])
     return self
+
+
 def receptor4(cls, node):
     self = ScalarMap()
     self['Rfc'] = node.attrib['Rfc']
     if (a := node.attrib.get('Nombre')) is not None:
         self['Nombre'] = a
     if (a := node.attrib.get('ResidenciaFiscal')) is not None:
-        self['ResidenciaFiscal'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscal'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
-    self['UsoCFDI'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_UsoCFDI', node.attrib['UsoCFDI'])
+    self['UsoCFDI'] = catalog_code('Tdabb861879fb4957fcfe5e9f7e65ee60a2d9a5eb', node.attrib['UsoCFDI'])
     return self
+
+
 def concepto2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/3}Impuestos')
@@ -10218,11 +11922,11 @@ def concepto2(cls, node):
     el = node.find('{http://www.sat.gob.mx/cfd/3}Parte')
     if el is not None:
         self['Parte'] = [parte1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/cfd/3}Parte')]
-    self['ClaveProdServ'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_ClaveProdServ', node.attrib['ClaveProdServ'])
+    self['ClaveProdServ'] = catalog_code('T9ce730d17a8b8282baa5b45ba1593dd58d44595a', node.attrib['ClaveProdServ'])
     if (a := node.attrib.get('NoIdentificacion')) is not None:
         self['NoIdentificacion'] = a
     self['Cantidad'] = Decimal(node.attrib['Cantidad'])
-    self['ClaveUnidad'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_ClaveUnidad', node.attrib['ClaveUnidad'])
+    self['ClaveUnidad'] = catalog_code('T9cad4fddc5bd985a75b854a2ed4a9cd1541e2d0d', node.attrib['ClaveUnidad'])
     if (a := node.attrib.get('Unidad')) is not None:
         self['Unidad'] = a
     self['Descripcion'] = node.attrib['Descripcion']
@@ -10231,6 +11935,8 @@ def concepto2(cls, node):
     if (a := node.attrib.get('Descuento')) is not None:
         self['Descuento'] = Decimal(a)
     return self
+
+
 def impuestos1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/3}Traslados')
@@ -10240,37 +11946,49 @@ def impuestos1(cls, node):
     if el is not None:
         self['Retenciones'] = {impuesto_index(n.attrib, 'Impuesto'): retencion1(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/cfd/3}Retencion')}
     return self
+
+
 def traslado1(cls, node):
     self = ScalarMap()
     self['Base'] = Decimal(node.attrib['Base'])
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['Impuesto'])
-    self['TipoFactor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoFactor', node.attrib['TipoFactor'])
+    self['Impuesto'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['Impuesto'])
+    self['TipoFactor'] = catalog_code('T3805f276eaeba302adc3ebfc9d8ea70a67cfa6ec', node.attrib['TipoFactor'])
     if (a := node.attrib.get('TasaOCuota')) is not None:
         self['TasaOCuota'] = Decimal(a)
     if (a := node.attrib.get('Importe')) is not None:
         self['Importe'] = Decimal(a)
     return self
+
+
 def retencion1(cls, node):
     self = ScalarMap()
     self['Base'] = Decimal(node.attrib['Base'])
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['Impuesto'])
-    self['TipoFactor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoFactor', node.attrib['TipoFactor'])
+    self['Impuesto'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['Impuesto'])
+    self['TipoFactor'] = catalog_code('T3805f276eaeba302adc3ebfc9d8ea70a67cfa6ec', node.attrib['TipoFactor'])
     self['TasaOCuota'] = Decimal(node.attrib['TasaOCuota'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def informacion_aduanera0(cls, node):
     return node.attrib['NumeroPedimento']
+
+
 def cuenta_predial1(cls, node):
     return node.attrib['Numero']
+
+
 def complemento_concepto1(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def parte1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/3}InformacionAduanera')
     if el is not None:
         self['InformacionAduanera'] = [informacion_aduanera1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/cfd/3}InformacionAduanera')]
-    self['ClaveProdServ'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_ClaveProdServ', node.attrib['ClaveProdServ'])
+    self['ClaveProdServ'] = catalog_code('T9ce730d17a8b8282baa5b45ba1593dd58d44595a', node.attrib['ClaveProdServ'])
     if (a := node.attrib.get('NoIdentificacion')) is not None:
         self['NoIdentificacion'] = a
     self['Cantidad'] = Decimal(node.attrib['Cantidad'])
@@ -10282,8 +12000,12 @@ def parte1(cls, node):
     if (a := node.attrib.get('Importe')) is not None:
         self['Importe'] = Decimal(a)
     return self
+
+
 def informacion_aduanera1(cls, node):
     return node.attrib['NumeroPedimento']
+
+
 def impuestos2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/3}Retenciones')
@@ -10297,24 +12019,34 @@ def impuestos2(cls, node):
     if (a := node.attrib.get('TotalImpuestosTrasladados')) is not None:
         self['TotalImpuestosTrasladados'] = Decimal(a)
     return self
+
+
 def retencion2(cls, node):
     self = ScalarMap()
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['Impuesto'])
+    self['Impuesto'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['Impuesto'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def traslado2(cls, node):
     self = ScalarMap()
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['Impuesto'])
-    self['TipoFactor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoFactor', node.attrib['TipoFactor'])
+    self['Impuesto'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['Impuesto'])
+    self['TipoFactor'] = catalog_code('T3805f276eaeba302adc3ebfc9d8ea70a67cfa6ec', node.attrib['TipoFactor'])
     self['TasaOCuota'] = Decimal(node.attrib['TasaOCuota'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def complemento3(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def addenda3(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def comprobante2(cls, node):
     self = cls()
     self.tag = node.tag
@@ -10347,7 +12079,7 @@ def comprobante2(cls, node):
     self['Fecha'] = datetime.fromisoformat(node.attrib['Fecha'])
     self['Sello'] = node.attrib['Sello']
     if (a := node.attrib.get('FormaPago')) is not None:
-        self['FormaPago'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_FormaPago', a)
+        self['FormaPago'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', a)
     self['NoCertificado'] = node.attrib['NoCertificado']
     self['Certificado'] = node.attrib['Certificado']
     if (a := node.attrib.get('CondicionesDePago')) is not None:
@@ -10355,51 +12087,63 @@ def comprobante2(cls, node):
     self['SubTotal'] = Decimal(node.attrib['SubTotal'])
     if (a := node.attrib.get('Descuento')) is not None:
         self['Descuento'] = Decimal(a)
-    self['Moneda'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Moneda', node.attrib['Moneda'], 0)
+    self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', node.attrib['Moneda'], 0)
     if (a := node.attrib.get('TipoCambio')) is not None:
         self['TipoCambio'] = Decimal(a)
     self['Total'] = Decimal(node.attrib['Total'])
-    self['TipoDeComprobante'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoDeComprobante', node.attrib['TipoDeComprobante'])
-    self['Exportacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Exportacion', node.attrib['Exportacion'])
+    self['TipoDeComprobante'] = catalog_code('T1ff2335bfe2d18fac75119dda16abc746970a13b', node.attrib['TipoDeComprobante'])
+    self['Exportacion'] = catalog_code('T005853eb191473455b37190362a07426d4813f33', node.attrib['Exportacion'])
     if (a := node.attrib.get('MetodoPago')) is not None:
-        self['MetodoPago'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_MetodoPago', a)
-    self['LugarExpedicion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_CodigoPostal', node.attrib['LugarExpedicion'], None)
+        self['MetodoPago'] = catalog_code('Ta3c596e4e2bc45eca9281839ca98df1d26d5b2b1', a)
+    self['LugarExpedicion'] = Code(node.attrib['LugarExpedicion'], None)
     if (a := node.attrib.get('Confirmacion')) is not None:
         self['Confirmacion'] = a
     return self
+
+
 def informacion_global0(cls, node):
     self = ScalarMap()
-    self['Periodicidad'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Periodicidad', node.attrib['Periodicidad'])
-    self['Meses'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Meses', node.attrib['Meses'])
+    self['Periodicidad'] = catalog_code('T688ea4eff2cadd4fa90a40132638c95c7b9ef5f1', node.attrib['Periodicidad'])
+    self['Meses'] = catalog_code('T68883e6768e86aec606e15bae312ab3b90066132', node.attrib['Meses'])
     self['Año'] = Xint(node.attrib['Año'])
     return self
+
+
 def cfdi_relacionados1(cls, node):
     self = ScalarMap()
     self['CfdiRelacionado'] = [cfdi_relacionado1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/cfd/4}CfdiRelacionado')]
-    self['TipoRelacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoRelacion', node.attrib['TipoRelacion'])
+    self['TipoRelacion'] = catalog_code('T6811a705103c6e40efb95fea601c1bc7faccfcb4', node.attrib['TipoRelacion'])
     return self
+
+
 def cfdi_relacionado1(cls, node):
     return node.attrib['UUID']
+
+
 def emisor5(cls, node):
     self = ScalarMap()
     self['Rfc'] = node.attrib['Rfc']
     self['Nombre'] = node.attrib['Nombre']
-    self['RegimenFiscal'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_RegimenFiscal', node.attrib['RegimenFiscal'])
+    self['RegimenFiscal'] = catalog_code('Tee1adb7bc641ae4cb96d245454aab95bb456932a', node.attrib['RegimenFiscal'])
     if (a := node.attrib.get('FacAtrAdquirente')) is not None:
         self['FacAtrAdquirente'] = a
     return self
+
+
 def receptor5(cls, node):
     self = ScalarMap()
     self['Rfc'] = node.attrib['Rfc']
     self['Nombre'] = node.attrib['Nombre']
     self['DomicilioFiscalReceptor'] = node.attrib['DomicilioFiscalReceptor']
     if (a := node.attrib.get('ResidenciaFiscal')) is not None:
-        self['ResidenciaFiscal'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscal'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
-    self['RegimenFiscalReceptor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_RegimenFiscal', node.attrib['RegimenFiscalReceptor'])
-    self['UsoCFDI'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_UsoCFDI', node.attrib['UsoCFDI'])
+    self['RegimenFiscalReceptor'] = catalog_code('Tee1adb7bc641ae4cb96d245454aab95bb456932a', node.attrib['RegimenFiscalReceptor'])
+    self['UsoCFDI'] = catalog_code('Tdabb861879fb4957fcfe5e9f7e65ee60a2d9a5eb', node.attrib['UsoCFDI'])
     return self
+
+
 def concepto3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/4}Impuestos')
@@ -10420,11 +12164,11 @@ def concepto3(cls, node):
     el = node.find('{http://www.sat.gob.mx/cfd/4}Parte')
     if el is not None:
         self['Parte'] = [parte2(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/cfd/4}Parte')]
-    self['ClaveProdServ'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_ClaveProdServ', node.attrib['ClaveProdServ'])
+    self['ClaveProdServ'] = catalog_code('T9ce730d17a8b8282baa5b45ba1593dd58d44595a', node.attrib['ClaveProdServ'])
     if (a := node.attrib.get('NoIdentificacion')) is not None:
         self['NoIdentificacion'] = a
     self['Cantidad'] = Decimal(node.attrib['Cantidad'])
-    self['ClaveUnidad'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_ClaveUnidad', node.attrib['ClaveUnidad'])
+    self['ClaveUnidad'] = catalog_code('T9cad4fddc5bd985a75b854a2ed4a9cd1541e2d0d', node.attrib['ClaveUnidad'])
     if (a := node.attrib.get('Unidad')) is not None:
         self['Unidad'] = a
     self['Descripcion'] = node.attrib['Descripcion']
@@ -10432,8 +12176,10 @@ def concepto3(cls, node):
     self['Importe'] = Decimal(node.attrib['Importe'])
     if (a := node.attrib.get('Descuento')) is not None:
         self['Descuento'] = Decimal(a)
-    self['ObjetoImp'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_ObjetoImp', node.attrib['ObjetoImp'])
+    self['ObjetoImp'] = catalog_code('T86de9ab0d2eb09baf797a151f974a78abb834d48', node.attrib['ObjetoImp'])
     return self
+
+
 def impuestos3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/4}Traslados')
@@ -10443,44 +12189,58 @@ def impuestos3(cls, node):
     if el is not None:
         self['Retenciones'] = {impuesto_index(n.attrib, 'Impuesto'): retencion3(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/cfd/4}Retencion')}
     return self
+
+
 def traslado3(cls, node):
     self = ScalarMap()
     self['Base'] = Decimal(node.attrib['Base'])
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['Impuesto'])
-    self['TipoFactor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoFactor', node.attrib['TipoFactor'])
+    self['Impuesto'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['Impuesto'])
+    self['TipoFactor'] = catalog_code('T3805f276eaeba302adc3ebfc9d8ea70a67cfa6ec', node.attrib['TipoFactor'])
     if (a := node.attrib.get('TasaOCuota')) is not None:
         self['TasaOCuota'] = Decimal(a)
     if (a := node.attrib.get('Importe')) is not None:
         self['Importe'] = Decimal(a)
     return self
+
+
 def retencion3(cls, node):
     self = ScalarMap()
     self['Base'] = Decimal(node.attrib['Base'])
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['Impuesto'])
-    self['TipoFactor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoFactor', node.attrib['TipoFactor'])
+    self['Impuesto'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['Impuesto'])
+    self['TipoFactor'] = catalog_code('T3805f276eaeba302adc3ebfc9d8ea70a67cfa6ec', node.attrib['TipoFactor'])
     self['TasaOCuota'] = Decimal(node.attrib['TasaOCuota'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def a_cuenta_terceros0(cls, node):
     self = ScalarMap()
     self['RfcACuentaTerceros'] = node.attrib['RfcACuentaTerceros']
     self['NombreACuentaTerceros'] = node.attrib['NombreACuentaTerceros']
-    self['RegimenFiscalACuentaTerceros'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_RegimenFiscal', node.attrib['RegimenFiscalACuentaTerceros'])
+    self['RegimenFiscalACuentaTerceros'] = catalog_code('Tee1adb7bc641ae4cb96d245454aab95bb456932a', node.attrib['RegimenFiscalACuentaTerceros'])
     self['DomicilioFiscalACuentaTerceros'] = node.attrib['DomicilioFiscalACuentaTerceros']
     return self
+
+
 def informacion_aduanera2(cls, node):
     return node.attrib['NumeroPedimento']
+
+
 def cuenta_predial2(cls, node):
     return node.attrib['Numero']
+
+
 def complemento_concepto2(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def parte2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/4}InformacionAduanera')
     if el is not None:
         self['InformacionAduanera'] = [informacion_aduanera3(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/cfd/4}InformacionAduanera')]
-    self['ClaveProdServ'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_ClaveProdServ', node.attrib['ClaveProdServ'])
+    self['ClaveProdServ'] = catalog_code('T9ce730d17a8b8282baa5b45ba1593dd58d44595a', node.attrib['ClaveProdServ'])
     if (a := node.attrib.get('NoIdentificacion')) is not None:
         self['NoIdentificacion'] = a
     self['Cantidad'] = Decimal(node.attrib['Cantidad'])
@@ -10492,8 +12252,12 @@ def parte2(cls, node):
     if (a := node.attrib.get('Importe')) is not None:
         self['Importe'] = Decimal(a)
     return self
+
+
 def informacion_aduanera3(cls, node):
     return node.attrib['NumeroPedimento']
+
+
 def impuestos4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/cfd/4}Retenciones')
@@ -10507,27 +12271,37 @@ def impuestos4(cls, node):
     if (a := node.attrib.get('TotalImpuestosTrasladados')) is not None:
         self['TotalImpuestosTrasladados'] = Decimal(a)
     return self
+
+
 def retencion4(cls, node):
     self = ScalarMap()
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['Impuesto'])
+    self['Impuesto'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['Impuesto'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def traslado4(cls, node):
     self = ScalarMap()
     self['Base'] = Decimal(node.attrib['Base'])
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['Impuesto'])
-    self['TipoFactor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoFactor', node.attrib['TipoFactor'])
+    self['Impuesto'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['Impuesto'])
+    self['TipoFactor'] = catalog_code('T3805f276eaeba302adc3ebfc9d8ea70a67cfa6ec', node.attrib['TipoFactor'])
     if (a := node.attrib.get('TasaOCuota')) is not None:
         self['TasaOCuota'] = Decimal(a)
     if (a := node.attrib.get('Importe')) is not None:
         self['Importe'] = Decimal(a)
     return self
+
+
 def complemento4(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def addenda4(cls, node):
     self = {n.tag.rsplit('}', 1)[-1]: cfdi_objectify.get(n.tag, default_objectify)(cls, n) for n in node}
     return self
+
+
 def carta_porte0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -10543,10 +12317,12 @@ def carta_porte0(cls, node):
     if (a := node.attrib.get('EntradaSalidaMerc')) is not None:
         self['EntradaSalidaMerc'] = a
     if (a := node.attrib.get('ViaEntradaSalida')) is not None:
-        self['ViaEntradaSalida'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_CveTransporte', a)
+        self['ViaEntradaSalida'] = catalog_code('T72094c5b09e8fd5d5b9a5e46c1a5bc3686d0600f', a)
     if (a := node.attrib.get('TotalDistRec')) is not None:
         self['TotalDistRec'] = Decimal(a)
     return self
+
+
 def ubicacion1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte}Origen')
@@ -10559,10 +12335,12 @@ def ubicacion1(cls, node):
     if el is not None:
         self['Domicilio'] = domicilio0(cls, el)
     if (a := node.attrib.get('TipoEstacion')) is not None:
-        self['TipoEstacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoEstacion', a)
+        self['TipoEstacion'] = catalog_code('Te1617ea385123e2ab0f6ba8d424e358c9cc18b49', a)
     if (a := node.attrib.get('DistanciaRecorrida')) is not None:
         self['DistanciaRecorrida'] = Decimal(a)
     return self
+
+
 def origen0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('IDOrigen')) is not None:
@@ -10574,15 +12352,17 @@ def origen0(cls, node):
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
     if (a := node.attrib.get('ResidenciaFiscal')) is not None:
-        self['ResidenciaFiscal'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscal'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     if (a := node.attrib.get('NumEstacion')) is not None:
-        self['NumEstacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_Estaciones', a)
+        self['NumEstacion'] = catalog_code('T63478a7d076052c6450e70d2b5137e2ef681a9ca', a)
     if (a := node.attrib.get('NombreEstacion')) is not None:
         self['NombreEstacion'] = a
     if (a := node.attrib.get('NavegacionTrafico')) is not None:
         self['NavegacionTrafico'] = a
     self['FechaHoraSalida'] = datetime.fromisoformat(node.attrib['FechaHoraSalida'])
     return self
+
+
 def destino0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('IDDestino')) is not None:
@@ -10594,15 +12374,17 @@ def destino0(cls, node):
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
     if (a := node.attrib.get('ResidenciaFiscal')) is not None:
-        self['ResidenciaFiscal'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscal'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     if (a := node.attrib.get('NumEstacion')) is not None:
-        self['NumEstacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_Estaciones', a)
+        self['NumEstacion'] = catalog_code('T63478a7d076052c6450e70d2b5137e2ef681a9ca', a)
     if (a := node.attrib.get('NombreEstacion')) is not None:
         self['NombreEstacion'] = a
     if (a := node.attrib.get('NavegacionTrafico')) is not None:
         self['NavegacionTrafico'] = a
     self['FechaHoraProgLlegada'] = datetime.fromisoformat(node.attrib['FechaHoraProgLlegada'])
     return self
+
+
 def domicilio0(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
@@ -10619,9 +12401,11 @@ def domicilio0(cls, node):
     if (a := node.attrib.get('Municipio')) is not None:
         self['Municipio'] = a
     self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['Pais'])
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def mercancias0(cls, node):
     self = ScalarMap()
     self['Mercancia'] = [mercancia0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte}Mercancia')]
@@ -10640,13 +12424,15 @@ def mercancias0(cls, node):
     if (a := node.attrib.get('PesoBrutoTotal')) is not None:
         self['PesoBrutoTotal'] = Decimal(a)
     if (a := node.attrib.get('UnidadPeso')) is not None:
-        self['UnidadPeso'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ClaveUnidadPeso', a)
+        self['UnidadPeso'] = catalog_code('T57e04dc79858aa9b04abfe9bf1a99669cf2f1462', a)
     if (a := node.attrib.get('PesoNetoTotal')) is not None:
         self['PesoNetoTotal'] = Decimal(a)
     self['NumTotalMercancias'] = Xint(node.attrib['NumTotalMercancias'])
     if (a := node.attrib.get('CargoPorTasacion')) is not None:
         self['CargoPorTasacion'] = Decimal(a)
     return self
+
+
 def mercancia0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte}CantidadTransporta')
@@ -10656,15 +12442,15 @@ def mercancia0(cls, node):
     if el is not None:
         self['DetalleMercancia'] = detalle_mercancia0(cls, el)
     if (a := node.attrib.get('BienesTransp')) is not None:
-        self['BienesTransp'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ClaveProdServCP', a)
+        self['BienesTransp'] = catalog_code('Te3b33d194b4cf6dc72ce8391e1bb98005d46020e', a)
     if (a := node.attrib.get('ClaveSTCC')) is not None:
-        self['ClaveSTCC'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ClaveProdSTCC', a)
+        self['ClaveSTCC'] = catalog_code('Te892196bfa82e19c01d178cc3644c726d7150e4c', a)
     if (a := node.attrib.get('Descripcion')) is not None:
         self['Descripcion'] = a
     if (a := node.attrib.get('Cantidad')) is not None:
         self['Cantidad'] = Decimal(a)
     if (a := node.attrib.get('ClaveUnidad')) is not None:
-        self['ClaveUnidad'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_ClaveUnidad', a)
+        self['ClaveUnidad'] = catalog_code('T9cad4fddc5bd985a75b854a2ed4a9cd1541e2d0d', a)
     if (a := node.attrib.get('Unidad')) is not None:
         self['Unidad'] = a
     if (a := node.attrib.get('Dimensiones')) is not None:
@@ -10672,38 +12458,44 @@ def mercancia0(cls, node):
     if (a := node.attrib.get('MaterialPeligroso')) is not None:
         self['MaterialPeligroso'] = a
     if (a := node.attrib.get('CveMaterialPeligroso')) is not None:
-        self['CveMaterialPeligroso'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_MaterialPeligroso', a)
+        self['CveMaterialPeligroso'] = catalog_code('T08d28bb9a13f01f59a9e4d8e82356ea7ef38073f', a)
     if (a := node.attrib.get('Embalaje')) is not None:
-        self['Embalaje'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoEmbalaje', a)
+        self['Embalaje'] = catalog_code('T5cfbb98ef5b1d62355913db4bf9b3908bc0b497b', a)
     if (a := node.attrib.get('DescripEmbalaje')) is not None:
         self['DescripEmbalaje'] = a
     self['PesoEnKg'] = Decimal(node.attrib['PesoEnKg'])
     if (a := node.attrib.get('ValorMercancia')) is not None:
         self['ValorMercancia'] = Decimal(a)
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('FraccionArancelaria')) is not None:
-        self['FraccionArancelaria'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/ComExt}c_FraccionArancelaria', a)
+        self['FraccionArancelaria'] = catalog_code('T28975cacee1cd8fb5b7b6233d6a7a8db2de6fcde', a)
     if (a := node.attrib.get('UUIDComercioExt')) is not None:
         self['UUIDComercioExt'] = a
     return self
+
+
 def cantidad_transporta0(cls, node):
     self = ScalarMap()
     self['Cantidad'] = Decimal(node.attrib['Cantidad'])
     self['IDOrigen'] = node.attrib['IDOrigen']
     self['IDDestino'] = node.attrib['IDDestino']
     if (a := node.attrib.get('CvesTransporte')) is not None:
-        self['CvesTransporte'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_CveTransporte', a)
+        self['CvesTransporte'] = catalog_code('T72094c5b09e8fd5d5b9a5e46c1a5bc3686d0600f', a)
     return self
+
+
 def detalle_mercancia0(cls, node):
     self = ScalarMap()
-    self['UnidadPeso'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ClaveUnidadPeso', node.attrib['UnidadPeso'])
+    self['UnidadPeso'] = catalog_code('T57e04dc79858aa9b04abfe9bf1a99669cf2f1462', node.attrib['UnidadPeso'])
     self['PesoBruto'] = Decimal(node.attrib['PesoBruto'])
     self['PesoNeto'] = Decimal(node.attrib['PesoNeto'])
     self['PesoTara'] = Decimal(node.attrib['PesoTara'])
     if (a := node.attrib.get('NumPiezas')) is not None:
         self['NumPiezas'] = Xint(a)
     return self
+
+
 def autotransporte_federal0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte}IdentificacionVehicular')
@@ -10711,43 +12503,49 @@ def autotransporte_federal0(cls, node):
     el = node.find('{http://www.sat.gob.mx/CartaPorte}Remolques')
     if el is not None:
         self['Remolques'] = [remolque0(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/CartaPorte}Remolque')]
-    self['PermSCT'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoPermiso', node.attrib['PermSCT'])
+    self['PermSCT'] = catalog_code('Tf438c810acc78ca024c7bf5fd1ef094c6e4a744d', node.attrib['PermSCT'])
     self['NumPermisoSCT'] = node.attrib['NumPermisoSCT']
     self['NombreAseg'] = node.attrib['NombreAseg']
     self['NumPolizaSeguro'] = node.attrib['NumPolizaSeguro']
     return self
+
+
 def identificacion_vehicular0(cls, node):
     self = ScalarMap()
-    self['ConfigVehicular'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ConfigAutotransporte', node.attrib['ConfigVehicular'])
+    self['ConfigVehicular'] = catalog_code('T5c26f1e82cd6b941dd63007d4dc11bc8d04773b1', node.attrib['ConfigVehicular'])
     self['PlacaVM'] = node.attrib['PlacaVM']
     self['AnioModeloVM'] = Xint(node.attrib['AnioModeloVM'])
     return self
+
+
 def remolque0(cls, node):
     self = ScalarMap()
-    self['SubTipoRem'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_SubTipoRem', node.attrib['SubTipoRem'])
+    self['SubTipoRem'] = catalog_code('T5f39cdd7073ffd760072bd83d6c4c375f609b5da', node.attrib['SubTipoRem'])
     self['Placa'] = node.attrib['Placa']
     return self
+
+
 def transporte_maritimo0(cls, node):
     self = ScalarMap()
     self['Contenedor'] = [contenedor0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte}Contenedor')]
     if (a := node.attrib.get('PermSCT')) is not None:
-        self['PermSCT'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoPermiso', a)
+        self['PermSCT'] = catalog_code('Tf438c810acc78ca024c7bf5fd1ef094c6e4a744d', a)
     if (a := node.attrib.get('NumPermisoSCT')) is not None:
         self['NumPermisoSCT'] = a
     if (a := node.attrib.get('NombreAseg')) is not None:
         self['NombreAseg'] = a
     if (a := node.attrib.get('NumPolizaSeguro')) is not None:
         self['NumPolizaSeguro'] = a
-    self['TipoEmbarcacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ConfigMaritima', node.attrib['TipoEmbarcacion'])
+    self['TipoEmbarcacion'] = catalog_code('T8c9ab97ce72dcef06a2d83e81c8b8e652eaf284f', node.attrib['TipoEmbarcacion'])
     self['Matricula'] = node.attrib['Matricula']
     self['NumeroOMI'] = node.attrib['NumeroOMI']
     if (a := node.attrib.get('AnioEmbarcacion')) is not None:
         self['AnioEmbarcacion'] = Xint(a)
     if (a := node.attrib.get('NombreEmbarc')) is not None:
         self['NombreEmbarc'] = a
-    self['NacionalidadEmbarc'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['NacionalidadEmbarc'])
+    self['NacionalidadEmbarc'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['NacionalidadEmbarc'])
     self['UnidadesDeArqBruto'] = Decimal(node.attrib['UnidadesDeArqBruto'])
-    self['TipoCarga'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ClaveTipoCarga', node.attrib['TipoCarga'])
+    self['TipoCarga'] = catalog_code('T32285e1fde5686cc1bad2612d99826c3dc097df5', node.attrib['TipoCarga'])
     self['NumCertITC'] = node.attrib['NumCertITC']
     if (a := node.attrib.get('Eslora')) is not None:
         self['Eslora'] = Decimal(a)
@@ -10758,22 +12556,26 @@ def transporte_maritimo0(cls, node):
     if (a := node.attrib.get('LineaNaviera')) is not None:
         self['LineaNaviera'] = a
     self['NombreAgenteNaviero'] = node.attrib['NombreAgenteNaviero']
-    self['NumAutorizacionNaviero'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_NumAutorizacionNaviero', node.attrib['NumAutorizacionNaviero'])
+    self['NumAutorizacionNaviero'] = catalog_code('Tcd77f438d01105ee80094dbfab32410b122bc5ea', node.attrib['NumAutorizacionNaviero'])
     if (a := node.attrib.get('NumViaje')) is not None:
         self['NumViaje'] = a
     if (a := node.attrib.get('NumConocEmbarc')) is not None:
         self['NumConocEmbarc'] = a
     return self
+
+
 def contenedor0(cls, node):
     self = ScalarMap()
     self['MatriculaContenedor'] = node.attrib['MatriculaContenedor']
-    self['TipoContenedor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ContenedorMaritimo', node.attrib['TipoContenedor'])
+    self['TipoContenedor'] = catalog_code('Te8b6614e5bea00952e161f2c10dc2110e3dc9ad8', node.attrib['TipoContenedor'])
     if (a := node.attrib.get('NumPrecinto')) is not None:
         self['NumPrecinto'] = a
     return self
+
+
 def transporte_aereo0(cls, node):
     self = ScalarMap()
-    self['PermSCT'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoPermiso', node.attrib['PermSCT'])
+    self['PermSCT'] = catalog_code('Tf438c810acc78ca024c7bf5fd1ef094c6e4a744d', node.attrib['PermSCT'])
     self['NumPermisoSCT'] = node.attrib['NumPermisoSCT']
     self['MatriculaAeronave'] = node.attrib['MatriculaAeronave']
     if (a := node.attrib.get('NombreAseg')) is not None:
@@ -10785,11 +12587,11 @@ def transporte_aereo0(cls, node):
         self['LugarContrato'] = a
     if (a := node.attrib.get('RFCTransportista')) is not None:
         self['RFCTransportista'] = a
-    self['CodigoTransportista'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_CodigoTransporteAereo', node.attrib['CodigoTransportista'])
+    self['CodigoTransportista'] = catalog_code('Te9b1e9e022e42aacc5fe6265299437d444b9c65a', node.attrib['CodigoTransportista'])
     if (a := node.attrib.get('NumRegIdTribTranspor')) is not None:
         self['NumRegIdTribTranspor'] = a
     if (a := node.attrib.get('ResidenciaFiscalTranspor')) is not None:
-        self['ResidenciaFiscalTranspor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscalTranspor'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     if (a := node.attrib.get('NombreTransportista')) is not None:
         self['NombreTransportista'] = a
     if (a := node.attrib.get('RFCEmbarcador')) is not None:
@@ -10797,17 +12599,19 @@ def transporte_aereo0(cls, node):
     if (a := node.attrib.get('NumRegIdTribEmbarc')) is not None:
         self['NumRegIdTribEmbarc'] = a
     if (a := node.attrib.get('ResidenciaFiscalEmbarc')) is not None:
-        self['ResidenciaFiscalEmbarc'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscalEmbarc'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     if (a := node.attrib.get('NombreEmbarcador')) is not None:
         self['NombreEmbarcador'] = a
     return self
+
+
 def transporte_ferroviario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte}DerechosDePaso')
     if el is not None:
         self['DerechosDePaso'] = [derechos_de_paso0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte}DerechosDePaso')]
     self['Carro'] = [carro0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte}Carro')]
-    self['TipoDeServicio'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoDeServicio', node.attrib['TipoDeServicio'])
+    self['TipoDeServicio'] = catalog_code('T6df9d65d39e3b7aa44f6c0b56848b57060f49f04', node.attrib['TipoDeServicio'])
     if (a := node.attrib.get('NombreAseg')) is not None:
         self['NombreAseg'] = a
     if (a := node.attrib.get('NumPolizaSeguro')) is not None:
@@ -10815,27 +12619,35 @@ def transporte_ferroviario0(cls, node):
     if (a := node.attrib.get('Concesionario')) is not None:
         self['Concesionario'] = a
     return self
+
+
 def derechos_de_paso0(cls, node):
     self = ScalarMap()
-    self['TipoDerechoDePaso'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_DerechosDePaso', node.attrib['TipoDerechoDePaso'])
+    self['TipoDerechoDePaso'] = catalog_code('T3992814f5ac37b2b486ccfa4253c68ecd59168b2', node.attrib['TipoDerechoDePaso'])
     self['KilometrajePagado'] = Decimal(node.attrib['KilometrajePagado'])
     return self
+
+
 def carro0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte}Contenedor')
     if el is not None:
         self['Contenedor'] = [contenedor1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte}Contenedor')]
-    self['TipoCarro'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoCarro', node.attrib['TipoCarro'])
+    self['TipoCarro'] = catalog_code('T0a184c28709724a85c3d137e9b861ecf6944f52b', node.attrib['TipoCarro'])
     self['MatriculaCarro'] = node.attrib['MatriculaCarro']
     self['GuiaCarro'] = node.attrib['GuiaCarro']
     self['ToneladasNetasCarro'] = Decimal(node.attrib['ToneladasNetasCarro'])
     return self
+
+
 def contenedor1(cls, node):
     self = ScalarMap()
-    self['TipoContenedor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_Contenedor', node.attrib['TipoContenedor'])
+    self['TipoContenedor'] = catalog_code('T9ac8c5d03876f4df95da94a74cb10c0227417d82', node.attrib['TipoContenedor'])
     self['PesoContenedorVacio'] = Decimal(node.attrib['PesoContenedorVacio'])
     self['PesoNetoMercancia'] = Decimal(node.attrib['PesoNetoMercancia'])
     return self
+
+
 def figura_transporte0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte}Operadores')
@@ -10850,12 +12662,16 @@ def figura_transporte0(cls, node):
     el = node.find('{http://www.sat.gob.mx/CartaPorte}Notificado')
     if el is not None:
         self['Notificado'] = [notificado0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte}Notificado')]
-    self['CveTransporte'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_CveTransporte', node.attrib['CveTransporte'])
+    self['CveTransporte'] = catalog_code('T72094c5b09e8fd5d5b9a5e46c1a5bc3686d0600f', node.attrib['CveTransporte'])
     return self
+
+
 def operadores0(cls, node):
     self = ScalarMap()
     self['Operador'] = [operador0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte}Operador')]
     return self
+
+
 def operador0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte}Domicilio')
@@ -10870,8 +12686,10 @@ def operador0(cls, node):
     if (a := node.attrib.get('NumRegIdTribOperador')) is not None:
         self['NumRegIdTribOperador'] = a
     if (a := node.attrib.get('ResidenciaFiscalOperador')) is not None:
-        self['ResidenciaFiscalOperador'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscalOperador'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     return self
+
+
 def domicilio1(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
@@ -10888,9 +12706,11 @@ def domicilio1(cls, node):
     if (a := node.attrib.get('Municipio')) is not None:
         self['Municipio'] = a
     self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['Pais'])
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def propietario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte}Domicilio')
@@ -10903,8 +12723,10 @@ def propietario0(cls, node):
     if (a := node.attrib.get('NumRegIdTribPropietario')) is not None:
         self['NumRegIdTribPropietario'] = a
     if (a := node.attrib.get('ResidenciaFiscalPropietario')) is not None:
-        self['ResidenciaFiscalPropietario'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscalPropietario'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     return self
+
+
 def domicilio2(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
@@ -10921,9 +12743,11 @@ def domicilio2(cls, node):
     if (a := node.attrib.get('Municipio')) is not None:
         self['Municipio'] = a
     self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['Pais'])
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def arrendatario0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte}Domicilio')
@@ -10936,8 +12760,10 @@ def arrendatario0(cls, node):
     if (a := node.attrib.get('NumRegIdTribArrendatario')) is not None:
         self['NumRegIdTribArrendatario'] = a
     if (a := node.attrib.get('ResidenciaFiscalArrendatario')) is not None:
-        self['ResidenciaFiscalArrendatario'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscalArrendatario'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     return self
+
+
 def domicilio3(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
@@ -10954,9 +12780,11 @@ def domicilio3(cls, node):
     if (a := node.attrib.get('Municipio')) is not None:
         self['Municipio'] = a
     self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['Pais'])
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def notificado0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte}Domicilio')
@@ -10969,8 +12797,10 @@ def notificado0(cls, node):
     if (a := node.attrib.get('NumRegIdTribNotificado')) is not None:
         self['NumRegIdTribNotificado'] = a
     if (a := node.attrib.get('ResidenciaFiscalNotificado')) is not None:
-        self['ResidenciaFiscalNotificado'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscalNotificado'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     return self
+
+
 def domicilio4(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
@@ -10987,9 +12817,11 @@ def domicilio4(cls, node):
     if (a := node.attrib.get('Municipio')) is not None:
         self['Municipio'] = a
     self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['Pais'])
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def carta_porte1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -11005,12 +12837,14 @@ def carta_porte1(cls, node):
     if (a := node.attrib.get('EntradaSalidaMerc')) is not None:
         self['EntradaSalidaMerc'] = a
     if (a := node.attrib.get('PaisOrigenDestino')) is not None:
-        self['PaisOrigenDestino'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['PaisOrigenDestino'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     if (a := node.attrib.get('ViaEntradaSalida')) is not None:
-        self['ViaEntradaSalida'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_CveTransporte', a)
+        self['ViaEntradaSalida'] = catalog_code('T72094c5b09e8fd5d5b9a5e46c1a5bc3686d0600f', a)
     if (a := node.attrib.get('TotalDistRec')) is not None:
         self['TotalDistRec'] = Decimal(a)
     return self
+
+
 def ubicacion2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte20}Domicilio')
@@ -11025,19 +12859,21 @@ def ubicacion2(cls, node):
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
     if (a := node.attrib.get('ResidenciaFiscal')) is not None:
-        self['ResidenciaFiscal'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscal'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     if (a := node.attrib.get('NumEstacion')) is not None:
-        self['NumEstacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_Estaciones', a)
+        self['NumEstacion'] = catalog_code('T63478a7d076052c6450e70d2b5137e2ef681a9ca', a)
     if (a := node.attrib.get('NombreEstacion')) is not None:
         self['NombreEstacion'] = a
     if (a := node.attrib.get('NavegacionTrafico')) is not None:
         self['NavegacionTrafico'] = a
     self['FechaHoraSalidaLlegada'] = datetime.fromisoformat(node.attrib['FechaHoraSalidaLlegada'])
     if (a := node.attrib.get('TipoEstacion')) is not None:
-        self['TipoEstacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoEstacion', a)
+        self['TipoEstacion'] = catalog_code('Te1617ea385123e2ab0f6ba8d424e358c9cc18b49', a)
     if (a := node.attrib.get('DistanciaRecorrida')) is not None:
         self['DistanciaRecorrida'] = Decimal(a)
     return self
+
+
 def domicilio5(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('Calle')) is not None:
@@ -11055,9 +12891,11 @@ def domicilio5(cls, node):
     if (a := node.attrib.get('Municipio')) is not None:
         self['Municipio'] = a
     self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['Pais'])
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def mercancias1(cls, node):
     self = ScalarMap()
     self['Mercancia'] = [mercancia1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte20}Mercancia')]
@@ -11074,13 +12912,15 @@ def mercancias1(cls, node):
     if el is not None:
         self['TransporteFerroviario'] = transporte_ferroviario1(cls, el)
     self['PesoBrutoTotal'] = Decimal(node.attrib['PesoBrutoTotal'])
-    self['UnidadPeso'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ClaveUnidadPeso', node.attrib['UnidadPeso'])
+    self['UnidadPeso'] = catalog_code('T57e04dc79858aa9b04abfe9bf1a99669cf2f1462', node.attrib['UnidadPeso'])
     if (a := node.attrib.get('PesoNetoTotal')) is not None:
         self['PesoNetoTotal'] = Decimal(a)
     self['NumTotalMercancias'] = Xint(node.attrib['NumTotalMercancias'])
     if (a := node.attrib.get('CargoPorTasacion')) is not None:
         self['CargoPorTasacion'] = Decimal(a)
     return self
+
+
 def mercancia1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte20}Pedimentos')
@@ -11095,12 +12935,12 @@ def mercancia1(cls, node):
     el = node.find('{http://www.sat.gob.mx/CartaPorte20}DetalleMercancia')
     if el is not None:
         self['DetalleMercancia'] = detalle_mercancia1(cls, el)
-    self['BienesTransp'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ClaveProdServCP', node.attrib['BienesTransp'])
+    self['BienesTransp'] = catalog_code('Te3b33d194b4cf6dc72ce8391e1bb98005d46020e', node.attrib['BienesTransp'])
     if (a := node.attrib.get('ClaveSTCC')) is not None:
         self['ClaveSTCC'] = a
     self['Descripcion'] = node.attrib['Descripcion']
     self['Cantidad'] = Decimal(node.attrib['Cantidad'])
-    self['ClaveUnidad'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_ClaveUnidad', node.attrib['ClaveUnidad'])
+    self['ClaveUnidad'] = catalog_code('T9cad4fddc5bd985a75b854a2ed4a9cd1541e2d0d', node.attrib['ClaveUnidad'])
     if (a := node.attrib.get('Unidad')) is not None:
         self['Unidad'] = a
     if (a := node.attrib.get('Dimensiones')) is not None:
@@ -11108,46 +12948,56 @@ def mercancia1(cls, node):
     if (a := node.attrib.get('MaterialPeligroso')) is not None:
         self['MaterialPeligroso'] = a
     if (a := node.attrib.get('CveMaterialPeligroso')) is not None:
-        self['CveMaterialPeligroso'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_MaterialPeligroso', a)
+        self['CveMaterialPeligroso'] = catalog_code('T08d28bb9a13f01f59a9e4d8e82356ea7ef38073f', a)
     if (a := node.attrib.get('Embalaje')) is not None:
-        self['Embalaje'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoEmbalaje', a)
+        self['Embalaje'] = catalog_code('T5cfbb98ef5b1d62355913db4bf9b3908bc0b497b', a)
     if (a := node.attrib.get('DescripEmbalaje')) is not None:
         self['DescripEmbalaje'] = a
     self['PesoEnKg'] = Decimal(node.attrib['PesoEnKg'])
     if (a := node.attrib.get('ValorMercancia')) is not None:
         self['ValorMercancia'] = Decimal(a)
     if (a := node.attrib.get('Moneda')) is not None:
-        self['Moneda'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Moneda', a, 0)
+        self['Moneda'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', a, 0)
     if (a := node.attrib.get('FraccionArancelaria')) is not None:
-        self['FraccionArancelaria'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/ComExt}c_FraccionArancelaria', a)
+        self['FraccionArancelaria'] = catalog_code('T28975cacee1cd8fb5b7b6233d6a7a8db2de6fcde', a)
     if (a := node.attrib.get('UUIDComercioExt')) is not None:
         self['UUIDComercioExt'] = a
     return self
+
+
 def pedimentos0(cls, node):
     return node.attrib['Pedimento']
+
+
 def guias_identificacion0(cls, node):
     self = ScalarMap()
     self['NumeroGuiaIdentificacion'] = node.attrib['NumeroGuiaIdentificacion']
     self['DescripGuiaIdentificacion'] = node.attrib['DescripGuiaIdentificacion']
     self['PesoGuiaIdentificacion'] = Decimal(node.attrib['PesoGuiaIdentificacion'])
     return self
+
+
 def cantidad_transporta1(cls, node):
     self = ScalarMap()
     self['Cantidad'] = Decimal(node.attrib['Cantidad'])
     self['IDOrigen'] = node.attrib['IDOrigen']
     self['IDDestino'] = node.attrib['IDDestino']
     if (a := node.attrib.get('CvesTransporte')) is not None:
-        self['CvesTransporte'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_CveTransporte', a)
+        self['CvesTransporte'] = catalog_code('T72094c5b09e8fd5d5b9a5e46c1a5bc3686d0600f', a)
     return self
+
+
 def detalle_mercancia1(cls, node):
     self = ScalarMap()
-    self['UnidadPesoMerc'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ClaveUnidadPeso', node.attrib['UnidadPesoMerc'])
+    self['UnidadPesoMerc'] = catalog_code('T57e04dc79858aa9b04abfe9bf1a99669cf2f1462', node.attrib['UnidadPesoMerc'])
     self['PesoBruto'] = Decimal(node.attrib['PesoBruto'])
     self['PesoNeto'] = Decimal(node.attrib['PesoNeto'])
     self['PesoTara'] = Decimal(node.attrib['PesoTara'])
     if (a := node.attrib.get('NumPiezas')) is not None:
         self['NumPiezas'] = Xint(a)
     return self
+
+
 def autotransporte0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte20}IdentificacionVehicular')
@@ -11157,15 +13007,19 @@ def autotransporte0(cls, node):
     el = node.find('{http://www.sat.gob.mx/CartaPorte20}Remolques')
     if el is not None:
         self['Remolques'] = [remolque1(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/CartaPorte20}Remolque')]
-    self['PermSCT'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoPermiso', node.attrib['PermSCT'])
+    self['PermSCT'] = catalog_code('Tf438c810acc78ca024c7bf5fd1ef094c6e4a744d', node.attrib['PermSCT'])
     self['NumPermisoSCT'] = node.attrib['NumPermisoSCT']
     return self
+
+
 def identificacion_vehicular1(cls, node):
     self = ScalarMap()
-    self['ConfigVehicular'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ConfigAutotransporte', node.attrib['ConfigVehicular'])
+    self['ConfigVehicular'] = catalog_code('T5c26f1e82cd6b941dd63007d4dc11bc8d04773b1', node.attrib['ConfigVehicular'])
     self['PlacaVM'] = node.attrib['PlacaVM']
     self['AnioModeloVM'] = Xint(node.attrib['AnioModeloVM'])
     return self
+
+
 def seguros0(cls, node):
     self = ScalarMap()
     self['AseguraRespCivil'] = node.attrib['AseguraRespCivil']
@@ -11181,32 +13035,36 @@ def seguros0(cls, node):
     if (a := node.attrib.get('PrimaSeguro')) is not None:
         self['PrimaSeguro'] = Decimal(a)
     return self
+
+
 def remolque1(cls, node):
     self = ScalarMap()
-    self['SubTipoRem'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_SubTipoRem', node.attrib['SubTipoRem'])
+    self['SubTipoRem'] = catalog_code('T5f39cdd7073ffd760072bd83d6c4c375f609b5da', node.attrib['SubTipoRem'])
     self['Placa'] = node.attrib['Placa']
     return self
+
+
 def transporte_maritimo1(cls, node):
     self = ScalarMap()
     self['Contenedor'] = [contenedor2(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte20}Contenedor')]
     if (a := node.attrib.get('PermSCT')) is not None:
-        self['PermSCT'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoPermiso', a)
+        self['PermSCT'] = catalog_code('Tf438c810acc78ca024c7bf5fd1ef094c6e4a744d', a)
     if (a := node.attrib.get('NumPermisoSCT')) is not None:
         self['NumPermisoSCT'] = a
     if (a := node.attrib.get('NombreAseg')) is not None:
         self['NombreAseg'] = a
     if (a := node.attrib.get('NumPolizaSeguro')) is not None:
         self['NumPolizaSeguro'] = a
-    self['TipoEmbarcacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ConfigMaritima', node.attrib['TipoEmbarcacion'])
+    self['TipoEmbarcacion'] = catalog_code('T8c9ab97ce72dcef06a2d83e81c8b8e652eaf284f', node.attrib['TipoEmbarcacion'])
     self['Matricula'] = node.attrib['Matricula']
     self['NumeroOMI'] = node.attrib['NumeroOMI']
     if (a := node.attrib.get('AnioEmbarcacion')) is not None:
         self['AnioEmbarcacion'] = Xint(a)
     if (a := node.attrib.get('NombreEmbarc')) is not None:
         self['NombreEmbarc'] = a
-    self['NacionalidadEmbarc'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['NacionalidadEmbarc'])
+    self['NacionalidadEmbarc'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['NacionalidadEmbarc'])
     self['UnidadesDeArqBruto'] = Decimal(node.attrib['UnidadesDeArqBruto'])
-    self['TipoCarga'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ClaveTipoCarga', node.attrib['TipoCarga'])
+    self['TipoCarga'] = catalog_code('T32285e1fde5686cc1bad2612d99826c3dc097df5', node.attrib['TipoCarga'])
     self['NumCertITC'] = node.attrib['NumCertITC']
     if (a := node.attrib.get('Eslora')) is not None:
         self['Eslora'] = Decimal(a)
@@ -11217,22 +13075,26 @@ def transporte_maritimo1(cls, node):
     if (a := node.attrib.get('LineaNaviera')) is not None:
         self['LineaNaviera'] = a
     self['NombreAgenteNaviero'] = node.attrib['NombreAgenteNaviero']
-    self['NumAutorizacionNaviero'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_NumAutorizacionNaviero', node.attrib['NumAutorizacionNaviero'])
+    self['NumAutorizacionNaviero'] = catalog_code('Tcd77f438d01105ee80094dbfab32410b122bc5ea', node.attrib['NumAutorizacionNaviero'])
     if (a := node.attrib.get('NumViaje')) is not None:
         self['NumViaje'] = a
     if (a := node.attrib.get('NumConocEmbarc')) is not None:
         self['NumConocEmbarc'] = a
     return self
+
+
 def contenedor2(cls, node):
     self = ScalarMap()
     self['MatriculaContenedor'] = node.attrib['MatriculaContenedor']
-    self['TipoContenedor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ContenedorMaritimo', node.attrib['TipoContenedor'])
+    self['TipoContenedor'] = catalog_code('Te8b6614e5bea00952e161f2c10dc2110e3dc9ad8', node.attrib['TipoContenedor'])
     if (a := node.attrib.get('NumPrecinto')) is not None:
         self['NumPrecinto'] = a
     return self
+
+
 def transporte_aereo1(cls, node):
     self = ScalarMap()
-    self['PermSCT'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoPermiso', node.attrib['PermSCT'])
+    self['PermSCT'] = catalog_code('Tf438c810acc78ca024c7bf5fd1ef094c6e4a744d', node.attrib['PermSCT'])
     self['NumPermisoSCT'] = node.attrib['NumPermisoSCT']
     if (a := node.attrib.get('MatriculaAeronave')) is not None:
         self['MatriculaAeronave'] = a
@@ -11243,50 +13105,60 @@ def transporte_aereo1(cls, node):
     self['NumeroGuia'] = node.attrib['NumeroGuia']
     if (a := node.attrib.get('LugarContrato')) is not None:
         self['LugarContrato'] = a
-    self['CodigoTransportista'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_CodigoTransporteAereo', node.attrib['CodigoTransportista'])
+    self['CodigoTransportista'] = catalog_code('Te9b1e9e022e42aacc5fe6265299437d444b9c65a', node.attrib['CodigoTransportista'])
     if (a := node.attrib.get('RFCEmbarcador')) is not None:
         self['RFCEmbarcador'] = a
     if (a := node.attrib.get('NumRegIdTribEmbarc')) is not None:
         self['NumRegIdTribEmbarc'] = a
     if (a := node.attrib.get('ResidenciaFiscalEmbarc')) is not None:
-        self['ResidenciaFiscalEmbarc'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscalEmbarc'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     if (a := node.attrib.get('NombreEmbarcador')) is not None:
         self['NombreEmbarcador'] = a
     return self
+
+
 def transporte_ferroviario1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte20}DerechosDePaso')
     if el is not None:
         self['DerechosDePaso'] = [derechos_de_paso1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte20}DerechosDePaso')]
     self['Carro'] = [carro1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte20}Carro')]
-    self['TipoDeServicio'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoDeServicio', node.attrib['TipoDeServicio'])
-    self['TipoDeTrafico'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoDeTrafico', node.attrib['TipoDeTrafico'])
+    self['TipoDeServicio'] = catalog_code('T6df9d65d39e3b7aa44f6c0b56848b57060f49f04', node.attrib['TipoDeServicio'])
+    self['TipoDeTrafico'] = catalog_code('Taf6efa9b9b743b8bd321f90402096abeffefe51b', node.attrib['TipoDeTrafico'])
     if (a := node.attrib.get('NombreAseg')) is not None:
         self['NombreAseg'] = a
     if (a := node.attrib.get('NumPolizaSeguro')) is not None:
         self['NumPolizaSeguro'] = a
     return self
+
+
 def derechos_de_paso1(cls, node):
     self = ScalarMap()
-    self['TipoDerechoDePaso'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_DerechosDePaso', node.attrib['TipoDerechoDePaso'])
+    self['TipoDerechoDePaso'] = catalog_code('T3992814f5ac37b2b486ccfa4253c68ecd59168b2', node.attrib['TipoDerechoDePaso'])
     self['KilometrajePagado'] = Decimal(node.attrib['KilometrajePagado'])
     return self
+
+
 def carro1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte20}Contenedor')
     if el is not None:
         self['Contenedor'] = [contenedor3(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/CartaPorte20}Contenedor')]
-    self['TipoCarro'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_TipoCarro', node.attrib['TipoCarro'])
+    self['TipoCarro'] = catalog_code('T0a184c28709724a85c3d137e9b861ecf6944f52b', node.attrib['TipoCarro'])
     self['MatriculaCarro'] = node.attrib['MatriculaCarro']
     self['GuiaCarro'] = node.attrib['GuiaCarro']
     self['ToneladasNetasCarro'] = Decimal(node.attrib['ToneladasNetasCarro'])
     return self
+
+
 def contenedor3(cls, node):
     self = ScalarMap()
-    self['TipoContenedor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_Contenedor', node.attrib['TipoContenedor'])
+    self['TipoContenedor'] = catalog_code('T9ac8c5d03876f4df95da94a74cb10c0227417d82', node.attrib['TipoContenedor'])
     self['PesoContenedorVacio'] = Decimal(node.attrib['PesoContenedorVacio'])
     self['PesoNetoMercancia'] = Decimal(node.attrib['PesoNetoMercancia'])
     return self
+
+
 def tipos_figura0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte20}PartesTransporte')
@@ -11295,7 +13167,7 @@ def tipos_figura0(cls, node):
     el = node.find('{http://www.sat.gob.mx/CartaPorte20}Domicilio')
     if el is not None:
         self['Domicilio'] = domicilio6(cls, el)
-    self['TipoFigura'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_FiguraTransporte', node.attrib['TipoFigura'])
+    self['TipoFigura'] = catalog_code('T123af46997368362c7a8769c7ad44c69c700570d', node.attrib['TipoFigura'])
     if (a := node.attrib.get('RFCFigura')) is not None:
         self['RFCFigura'] = a
     if (a := node.attrib.get('NumLicencia')) is not None:
@@ -11305,10 +13177,14 @@ def tipos_figura0(cls, node):
     if (a := node.attrib.get('NumRegIdTribFigura')) is not None:
         self['NumRegIdTribFigura'] = a
     if (a := node.attrib.get('ResidenciaFiscalFigura')) is not None:
-        self['ResidenciaFiscalFigura'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', a)
+        self['ResidenciaFiscalFigura'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', a)
     return self
+
+
 def partes_transporte0(cls, node):
-    return catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/CartaPorte}c_ParteTransporte', node.attrib['ParteTransporte'])
+    return catalog_code('Tafedf083dc96e0e6dd4688e7f524abcead25a5e6', node.attrib['ParteTransporte'])
+
+
 def domicilio6(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('Calle')) is not None:
@@ -11326,9 +13202,11 @@ def domicilio6(cls, node):
     if (a := node.attrib.get('Municipio')) is not None:
         self['Municipio'] = a
     self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['Pais'])
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def comercio_exterior0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -11349,10 +13227,10 @@ def comercio_exterior0(cls, node):
         self['Mercancias'] = [mercancia2(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/ComercioExterior11}Mercancia')]
     self['Version'] = node.attrib['Version']
     if (a := node.attrib.get('MotivoTraslado')) is not None:
-        self['MotivoTraslado'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/ComExt}c_MotivoTraslado', a)
-    self['TipoOperacion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/ComExt}c_TipoOperacion', node.attrib['TipoOperacion'])
+        self['MotivoTraslado'] = catalog_code('T85f1bd781690bc982b62c6ca30a437ee03a8c10f', a)
+    self['TipoOperacion'] = catalog_code('T45959ecedda4189fad226c382488dce3b895b0c9', node.attrib['TipoOperacion'])
     if (a := node.attrib.get('ClaveDePedimento')) is not None:
-        self['ClaveDePedimento'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/ComExt}c_ClavePedimento', a)
+        self['ClaveDePedimento'] = catalog_code('Tbf0de8fd3f9dd4e575e374f9666c6322f1c17976', a)
     if (a := node.attrib.get('CertificadoOrigen')) is not None:
         self['CertificadoOrigen'] = Xint(a)
     if (a := node.attrib.get('NumCertificadoOrigen')) is not None:
@@ -11360,7 +13238,7 @@ def comercio_exterior0(cls, node):
     if (a := node.attrib.get('NumeroExportadorConfiable')) is not None:
         self['NumeroExportadorConfiable'] = a
     if (a := node.attrib.get('Incoterm')) is not None:
-        self['Incoterm'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/ComExt}c_INCOTERM', a)
+        self['Incoterm'] = catalog_code('T7da080f3a488ce39a1873c9700da330af20c925b', a)
     if (a := node.attrib.get('Subdivision')) is not None:
         self['Subdivision'] = Xint(a)
     if (a := node.attrib.get('Observaciones')) is not None:
@@ -11370,6 +13248,8 @@ def comercio_exterior0(cls, node):
     if (a := node.attrib.get('TotalUSD')) is not None:
         self['TotalUSD'] = Decimal(a)
     return self
+
+
 def emisor6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Domicilio')
@@ -11378,6 +13258,8 @@ def emisor6(cls, node):
     if (a := node.attrib.get('Curp')) is not None:
         self['Curp'] = a
     return self
+
+
 def domicilio7(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
@@ -11386,22 +13268,26 @@ def domicilio7(cls, node):
     if (a := node.attrib.get('NumeroInterior')) is not None:
         self['NumeroInterior'] = a
     if (a := node.attrib.get('Colonia')) is not None:
-        self['Colonia'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Colonia', a, node.attrib['CodigoPostal'])
+        self['Colonia'] = catalog_code('T61d090c40ff57d5a292c9c5f62bfad1c964886aa', (a, node.attrib['CodigoPostal']))
     if (a := node.attrib.get('Localidad')) is not None:
-        self['Localidad'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Localidad', a, node.attrib['Estado'])
+        self['Localidad'] = catalog_code('Tf01f38608cf30cb0b03a53088fe4458f1377041a', (a, node.attrib['Estado']))
     if (a := node.attrib.get('Referencia')) is not None:
         self['Referencia'] = a
     if (a := node.attrib.get('Municipio')) is not None:
-        self['Municipio'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Municipio', a, node.attrib['Estado'])
-    self['Estado'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Estado', node.attrib['Estado'], 1)
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['Pais'])
-    self['CodigoPostal'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_CodigoPostal', node.attrib['CodigoPostal'], None)
+        self['Municipio'] = catalog_code('Tce3ee053e7f50d136354da570c8f8f76dc6fa3f3', (a, node.attrib['Estado']))
+    self['Estado'] = catalog_code('Tc4963ea7e21b937270e35ebeffde2be96f481b72', node.attrib['Estado'], 1)
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
+    self['CodigoPostal'] = Code(node.attrib['CodigoPostal'], None)
     return self
+
+
 def propietario1(cls, node):
     self = ScalarMap()
     self['NumRegIdTrib'] = node.attrib['NumRegIdTrib']
-    self['ResidenciaFiscal'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['ResidenciaFiscal'])
+    self['ResidenciaFiscal'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['ResidenciaFiscal'])
     return self
+
+
 def receptor6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Domicilio')
@@ -11410,6 +13296,8 @@ def receptor6(cls, node):
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
     return self
+
+
 def domicilio8(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
@@ -11426,9 +13314,11 @@ def domicilio8(cls, node):
     if (a := node.attrib.get('Municipio')) is not None:
         self['Municipio'] = a
     self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['Pais'])
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def destinatario1(cls, node):
     self = ScalarMap()
     self['Domicilio'] = [domicilio9(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior11}Domicilio')]
@@ -11437,6 +13327,8 @@ def destinatario1(cls, node):
     if (a := node.attrib.get('Nombre')) is not None:
         self['Nombre'] = a
     return self
+
+
 def domicilio9(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
@@ -11453,9 +13345,11 @@ def domicilio9(cls, node):
     if (a := node.attrib.get('Municipio')) is not None:
         self['Municipio'] = a
     self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Pais', node.attrib['Pais'])
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def mercancia2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ComercioExterior11}DescripcionesEspecificas')
@@ -11463,15 +13357,17 @@ def mercancia2(cls, node):
         self['DescripcionesEspecificas'] = [descripciones_especificas0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior11}DescripcionesEspecificas')]
     self['NoIdentificacion'] = node.attrib['NoIdentificacion']
     if (a := node.attrib.get('FraccionArancelaria')) is not None:
-        self['FraccionArancelaria'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/ComExt}c_FraccionArancelaria', a)
+        self['FraccionArancelaria'] = catalog_code('T28975cacee1cd8fb5b7b6233d6a7a8db2de6fcde', a)
     if (a := node.attrib.get('CantidadAduana')) is not None:
         self['CantidadAduana'] = Decimal(a)
     if (a := node.attrib.get('UnidadAduana')) is not None:
-        self['UnidadAduana'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/ComExt}c_UnidadAduana', a)
+        self['UnidadAduana'] = catalog_code('T0f409fd65e8a9a68385f6e036d706eb1885a135f', a)
     if (a := node.attrib.get('ValorUnitarioAduana')) is not None:
         self['ValorUnitarioAduana'] = Decimal(a)
     self['ValorDolares'] = Decimal(node.attrib['ValorDolares'])
     return self
+
+
 def descripciones_especificas0(cls, node):
     self = ScalarMap()
     self['Marca'] = node.attrib['Marca']
@@ -11482,6 +13378,8 @@ def descripciones_especificas0(cls, node):
     if (a := node.attrib.get('NumeroSerie')) is not None:
         self['NumeroSerie'] = a
     return self
+
+
 def comercio_exterior1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -11497,9 +13395,9 @@ def comercio_exterior1(cls, node):
     if el is not None:
         self['Mercancias'] = [mercancia3(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/ComercioExterior}Mercancia')]
     self['Version'] = node.attrib['Version']
-    self['TipoOperacion'] = catalog_code('{http://www.sat.gob.mx/ComercioExterior}c_TipoOperacion', node.attrib['TipoOperacion'])
+    self['TipoOperacion'] = catalog_code('T45959ecedda4189fad226c382488dce3b895b0c9', node.attrib['TipoOperacion'])
     if (a := node.attrib.get('ClaveDePedimento')) is not None:
-        self['ClaveDePedimento'] = catalog_code('{http://www.sat.gob.mx/ComercioExterior}c_ClavePedimento', a)
+        self['ClaveDePedimento'] = catalog_code('Tbf0de8fd3f9dd4e575e374f9666c6322f1c17976', a)
     if (a := node.attrib.get('CertificadoOrigen')) is not None:
         self['CertificadoOrigen'] = Xint(a)
     if (a := node.attrib.get('NumCertificadoOrigen')) is not None:
@@ -11507,7 +13405,7 @@ def comercio_exterior1(cls, node):
     if (a := node.attrib.get('NumeroExportadorConfiable')) is not None:
         self['NumeroExportadorConfiable'] = a
     if (a := node.attrib.get('Incoterm')) is not None:
-        self['Incoterm'] = catalog_code('{http://www.sat.gob.mx/ComercioExterior}c_INCOTERM', a)
+        self['Incoterm'] = catalog_code('T7da080f3a488ce39a1873c9700da330af20c925b', a)
     if (a := node.attrib.get('Subdivision')) is not None:
         self['Subdivision'] = Xint(a)
     if (a := node.attrib.get('Observaciones')) is not None:
@@ -11517,17 +13415,23 @@ def comercio_exterior1(cls, node):
     if (a := node.attrib.get('TotalUSD')) is not None:
         self['TotalUSD'] = Decimal(a)
     return self
+
+
 def emisor7(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('Curp')) is not None:
         self['Curp'] = a
     return self
+
+
 def receptor7(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('Curp')) is not None:
         self['Curp'] = a
     self['NumRegIdTrib'] = node.attrib['NumRegIdTrib']
     return self
+
+
 def destinatario2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ComercioExterior}Domicilio')
@@ -11541,6 +13445,8 @@ def destinatario2(cls, node):
     if (a := node.attrib.get('Nombre')) is not None:
         self['Nombre'] = a
     return self
+
+
 def domicilioa(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
@@ -11557,9 +13463,11 @@ def domicilioa(cls, node):
     if (a := node.attrib.get('Municipio')) is not None:
         self['Municipio'] = a
     self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('{http://www.sat.gob.mx/ComercioExterior}c_Pais', node.attrib['Pais'])
+    self['Pais'] = catalog_code('T5bc49836024e4e2fa542780fa44be5695ea7233f', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def mercancia3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ComercioExterior}DescripcionesEspecificas')
@@ -11567,15 +13475,17 @@ def mercancia3(cls, node):
         self['DescripcionesEspecificas'] = [descripciones_especificas1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior}DescripcionesEspecificas')]
     self['NoIdentificacion'] = node.attrib['NoIdentificacion']
     if (a := node.attrib.get('FraccionArancelaria')) is not None:
-        self['FraccionArancelaria'] = catalog_code('{http://www.sat.gob.mx/ComercioExterior}c_FraccionArancelaria', a)
+        self['FraccionArancelaria'] = catalog_code('T28975cacee1cd8fb5b7b6233d6a7a8db2de6fcde', a)
     if (a := node.attrib.get('CantidadAduana')) is not None:
         self['CantidadAduana'] = Decimal(a)
     if (a := node.attrib.get('UnidadAduana')) is not None:
-        self['UnidadAduana'] = catalog_code('{http://www.sat.gob.mx/ComercioExterior}c_UnidadMedidaAduana', a)
+        self['UnidadAduana'] = catalog_code('T0f409fd65e8a9a68385f6e036d706eb1885a135f', a)
     if (a := node.attrib.get('ValorUnitarioAduana')) is not None:
         self['ValorUnitarioAduana'] = Decimal(a)
     self['ValorDolares'] = Decimal(node.attrib['ValorDolares'])
     return self
+
+
 def descripciones_especificas1(cls, node):
     self = ScalarMap()
     self['Marca'] = node.attrib['Marca']
@@ -11586,6 +13496,8 @@ def descripciones_especificas1(cls, node):
     if (a := node.attrib.get('NumeroSerie')) is not None:
         self['NumeroSerie'] = a
     return self
+
+
 def estado_de_cuenta_combustible0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -11597,6 +13509,8 @@ def estado_de_cuenta_combustible0(cls, node):
     self['SubTotal'] = Decimal(node.attrib['SubTotal'])
     self['Total'] = Decimal(node.attrib['Total'])
     return self
+
+
 def concepto_estado_de_cuenta_combustible0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/EstadoDeCuentaCombustible}Traslados')
@@ -11606,9 +13520,9 @@ def concepto_estado_de_cuenta_combustible0(cls, node):
     self['Rfc'] = node.attrib['Rfc']
     self['ClaveEstacion'] = node.attrib['ClaveEstacion']
     if (a := node.attrib.get('TAR')) is not None:
-        self['TAR'] = catalog_code('{http://www.sat.gob.mx/EstadoDeCuentaCombustible}c_TAR', a)
+        self['TAR'] = catalog_code('T2e0b137e99acb8ee9eb80c3a8287ca0c95dc16dc', a)
     self['Cantidad'] = Decimal(node.attrib['Cantidad'])
-    self['NoIdentificacion'] = catalog_code('{http://www.sat.gob.mx/EstadoDeCuentaCombustible}c_claveProducto', node.attrib['NoIdentificacion'])
+    self['NoIdentificacion'] = catalog_code('T00234e828f23f1946548804d306dfa71f9a09efa', node.attrib['NoIdentificacion'])
     if (a := node.attrib.get('Unidad')) is not None:
         self['Unidad'] = a
     self['NombreCombustible'] = node.attrib['NombreCombustible']
@@ -11616,23 +13530,30 @@ def concepto_estado_de_cuenta_combustible0(cls, node):
     self['ValorUnitario'] = Decimal(node.attrib['ValorUnitario'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def traslado5(cls, node):
     self = ScalarMap()
     self['Impuesto'] = node.attrib['Impuesto']
     self['TasaoCuota'] = Decimal(node.attrib['TasaoCuota'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def estado_de_cuenta_combustible1(cls, node):
     self = cls()
     self.tag = node.tag
     el = node.find('{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}Conceptos')
-    self['Conceptos'] = [concepto_estado_de_cuenta_combustible1(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}ConceptoEstadoDeCuentaCombustible')]
+    self['Conceptos'] = [concepto_estado_de_cuenta_combustible1(cls, n) for n in
+                         el.iterfind('{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}ConceptoEstadoDeCuentaCombustible')]
     self['Version'] = node.attrib['Version']
     self['TipoOperacion'] = node.attrib['TipoOperacion']
     self['NumeroDeCuenta'] = node.attrib['NumeroDeCuenta']
     self['SubTotal'] = Decimal(node.attrib['SubTotal'])
     self['Total'] = Decimal(node.attrib['Total'])
     return self
+
+
 def concepto_estado_de_cuenta_combustible1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}Traslados')
@@ -11642,7 +13563,7 @@ def concepto_estado_de_cuenta_combustible1(cls, node):
     self['Rfc'] = node.attrib['Rfc']
     self['ClaveEstacion'] = node.attrib['ClaveEstacion']
     self['Cantidad'] = Decimal(node.attrib['Cantidad'])
-    self['TipoCombustible'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Combustible}c_ClaveTipoCombustible', node.attrib['TipoCombustible'])
+    self['TipoCombustible'] = catalog_code('T3f7134e42492200d9e555ce3289705dda0aca583', node.attrib['TipoCombustible'])
     if (a := node.attrib.get('Unidad')) is not None:
         self['Unidad'] = a
     self['NombreCombustible'] = node.attrib['NombreCombustible']
@@ -11650,12 +13571,16 @@ def concepto_estado_de_cuenta_combustible1(cls, node):
     self['ValorUnitario'] = Decimal(node.attrib['ValorUnitario'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def traslado6(cls, node):
     self = ScalarMap()
     self['Impuesto'] = node.attrib['Impuesto']
     self['TasaOCuota'] = Decimal(node.attrib['TasaOCuota'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def gastos_hidrocarburos0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -11665,6 +13590,8 @@ def gastos_hidrocarburos0(cls, node):
     if (a := node.attrib.get('AreaContractual')) is not None:
         self['AreaContractual'] = a
     return self
+
+
 def erogacion0(cls, node):
     self = ScalarMap()
     self['DocumentoRelacionado'] = [documento_relacionado0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/GastosHidrocarburos10}DocumentoRelacionado')]
@@ -11678,6 +13605,8 @@ def erogacion0(cls, node):
     self['MontocuErogacion'] = Decimal(node.attrib['MontocuErogacion'])
     self['Porcentaje'] = Decimal(node.attrib['Porcentaje'])
     return self
+
+
 def documento_relacionado0(cls, node):
     self = ScalarMap()
     self['OrigenErogacion'] = node.attrib['OrigenErogacion']
@@ -11696,39 +13625,47 @@ def documento_relacionado0(cls, node):
     if (a := node.attrib.get('NumeroPedimentoVinculado')) is not None:
         self['NumeroPedimentoVinculado'] = a
     if (a := node.attrib.get('ClavePedimentoVinculado')) is not None:
-        self['ClavePedimentoVinculado'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/hidrocarburos}ClavePedimento', a)
+        self['ClavePedimentoVinculado'] = catalog_code('T5753c418fc21ce9617e4b300ba3ee8c375ca2dff', a)
     if (a := node.attrib.get('ClavePagoPedimentoVinculado')) is not None:
-        self['ClavePagoPedimentoVinculado'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/hidrocarburos}ClavePagoPedimento', a)
+        self['ClavePagoPedimentoVinculado'] = catalog_code('Tbb0c9568d0203ce7624c292b1b1a70a425f69d66', a)
     if (a := node.attrib.get('MontoIVAPedimento')) is not None:
         self['MontoIVAPedimento'] = Decimal(a)
     if (a := node.attrib.get('OtrosImpuestosPagadosPedimento')) is not None:
         self['OtrosImpuestosPagadosPedimento'] = Decimal(a)
     if (a := node.attrib.get('FechaFolioFiscalVinculado')) is not None:
         self['FechaFolioFiscalVinculado'] = date.fromisoformat(a)
-    self['Mes'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/hidrocarburos}Meses', node.attrib['Mes'])
+    self['Mes'] = catalog_code('Tb80f4883b9d5fc59ee3ac346c1eb0c7de6e87243', node.attrib['Mes'])
     self['MontoTotalErogaciones'] = Decimal(node.attrib['MontoTotalErogaciones'])
     return self
+
+
 def actividades0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/GastosHidrocarburos10}SubActividades')
     if el is not None:
         self['SubActividades'] = [sub_actividades0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/GastosHidrocarburos10}SubActividades')]
     if (a := node.attrib.get('ActividadRelacionada')) is not None:
-        self['ActividadRelacionada'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/hidrocarburos}Actividades', a)
+        self['ActividadRelacionada'] = catalog_code('T33b0c7616219ced957b33dac0fbbac93cc5d1944', a)
     return self
+
+
 def sub_actividades0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/GastosHidrocarburos10}Tareas')
     if el is not None:
         self['Tareas'] = [tareas0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/GastosHidrocarburos10}Tareas')]
     if (a := node.attrib.get('SubActividadRelacionada')) is not None:
-        self['SubActividadRelacionada'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/hidrocarburos}SubActividad', a)
+        self['SubActividadRelacionada'] = catalog_code('Tf27c5dfbc567d5662b12ab526f72814f79e4212e', a)
     return self
+
+
 def tareas0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('TareaRelacionada')) is not None:
-        self['TareaRelacionada'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/hidrocarburos}Tareas', a)
+        self['TareaRelacionada'] = catalog_code('T4a43f1161efa45150b3a00eeb01e02671132aa78', a)
     return self
+
+
 def centro_costos0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/GastosHidrocarburos10}Yacimientos')
@@ -11737,6 +13674,8 @@ def centro_costos0(cls, node):
     if (a := node.attrib.get('Campo')) is not None:
         self['Campo'] = a
     return self
+
+
 def yacimientos0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/GastosHidrocarburos10}Pozos')
@@ -11745,11 +13684,15 @@ def yacimientos0(cls, node):
     if (a := node.attrib.get('Yacimiento')) is not None:
         self['Yacimiento'] = a
     return self
+
+
 def pozos0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('Pozo')) is not None:
         self['Pozo'] = a
     return self
+
+
 def ingresos_hidrocarburos0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -11759,18 +13702,24 @@ def ingresos_hidrocarburos0(cls, node):
     self['ContraprestacionPagadaOperador'] = Decimal(node.attrib['ContraprestacionPagadaOperador'])
     self['Porcentaje'] = Decimal(node.attrib['Porcentaje'])
     return self
+
+
 def documento_relacionado1(cls, node):
     self = ScalarMap()
     self['FolioFiscalVinculado'] = node.attrib['FolioFiscalVinculado']
     self['FechaFolioFiscalVinculado'] = date.fromisoformat(node.attrib['FechaFolioFiscalVinculado'])
-    self['Mes'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/hidrocarburos}Meses', node.attrib['Mes'])
+    self['Mes'] = catalog_code('Tb80f4883b9d5fc59ee3ac346c1eb0c7de6e87243', node.attrib['Mes'])
     return self
+
+
 def pagos0(cls, node):
     self = cls()
     self.tag = node.tag
     self['Pago'] = [pago0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/Pagos}Pago')]
     self['Version'] = node.attrib['Version']
     return self
+
+
 def pago0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/Pagos}DoctoRelacionado')
@@ -11780,8 +13729,8 @@ def pago0(cls, node):
     if el is not None:
         self['Impuestos'] = [impuestos5(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/Pagos}Impuestos')]
     self['FechaPago'] = datetime.fromisoformat(node.attrib['FechaPago'])
-    self['FormaDePagoP'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_FormaPago', node.attrib['FormaDePagoP'])
-    self['MonedaP'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Moneda', node.attrib['MonedaP'], 0)
+    self['FormaDePagoP'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', node.attrib['FormaDePagoP'])
+    self['MonedaP'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', node.attrib['MonedaP'], 0)
     if (a := node.attrib.get('TipoCambioP')) is not None:
         self['TipoCambioP'] = Decimal(a)
     self['Monto'] = Decimal(node.attrib['Monto'])
@@ -11798,7 +13747,7 @@ def pago0(cls, node):
     if (a := node.attrib.get('CtaBeneficiario')) is not None:
         self['CtaBeneficiario'] = a
     if (a := node.attrib.get('TipoCadPago')) is not None:
-        self['TipoCadPago'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Pagos}c_TipoCadenaPago', a)
+        self['TipoCadPago'] = catalog_code('Td64a8fbf19cf2b9474eaae73712bfa4d72bbafe3', a)
     if (a := node.attrib.get('CertPago')) is not None:
         self['CertPago'] = a
     if (a := node.attrib.get('CadPago')) is not None:
@@ -11806,6 +13755,8 @@ def pago0(cls, node):
     if (a := node.attrib.get('SelloPago')) is not None:
         self['SelloPago'] = a
     return self
+
+
 def docto_relacionado0(cls, node):
     self = ScalarMap()
     self['IdDocumento'] = node.attrib['IdDocumento']
@@ -11813,10 +13764,10 @@ def docto_relacionado0(cls, node):
         self['Serie'] = a
     if (a := node.attrib.get('Folio')) is not None:
         self['Folio'] = a
-    self['MonedaDR'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Moneda', node.attrib['MonedaDR'], 0)
+    self['MonedaDR'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', node.attrib['MonedaDR'], 0)
     if (a := node.attrib.get('TipoCambioDR')) is not None:
         self['TipoCambioDR'] = Decimal(a)
-    self['MetodoDePagoDR'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_MetodoPago', node.attrib['MetodoDePagoDR'])
+    self['MetodoDePagoDR'] = catalog_code('Ta3c596e4e2bc45eca9281839ca98df1d26d5b2b1', node.attrib['MetodoDePagoDR'])
     if (a := node.attrib.get('NumParcialidad')) is not None:
         self['NumParcialidad'] = Xint(a)
     if (a := node.attrib.get('ImpSaldoAnt')) is not None:
@@ -11826,6 +13777,8 @@ def docto_relacionado0(cls, node):
     if (a := node.attrib.get('ImpSaldoInsoluto')) is not None:
         self['ImpSaldoInsoluto'] = Decimal(a)
     return self
+
+
 def impuestos5(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/Pagos}Retenciones')
@@ -11839,18 +13792,24 @@ def impuestos5(cls, node):
     if (a := node.attrib.get('TotalImpuestosTrasladados')) is not None:
         self['TotalImpuestosTrasladados'] = Decimal(a)
     return self
+
+
 def retencion5(cls, node):
     self = ScalarMap()
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['Impuesto'])
+    self['Impuesto'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['Impuesto'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def traslado7(cls, node):
     self = ScalarMap()
-    self['Impuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['Impuesto'])
-    self['TipoFactor'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoFactor', node.attrib['TipoFactor'])
+    self['Impuesto'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['Impuesto'])
+    self['TipoFactor'] = catalog_code('T3805f276eaeba302adc3ebfc9d8ea70a67cfa6ec', node.attrib['TipoFactor'])
     self['TasaOCuota'] = Decimal(node.attrib['TasaOCuota'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def pagos1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -11859,6 +13818,8 @@ def pagos1(cls, node):
     self['Pago'] = [pago1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/Pagos20}Pago')]
     self['Version'] = node.attrib['Version']
     return self
+
+
 def totales2(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('TotalRetencionesIVA')) is not None:
@@ -11883,6 +13844,8 @@ def totales2(cls, node):
         self['TotalTrasladosBaseIVAExento'] = Decimal(a)
     self['MontoTotalPagos'] = Decimal(node.attrib['MontoTotalPagos'])
     return self
+
+
 def pago1(cls, node):
     self = ScalarMap()
     self['DoctoRelacionado'] = [docto_relacionado1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/Pagos20}DoctoRelacionado')]
@@ -11890,8 +13853,8 @@ def pago1(cls, node):
     if el is not None:
         self['ImpuestosP'] = impuestos_p0(cls, el)
     self['FechaPago'] = datetime.fromisoformat(node.attrib['FechaPago'])
-    self['FormaDePagoP'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_FormaPago', node.attrib['FormaDePagoP'])
-    self['MonedaP'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Moneda', node.attrib['MonedaP'], 0)
+    self['FormaDePagoP'] = catalog_code('Td5a9fdcc78ab4510aee9addb48db94cf47a91f1b', node.attrib['FormaDePagoP'])
+    self['MonedaP'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', node.attrib['MonedaP'], 0)
     if (a := node.attrib.get('TipoCambioP')) is not None:
         self['TipoCambioP'] = Decimal(a)
     self['Monto'] = Decimal(node.attrib['Monto'])
@@ -11908,7 +13871,7 @@ def pago1(cls, node):
     if (a := node.attrib.get('CtaBeneficiario')) is not None:
         self['CtaBeneficiario'] = a
     if (a := node.attrib.get('TipoCadPago')) is not None:
-        self['TipoCadPago'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Pagos}c_TipoCadenaPago', a)
+        self['TipoCadPago'] = catalog_code('Td64a8fbf19cf2b9474eaae73712bfa4d72bbafe3', a)
     if (a := node.attrib.get('CertPago')) is not None:
         self['CertPago'] = a
     if (a := node.attrib.get('CadPago')) is not None:
@@ -11916,6 +13879,8 @@ def pago1(cls, node):
     if (a := node.attrib.get('SelloPago')) is not None:
         self['SelloPago'] = a
     return self
+
+
 def docto_relacionado1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/Pagos20}ImpuestosDR')
@@ -11926,15 +13891,17 @@ def docto_relacionado1(cls, node):
         self['Serie'] = a
     if (a := node.attrib.get('Folio')) is not None:
         self['Folio'] = a
-    self['MonedaDR'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Moneda', node.attrib['MonedaDR'], 0)
+    self['MonedaDR'] = catalog_code('Tae00f1168e4dd44ad14f604041a8e80bcade7279', node.attrib['MonedaDR'], 0)
     if (a := node.attrib.get('EquivalenciaDR')) is not None:
         self['EquivalenciaDR'] = Decimal(a)
     self['NumParcialidad'] = Xint(node.attrib['NumParcialidad'])
     self['ImpSaldoAnt'] = Decimal(node.attrib['ImpSaldoAnt'])
     self['ImpPagado'] = Decimal(node.attrib['ImpPagado'])
     self['ImpSaldoInsoluto'] = Decimal(node.attrib['ImpSaldoInsoluto'])
-    self['ObjetoImpDR'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_ObjetoImp', node.attrib['ObjetoImpDR'])
+    self['ObjetoImpDR'] = catalog_code('T86de9ab0d2eb09baf797a151f974a78abb834d48', node.attrib['ObjetoImpDR'])
     return self
+
+
 def impuestos_dr0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/Pagos20}RetencionesDR')
@@ -11944,24 +13911,30 @@ def impuestos_dr0(cls, node):
     if el is not None:
         self['TrasladosDR'] = {impuesto_index(n.attrib, 'ImpuestoDR'): traslado_dr0(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/Pagos20}TrasladoDR')}
     return self
+
+
 def retencion_dr0(cls, node):
     self = ScalarMap()
     self['BaseDR'] = Decimal(node.attrib['BaseDR'])
-    self['ImpuestoDR'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['ImpuestoDR'])
-    self['TipoFactorDR'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoFactor', node.attrib['TipoFactorDR'])
+    self['ImpuestoDR'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['ImpuestoDR'])
+    self['TipoFactorDR'] = catalog_code('T3805f276eaeba302adc3ebfc9d8ea70a67cfa6ec', node.attrib['TipoFactorDR'])
     self['TasaOCuotaDR'] = Decimal(node.attrib['TasaOCuotaDR'])
     self['ImporteDR'] = Decimal(node.attrib['ImporteDR'])
     return self
+
+
 def traslado_dr0(cls, node):
     self = ScalarMap()
     self['BaseDR'] = Decimal(node.attrib['BaseDR'])
-    self['ImpuestoDR'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['ImpuestoDR'])
-    self['TipoFactorDR'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoFactor', node.attrib['TipoFactorDR'])
+    self['ImpuestoDR'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['ImpuestoDR'])
+    self['TipoFactorDR'] = catalog_code('T3805f276eaeba302adc3ebfc9d8ea70a67cfa6ec', node.attrib['TipoFactorDR'])
     if (a := node.attrib.get('TasaOCuotaDR')) is not None:
         self['TasaOCuotaDR'] = Decimal(a)
     if (a := node.attrib.get('ImporteDR')) is not None:
         self['ImporteDR'] = Decimal(a)
     return self
+
+
 def impuestos_p0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/Pagos20}RetencionesP')
@@ -11971,21 +13944,27 @@ def impuestos_p0(cls, node):
     if el is not None:
         self['TrasladosP'] = {impuesto_index(n.attrib, 'ImpuestoP'): traslado_p0(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/Pagos20}TrasladoP')}
     return self
+
+
 def retencion_p0(cls, node):
     self = ScalarMap()
-    self['ImpuestoP'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['ImpuestoP'])
+    self['ImpuestoP'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['ImpuestoP'])
     self['ImporteP'] = Decimal(node.attrib['ImporteP'])
     return self
+
+
 def traslado_p0(cls, node):
     self = ScalarMap()
     self['BaseP'] = Decimal(node.attrib['BaseP'])
-    self['ImpuestoP'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Impuesto', node.attrib['ImpuestoP'])
-    self['TipoFactorP'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_TipoFactor', node.attrib['TipoFactorP'])
+    self['ImpuestoP'] = catalog_code('T20556b53d8a5f24b66819691607ec33118ced0c1', node.attrib['ImpuestoP'])
+    self['TipoFactorP'] = catalog_code('T3805f276eaeba302adc3ebfc9d8ea70a67cfa6ec', node.attrib['TipoFactorP'])
     if (a := node.attrib.get('TasaOCuotaP')) is not None:
         self['TasaOCuotaP'] = Decimal(a)
     if (a := node.attrib.get('ImporteP')) is not None:
         self['ImporteP'] = Decimal(a)
     return self
+
+
 def timbre_fiscal_digital0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -11996,6 +13975,8 @@ def timbre_fiscal_digital0(cls, node):
     self['NoCertificadoSAT'] = node.attrib['noCertificadoSAT']
     self['SelloSAT'] = node.attrib['selloSAT']
     return self
+
+
 def timbre_fiscal_digital1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12009,6 +13990,8 @@ def timbre_fiscal_digital1(cls, node):
     self['NoCertificadoSAT'] = node.attrib['NoCertificadoSAT']
     self['SelloSAT'] = node.attrib['SelloSAT']
     return self
+
+
 def turista_pasajero_extranjero0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12018,6 +14001,8 @@ def turista_pasajero_extranjero0(cls, node):
     self['FechadeTransito'] = datetime.fromisoformat(node.attrib['fechadeTransito'])
     self['TipoTransito'] = node.attrib['tipoTransito']
     return self
+
+
 def datos_transito0(cls, node):
     self = ScalarMap()
     self['Via'] = node.attrib['Via']
@@ -12028,12 +14013,16 @@ def datos_transito0(cls, node):
     if (a := node.attrib.get('IdTransporte')) is not None:
         self['IdTransporte'] = a
     return self
+
+
 def acreditamiento_ieps0(cls, node):
     self = cls()
     self.tag = node.tag
     self['Version'] = node.attrib['Version']
-    self['TAR'] = catalog_code('{http://www.sat.gob.mx/acreditamiento}c_TAR', node.attrib['TAR'])
+    self['TAR'] = catalog_code('T2e0b137e99acb8ee9eb80c3a8287ca0c95dc16dc', node.attrib['TAR'])
     return self
+
+
 def aerolineas0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12043,24 +14032,30 @@ def aerolineas0(cls, node):
     self['Version'] = node.attrib['Version']
     self['TUA'] = Decimal(node.attrib['TUA'])
     return self
+
+
 def otros_cargos0(cls, node):
     self = ScalarMap()
     self['Cargo'] = [cargo0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/aerolineas}Cargo')]
     self['TotalCargos'] = Decimal(node.attrib['TotalCargos'])
     return self
+
+
 def cargo0(cls, node):
     self = ScalarMap()
     self['CodigoCargo'] = node.attrib['CodigoCargo']
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def obrasarteantiguedades0(cls, node):
     self = cls()
     self.tag = node.tag
     self['Version'] = node.attrib['Version']
-    self['TipoBien'] = catalog_code('{http://www.sat.gob.mx/arteantiguedades}c_TipoBien', node.attrib['TipoBien'])
+    self['TipoBien'] = catalog_code('T227f7ba8fc78e49496d435307ffb89ca11bdaaba', node.attrib['TipoBien'])
     if (a := node.attrib.get('OtrosTipoBien')) is not None:
         self['OtrosTipoBien'] = a
-    self['TituloAdquirido'] = catalog_code('{http://www.sat.gob.mx/arteantiguedades}c_Tituloadquirido', node.attrib['TituloAdquirido'])
+    self['TituloAdquirido'] = catalog_code('Tadc98ded33940ae9a936af10d3bc96744dddaccf', node.attrib['TituloAdquirido'])
     if (a := node.attrib.get('OtrosTituloAdquirido')) is not None:
         self['OtrosTituloAdquirido'] = a
     if (a := node.attrib.get('Subtotal')) is not None:
@@ -12068,8 +14063,10 @@ def obrasarteantiguedades0(cls, node):
     if (a := node.attrib.get('IVA')) is not None:
         self['IVA'] = Decimal(a)
     self['FechaAdquisicion'] = date.fromisoformat(node.attrib['FechaAdquisicion'])
-    self['CaracterísticasDeObraoPieza'] = catalog_code('{http://www.sat.gob.mx/arteantiguedades}c_CaracterísticasDeObraoPieza', node.attrib['CaracterísticasDeObraoPieza'])
+    self['CaracterísticasDeObraoPieza'] = catalog_code('Td36829bea43b6cc3963c671cb8559a0ee5d1216d', node.attrib['CaracterísticasDeObraoPieza'])
     return self
+
+
 def certificadodedestruccion0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12079,9 +14076,11 @@ def certificadodedestruccion0(cls, node):
     if el is not None:
         self['InformacionAduanera'] = informacion_aduanera4(cls, el)
     self['Version'] = node.attrib['Version']
-    self['Serie'] = catalog_code('{http://www.sat.gob.mx/certificadodestruccion}c_TipoSerie', node.attrib['Serie'])
+    self['Serie'] = catalog_code('T5a7a727a29b9e5f3bb7b91e5687ff7cbc371e5eb', node.attrib['Serie'])
     self['NumFolDesVeh'] = node.attrib['NumFolDesVeh']
     return self
+
+
 def vehiculo_destruido0(cls, node):
     self = ScalarMap()
     self['Marca'] = node.attrib['Marca']
@@ -12098,18 +14097,24 @@ def vehiculo_destruido0(cls, node):
         self['NumMotor'] = a
     self['NumFolTarjCir'] = node.attrib['NumFolTarjCir']
     return self
+
+
 def informacion_aduanera4(cls, node):
     self = ScalarMap()
     self['NumPedImp'] = node.attrib['NumPedImp']
     self['Fecha'] = date.fromisoformat(node.attrib['Fecha'])
     self['Aduana'] = node.attrib['Aduana']
     return self
+
+
 def cfdiregistro_fiscal0(cls, node):
     self = cls()
     self.tag = node.tag
     self['Version'] = node.attrib['Version']
     self['Folio'] = node.attrib['Folio']
     return self
+
+
 def consumo_de_combustibles0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12122,6 +14127,8 @@ def consumo_de_combustibles0(cls, node):
         self['SubTotal'] = Decimal(a)
     self['Total'] = Decimal(node.attrib['total'])
     return self
+
+
 def concepto_consumo_de_combustibles0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ConsumoDeCombustibles11}Determinados')
@@ -12130,19 +14137,23 @@ def concepto_consumo_de_combustibles0(cls, node):
     self['Fecha'] = datetime.fromisoformat(node.attrib['fecha'])
     self['Rfc'] = node.attrib['rfc']
     self['ClaveEstacion'] = node.attrib['claveEstacion']
-    self['TipoCombustible'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Combustible}c_ClaveTipoCombustible', node.attrib['tipoCombustible'])
+    self['TipoCombustible'] = catalog_code('T3f7134e42492200d9e555ce3289705dda0aca583', node.attrib['tipoCombustible'])
     self['Cantidad'] = Decimal(node.attrib['cantidad'])
     self['NombreCombustible'] = node.attrib['nombreCombustible']
     self['FolioOperacion'] = node.attrib['folioOperacion']
     self['ValorUnitario'] = Decimal(node.attrib['valorUnitario'])
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def determinado0(cls, node):
     self = ScalarMap()
     self['Impuesto'] = node.attrib['impuesto']
     self['TasaOCuota'] = Decimal(node.attrib['tasaOCuota'])
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def consumo_de_combustibles1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12155,6 +14166,8 @@ def consumo_de_combustibles1(cls, node):
         self['SubTotal'] = Decimal(a)
     self['Total'] = Decimal(node.attrib['total'])
     return self
+
+
 def concepto_consumo_de_combustibles1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/consumodecombustibles}Determinados')
@@ -12169,12 +14182,16 @@ def concepto_consumo_de_combustibles1(cls, node):
     self['ValorUnitario'] = Decimal(node.attrib['valorUnitario'])
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def determinado1(cls, node):
     self = ScalarMap()
     self['Impuesto'] = node.attrib['impuesto']
     self['Tasa'] = Decimal(node.attrib['tasa'])
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def detallista0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12232,16 +14249,22 @@ def detallista0(cls, node):
     self['DocumentStructureVersion'] = node.attrib['documentStructureVersion']
     self['DocumentStatus'] = node.attrib['documentStatus']
     return self
+
+
 def request_for_payment_identification0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}entityType')
     self['EntityType'] = el.text
     return self
+
+
 def special_instruction0(cls, node):
     self = ScalarMap()
     self['Text'] = [n.text for n in node.iterfind('{http://www.sat.gob.mx/detallista}text')]
     self['Code'] = node.attrib['code']
     return self
+
+
 def order_identification0(cls, node):
     self = ScalarMap()
     self['ReferenceIdentification'] = [reference_identification0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/detallista}referenceIdentification')]
@@ -12249,16 +14272,22 @@ def order_identification0(cls, node):
     if el is not None:
         self['ReferenceDate'] = date.fromisoformat(el.text)
     return self
+
+
 def reference_identification0(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     self['Type'] = node.attrib['type']
     return self
+
+
 def reference_identification1(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     self['Type'] = node.attrib['type']
     return self
+
+
 def delivery_note0(cls, node):
     self = ScalarMap()
     self['ReferenceIdentification'] = [n.text for n in node.iterfind('{http://www.sat.gob.mx/detallista}referenceIdentification')]
@@ -12266,6 +14295,8 @@ def delivery_note0(cls, node):
     if el is not None:
         self['ReferenceDate'] = date.fromisoformat(el.text)
     return self
+
+
 def buyer0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}gln')
@@ -12274,16 +14305,22 @@ def buyer0(cls, node):
     if el is not None:
         self['ContactInformation'] = contact_information0(cls, el)
     return self
+
+
 def contact_information0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}personOrDepartmentName')
     self['PersonOrDepartmentName'] = person_or_department_name0(cls, el)
     return self
+
+
 def person_or_department_name0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}text')
     self['Text'] = el.text
     return self
+
+
 def seller0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}gln')
@@ -12291,11 +14328,15 @@ def seller0(cls, node):
     el = node.find('{http://www.sat.gob.mx/detallista}alternatePartyIdentification')
     self['AlternatePartyIdentification'] = alternate_party_identification0(cls, el)
     return self
+
+
 def alternate_party_identification0(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     self['Type'] = node.attrib['type']
     return self
+
+
 def ship_to0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}gln')
@@ -12305,6 +14346,8 @@ def ship_to0(cls, node):
     if el is not None:
         self['NameAndAddress'] = name_and_address0(cls, el)
     return self
+
+
 def name_and_address0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}name')
@@ -12320,6 +14363,8 @@ def name_and_address0(cls, node):
     if el is not None:
         self['PostalCode'] = el.text
     return self
+
+
 def invoice_creator0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}gln')
@@ -12332,11 +14377,15 @@ def invoice_creator0(cls, node):
     if el is not None:
         self['NameAndAddress'] = name_and_address1(cls, el)
     return self
+
+
 def alternate_party_identification1(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     self['Type'] = node.attrib['type']
     return self
+
+
 def name_and_address1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}name')
@@ -12352,6 +14401,8 @@ def name_and_address1(cls, node):
     if el is not None:
         self['PostalCode'] = el.text
     return self
+
+
 def currency0(cls, node):
     self = ScalarMap()
     self['CurrencyFunction'] = [n.text for n in node.iterfind('{http://www.sat.gob.mx/detallista}currencyFunction')]
@@ -12360,6 +14411,8 @@ def currency0(cls, node):
         self['RateOfChange'] = Decimal(el.text)
     self['CurrencyISOCode'] = node.attrib['currencyISOCode']
     return self
+
+
 def payment_terms0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}netPayment')
@@ -12373,6 +14426,8 @@ def payment_terms0(cls, node):
     if (a := node.attrib.get('PaymentTermsRelationTime')) is not None:
         self['PaymentTermsRelationTime'] = a
     return self
+
+
 def net_payment0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}paymentTimePeriod')
@@ -12380,26 +14435,36 @@ def net_payment0(cls, node):
         self['PaymentTimePeriod'] = payment_time_period0(cls, el)
     self['NetPaymentTermsType'] = node.attrib['netPaymentTermsType']
     return self
+
+
 def payment_time_period0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}timePeriodDue')
     self['TimePeriodDue'] = time_period_due0(cls, el)
     return self
+
+
 def time_period_due0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}value')
     self['Value'] = el.text
     self['TimePeriod'] = node.attrib['timePeriod']
     return self
+
+
 def discount_payment0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}percentage')
     self['Percentage'] = el.text
     self['DiscountType'] = node.attrib['discountType']
     return self
+
+
 def shipment_detail0(cls, node):
     self = ScalarMap()
     return self
+
+
 def allowance_charge0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}specialServicesType')
@@ -12413,25 +14478,32 @@ def allowance_charge0(cls, node):
     if (a := node.attrib.get('sequenceNumber')) is not None:
         self['SequenceNumber'] = a
     return self
+
+
 def monetary_amount_or_percentage0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}rate')
     if el is not None:
         self['Rate'] = rate0(cls, el)
     return self
+
+
 def rate0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}percentage')
     self['Percentage'] = Decimal(el.text)
     self['Base'] = node.attrib['base']
     return self
+
+
 def line_item0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}tradeItemIdentification')
     self['TradeItemIdentification'] = trade_item_identification0(cls, el)
     el = node.find('{http://www.sat.gob.mx/detallista}alternateTradeItemIdentification')
     if el is not None:
-        self['AlternateTradeItemIdentification'] = [alternate_trade_item_identification0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/detallista}alternateTradeItemIdentification')]
+        self['AlternateTradeItemIdentification'] = [alternate_trade_item_identification0(cls, n) for n in
+                                                    node.iterfind('{http://www.sat.gob.mx/detallista}alternateTradeItemIdentification')]
     el = node.find('{http://www.sat.gob.mx/detallista}tradeItemDescriptionInformation')
     if el is not None:
         self['TradeItemDescriptionInformation'] = trade_item_description_information0(cls, el)
@@ -12474,16 +14546,22 @@ def line_item0(cls, node):
     if (a := node.attrib.get('number')) is not None:
         self['Number'] = Xint(a)
     return self
+
+
 def trade_item_identification0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}gtin')
     self['Gtin'] = el.text
     return self
+
+
 def alternate_trade_item_identification0(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     self['Type'] = node.attrib['type']
     return self
+
+
 def trade_item_description_information0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}longText')
@@ -12491,37 +14569,51 @@ def trade_item_description_information0(cls, node):
     if (a := node.attrib.get('language')) is not None:
         self['Language'] = a
     return self
+
+
 def invoiced_quantity0(cls, node):
     self = ScalarMap()
     self['_text'] = Decimal(node.text)
     self['UnitOfMeasure'] = node.attrib['unitOfMeasure']
     return self
+
+
 def aditional_quantity0(cls, node):
     self = ScalarMap()
     self['_text'] = Decimal(node.text)
     self['QuantityType'] = node.attrib['QuantityType']
     return self
+
+
 def gross_price0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}Amount')
     self['Amount'] = Decimal(el.text)
     return self
+
+
 def net_price0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}Amount')
     self['Amount'] = Decimal(el.text)
     return self
+
+
 def additional_information0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}referenceIdentification')
     if el is not None:
         self['ReferenceIdentification'] = reference_identification2(cls, el)
     return self
+
+
 def reference_identification2(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     self['Type'] = node.attrib['type']
     return self
+
+
 def customs0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}gln')
@@ -12534,26 +14626,36 @@ def customs0(cls, node):
     el = node.find('{http://www.sat.gob.mx/detallista}nameAndAddress')
     self['NameAndAddress'] = name_and_address2(cls, el)
     return self
+
+
 def alternate_party_identification2(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     self['Type'] = node.attrib['type']
     return self
+
+
 def name_and_address2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}name')
     self['Name'] = el.text
     return self
+
+
 def logistic_units0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}serialShippingContainerCode')
     self['SerialShippingContainerCode'] = serial_shipping_container_code0(cls, el)
     return self
+
+
 def serial_shipping_container_code0(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     self['Type'] = node.attrib['type']
     return self
+
+
 def pallet_information0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}palletQuantity')
@@ -12563,22 +14665,30 @@ def pallet_information0(cls, node):
     el = node.find('{http://www.sat.gob.mx/detallista}transport')
     self['Transport'] = transport0(cls, el)
     return self
+
+
 def description0(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     self['Type'] = node.attrib['type']
     return self
+
+
 def transport0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}methodOfPayment')
     self['MethodOfPayment'] = el.text
     return self
+
+
 def lot_number0(cls, node):
     self = ScalarMap()
     self['_text'] = node.text
     if (a := node.attrib.get('productionDate')) is not None:
         self['ProductionDate'] = date.fromisoformat(a)
     return self
+
+
 def allowance_charge1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}specialServicesType')
@@ -12592,6 +14702,8 @@ def allowance_charge1(cls, node):
     if (a := node.attrib.get('sequenceNumber')) is not None:
         self['SequenceNumber'] = a
     return self
+
+
 def monetary_amount_or_percentage1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}percentagePerUnit')
@@ -12600,11 +14712,15 @@ def monetary_amount_or_percentage1(cls, node):
     if el is not None:
         self['RatePerUnit'] = rate_per_unit0(cls, el)
     return self
+
+
 def rate_per_unit0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}amountPerUnit')
     self['AmountPerUnit'] = el.text
     return self
+
+
 def trade_item_tax_information0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}taxTypeDescription')
@@ -12619,6 +14735,8 @@ def trade_item_tax_information0(cls, node):
     if el is not None:
         self['TaxCategory'] = el.text
     return self
+
+
 def trade_item_tax_amount0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}taxPercentage')
@@ -12626,6 +14744,8 @@ def trade_item_tax_amount0(cls, node):
     el = node.find('{http://www.sat.gob.mx/detallista}taxAmount')
     self['TaxAmount'] = Decimal(el.text)
     return self
+
+
 def total_line_amount0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}grossAmount')
@@ -12634,21 +14754,29 @@ def total_line_amount0(cls, node):
     el = node.find('{http://www.sat.gob.mx/detallista}netAmount')
     self['NetAmount'] = net_amount0(cls, el)
     return self
+
+
 def gross_amount0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}Amount')
     self['Amount'] = Decimal(el.text)
     return self
+
+
 def net_amount0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}Amount')
     self['Amount'] = Decimal(el.text)
     return self
+
+
 def total_amount0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}Amount')
     self['Amount'] = Decimal(el.text)
     return self
+
+
 def total_allowance_charge0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/detallista}specialServicesType')
@@ -12659,12 +14787,16 @@ def total_allowance_charge0(cls, node):
         self['Amount'] = Decimal(el.text)
     self['AllowanceOrChargeType'] = node.attrib['allowanceOrChargeType']
     return self
+
+
 def divisas0(cls, node):
     self = cls()
     self.tag = node.tag
     self['Version'] = node.attrib['version']
     self['TipoOperacion'] = node.attrib['tipoOperacion']
     return self
+
+
 def donatarias0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12673,6 +14805,8 @@ def donatarias0(cls, node):
     self['FechaAutorizacion'] = date.fromisoformat(node.attrib['fechaAutorizacion'])
     self['Leyenda'] = node.attrib['leyenda']
     return self
+
+
 def estado_de_cuenta_bancario0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12685,6 +14819,8 @@ def estado_de_cuenta_bancario0(cls, node):
     if (a := node.attrib.get('sucursal')) is not None:
         self['Sucursal'] = a
     return self
+
+
 def movimientos0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ecb}MovimientoECB')
@@ -12694,6 +14830,8 @@ def movimientos0(cls, node):
     if el is not None:
         self['MovimientoECBFiscal'] = movimiento_ecbfiscal0(cls, el)
     return self
+
+
 def movimiento_ecb0(cls, node):
     self = ScalarMap()
     self['Fecha'] = datetime.fromisoformat(node.attrib['fecha'])
@@ -12708,6 +14846,8 @@ def movimiento_ecb0(cls, node):
     if (a := node.attrib.get('saldoAlCorte')) is not None:
         self['SaldoAlCorte'] = Decimal(a)
     return self
+
+
 def movimiento_ecbfiscal0(cls, node):
     self = ScalarMap()
     self['Fecha'] = datetime.fromisoformat(node.attrib['fecha'])
@@ -12723,6 +14863,8 @@ def movimiento_ecbfiscal0(cls, node):
     if (a := node.attrib.get('saldoAlCorte')) is not None:
         self['SaldoAlCorte'] = Decimal(a)
     return self
+
+
 def estado_de_cuenta_combustible2(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12734,6 +14876,8 @@ def estado_de_cuenta_combustible2(cls, node):
         self['SubTotal'] = Decimal(a)
     self['Total'] = Decimal(node.attrib['total'])
     return self
+
+
 def concepto_estado_de_cuenta_combustible2(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ecc}Traslados')
@@ -12748,12 +14892,16 @@ def concepto_estado_de_cuenta_combustible2(cls, node):
     self['ValorUnitario'] = Decimal(node.attrib['valorUnitario'])
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def traslado8(cls, node):
     self = ScalarMap()
     self['Impuesto'] = node.attrib['impuesto']
     self['Tasa'] = Decimal(node.attrib['tasa'])
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def inst_educativas0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12765,6 +14913,8 @@ def inst_educativas0(cls, node):
     if (a := node.attrib.get('rfcPago')) is not None:
         self['RfcPago'] = a
     return self
+
+
 def impuestos_locales0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12778,18 +14928,24 @@ def impuestos_locales0(cls, node):
     self['TotaldeRetenciones'] = Decimal(node.attrib['TotaldeRetenciones'])
     self['TotaldeTraslados'] = Decimal(node.attrib['TotaldeTraslados'])
     return self
+
+
 def retenciones_locales0(cls, node):
     self = ScalarMap()
     self['ImpLocRetenido'] = node.attrib['ImpLocRetenido']
     self['TasadeRetencion'] = Decimal(node.attrib['TasadeRetencion'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def traslados_locales0(cls, node):
     self = ScalarMap()
     self['ImpLocTrasladado'] = node.attrib['ImpLocTrasladado']
     self['TasadeTraslado'] = Decimal(node.attrib['TasadeTraslado'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def ine0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12797,23 +14953,29 @@ def ine0(cls, node):
     if el is not None:
         self['Entidad'] = [entidad0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ine}Entidad')]
     self['Version'] = node.attrib['Version']
-    self['TipoProceso'] = catalog_code('{http://www.sat.gob.mx/ine}t_TipoProc', node.attrib['TipoProceso'])
+    self['TipoProceso'] = catalog_code('Td5d4890c408985dad79f676d39891a5d4d4125e5', node.attrib['TipoProceso'])
     if (a := node.attrib.get('TipoComite')) is not None:
-        self['TipoComite'] = catalog_code('{http://www.sat.gob.mx/ine}t_TipoComite', a)
+        self['TipoComite'] = catalog_code('T5da823b2ff997a5447c996c5567e10ee31ebfd76', a)
     if (a := node.attrib.get('IdContabilidad')) is not None:
         self['IdContabilidad'] = Xint(a)
     return self
+
+
 def entidad0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ine}Contabilidad')
     if el is not None:
         self['Contabilidad'] = [contabilidad0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ine}Contabilidad')]
-    self['ClaveEntidad'] = catalog_code('{http://www.sat.gob.mx/ine}t_ClaveEntidad', node.attrib['ClaveEntidad'])
+    self['ClaveEntidad'] = catalog_code('T0b0f074f799c7e02e79ed7f3118a688f70257c31', node.attrib['ClaveEntidad'])
     if (a := node.attrib.get('Ambito')) is not None:
-        self['Ambito'] = catalog_code('{http://www.sat.gob.mx/ine}t_Ambito', a)
+        self['Ambito'] = catalog_code('T37afc115c80186cb1fd839354b6e29873022533e', a)
     return self
+
+
 def contabilidad0(cls, node):
     return Xint(node.attrib['IdContabilidad'])
+
+
 def ine1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12821,29 +14983,37 @@ def ine1(cls, node):
     if el is not None:
         self['Entidad'] = [entidad1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ine}Entidad')]
     self['Version'] = node.attrib['Version']
-    self['TipoProceso'] = catalog_code('{http://www.sat.gob.mx/ine}t_TipoProc', node.attrib['TipoProceso'])
+    self['TipoProceso'] = catalog_code('Td5d4890c408985dad79f676d39891a5d4d4125e5', node.attrib['TipoProceso'])
     if (a := node.attrib.get('TipoComite')) is not None:
-        self['TipoComite'] = catalog_code('{http://www.sat.gob.mx/ine}t_TipoComite', a)
+        self['TipoComite'] = catalog_code('T5da823b2ff997a5447c996c5567e10ee31ebfd76', a)
     if (a := node.attrib.get('IdContabilidad')) is not None:
         self['IdContabilidad'] = Xint(a)
     return self
+
+
 def entidad1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ine}Contabilidad')
     if el is not None:
         self['Contabilidad'] = [contabilidad1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ine}Contabilidad')]
-    self['ClaveEntidad'] = catalog_code('{http://www.sat.gob.mx/ine}t_ClaveEntidad', node.attrib['ClaveEntidad'])
+    self['ClaveEntidad'] = catalog_code('T0b0f074f799c7e02e79ed7f3118a688f70257c31', node.attrib['ClaveEntidad'])
     if (a := node.attrib.get('Ambito')) is not None:
-        self['Ambito'] = catalog_code('{http://www.sat.gob.mx/ine}t_Ambito', a)
+        self['Ambito'] = catalog_code('T37afc115c80186cb1fd839354b6e29873022533e', a)
     return self
+
+
 def contabilidad1(cls, node):
     return Xint(node.attrib['IdContabilidad'])
+
+
 def leyendas_fiscales0(cls, node):
     self = cls()
     self.tag = node.tag
     self['Leyenda'] = [leyenda0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/leyendasFiscales}Leyenda')]
     self['Version'] = node.attrib['version']
     return self
+
+
 def leyenda0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('disposicionFiscal')) is not None:
@@ -12852,6 +15022,8 @@ def leyenda0(cls, node):
         self['Norma'] = a
     self['TextoLeyenda'] = node.attrib['textoLeyenda']
     return self
+
+
 def nomina0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12903,12 +15075,16 @@ def nomina0(cls, node):
     if (a := node.attrib.get('SalarioDiarioIntegrado')) is not None:
         self['SalarioDiarioIntegrado'] = Decimal(a)
     return self
+
+
 def percepciones0(cls, node):
     self = ScalarMap()
     self['Percepcion'] = [percepcion0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/nomina}Percepcion')]
     self['TotalGravado'] = Decimal(node.attrib['TotalGravado'])
     self['TotalExento'] = Decimal(node.attrib['TotalExento'])
     return self
+
+
 def percepcion0(cls, node):
     self = ScalarMap()
     self['TipoPercepcion'] = Xint(node.attrib['TipoPercepcion'])
@@ -12917,12 +15093,16 @@ def percepcion0(cls, node):
     self['ImporteGravado'] = Decimal(node.attrib['ImporteGravado'])
     self['ImporteExento'] = Decimal(node.attrib['ImporteExento'])
     return self
+
+
 def deducciones0(cls, node):
     self = ScalarMap()
     self['Deduccion'] = [deduccion0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/nomina}Deduccion')]
     self['TotalGravado'] = Decimal(node.attrib['TotalGravado'])
     self['TotalExento'] = Decimal(node.attrib['TotalExento'])
     return self
+
+
 def deduccion0(cls, node):
     self = ScalarMap()
     self['TipoDeduccion'] = Xint(node.attrib['TipoDeduccion'])
@@ -12931,12 +15111,16 @@ def deduccion0(cls, node):
     self['ImporteGravado'] = Decimal(node.attrib['ImporteGravado'])
     self['ImporteExento'] = Decimal(node.attrib['ImporteExento'])
     return self
+
+
 def incapacidad0(cls, node):
     self = ScalarMap()
     self['DiasIncapacidad'] = Decimal(node.attrib['DiasIncapacidad'])
     self['TipoIncapacidad'] = Xint(node.attrib['TipoIncapacidad'])
     self['Descuento'] = Decimal(node.attrib['Descuento'])
     return self
+
+
 def horas_extra0(cls, node):
     self = ScalarMap()
     self['Dias'] = Xint(node.attrib['Dias'])
@@ -12944,6 +15128,8 @@ def horas_extra0(cls, node):
     self['HorasExtra'] = Xint(node.attrib['HorasExtra'])
     self['ImportePagado'] = Decimal(node.attrib['ImportePagado'])
     return self
+
+
 def nomina1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -12965,7 +15151,7 @@ def nomina1(cls, node):
     if el is not None:
         self['Incapacidades'] = [incapacidad1(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/nomina12}Incapacidad')]
     self['Version'] = node.attrib['Version']
-    self['TipoNomina'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_TipoNomina', node.attrib['TipoNomina'])
+    self['TipoNomina'] = catalog_code('Ta1e6dfc49a7fa82f04155571f84f3d0f2fc6a4c7', node.attrib['TipoNomina'])
     self['FechaPago'] = date.fromisoformat(node.attrib['FechaPago'])
     self['FechaInicialPago'] = date.fromisoformat(node.attrib['FechaInicialPago'])
     self['FechaFinalPago'] = date.fromisoformat(node.attrib['FechaFinalPago'])
@@ -12977,6 +15163,8 @@ def nomina1(cls, node):
     if (a := node.attrib.get('TotalOtrosPagos')) is not None:
         self['TotalOtrosPagos'] = Decimal(a)
     return self
+
+
 def emisor8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/nomina12}EntidadSNCF')
@@ -12989,12 +15177,16 @@ def emisor8(cls, node):
     if (a := node.attrib.get('RfcPatronOrigen')) is not None:
         self['RfcPatronOrigen'] = a
     return self
+
+
 def entidad_sncf0(cls, node):
     self = ScalarMap()
-    self['OrigenRecurso'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_OrigenRecurso', node.attrib['OrigenRecurso'])
+    self['OrigenRecurso'] = catalog_code('Tb9f5819d9364def5b9ea084259fded052a681a08', node.attrib['OrigenRecurso'])
     if (a := node.attrib.get('MontoRecursoPropio')) is not None:
         self['MontoRecursoPropio'] = Decimal(a)
     return self
+
+
 def receptor8(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/nomina12}SubContratacion')
@@ -13007,35 +15199,39 @@ def receptor8(cls, node):
         self['FechaInicioRelLaboral'] = date.fromisoformat(a)
     if (a := node.attrib.get('Antigüedad')) is not None:
         self['Antigüedad'] = a
-    self['TipoContrato'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_TipoContrato', node.attrib['TipoContrato'])
+    self['TipoContrato'] = catalog_code('T23eea8c0c78547b9e6b95c99baf2f5813412396c', node.attrib['TipoContrato'])
     if (a := node.attrib.get('Sindicalizado')) is not None:
         self['Sindicalizado'] = a
     if (a := node.attrib.get('TipoJornada')) is not None:
-        self['TipoJornada'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_TipoJornada', a)
-    self['TipoRegimen'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_TipoRegimen', node.attrib['TipoRegimen'])
+        self['TipoJornada'] = catalog_code('Tfc77299120c97c1d80d44efb0b70cea908bb142f', a)
+    self['TipoRegimen'] = catalog_code('T3a786566e7ccb821af3c3b5a048f2b82ecb83123', node.attrib['TipoRegimen'])
     self['NumEmpleado'] = node.attrib['NumEmpleado']
     if (a := node.attrib.get('Departamento')) is not None:
         self['Departamento'] = a
     if (a := node.attrib.get('Puesto')) is not None:
         self['Puesto'] = a
     if (a := node.attrib.get('RiesgoPuesto')) is not None:
-        self['RiesgoPuesto'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_RiesgoPuesto', a)
-    self['PeriodicidadPago'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_PeriodicidadPago', node.attrib['PeriodicidadPago'])
+        self['RiesgoPuesto'] = catalog_code('T3a0b1f16a43fcec7ffe9663001d5ea6c6a5e6afa', a)
+    self['PeriodicidadPago'] = catalog_code('Te5e6e12e273093dbcf7ad288b703875babc5e7bf', node.attrib['PeriodicidadPago'])
     if (a := node.attrib.get('Banco')) is not None:
-        self['Banco'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_Banco', a)
+        self['Banco'] = catalog_code('Te1e094b9e1834cb8e42087383a467eb81354d5a1', a)
     if (a := node.attrib.get('CuentaBancaria')) is not None:
         self['CuentaBancaria'] = Xint(a)
     if (a := node.attrib.get('SalarioBaseCotApor')) is not None:
         self['SalarioBaseCotApor'] = Decimal(a)
     if (a := node.attrib.get('SalarioDiarioIntegrado')) is not None:
         self['SalarioDiarioIntegrado'] = Decimal(a)
-    self['ClaveEntFed'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Estado', node.attrib['ClaveEntFed'], 1)
+    self['ClaveEntFed'] = catalog_code('Tc4963ea7e21b937270e35ebeffde2be96f481b72', node.attrib['ClaveEntFed'], 1)
     return self
+
+
 def sub_contratacion0(cls, node):
     self = ScalarMap()
     self['RfcLabora'] = node.attrib['RfcLabora']
     self['PorcentajeTiempo'] = Decimal(node.attrib['PorcentajeTiempo'])
     return self
+
+
 def percepciones1(cls, node):
     self = ScalarMap()
     self['Percepcion'] = [percepcion1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/nomina12}Percepcion')]
@@ -13054,6 +15250,8 @@ def percepciones1(cls, node):
     self['TotalGravado'] = Decimal(node.attrib['TotalGravado'])
     self['TotalExento'] = Decimal(node.attrib['TotalExento'])
     return self
+
+
 def percepcion1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/nomina12}AccionesOTitulos')
@@ -13062,24 +15260,30 @@ def percepcion1(cls, node):
     el = node.find('{http://www.sat.gob.mx/nomina12}HorasExtra')
     if el is not None:
         self['HorasExtra'] = [horas_extra1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/nomina12}HorasExtra')]
-    self['TipoPercepcion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_TipoPercepcion', node.attrib['TipoPercepcion'])
+    self['TipoPercepcion'] = catalog_code('T5583f8802045aedce8664c6a4989b75d0b43bbde', node.attrib['TipoPercepcion'])
     self['Clave'] = node.attrib['Clave']
     self['Concepto'] = node.attrib['Concepto']
     self['ImporteGravado'] = Decimal(node.attrib['ImporteGravado'])
     self['ImporteExento'] = Decimal(node.attrib['ImporteExento'])
     return self
+
+
 def acciones_o_titulos0(cls, node):
     self = ScalarMap()
     self['ValorMercado'] = Decimal(node.attrib['ValorMercado'])
     self['PrecioAlOtorgarse'] = Decimal(node.attrib['PrecioAlOtorgarse'])
     return self
+
+
 def horas_extra1(cls, node):
     self = ScalarMap()
     self['Dias'] = Xint(node.attrib['Dias'])
-    self['TipoHoras'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_TipoHoras', node.attrib['TipoHoras'])
+    self['TipoHoras'] = catalog_code('Tddd8419286c7f558ad117bd80f8a769b03482ccb', node.attrib['TipoHoras'])
     self['HorasExtra'] = Xint(node.attrib['HorasExtra'])
     self['ImportePagado'] = Decimal(node.attrib['ImportePagado'])
     return self
+
+
 def jubilacion_pension_retiro0(cls, node):
     self = ScalarMap()
     if (a := node.attrib.get('TotalUnaExhibicion')) is not None:
@@ -13091,6 +15295,8 @@ def jubilacion_pension_retiro0(cls, node):
     self['IngresoAcumulable'] = Decimal(node.attrib['IngresoAcumulable'])
     self['IngresoNoAcumulable'] = Decimal(node.attrib['IngresoNoAcumulable'])
     return self
+
+
 def separacion_indemnizacion0(cls, node):
     self = ScalarMap()
     self['TotalPagado'] = Decimal(node.attrib['TotalPagado'])
@@ -13099,6 +15305,8 @@ def separacion_indemnizacion0(cls, node):
     self['IngresoAcumulable'] = Decimal(node.attrib['IngresoAcumulable'])
     self['IngresoNoAcumulable'] = Decimal(node.attrib['IngresoNoAcumulable'])
     return self
+
+
 def deducciones1(cls, node):
     self = ScalarMap()
     self['Deduccion'] = [deduccion1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/nomina12}Deduccion')]
@@ -13107,13 +15315,17 @@ def deducciones1(cls, node):
     if (a := node.attrib.get('TotalImpuestosRetenidos')) is not None:
         self['TotalImpuestosRetenidos'] = Decimal(a)
     return self
+
+
 def deduccion1(cls, node):
     self = ScalarMap()
-    self['TipoDeduccion'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_TipoDeduccion', node.attrib['TipoDeduccion'])
+    self['TipoDeduccion'] = catalog_code('T193d471444d5c066fd9a2806745d6bddb4f56f96', node.attrib['TipoDeduccion'])
     self['Clave'] = node.attrib['Clave']
     self['Concepto'] = node.attrib['Concepto']
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def otro_pago0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/nomina12}SubsidioAlEmpleo')
@@ -13122,26 +15334,34 @@ def otro_pago0(cls, node):
     el = node.find('{http://www.sat.gob.mx/nomina12}CompensacionSaldosAFavor')
     if el is not None:
         self['CompensacionSaldosAFavor'] = compensacion_saldos_a_favor0(cls, el)
-    self['TipoOtroPago'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_TipoOtroPago', node.attrib['TipoOtroPago'])
+    self['TipoOtroPago'] = catalog_code('T0007522e2547aa6bbe01d014016d73ccdb4580eb', node.attrib['TipoOtroPago'])
     self['Clave'] = node.attrib['Clave']
     self['Concepto'] = node.attrib['Concepto']
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
+
+
 def subsidio_al_empleo0(cls, node):
     return Decimal(node.attrib['SubsidioCausado'])
+
+
 def compensacion_saldos_a_favor0(cls, node):
     self = ScalarMap()
     self['SaldoAFavor'] = Decimal(node.attrib['SaldoAFavor'])
     self['Año'] = Xint(node.attrib['Año'])
     self['RemanenteSalFav'] = Decimal(node.attrib['RemanenteSalFav'])
     return self
+
+
 def incapacidad1(cls, node):
     self = ScalarMap()
     self['DiasIncapacidad'] = Xint(node.attrib['DiasIncapacidad'])
-    self['TipoIncapacidad'] = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos/Nomina}c_TipoIncapacidad', node.attrib['TipoIncapacidad'])
+    self['TipoIncapacidad'] = catalog_code('Tacb6d7d1e72611c08cb809725b522425e1cff291', node.attrib['TipoIncapacidad'])
     if (a := node.attrib.get('ImporteMonetario')) is not None:
         self['ImporteMonetario'] = Decimal(a)
     return self
+
+
 def notarios_publicos0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -13157,6 +15377,8 @@ def notarios_publicos0(cls, node):
     self['DatosAdquiriente'] = datos_adquiriente0(cls, el)
     self['Version'] = node.attrib['Version']
     return self
+
+
 def desc_inmueble0(cls, node):
     self = ScalarMap()
     self['TipoInmueble'] = node.attrib['TipoInmueble']
@@ -13172,10 +15394,12 @@ def desc_inmueble0(cls, node):
     if (a := node.attrib.get('Referencia')) is not None:
         self['Referencia'] = a
     self['Municipio'] = node.attrib['Municipio']
-    self['Estado'] = catalog_code('{http://www.sat.gob.mx/notariospublicos}t_EntidadFederativa', node.attrib['Estado'])
+    self['Estado'] = catalog_code('T814f0618a5a55cbfa33a426fa588164ced6ec0e1', node.attrib['Estado'])
     self['Pais'] = node.attrib['Pais']
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def datos_operacion12(cls, node):
     self = ScalarMap()
     self['NumInstrumentoNotarial'] = Xint(node.attrib['NumInstrumentoNotarial'])
@@ -13184,14 +15408,18 @@ def datos_operacion12(cls, node):
     self['Subtotal'] = Decimal(node.attrib['Subtotal'])
     self['IVA'] = Decimal(node.attrib['IVA'])
     return self
+
+
 def datos_notario0(cls, node):
     self = ScalarMap()
     self['CURP'] = node.attrib['CURP']
     self['NumNotaria'] = Xint(node.attrib['NumNotaria'])
-    self['EntidadFederativa'] = catalog_code('{http://www.sat.gob.mx/notariospublicos}t_EntidadFederativa', node.attrib['EntidadFederativa'])
+    self['EntidadFederativa'] = catalog_code('T814f0618a5a55cbfa33a426fa588164ced6ec0e1', node.attrib['EntidadFederativa'])
     if (a := node.attrib.get('Adscripcion')) is not None:
         self['Adscripcion'] = a
     return self
+
+
 def datos_enajenante0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/notariospublicos}DatosUnEnajenante')
@@ -13202,6 +15430,8 @@ def datos_enajenante0(cls, node):
         self['DatosEnajenantesCopSC'] = [datos_enajenante_cop_sc0(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/notariospublicos}DatosEnajenanteCopSC')]
     self['CoproSocConyugalE'] = node.attrib['CoproSocConyugalE']
     return self
+
+
 def datos_un_enajenante0(cls, node):
     self = ScalarMap()
     self['Nombre'] = node.attrib['Nombre']
@@ -13211,6 +15441,8 @@ def datos_un_enajenante0(cls, node):
     self['RFC'] = node.attrib['RFC']
     self['CURP'] = node.attrib['CURP']
     return self
+
+
 def datos_enajenante_cop_sc0(cls, node):
     self = ScalarMap()
     self['Nombre'] = node.attrib['Nombre']
@@ -13223,6 +15455,8 @@ def datos_enajenante_cop_sc0(cls, node):
         self['CURP'] = a
     self['Porcentaje'] = Decimal(node.attrib['Porcentaje'])
     return self
+
+
 def datos_adquiriente0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/notariospublicos}DatosUnAdquiriente')
@@ -13233,6 +15467,8 @@ def datos_adquiriente0(cls, node):
         self['DatosAdquirientesCopSC'] = [datos_adquiriente_cop_sc0(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/notariospublicos}DatosAdquirienteCopSC')]
     self['CoproSocConyugalE'] = node.attrib['CoproSocConyugalE']
     return self
+
+
 def datos_un_adquiriente0(cls, node):
     self = ScalarMap()
     self['Nombre'] = node.attrib['Nombre']
@@ -13244,6 +15480,8 @@ def datos_un_adquiriente0(cls, node):
     if (a := node.attrib.get('CURP')) is not None:
         self['CURP'] = a
     return self
+
+
 def datos_adquiriente_cop_sc0(cls, node):
     self = ScalarMap()
     self['Nombre'] = node.attrib['Nombre']
@@ -13256,6 +15494,8 @@ def datos_adquiriente_cop_sc0(cls, node):
         self['CURP'] = a
     self['Porcentaje'] = Decimal(node.attrib['Porcentaje'])
     return self
+
+
 def pago_en_especie0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -13267,6 +15507,8 @@ def pago_en_especie0(cls, node):
     self['PzaArtAProd'] = node.attrib['PzaArtAProd']
     self['PzaArtDim'] = node.attrib['PzaArtDim']
     return self
+
+
 def pfintegrante_coordinado0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -13276,6 +15518,8 @@ def pfintegrante_coordinado0(cls, node):
     if (a := node.attrib.get('RFCPF')) is not None:
         self['RFCPF'] = a
     return self
+
+
 def prestadores_de_servicios_de_cfd0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -13286,6 +15530,8 @@ def prestadores_de_servicios_de_cfd0(cls, node):
     self['NoAutorizacion'] = Xint(node.attrib['noAutorizacion'])
     self['SelloDelPSGECFD'] = node.attrib['selloDelPSGECFD']
     return self
+
+
 def renovacionysustitucionvehiculos0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -13296,19 +15542,24 @@ def renovacionysustitucionvehiculos0(cls, node):
     if el is not None:
         self['DecretoSustitVehicular'] = decreto_sustit_vehicular0(cls, el)
     self['Version'] = node.attrib['Version']
-    self['TipoDeDecreto'] = catalog_code('{http://www.sat.gob.mx/renovacionysustitucionvehiculos}c_TipoDecreto', node.attrib['TipoDeDecreto'])
+    self['TipoDeDecreto'] = catalog_code('T6e051abcc7cd56716dec19728940f8ce7e198e0a', node.attrib['TipoDeDecreto'])
     return self
+
+
 def decreto_renov_vehicular0(cls, node):
     self = ScalarMap()
-    self['VehiculosUsadosEnajenadoPermAlFab'] = [vehiculos_usados_enajenado_perm_al_fab0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/renovacionysustitucionvehiculos}VehiculosUsadosEnajenadoPermAlFab')]
+    self['VehiculosUsadosEnajenadoPermAlFab'] = [vehiculos_usados_enajenado_perm_al_fab0(cls, n) for n in
+                                                 node.iterfind('{http://www.sat.gob.mx/renovacionysustitucionvehiculos}VehiculosUsadosEnajenadoPermAlFab')]
     el = node.find('{http://www.sat.gob.mx/renovacionysustitucionvehiculos}VehiculoNuvoSemEnajenadoFabAlPerm')
     self['VehiculoNuvoSemEnajenadoFabAlPerm'] = vehiculo_nuvo_sem_enajenado_fab_al_perm0(cls, el)
-    self['VehEnaj'] = catalog_code('{http://www.sat.gob.mx/renovacionysustitucionvehiculos}c_VehiculoEnajenado', node.attrib['VehEnaj'])
+    self['VehEnaj'] = catalog_code('T7163d9a3fcf63243e791fee13b803509edec7f1a', node.attrib['VehEnaj'])
     return self
+
+
 def vehiculos_usados_enajenado_perm_al_fab0(cls, node):
     self = ScalarMap()
     self['PrecioVehUsado'] = Decimal(node.attrib['PrecioVehUsado'])
-    self['TipoVeh'] = catalog_code('{http://www.sat.gob.mx/renovacionysustitucionvehiculos}c_TipoVehiculo_r', node.attrib['TipoVeh'])
+    self['TipoVeh'] = catalog_code('T0c7fa69685d8d069a0885ead7d94a39eae222750', node.attrib['TipoVeh'])
     self['Marca'] = node.attrib['Marca']
     self['TipooClase'] = node.attrib['TipooClase']
     self['Año'] = Xint(node.attrib['Año'])
@@ -13330,6 +15581,8 @@ def vehiculos_usados_enajenado_perm_al_fab0(cls, node):
         self['FechaRegulVeh'] = date.fromisoformat(a)
     self['Foliofiscal'] = node.attrib['Foliofiscal']
     return self
+
+
 def vehiculo_nuvo_sem_enajenado_fab_al_perm0(cls, node):
     self = ScalarMap()
     self['Año'] = Xint(node.attrib['Año'])
@@ -13339,18 +15592,22 @@ def vehiculo_nuvo_sem_enajenado_fab_al_perm0(cls, node):
     if (a := node.attrib.get('RFC')) is not None:
         self['RFC'] = a
     return self
+
+
 def decreto_sustit_vehicular0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/renovacionysustitucionvehiculos}VehiculoUsadoEnajenadoPermAlFab')
     self['VehiculoUsadoEnajenadoPermAlFab'] = vehiculo_usado_enajenado_perm_al_fab0(cls, el)
     el = node.find('{http://www.sat.gob.mx/renovacionysustitucionvehiculos}VehiculoNuvoSemEnajenadoFabAlPerm')
     self['VehiculoNuvoSemEnajenadoFabAlPerm'] = vehiculo_nuvo_sem_enajenado_fab_al_perm1(cls, el)
-    self['VehEnaj'] = catalog_code('{http://www.sat.gob.mx/renovacionysustitucionvehiculos}c_VehiculoEnajenado', node.attrib['VehEnaj'])
+    self['VehEnaj'] = catalog_code('T7163d9a3fcf63243e791fee13b803509edec7f1a', node.attrib['VehEnaj'])
     return self
+
+
 def vehiculo_usado_enajenado_perm_al_fab0(cls, node):
     self = ScalarMap()
     self['PrecioVehUsado'] = Decimal(node.attrib['PrecioVehUsado'])
-    self['TipoVeh'] = catalog_code('{http://www.sat.gob.mx/renovacionysustitucionvehiculos}c_TipoVehiculo_s', node.attrib['TipoVeh'])
+    self['TipoVeh'] = catalog_code('T22a9a6b5b8bd749ff19997a1d3ec5967dfdc6c61', node.attrib['TipoVeh'])
     self['Marca'] = node.attrib['Marca']
     self['TipooClase'] = node.attrib['TipooClase']
     self['Año'] = Xint(node.attrib['Año'])
@@ -13370,6 +15627,8 @@ def vehiculo_usado_enajenado_perm_al_fab0(cls, node):
     self['FechaRegulVeh'] = date.fromisoformat(node.attrib['FechaRegulVeh'])
     self['Foliofiscal'] = node.attrib['Foliofiscal']
     return self
+
+
 def vehiculo_nuvo_sem_enajenado_fab_al_perm1(cls, node):
     self = ScalarMap()
     self['Año'] = Xint(node.attrib['Año'])
@@ -13379,6 +15638,8 @@ def vehiculo_nuvo_sem_enajenado_fab_al_perm1(cls, node):
     if (a := node.attrib.get('RFC')) is not None:
         self['RFC'] = a
     return self
+
+
 def parcialesconstruccion0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -13387,6 +15648,8 @@ def parcialesconstruccion0(cls, node):
     self['Version'] = node.attrib['Version']
     self['NumPerLicoAut'] = node.attrib['NumPerLicoAut']
     return self
+
+
 def inmueble0(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
@@ -13401,14 +15664,18 @@ def inmueble0(cls, node):
     if (a := node.attrib.get('Referencia')) is not None:
         self['Referencia'] = a
     self['Municipio'] = node.attrib['Municipio']
-    self['Estado'] = catalog_code('{http://www.sat.gob.mx/servicioparcialconstruccion}t_EntidadFederativa', node.attrib['Estado'])
+    self['Estado'] = catalog_code('T814f0618a5a55cbfa33a426fa588164ced6ec0e1', node.attrib['Estado'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
+
+
 def complemento_spei0(cls, node):
     self = cls()
     self.tag = node.tag
     self['SPEI_Tercero'] = [spei_tercero0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/spei}SPEI_Tercero')]
     return self
+
+
 def spei_tercero0(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/spei}Ordenante')
@@ -13422,6 +15689,8 @@ def spei_tercero0(cls, node):
     self['NumeroCertificado'] = node.attrib['numeroCertificado']
     self['CadenaCDA'] = node.attrib['cadenaCDA']
     return self
+
+
 def ordenante0(cls, node):
     self = ScalarMap()
     self['BancoEmisor'] = node.attrib['BancoEmisor']
@@ -13430,6 +15699,8 @@ def ordenante0(cls, node):
     self['Cuenta'] = Decimal(node.attrib['Cuenta'])
     self['RFC'] = node.attrib['RFC']
     return self
+
+
 def beneficiario1(cls, node):
     self = ScalarMap()
     self['BancoReceptor'] = node.attrib['BancoReceptor']
@@ -13442,6 +15713,8 @@ def beneficiario1(cls, node):
         self['IVA'] = Decimal(a)
     self['MontoPago'] = Decimal(node.attrib['MontoPago'])
     return self
+
+
 def por_cuentade_terceros0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -13464,12 +15737,18 @@ def por_cuentade_terceros0(cls, node):
     if (a := node.attrib.get('nombre')) is not None:
         self['Nombre'] = a
     return self
+
+
 def informacion_fiscal_tercero0(cls, node):
     self = t_ubicacion_fiscal1(None, node)
     return self
+
+
 def informacion_aduanera5(cls, node):
     self = t_informacion_aduanera1(None, node)
     return self
+
+
 def parte3(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/terceros}InformacionAduanera')
@@ -13486,8 +15765,12 @@ def parte3(cls, node):
     if (a := node.attrib.get('importe')) is not None:
         self['Importe'] = Decimal(a)
     return self
+
+
 def cuenta_predial3(cls, node):
     return node.attrib['numero']
+
+
 def impuestos6(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/terceros}Retenciones')
@@ -13497,17 +15780,23 @@ def impuestos6(cls, node):
     if el is not None:
         self['Traslados'] = [traslado9(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/terceros}Traslado')]
     return self
+
+
 def retencion6(cls, node):
     self = ScalarMap()
     self['Impuesto'] = node.attrib['impuesto']
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def traslado9(cls, node):
     self = ScalarMap()
     self['Impuesto'] = node.attrib['impuesto']
     self['Tasa'] = Decimal(node.attrib['tasa'])
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def vales_de_despensa0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -13520,6 +15809,8 @@ def vales_de_despensa0(cls, node):
     self['NumeroDeCuenta'] = node.attrib['numeroDeCuenta']
     self['Total'] = Decimal(node.attrib['total'])
     return self
+
+
 def concepto4(cls, node):
     self = ScalarMap()
     self['Identificador'] = node.attrib['identificador']
@@ -13531,6 +15822,8 @@ def concepto4(cls, node):
         self['NumSeguridadSocial'] = a
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+
+
 def vehiculo_usado0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -13552,6 +15845,8 @@ def vehiculo_usado0(cls, node):
         self['NIV'] = a
     self['Valor'] = Decimal(node.attrib['valor'])
     return self
+
+
 def venta_vehiculos0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -13565,6 +15860,8 @@ def venta_vehiculos0(cls, node):
     self['ClaveVehicular'] = node.attrib['ClaveVehicular']
     self['Niv'] = node.attrib['Niv']
     return self
+
+
 def parte4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/ventavehiculos}InformacionAduanera')
@@ -13581,380 +15878,614 @@ def parte4(cls, node):
     if (a := node.attrib.get('importe')) is not None:
         self['Importe'] = Decimal(a)
     return self
+
+
 def s_cancelacion0(cls, node):
     return cancelacion0(cls, node)
+
+
 def s_cancelacion1(cls, node):
     return cancelacion1(cls, node)
+
+
 def s_solicitud_aceptacion_rechazo0(cls, node):
     return solicitud_aceptacion_rechazo0(cls, node)
+
+
 def s_diverza0(cls, node):
     if node.attrib.get('version') == '1.1':
         return diverza0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_archivo0(cls, node):
     return archivo_type0(cls, node)
+
+
 def s_archivo1(cls, node):
     return archivo_type1(cls, node)
+
+
 def s_archivo2(cls, node):
     return archivo_type2(cls, node)
+
+
 def s_archivo3(cls, node):
     return archivo_type3(cls, node)
+
+
 def s_archivo4(cls, node):
     return archivo_type4(cls, node)
+
+
 def s_archivo5(cls, node):
     return archivo_type5(cls, node)
+
+
 def s_archivo6(cls, node):
     return archivo_type6(cls, node)
+
+
 def s_archivo7(cls, node):
     return archivo_type7(cls, node)
+
+
 def s_archivo8(cls, node):
     return archivo_type8(cls, node)
+
+
 def s_archivo9(cls, node):
     return archivo_type9(cls, node)
+
+
 def s_archivoa(cls, node):
     return archivo_typea(cls, node)
+
+
 def s_archivob(cls, node):
     return archivo_typeb(cls, node)
+
+
 def s_archivoc(cls, node):
     return archivo_typec(cls, node)
+
+
 def s_archivod(cls, node):
     return archivo_typed(cls, node)
+
+
 def s_archivoe(cls, node):
     return archivo_typee(cls, node)
+
+
 def s_archivof(cls, node):
     return archivo_typef(cls, node)
+
+
 def s_archivo10(cls, node):
     return archivo_type10(cls, node)
+
+
 def s_archivo11(cls, node):
     return archivo_type11(cls, node)
+
+
 def s_archivo12(cls, node):
     return archivo_type12(cls, node)
+
+
 def s_auxiliar_ctas0(cls, node):
     if node.attrib.get('Version') == '1.1':
         return auxiliar_ctas0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_rep_aux_fol0(cls, node):
     if node.attrib.get('Version') == '1.2':
         return rep_aux_fol0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_balanza0(cls, node):
     if node.attrib.get('Version') == '1.1':
         return balanza0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_catalogo0(cls, node):
     if node.attrib.get('Version') == '1.1':
         return catalogo0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_polizas0(cls, node):
     if node.attrib.get('Version') == '1.1':
         return polizas0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_auxiliar_ctas1(cls, node):
     if node.attrib.get('Version') == '1.3':
         return auxiliar_ctas1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_rep_aux_fol1(cls, node):
     if node.attrib.get('Version') == '1.3':
         return rep_aux_fol1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_balanza1(cls, node):
     if node.attrib.get('Version') == '1.3':
         return balanza1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_catalogo1(cls, node):
     if node.attrib.get('Version') == '1.3':
         return catalogo1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_polizas1(cls, node):
     if node.attrib.get('Version') == '1.3':
         return polizas1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_sello_digital_cont_elec0(cls, node):
     if node.attrib.get('Version') == '1.1':
         return sello_digital_cont_elec0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_servicios_plataformas_tecnologicas0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return servicios_plataformas_tecnologicas0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_arrendamientoenfideicomiso0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return arrendamientoenfideicomiso0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_dividendos0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return dividendos0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_enajenacionde_acciones0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return enajenacionde_acciones0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_fideicomisonoempresarial0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return fideicomisonoempresarial0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_intereses0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return intereses0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_intereseshipotecarios0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return intereseshipotecarios0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_operacionesconderivados0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return operacionesconderivados0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_pagosaextranjeros0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return pagosaextranjeros0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_planesderetiro0(cls, node):
     if node.attrib.get('Version') == '1.1':
         return planesderetiro0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_planesderetiro1(cls, node):
     if node.attrib.get('Version') == '1.0':
         return planesderetiro1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_premios0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return premios0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_retenciones0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return retenciones0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_sector_financiero0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return sector_financiero0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_retenciones1(cls, node):
     if node.attrib.get('Version') == '2.0':
         return retenciones1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_comprobante0(cls, node):
     if node.attrib.get('version') == '3.2':
         return comprobante0(cls, node)
     if node.attrib.get('Version') == '3.3':
         return comprobante1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_comprobante1(cls, node):
     if node.attrib.get('Version') == '4.0':
         return comprobante2(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_carta_porte0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return carta_porte0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_carta_porte1(cls, node):
     if node.attrib.get('Version') == '2.0':
         return carta_porte1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_comercio_exterior0(cls, node):
     if node.attrib.get('Version') == '1.1':
         return comercio_exterior0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_comercio_exterior1(cls, node):
     if node.attrib.get('Version') == '1.0':
         return comercio_exterior1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_estado_de_cuenta_combustible0(cls, node):
     if node.attrib.get('Version') == '1.1' and node.attrib.get('TipoOperacion') == 'Tarjeta':
         return estado_de_cuenta_combustible0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_estado_de_cuenta_combustible1(cls, node):
     if node.attrib.get('Version') == '1.2' and node.attrib.get('TipoOperacion') == 'Tarjeta':
         return estado_de_cuenta_combustible1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_gastos_hidrocarburos0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return gastos_hidrocarburos0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_ingresos_hidrocarburos0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return ingresos_hidrocarburos0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_pagos0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return pagos0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_pagos1(cls, node):
     if node.attrib.get('Version') == '2.0':
         return pagos1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_timbre_fiscal_digital0(cls, node):
     if node.attrib.get('version') == '1.0':
         return timbre_fiscal_digital0(cls, node)
     if node.attrib.get('Version') == '1.1':
         return timbre_fiscal_digital1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_turista_pasajero_extranjero0(cls, node):
     if node.attrib.get('version') == '1.0':
         return turista_pasajero_extranjero0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_acreditamiento_ieps0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return acreditamiento_ieps0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_aerolineas0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return aerolineas0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_obrasarteantiguedades0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return obrasarteantiguedades0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_certificadodedestruccion0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return certificadodedestruccion0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_cfdiregistro_fiscal0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return cfdiregistro_fiscal0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_consumo_de_combustibles0(cls, node):
     if node.attrib.get('version') == '1.1' and node.attrib.get('tipoOperacion') == 'monedero electrónico':
         return consumo_de_combustibles0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_consumo_de_combustibles1(cls, node):
     if node.attrib.get('version') == '1.0' and node.attrib.get('tipoOperacion') == 'monedero electrónico':
         return consumo_de_combustibles1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_detallista0(cls, node):
     if node.attrib.get('documentStructureVersion') == 'AMC8.1':
         return detallista0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_divisas0(cls, node):
     if node.attrib.get('version') == '1.0':
         return divisas0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_donatarias0(cls, node):
     if node.attrib.get('version') == '1.1':
         return donatarias0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_estado_de_cuenta_bancario0(cls, node):
     if node.attrib.get('version') == '1.0':
         return estado_de_cuenta_bancario0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_estado_de_cuenta_combustible2(cls, node):
     if node.attrib.get('tipoOperacion') == 'Tarjeta':
         return estado_de_cuenta_combustible2(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_inst_educativas0(cls, node):
     if node.attrib.get('version') == '1.0':
         return inst_educativas0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_impuestos_locales0(cls, node):
     if node.attrib.get('version') == '1.0':
         return impuestos_locales0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_ine0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return ine0(cls, node)
     if node.attrib.get('Version') == '1.1':
         return ine1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_leyendas_fiscales0(cls, node):
     if node.attrib.get('version') == '1.0':
         return leyendas_fiscales0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_nomina0(cls, node):
     if node.attrib.get('Version') == '1.1':
         return nomina0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_nomina1(cls, node):
     if node.attrib.get('Version') == '1.2':
         return nomina1(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_notarios_publicos0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return notarios_publicos0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_pago_en_especie0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return pago_en_especie0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_pfintegrante_coordinado0(cls, node):
     if node.attrib.get('version') == '1.0':
         return pfintegrante_coordinado0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_prestadores_de_servicios_de_cfd0(cls, node):
     return prestadores_de_servicios_de_cfd0(cls, node)
+
+
 def s_renovacionysustitucionvehiculos0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return renovacionysustitucionvehiculos0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_parcialesconstruccion0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return parcialesconstruccion0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_complemento_spei0(cls, node):
     return complemento_spei0(cls, node)
+
+
 def s_por_cuentade_terceros0(cls, node):
     if node.attrib.get('version') == '1.1':
         return por_cuentade_terceros0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_vales_de_despensa0(cls, node):
     if node.attrib.get('version') == '1.0' and node.attrib.get('tipoOperacion') == 'monedero electrónico':
         return vales_de_despensa0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_vehiculo_usado0(cls, node):
     if node.attrib.get('Version') == '1.0':
         return vehiculo_usado0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_venta_vehiculos0(cls, node):
     if node.attrib.get('version') == '1.1':
         return venta_vehiculos0(cls, node)
     raise NamespaceMismatchError(node)
+
+
 def s_signature0(cls, node):
     return signature_type0(cls, node)
+
+
 def s_signature_value0(cls, node):
     return signature_value0(cls, node)
+
+
 def s_signed_info0(cls, node):
     return signed_info0(cls, node)
+
+
 def s_canonicalization_method0(cls, node):
     return canonicalization_method0(cls, node)
+
+
 def s_signature_method0(cls, node):
     return signature_method0(cls, node)
+
+
 def s_reference0(cls, node):
     return reference0(cls, node)
+
+
 def s_transforms0(cls, node):
     return transforms0(cls, node)
+
+
 def s_transform0(cls, node):
     return transform0(cls, node)
+
+
 def s_digest_method0(cls, node):
     return digest_method0(cls, node)
+
+
 def s_digest_value0(cls, node):
     return node.text
+
+
 def s_key_info0(cls, node):
     return key_info0(cls, node)
+
+
 def s_key_name0(cls, node):
     return node.text
+
+
 def s_mgmt_data0(cls, node):
     return node.text
+
+
 def s_key_value0(cls, node):
     return key_value0(cls, node)
+
+
 def s_retrieval_method0(cls, node):
     return retrieval_method0(cls, node)
+
+
 def s_x509data0(cls, node):
     return x509data0(cls, node)
+
+
 def s_pgpdata0(cls, node):
     return pgpdata0(cls, node)
+
+
 def s_spkid_ata0(cls, node):
     return spkid_ata0(cls, node)
+
+
 def s_object0(cls, node):
     return object0(cls, node)
+
+
 def s_manifest0(cls, node):
     return manifest_type0(cls, node)
+
+
 def s_signature_properties0(cls, node):
     return signature_properties_type0(cls, node)
+
+
 def s_signature_property0(cls, node):
     return signature_property0(cls, node)
+
+
 def s_dsakey_value0(cls, node):
     return dsakey_value0(cls, node)
+
+
 def s_rsakey_value0(cls, node):
     return rsakey_value0(cls, node)
+
+
 cfdi_objectify = {
     '{http://cancelacfd.sat.gob.mx}Cancelacion': s_cancelacion0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1}Cancelacion': s_cancelacion1,

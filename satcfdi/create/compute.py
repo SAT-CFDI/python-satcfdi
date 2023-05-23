@@ -7,7 +7,7 @@ from ..utils import iterate
 
 
 def rounder(moneda):
-    decimals = moneda_decimales(moneda)
+    decimals = moneda_decimales(strcode(moneda))
     return lambda v: round(v, decimals)
 
 

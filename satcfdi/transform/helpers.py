@@ -1,17 +1,19 @@
 import logging
+import os
+import pickle
+import sqlite3
 from decimal import Decimal
 from lxml import etree
 from lxml.etree import QName
 
 from .. import CFDIError
 from ..models import Code
-# noinspection PyUnresolvedReferences
-from ..transform.catalog import TRANSLATIONS, CATALOGS
 from ..utils import iterate
 
 logger = logging.getLogger(__name__)
 TEXT_KEY = "_text"
 _ = iterate
+current_dir = os.path.dirname(__file__)
 
 
 class SchemaCollector:
@@ -99,30 +101,50 @@ def default_objectify(cls, node):
 def impuesto_index(attrib, attribute_name):
     impuesto = attrib[attribute_name]
     ext = attribute_name[8:]
-    tipo_factor = attrib.get('TipoFactor' + ext)
-    if tipo_factor:
+    if tipo_factor := attrib.get('TipoFactor' + ext):
         impuesto += "|" + tipo_factor
-        tasa_cuota = attrib.get('TasaOCuota' + ext)
-        if tasa_cuota:
+        if tasa_cuota := attrib.get('TasaOCuota' + ext):
             impuesto += "|" + Decimal(tasa_cuota).__format__(".6f")
 
     return impuesto
 
 
-def catalog_code(*args):
-    desc = CATALOGS
-    code = args[1]
-    try:
-        for arg in args:
-            if arg is None:  # like Postal Code
-                desc = None
-                continue
-            desc = desc[arg]
-    except KeyError:
-        logger.error("Key Not found: %s", " ".join(args))
-        desc = None
+db_file = os.path.join(current_dir, "catalogos.db")
+conn = sqlite3.connect(db_file)
+c = conn.cursor()
 
-    return Code(code, desc)
+
+def select(catalog_name, key):
+    c.execute(f"SELECT value FROM {catalog_name} WHERE key = ?", (pickle.dumps(key),))
+    if ds := c.fetchone():
+        return pickle.loads(ds[0])
+
+
+def select_all(catalog_name):
+    c.execute(f"SELECT key, value FROM {catalog_name}")
+    return {pickle.loads(k): pickle.loads(v) for k, v in c.fetchall()}
+
+
+def catalog_code(catalog_name, key, index=None):
+    code = key
+    if isinstance(key, tuple):
+        code = key[0]
+
+    if ds := select(catalog_name, key):
+        if index is not None:
+            ds = ds[index]
+    return Code(code, ds)
+
+    # else:
+    #     logger.error("Key Not found: %s %s", catalog_name, " ".join(args))
+
+
+def moneda_decimales(moneda):
+    return select('Tae00f1168e4dd44ad14f604041a8e80bcade7279', moneda)[1]
+
+
+def codigo_postal_uso_horario(codigo_postal):
+    return select('T1c22cc9094f6f89d8589f52d827f368d767db6b0', codigo_postal)[4]
 
 
 def strcode(data):
@@ -199,7 +221,10 @@ def split_at_upper(word: str):
 
 
 def trans(k):
-    res = TRANSLATIONS.get(k)
+    c.execute(f"SELECT value FROM TTranslations WHERE key = ?", (k,))
+    if res := c.fetchone():
+        res = res[0]
+
     if res is None:
         res = split_at_upper(k)
     return res

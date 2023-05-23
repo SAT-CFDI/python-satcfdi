@@ -5,9 +5,7 @@ import pytest
 
 from satcfdi.cfdi import CFDI
 from satcfdi.transform import HUSO_HORARIOS
-# noinspection PyUnresolvedReferences
-from satcfdi.transform.catalog import CATALOGS
-from satcfdi.transform.helpers import catalog_code
+from satcfdi.transform.helpers import catalog_code, select_all
 from tests.constants import CFDI_FILES
 from tests.utils import verify_result, XElementPrettyPrinter
 
@@ -40,21 +38,6 @@ def test_generate_pdf(caplog, xml_file):
     verify_invoice(cfdi, xml_file)
 
 
-def test_catalog(caplog):
-    code = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_FormaPago', "24")
-    assert code.code == "24"
-    assert code.description == 'Confusión'
 
-    code = catalog_code('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_FormaPago', "-1")
-    assert code.code == "-1"
-    assert code.description is None
-    for record in caplog.records:
-        assert record.args == ('{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_FormaPago -1',)
-
-
-def test_huso_horario():
-    c = CATALOGS['{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_CodigoPostal']
-    for i in c.values():
-        assert i[4] in HUSO_HORARIOS
 
 

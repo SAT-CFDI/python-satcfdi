@@ -2,9 +2,8 @@ from datetime import datetime
 import requests
 import urllib3
 from bs4 import BeautifulSoup
-# noinspection PyUnresolvedReferences
-from ..transform.catalog import CATALOGS
 from .. import ResponseError, __version__, Code
+from ..transform.helpers import select_all
 
 try:
     urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
@@ -35,7 +34,8 @@ def _request_constancia(rfc: str, id_cif: str):
 
 
 def _find_regimen(regimen):
-    for k, v in CATALOGS['{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_RegimenFiscal'].items():
+    # {http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_RegimenFiscal Tee1adb7bc641ae4cb96d245454aab95bb456932a
+    for k, v in select_all('Tee1adb7bc641ae4cb96d245454aab95bb456932a').items():
         if regimen.endswith(v):
             return Code(k, v)
     return Code(None, regimen)

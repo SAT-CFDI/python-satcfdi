@@ -4,9 +4,7 @@ from functools import cache
 import pytz
 from lxml import etree
 
-# noinspection PyUnresolvedReferences
-from .catalog import TRANSLATIONS, CATALOGS
-from .helpers import SchemaCollector
+from .helpers import SchemaCollector, codigo_postal_uso_horario, moneda_decimales
 from .objectify import cfdi_objectify
 from .pdf_environment import DefaultPDFEnvironment
 from .schemas import cfdi_schemas
@@ -17,8 +15,6 @@ from ..models import CertificateStore
 from ..utils import parser
 
 __all__ = [
-    'TRANSLATIONS',
-    'CATALOGS',
     'SchemaCollector',
     'cfdi_xmlify',
     'cfdi_schemas',
@@ -36,11 +32,6 @@ current_dir = os.path.dirname(__file__)
 SCHEMA_ROOT = os.path.join(current_dir, "schemas")
 PDF_INIT_TEMPLATE = DefaultPDFEnvironment.get_template("_init.html")
 SAT_Certificate_Store = None
-
-
-def moneda_decimales(moneda):
-    return CATALOGS['{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_Moneda'][moneda][1]
-
 
 # America/Chihuahua, America/Mazatlan
 HUSO_HORARIOS = {
@@ -61,7 +52,7 @@ def _pytz_timezone(tz):
 
 def get_timezone(codigo_postal):
     tz = HUSO_HORARIOS[
-        CATALOGS['{http://www.sat.gob.mx/sitio_internet/cfd/catalogos}c_CodigoPostal'][codigo_postal][4]
+        codigo_postal_uso_horario(codigo_postal)
     ]
 
     return _pytz_timezone(tz)
