@@ -1,0 +1,22 @@
+[pydeps]
+max_bacon = 2
+verbose = 0
+pylib = False
+exclude =
+    os
+    re
+    sys
+    collections
+    cryptography
+    OpenSSL
+    pytz
+    lxml
+    jinja2
+    weasyprint
+    bs4
+    requests
+    satcfdi.create.*
+    packaging
+    qrcode
+    __future__
+
