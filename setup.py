@@ -68,7 +68,7 @@ setuptools.setup(
             "transform/schemas/*/*/*/*/*/*",
             "transform/schemas/*/*/*/*/*/*/*",
             "transform/CertsProd.zip",
-            "transform/catalogos.db",
+            "catalogs/catalogs.db",
             "pacs/sat_templates/*",
         ],
     },
