@@ -92,10 +92,9 @@ class PDFEnvironment(Environment):
         @self.filter
         def mes(m):
             if isinstance(m, int):
-                m = "{:0>2}".format(m)
-                return \
-                {'01': 'Enero', '02': 'Febrero', '03': 'Marzo', '04': 'Abril', '05': 'Mayo', '06': 'Junio', '07': 'Julio', '08': 'Agosto', '09': 'Septiembre', '10': 'Octubre',
-                 '11': 'Noviembre', '12': 'Diciembre'}[m]
+                meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+                            'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+                return meses[m - 1]
             return m
 
         @self.glob
