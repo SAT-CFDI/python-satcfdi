@@ -22,6 +22,25 @@ def select_all(catalog_name):
     return {pickle.loads(k): pickle.loads(v) for k, v in c.fetchall()}
 
 
+def catalog_code(catalog_name, key, index=None):
+    code = key
+    if isinstance(key, tuple):
+        code = key[0]
+
+    if ds := select(catalog_name, key):
+        if index is not None:
+            ds = ds[index]
+    return Code(code, ds)
+
+
+def moneda_decimales(moneda):
+    return select('C756_c_Moneda', moneda)[1]
+
+
+def codigo_postal_uso_horario(codigo_postal):
+    return select('C756_c_CodigoPostal', codigo_postal)[4]
+
+
 def split_at_upper(word: str):
     def split_at_upper_itr(word: str):
         piu = None
@@ -43,30 +62,6 @@ def split_at_upper(word: str):
 def trans(k):
     c.execute(f"SELECT value FROM Translations WHERE key = ?", (k,))
     if res := c.fetchone():
-        res = res[0]
+        return res[0]
 
-    if res is None:
-        res = split_at_upper(k)
-    return res
-
-
-def catalog_code(catalog_name, key, index=None):
-    code = key
-    if isinstance(key, tuple):
-        code = key[0]
-
-    if ds := select(catalog_name, key):
-        if index is not None:
-            ds = ds[index]
-    return Code(code, ds)
-
-    # else:
-    #     logger.error("Key Not found: %s %s", catalog_name, " ".join(args))
-
-
-def moneda_decimales(moneda):
-    return select('C756_c_Moneda', moneda)[1]
-
-
-def codigo_postal_uso_horario(codigo_postal):
-    return select('C756_c_CodigoPostal', codigo_postal)[4]
+    return split_at_upper(k)
