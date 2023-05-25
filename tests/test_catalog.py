@@ -49,5 +49,9 @@ def test_catalog(caplog):
 
 def test_huso_horario():
     c = select_all("C756_c_CodigoPostal")
+
+    s = set( i[4] for i in c.values())
+    print(sorted(s))
+
     for i in c.values():
         assert i[4] in HUSO_HORARIOS

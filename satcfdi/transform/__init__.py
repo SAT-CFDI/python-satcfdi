@@ -33,15 +33,12 @@ SCHEMA_ROOT = os.path.join(current_dir, "schemas")
 PDF_INIT_TEMPLATE = DefaultPDFEnvironment.get_template("_init.html")
 SAT_Certificate_Store = None
 
-# America/Chihuahua, America/Mazatlan
 HUSO_HORARIOS = {
-    "Tiempo del Centro en Frontera": "America/Monterrey",
-    "Tiempo del Centro": "America/Mexico_City",
-    "Tiempo del Noroeste en Frontera": "America/Matamoros",
-    "Tiempo del Pacífico Sonora": "America/Hermosillo",
-    "Tiempo del Pacífico en Frontera": "America/Tijuana",
-    "Tiempo del Pacífico": "America/La_Paz",
-    "Tiempo del Sureste": "America/Cancun",
+    'Tiempo del Centro': "America/Mexico_City",
+    'Tiempo del Centro en Frontera': "America/Monterrey",
+    'Tiempo del Noroeste': "America/Matamoros",
+    'Tiempo del Pacífico': "America/La_Paz",
+    'Tiempo del Sureste': "America/Cancun"
 }
 
 
