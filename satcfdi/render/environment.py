@@ -34,7 +34,7 @@ def finalize(s):
     return s
 
 
-class PDFEnvironment(Environment):
+class CFDIEnvironment(Environment):
     @property
     def filter(self):
         def sub(f):
@@ -160,4 +160,4 @@ class PDFFIleSystemLoader(FileSystemLoader):
             return "{{ c | dump }}", None, lambda: True
 
 
-DefaultPDFEnvironment = PDFEnvironment()
+DefaultCFDIEnvironment = CFDIEnvironment()

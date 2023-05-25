@@ -2,7 +2,7 @@ from lxml.etree import QName
 from weasyprint import HTML, CSS
 
 from .render import PDF_INIT_TEMPLATE
-from .render.pdf_environment import PDFEnvironment
+from .render.environment import CFDIEnvironment
 
 PDF_CSS = CSS(string="@page {margin: 1.0cm 1.27cm 1.1cm 0.85cm;}")
 
@@ -12,7 +12,7 @@ class Representable:
 
     def html_write(self, target, templates_path=None):
         if templates_path:
-            env = PDFEnvironment(templates_path=templates_path)
+            env = CFDIEnvironment(templates_path=templates_path)
             init_template = env.get_template("_init.html")
         else:
             init_template = PDF_INIT_TEMPLATE
@@ -21,7 +21,7 @@ class Representable:
 
     def html_str(self, templates_path=None) -> str:
         if templates_path:
-            env = PDFEnvironment(templates_path=templates_path)
+            env = CFDIEnvironment(templates_path=templates_path)
             init_template = env.get_template("_init.html")
         else:
             init_template = PDF_INIT_TEMPLATE
@@ -42,7 +42,7 @@ class Representable:
     @staticmethod
     def html_write_all(objs, target, templates_path=None):
         if templates_path:
-            env = PDFEnvironment(templates_path=templates_path)
+            env = CFDIEnvironment(templates_path=templates_path)
             init_template = env.get_template("_multiple.html")
         else:
             init_template = PDF_INIT_TEMPLATE
@@ -52,7 +52,7 @@ class Representable:
     @staticmethod
     def html_str_all(objs, templates_path=None) -> str:
         if templates_path:
-            env = PDFEnvironment(templates_path=templates_path)
+            env = CFDIEnvironment(templates_path=templates_path)
             init_template = env.get_template("_multiple.html")
         else:
             init_template = PDF_INIT_TEMPLATE

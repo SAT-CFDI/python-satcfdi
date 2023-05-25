@@ -1,3 +1,3 @@
-from .pdf_environment import DefaultPDFEnvironment
+from .environment import DefaultCFDIEnvironment
 
-PDF_INIT_TEMPLATE = DefaultPDFEnvironment.get_template("_init.html")
+PDF_INIT_TEMPLATE = DefaultCFDIEnvironment.get_template("_init.html")
