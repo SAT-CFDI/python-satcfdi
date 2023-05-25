@@ -1,20 +1,15 @@
-import filecmp
 import glob
-import json
 import os
 from unittest import mock
 
 import xlsxwriter
-from lxml.etree import QName
-from satcfdi.printer import Representable
-
-from satcfdi.transform.pdf_environment import PDFEnvironment
 
 from satcfdi import DatePeriod
 from satcfdi.accounting._ansi_colors import *
 from satcfdi.accounting.formatters import SatCFDI
 from satcfdi.accounting.process import filter_invoices_iter, invoices_export, invoices_print, payments_print, \
     complement_invoices_data, payments_export, num2col, filter_payments_iter, payments_retentions_export, filter_retenciones_iter, retenciones_print, payments_groupby_receptor
+from satcfdi.printer import Representable
 from tests.utils import verify_result
 
 current_dir = os.path.abspath(os.path.dirname(__file__))

@@ -59,7 +59,7 @@ setuptools.setup(
     package_data={
         package: [
             "diot/*",
-            "transform/pdf_templates/*",
+            "render/templates/*",
             "transform/schemas/*",
             "transform/schemas/*/*",
             "transform/schemas/*/*/*",

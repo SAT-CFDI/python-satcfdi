@@ -11,8 +11,9 @@ from jinja2.filters import do_mark_safe
 from jinja2.runtime import Undefined
 from lxml.etree import QName
 
-from .helpers import desc, format_address, iterate as h_iterate
+from .helpers import desc, format_address
 from ..models import py2html, Code
+from ..utils import iterate as h_iterate
 from ..catalogs import trans
 
 current_dir = os.path.dirname(__file__)
@@ -51,7 +52,7 @@ class PDFEnvironment(Environment):
         return sub
 
     def __init__(self, templates_path=None):
-        search_path = [os.path.join(current_dir, 'pdf_templates')]
+        search_path = [os.path.join(current_dir, 'templates')]
         if templates_path:
             search_path.insert(0, templates_path)
 

@@ -6,7 +6,6 @@ from lxml import etree
 
 from .helpers import SchemaCollector
 from .objectify import cfdi_objectify
-from .pdf_environment import DefaultPDFEnvironment
 from .schemas import cfdi_schemas
 from .xmlify import cfdi_xmlify
 from .xslt import TRANSFORMS
@@ -20,7 +19,6 @@ __all__ = [
     'cfdi_xmlify',
     'cfdi_schemas',
     'cfdi_objectify',
-    'PDF_INIT_TEMPLATE',
     'MEXICO_TZ',
     'get_timezone',
     'validate_xsd',
@@ -30,7 +28,6 @@ __all__ = [
 
 current_dir = os.path.dirname(__file__)
 SCHEMA_ROOT = os.path.join(current_dir, "schemas")
-PDF_INIT_TEMPLATE = DefaultPDFEnvironment.get_template("_init.html")
 SAT_Certificate_Store = None
 
 HUSO_HORARIOS = {
