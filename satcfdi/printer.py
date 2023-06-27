@@ -1,10 +1,13 @@
 from lxml.etree import QName
-from weasyprint import HTML, CSS
+
+try:
+    import weasyprint
+    PDF_CSS = weasyprint.CSS(string="@page {margin: 1.0cm 1.27cm 1.1cm 0.85cm;}")
+except OSError as ex:
+    weasyprint = None
 
 from .render import PDF_INIT_TEMPLATE
 from .render.environment import CFDIEnvironment
-
-PDF_CSS = CSS(string="@page {margin: 1.0cm 1.27cm 1.1cm 0.85cm;}")
 
 
 class Representable:
@@ -29,13 +32,19 @@ class Representable:
         return init_template.render({"c": self, "k": QName(self.tag).localname})
 
     def pdf_write(self, target, templates_path=None):
-        HTML(string=self.html_str(templates_path=templates_path)).write_pdf(
+        if weasyprint is None:
+            raise ImportError("weasyprint is not installed")
+
+        weasyprint.HTML(string=self.html_str(templates_path=templates_path)).write_pdf(
             target=target,
             stylesheets=[PDF_CSS]
         )
 
     def pdf_bytes(self, templates_path=None) -> bytes:
-        return HTML(string=self.html_str(templates_path=templates_path)).write_pdf(
+        if weasyprint is None:
+            raise ImportError("weasyprint is not installed")
+
+        return weasyprint.HTML(string=self.html_str(templates_path=templates_path)).write_pdf(
             stylesheets=[PDF_CSS]
         )
 

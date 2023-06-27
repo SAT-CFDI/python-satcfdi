@@ -1,7 +1,6 @@
 import logging
 import os
 import lxml.etree
-from weasyprint import CSS
 
 from . import CFDIError, XElement
 from .transform import *
@@ -12,7 +11,6 @@ logger = logging.getLogger(__name__)
 
 VERIFICA_CFDI = "https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx"
 VERIFICA_RETENCION = "https://prodretencionverificacion.clouda.sat.gob.mx/"
-PDF_CSS = CSS(string="@page {margin: 1.0cm 1.27cm 1.1cm 0.85cm;}")
 
 
 class CFDI(XElement):

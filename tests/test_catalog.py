@@ -2,7 +2,7 @@ import os
 
 from satcfdi.create.cfd.catalogos import Impuesto
 from satcfdi.transform import HUSO_HORARIOS
-from satcfdi.catalogs import moneda_decimales, catalog_code, select_all
+from satcfdi.catalogs import moneda_decimales, catalog_code, select_all, codigo_postal_uso_horario
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)
@@ -55,3 +55,8 @@ def test_huso_horario():
 
     for i in c.values():
         assert i[4] in HUSO_HORARIOS
+
+
+def test_codigo_postal():
+    cp = codigo_postal_uso_horario("50200")
+    assert cp == "Tiempo del Centro"
