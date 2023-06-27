@@ -4,7 +4,9 @@ from decimal import Decimal
 from pprint import PrettyPrinter
 from unittest import mock
 
-from satcfdi import __version__, CFDI, Code
+from satcfdi import __version__
+from satcfdi.cfdi import CFDI
+from satcfdi.models import Code
 from satcfdi.pacs import Environment
 from satcfdi.pacs import TaxpayerStatus
 from satcfdi.pacs.sat import _CFDISolicitaDescarga, _CFDIAutenticacion, EstadoSolicitud, TipoDescargaMasivaTerceros

@@ -1,5 +1,5 @@
 from ..utils import iterate
-from .. import NamespaceMismatchError
+from ..exceptions import NamespaceMismatchError
 
 
 def ubicacion0(col, data):

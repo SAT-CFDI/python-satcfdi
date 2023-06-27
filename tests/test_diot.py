@@ -130,7 +130,7 @@ def test_create_declaracion_diot():
             if dig == 24:
                 return b'\x9e@@hL\xcd\xf2\x9eR\xe6JC\xc8\xba\x8a\xf1C\xec\rE*\x16 4'
 
-        with mock.patch(f'{module}.Certificate.encrypt', encrypt), mock.patch('os.urandom', rand):
+        with mock.patch(f'{module}.models.Certificate.encrypt', encrypt), mock.patch('os.urandom', rand):
             dec_data = diot._encrypted_bytes(tmp_filename)
             assert dec_data == open(os.path.join(current_dir, 'diot', f'{text_file}.dec'), 'rb').read()
 

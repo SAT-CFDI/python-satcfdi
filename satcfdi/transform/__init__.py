@@ -9,8 +9,8 @@ from .objectify import cfdi_objectify
 from .schemas import cfdi_schemas
 from .xmlify import cfdi_xmlify
 from .xslt import TRANSFORMS
-from .. import SchemaValidationError, CFDIError, Certificate
-from ..models import CertificateStore
+from ..exceptions import SchemaValidationError, CFDIError
+from ..models import CertificateStore, Certificate
 from ..utils import parser
 from ..catalogs import codigo_postal_uso_horario
 

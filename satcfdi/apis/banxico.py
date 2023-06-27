@@ -10,7 +10,8 @@ from typing import Dict, Optional
 import requests
 import requests.auth
 
-from .. import __version__, ResponseError
+from .. import __version__
+from ..exceptions import ResponseError
 
 
 class SieAPIRest:
@@ -19,6 +20,7 @@ class SieAPIRest:
     API de consulta de series de tiempo del Banco de México
     version: 1.4.3-hotfix1
     """
+
     def __init__(
             self,
             bmx_token: str,

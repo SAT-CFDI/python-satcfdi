@@ -2,8 +2,10 @@ from collections.abc import *
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 
-from .. import Issuer
-from ... import CFDI, XElement, ScalarMap
+from ...cfdi import CFDI
+from ...models import Signer
+from ...xelement import XElement
+from ...utils import ScalarMap
 
 
 class ImpRetenidos(ScalarMap):
@@ -168,6 +170,28 @@ class Receptor(ScalarMap):
         })
 
 
+class Emisor(ScalarMap):
+    """
+    Nodo requerido para expresar la información del contribuyente emisor del documento electrónico de retenciones e información de pagos.
+
+    :param rfc_emisor: Atributo requerido para incorporar la clave en el Registro Federal de Contribuyentes correspondiente al contribuyente emisor del documento de retención e información de pagos, sin guiones o espacios.
+    :param nom_den_raz_soc_e: Atributo opcional para el nombre, denominación o razón social del contribuyente emisor del documento de retención e información de pagos.
+    :param curpe: Atributo opcional para la Clave Única del Registro Poblacional del contribuyente emisor del documento de retención e información de pagos.
+    """
+
+    def __init__(
+            self,
+            rfc_emisor: str,
+            nom_den_raz_soc_e: str = None,
+            curpe: str = None,
+    ):
+        super().__init__({
+            'RFCEmisor': rfc_emisor,
+            'NomDenRazSocE': nom_den_raz_soc_e,
+            'CURPE': curpe,
+        })
+
+
 class Retenciones(CFDI):
     """
     Estándar de Documento Electrónico Retenciones e Información de Pagos.
@@ -178,7 +202,7 @@ class Retenciones(CFDI):
     def __init__(
             self,
             cve_retenc: str,
-            emisor: Issuer | dict,
+            emisor: Emisor | dict,
             receptor: Receptor | dict,
             periodo: Periodo | dict,
             totales: Totales | dict,
@@ -210,24 +234,23 @@ class Retenciones(CFDI):
         super().__init__({
             'Version': self.version,
             'Sello': '',
-            'NumCert': emisor.certificate_number,
-            'Cert':  emisor.signer.certificate_base64(),
+            'NumCert': '',
+            'Cert':  '',
             'FechaExp': fecha_exp,
             'CveRetenc': cve_retenc,
             'FolioInt': folio_int,
             'DescRetenc': desc_retenc,
-            'Emisor': {
-                "RFCEmisor": emisor.rfc,
-                "NomDenRazSocE": emisor.legal_name,
-                "CURPE": None
-            },
+            'Emisor': emisor,
             'Receptor': receptor,
             'Periodo': periodo,
             'Totales': totales,
             'Complemento': complemento,
             'Addenda': addenda,
         })
-        if emisor.signer:
-            self['Sello'] = emisor.signer.sign_sha1(
-                self.cadena_original().encode()
-            )
+
+    def sign(self, signer: Signer):
+        self['NumCert'] = signer.certificate_number
+        self['Cert'] = signer.certificate_base64()
+        self['Sello'] = signer.sign_sha1(
+            self.cadena_original().encode()
+        )

@@ -3,10 +3,12 @@ from datetime import datetime
 from decimal import Decimal
 from uuid import UUID
 
-from .. import CFDI, XElement
+
 from ..create.catalogos import EstadoComprobante
 from ..create.cfd.catalogos import MetodoPago, TipoDeComprobante, TipoRelacion
 from ..create.compute import make_impuestos_dr_parcial, rounder, group_impuestos, encode_impuesto, calculate_partial
+from ..xelement import XElement
+from ..cfdi import CFDI
 
 
 class SatCFDI(CFDI):

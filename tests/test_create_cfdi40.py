@@ -194,7 +194,7 @@ def test_create_invoice(rfc, xml_file, traslados, retenciones, total, traslado_i
 
     # Stamping
     with mock.patch('uuid.uuid4', _uuid), \
-            mock.patch(f'{module}.Certificate.rfc_pac', "SAT970701NN3"):
+            mock.patch(f'{module}.models.Certificate.rfc_pac', "SAT970701NN3"):
         stamp_v11(invoice, signer=signer, date=datetime(year=2020, month=1, day=11))
 
     # with mock.patch(f'{module}.cfdi.CFDI.estatus', '1'), mock.patch(f'{module}.cfdi.CFDI.fecha_cancelacion', None):
@@ -206,7 +206,7 @@ def test_create_invoice(rfc, xml_file, traslados, retenciones, total, traslado_i
     # Verify Signature
     with mock.patch(f'{module}.transform.SAT_Certificate_Store', SAT_Certificate_Store_Pruebas), \
             mock.patch(f'{module}.pacs.sat.SAT.recover_certificate', from_no_certificado), \
-            mock.patch(f'{module}.Certificate.rfc_pac', "SAT970701NN3"):
+            mock.patch(f'{module}.models.Certificate.rfc_pac', "SAT970701NN3"):
         ver = sat.validate(invoice)
         assert ver
 

@@ -2,7 +2,7 @@ import os
 
 from satcfdi.accounting import SatCFDI
 
-from satcfdi import CFDI
+from satcfdi.cfdi import CFDI
 
 current_dir = os.path.dirname(__file__)
 

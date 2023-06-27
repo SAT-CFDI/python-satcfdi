@@ -1,6 +1,8 @@
 """tfd http://www.sat.gob.mx/TimbreFiscalDigital"""
 from datetime import datetime
-from ... import CFDI, XElement, ScalarMap
+from ...cfdi import CFDI
+from ...xelement import XElement
+from ...utils import ScalarMap
 from ...models.signer import Signer
 from ...transform import MEXICO_TZ
 

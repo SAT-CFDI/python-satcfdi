@@ -19,9 +19,12 @@ from lxml import etree
 from lxml.etree import QName
 from satcfdi.create.cfd.catalogos import TipoDeComprobante
 
-from .. import Code
+from ..models import Code
 
-from .. import CFDI, __version__, ResponseError, Signer, Certificate
+from .. import __version__
+from ..cfdi import CFDI
+from ..exceptions import ResponseError
+from ..models import Signer, Certificate
 from . import PAC, Environment, TaxpayerStatus
 from ..create.catalogos import EstadoComprobante
 from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes

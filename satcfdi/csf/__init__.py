@@ -2,7 +2,9 @@ from datetime import datetime
 import requests
 import urllib3
 from bs4 import BeautifulSoup
-from .. import ResponseError, __version__, Code
+from .. import __version__
+from ..models import Code
+from ..exceptions import ResponseError
 from ..catalogs import select_all
 
 try:

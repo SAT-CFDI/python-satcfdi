@@ -4,7 +4,8 @@ from datetime import date
 
 import pytest
 
-from satcfdi import CFDI, SchemaValidationError
+from satcfdi.cfdi import CFDI
+from satcfdi.exceptions import SchemaValidationError
 from satcfdi.create.pld import ari
 from tests.utils import verify_result, XElementPrettyPrinter
 

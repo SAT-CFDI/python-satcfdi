@@ -1,10 +1,10 @@
-from decimal import Decimal
-from datetime import datetime, date, time
 from collections.abc import Sequence
+from datetime import datetime
 
 from ..w3.signature import signature_c14n_sha1
-from ... import Signer
-from ... import CFDI, XElement, ScalarMap
+from ...models import Signer
+from ...utils import ScalarMap
+from ...xelement import XElement
 
 
 class Folios(ScalarMap):

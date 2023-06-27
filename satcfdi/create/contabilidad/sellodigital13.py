@@ -1,7 +1,6 @@
-from decimal import Decimal
-from datetime import datetime, date, time
-from collections.abc import Sequence
-from ... import CFDI, XElement, ScalarMap
+from datetime import datetime
+
+from ...cfdi import CFDI
 
 
 class SelloDigitalContElec:

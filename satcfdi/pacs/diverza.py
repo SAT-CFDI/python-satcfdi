@@ -7,7 +7,11 @@ from packaging import version
 import requests
 
 from . import PAC, Environment, Accept, Document, CancelReason, CancelationAcknowledgment
-from .. import __version__, ResponseError, CFDI, iterate, Signer, DocumentNotFoundError
+from .. import __version__
+from ..exceptions import ResponseError, DocumentNotFoundError
+from ..cfdi import CFDI
+from ..utils import iterate
+from ..models import Signer
 
 
 def _process_content(response, fmt):

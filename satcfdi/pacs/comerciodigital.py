@@ -1,9 +1,10 @@
 import requests
-from lxml import etree
 
 from . import PAC, Accept, Document, CancelationAcknowledgment, CancelReason, Environment
-from .. import __version__, ResponseError, Signer, XElement
+from .. import __version__
 from ..cfdi import CFDI
+from ..exceptions import ResponseError
+from ..models import Signer
 
 
 class ComercioDigital(PAC):

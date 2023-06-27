@@ -1,7 +1,7 @@
 from decimal import Decimal
 from datetime import datetime, date, time
 from .helpers import Xint, impuesto_index, default_objectify
-from .. import NamespaceMismatchError
+from ..exceptions import NamespaceMismatchError
 from ..utils import ScalarMap
 from ..catalogs import catalog_code
 

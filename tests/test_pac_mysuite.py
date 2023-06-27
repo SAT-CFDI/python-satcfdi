@@ -5,7 +5,7 @@ from decimal import Decimal
 from unittest import mock
 
 
-from satcfdi import Signer
+from satcfdi.models import Signer
 from satcfdi.create.cfd import cfdi40
 from satcfdi.pacs import Environment
 from satcfdi.pacs.mysuite import MYSuite

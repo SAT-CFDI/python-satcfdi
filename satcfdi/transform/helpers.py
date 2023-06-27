@@ -4,7 +4,7 @@ from decimal import Decimal
 from lxml import etree
 from lxml.etree import QName
 
-from .. import CFDIError
+from ..exceptions import CFDIError
 from ..models import Code
 from ..utils import iterate
 

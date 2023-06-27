@@ -5,7 +5,11 @@ import requests
 from lxml import etree
 
 from . import PAC, Environment, Accept, Document, CancelReason, CancelationAcknowledgment, AcceptRejectAcknowledgment, TaxpayerStatus
-from .. import ResponseError, CFDI, Signer, XElement, __version__
+from ..exceptions import ResponseError
+from .. import __version__
+from ..models import Signer
+from ..xelement import XElement
+from ..cfdi import CFDI
 from ..create.cancela import cancelacionretencion
 from ..create.cancela.aceptacionrechazo import SolicitudAceptacionRechazo
 from ..create.cancela.cancelacion import Cancelacion

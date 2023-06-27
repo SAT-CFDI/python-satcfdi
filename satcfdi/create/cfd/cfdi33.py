@@ -3,7 +3,8 @@ from collections.abc import *
 from decimal import Decimal
 
 from . import cfdi40, pago10
-from ... import CFDI, ScalarMap
+from ...cfdi import CFDI
+from ...utils import ScalarMap
 
 
 class Impuesto(cfdi40.Impuesto):

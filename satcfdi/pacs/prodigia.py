@@ -5,7 +5,9 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 from . import PAC, Accept, Document, CancelReason, CancelationAcknowledgment, Environment
-from .. import __version__, ResponseError, Signer
+from .. import __version__
+from ..exceptions import ResponseError
+from ..models import Signer
 from ..cfdi import CFDI
 
 

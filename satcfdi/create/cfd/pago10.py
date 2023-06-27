@@ -1,12 +1,11 @@
 """pago10 http://www.sat.gob.mx/Pagos"""
-from decimal import Decimal
-from datetime import datetime, date, time
 from collections.abc import *
+from datetime import datetime
+from decimal import Decimal
 
-from . import pago20
-from ..compute import make_impuestos_p
-from ... import iterate
-from ... import CFDI, XElement, ScalarMap
+from ...cfdi import CFDI
+from ...utils import ScalarMap
+from ...utils import iterate
 
 
 class Traslado(ScalarMap):

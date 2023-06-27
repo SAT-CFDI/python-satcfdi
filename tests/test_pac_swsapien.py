@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from decimal import Decimal
 from unittest import mock
-from satcfdi import CFDI
+from satcfdi.cfdi import CFDI
 from satcfdi.create.cancela import cancelacionretencion
 from satcfdi.create.cancela.aceptacionrechazo import SolicitudAceptacionRechazo, Folios
 from satcfdi.create.cancela.cancelacion import Cancelacion, Folio

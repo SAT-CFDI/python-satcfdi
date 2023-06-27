@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Flag, auto, Enum
-from .. import CFDI, Signer
+from ..cfdi import CFDI
+from ..models import Signer
 from ..create.cancela import cancelacion
 from ..create.cancela import cancelacionretencion
 from ..create.cancela.aceptacionrechazo import SolicitudAceptacionRechazo

@@ -4,14 +4,15 @@ from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 
-from .. import Signer
+from satcfdi.create.cfd.catalogos import Impuesto as CatImpuesto
 from . import pago20
+from .. import Signer
 from ..compute import make_impuestos, rounder, make_impuesto, \
     make_impuestos_dr_parcial
-from ... import CFDI, ScalarMap
+from ...cfdi import CFDI
 from ...transform import get_timezone
+from ...utils import ScalarMap
 from ...utils import iterate
-from satcfdi.create.cfd.catalogos import Impuesto as CatImpuesto
 
 
 class Impuesto(ScalarMap):

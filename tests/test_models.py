@@ -7,7 +7,7 @@ from unittest import mock
 import pytest
 from OpenSSL import crypto
 
-from satcfdi import Code
+from satcfdi.models import Code
 from satcfdi.models.certificate import CertificateType
 from satcfdi.models.certificate_request import CertificateSigningRequest
 from satcfdi.exceptions import CFDIError

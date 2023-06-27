@@ -1,7 +1,7 @@
 from lxml.etree import Element, SubElement
 from .schemas import cfdi_schemas
 from .helpers import simple_element, SchemaCollector, fmt_decimal, strcode, iterate
-from .. import NamespaceMismatchError
+from ..exceptions import NamespaceMismatchError
 
 def ubicacion0(name, data):
     self = Element('{%s}%s' % ('http://www.diverza.com/ns/addenda/diverza/1', name), nsmap=data.get('_nsmap') or {'dvz': 'http://www.diverza.com/ns/addenda/diverza/1'})

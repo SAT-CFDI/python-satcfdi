@@ -1,11 +1,10 @@
 from collections.abc import Sequence
 from datetime import datetime
 
-from lxml import etree
-
 from .. import Signer
 from ..w3.signature import signature_c14n_sha1
-from ... import CFDI, XElement, ScalarMap
+from ...utils import ScalarMap
+from ...xelement import XElement
 
 
 class Folio(ScalarMap):

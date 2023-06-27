@@ -3,14 +3,14 @@ from datetime import date, datetime
 from decimal import Decimal
 from io import BytesIO
 from typing import Sequence
-from zipfile import ZipFile, ZipInfo
 
 from .catalog import *
 from .code import *
 from .utils import _format_rfc, DIOTWriter, encrypt_triple_des, period_code, catalog_code
-from .. import RFC, RFCType, CURP, iterate, Certificate
 from ..ans1e import *
+from ..models import RFC, RFCType, CURP, Certificate
 from ..printer import Representable
+from ..utils import iterate
 
 __all__ = [
     'DIOT',

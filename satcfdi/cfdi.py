@@ -2,9 +2,10 @@ import logging
 import os
 import lxml.etree
 
-from . import CFDIError, XElement
+from .exceptions import CFDIError
 from .transform import *
 from .transform.helpers import fmt_decimal
+from .xelement import XElement
 
 current_dir = os.path.dirname(__file__)
 logger = logging.getLogger(__name__)

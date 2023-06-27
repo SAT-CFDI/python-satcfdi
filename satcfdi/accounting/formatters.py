@@ -1,7 +1,7 @@
 import logging
 
 from .models import Payment, PaymentsDetails, SatCFDI
-from .. import iterate
+from ..utils import iterate
 
 logger = logging.getLogger(__name__)
 

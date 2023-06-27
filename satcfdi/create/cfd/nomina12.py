@@ -3,8 +3,9 @@ from collections.abc import *
 from datetime import date
 from decimal import Decimal
 
-from ... import iterate
-from ... import CFDI, XElement, ScalarMap
+from ...cfdi import CFDI
+from ...utils import ScalarMap
+from ...utils import iterate
 
 
 class Incapacidad(ScalarMap):

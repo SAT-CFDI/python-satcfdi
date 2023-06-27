@@ -6,7 +6,7 @@ from urllib.parse import urlparse, urlunparse
 from bs4 import BeautifulSoup
 from requests import Response
 
-from .. import Signer, Certificate
+from ..models import Signer, Certificate
 
 
 def generate_token(signer: Signer, code: str) -> bytes:

@@ -4,8 +4,9 @@ from datetime import datetime
 from decimal import Decimal
 
 from ..compute import make_impuestos_p, make_pago_totales
-from ... import iterate
-from ... import CFDI, XElement, ScalarMap
+from ...utils import iterate
+from ...cfdi import CFDI
+from ...utils import ScalarMap
 
 
 class TrasladoDR(ScalarMap):

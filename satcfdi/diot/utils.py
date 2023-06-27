@@ -2,7 +2,7 @@ import os
 from io import BytesIO
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from .. import RFC, RFCType, Code
+from ..models import RFC, RFCType, Code
 
 BUFFER_SIZE = 65536
 

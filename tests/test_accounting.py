@@ -4,7 +4,7 @@ from unittest import mock
 
 import xlsxwriter
 
-from satcfdi import DatePeriod
+from satcfdi.models import DatePeriod
 from satcfdi.accounting._ansi_colors import *
 from satcfdi.accounting.formatters import SatCFDI
 from satcfdi.accounting.process import filter_invoices_iter, invoices_export, invoices_print, payments_print, \

@@ -6,7 +6,7 @@ from lxml import etree
 from .ds import SignatureValueType, KeyInfoType, CanonicalizationMethodType, SignatureMethodType, ReferenceType, TransformsType, TransformType, \
     DigestMethodType, X509DataType, X509IssuerSerialType, SignedInfo, Signature
 from .. import Signer
-from ... import XElement
+from ...xelement import XElement
 
 
 def _tobytes(element: etree.Element, exclusive=True) -> bytes:

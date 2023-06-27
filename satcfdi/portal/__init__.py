@@ -7,7 +7,8 @@ import urllib3
 from requests.structures import CaseInsensitiveDict
 
 from .utils import get_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
-from .. import Signer, ResponseError
+from ..models import Signer
+from ..exceptions import ResponseError
 
 
 class PortalManager(requests.Session):
