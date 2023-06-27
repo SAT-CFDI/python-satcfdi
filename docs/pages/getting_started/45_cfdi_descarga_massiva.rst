@@ -7,7 +7,7 @@ ___________________
 .. code-block:: python
 
     from datetime import date
-    from satcfdi import Signer
+    from satcfdi.models import Signer
     from satcfdi.pacs.sat import SAT, TipoDescargaMasivaTerceros
     
     # Load Fiel

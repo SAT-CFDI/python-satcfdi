@@ -6,7 +6,7 @@ ______________________
 
 .. code-block:: python
 
-    from satcfdi import Signer
+    from satcfdi.models import Signer
     from satcfdi.portal import SATFacturaElectronica
     
     # Load Fiel

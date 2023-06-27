@@ -122,7 +122,7 @@ ____________________
 .. code-block:: python
 
     from decimal import Decimal
-    from satcfdi import Signer
+    from satcfdi.models import Signer
     from satcfdi.create.cfd import cfdi40
     from satcfdi.create.cfd.catalogos import RegimenFiscal, UsoCFDI, MetodoPago
     

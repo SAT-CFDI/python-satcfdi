@@ -7,7 +7,7 @@ ______________________
 .. code-block:: python
 
     from decimal import Decimal
-    from satcfdi import Signer
+    from satcfdi.models import Signer
     from satcfdi.create.cfd import cfdi40
     from satcfdi.create.cfd.catalogos import RegimenFiscal, UsoCFDI, MetodoPago
     
@@ -63,7 +63,7 @@ ______________________
 
     from datetime import date
     from decimal import Decimal
-    from satcfdi import Signer
+    from satcfdi.models import Signer
     from satcfdi.create.cfd import cfdi40, nomina12
     
     # Load signing certificate
@@ -139,7 +139,7 @@ ______________________
     from datetime import date, datetime
     from decimal import Decimal
     
-    from satcfdi import Signer
+    from satcfdi.models import Signer
     from satcfdi.create.cfd import cfdi40, pago20
     
     # Load signing certificate
@@ -194,7 +194,7 @@ __________________________________
 .. code-block:: python
 
     from datetime import datetime
-    from satcfdi import Signer, CFDI
+    from satcfdi.models import Signer, CFDI
     from satcfdi.create.cfd import cfdi40
     
     # Load signing certificate
@@ -231,7 +231,7 @@ _______________________
 .. code-block:: python
 
     from decimal import Decimal
-    from satcfdi import Signer
+    from satcfdi.models import Signer
     from satcfdi.create.addendas import dvz11
     from satcfdi.create.cfd import cfdi40
     

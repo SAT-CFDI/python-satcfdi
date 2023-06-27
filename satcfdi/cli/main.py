@@ -3,7 +3,7 @@ import logging
 import sys
 from typing import List, Optional
 
-from .. import CFDI, CFDIError
+from ..cfdi import CFDI, CFDIError
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("weasyprint").setLevel(logging.ERROR)

@@ -42,7 +42,7 @@ ______________________
 .. code-block:: python
 
     import datetime
-    from satcfdi import Signer
+    from satcfdi.models import Signer
     from satcfdi.pacs.sat import SAT, TipoDescargaMasivaTerceros
     
     # Load fiel
@@ -77,7 +77,7 @@ ______________________
 
 .. code-block:: python
 
-    from satcfdi import CFDI
+    from satcfdi.cfdi import CFDI
     from satcfdi.pacs.sat import SAT
     
     sat = SAT()

@@ -6,7 +6,7 @@ ________________________________
 
 .. code-block:: python
 
-    from satcfdi import Signer
+    from satcfdi.models import Signer
     from satcfdi.certifica import Certifica
     
     # Load Fiel
