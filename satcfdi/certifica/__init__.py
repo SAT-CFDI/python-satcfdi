@@ -157,10 +157,6 @@ def _create_renovation_moral_certificate_signing_request(signer: Signer, private
         k: v for k, v in cer.get_subject().get_components()
     }
 
-    print(signer.rfc)
-    print(subject_at[b'x500UniqueIdentifier'])
-    print(subject_at[b'serialNumber'])
-
     subject = {
         '2.5.4.45': (rfc.encode(ENCODING) + b' / ' + subject_at[b'x500UniqueIdentifier'], Numbers.PrintableString),
         '2.5.4.5': (b' / ' + subject_at[b'serialNumber'], Numbers.PrintableString),
