@@ -116,6 +116,10 @@ _encode_fn = {
 }
 
 
+def to_utc_time(dt):
+    return dt.strftime('%y%m%d%H%M%SZ')
+
+
 class Ans1Encoder:
     __slots__ = ['_chain']
 

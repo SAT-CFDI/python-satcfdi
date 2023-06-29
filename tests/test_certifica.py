@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 import io
 import os
 from unittest import mock
@@ -9,6 +9,7 @@ from cryptography.hazmat.primitives.serialization import load_der_private_key
 
 from satcfdi.certifica import _create_certificate_signing_request, _create_certificate_signing_request_zip, Certifica, _calculate_code, \
     _create_renovation_certificate_signing_request, _calculate_code_random, _create_generacion_certificate_signing_request, _create_renovation_moral_certificate_signing_request
+from satcfdi.certifica.pcks7 import create_pkcs7
 from tests.utils import get_signer
 
 current_dir = os.path.dirname(__file__)
@@ -184,3 +185,25 @@ def test_create_signing_request_zip(folder, password, zip_date, sucursal, rfc, f
 
     assert len(res) > 3200
     # check something?
+
+
+def test_pcks7():
+    with open(os.path.join(current_dir, 'certifica', 'test_create.pcks7'), 'rb') as f:
+        data = f.read()
+
+    zip_data = b'123'
+    signer = get_signer('cacx7605101p8')
+
+    with mock.patch(f'{module}.certifica.pcks7.datetime') as d:
+        d.utcnow = mock.Mock(return_value=datetime(2023, 6, 28, 19, 28, 1, tzinfo=timezone.utc))
+
+        assert data == create_pkcs7(zip_data, signer)
+
+    # cert = self.signer.certificate.to_cryptography()
+    # key = self.signer.key
+    # options = [pkcs7.PKCS7Options.NoCapabilities, pkcs7.PKCS7Options.Binary]
+    #
+    # return pkcs7.PKCS7SignatureBuilder().set_data(data) \
+    #     .add_signer(cert, key, hashes.SHA1()) \
+    #     .sign(serialization.Encoding.DER, options)
+

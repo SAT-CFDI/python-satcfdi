@@ -10,6 +10,7 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 from cryptography.hazmat.primitives.serialization import pkcs7
 
+from .pcks7 import create_pkcs7
 from ..models import Signer, Certificate, RFC, RFCType
 from ..ans1e import *
 from ..models.certificate import CertificateType
@@ -103,13 +104,11 @@ class Certifica:
         return private_key
 
     def _pkcs7_package(self, data):
-        cert = self.signer.certificate.to_cryptography()
-        key = self.signer.key
-        options = [pkcs7.PKCS7Options.NoCapabilities, pkcs7.PKCS7Options.Binary]
-
-        return pkcs7.PKCS7SignatureBuilder().set_data(data) \
-            .add_signer(cert, key, hashes.SHA1()) \
-            .sign(serialization.Encoding.DER, options)
+        return create_pkcs7(
+            data=data,
+            signer=self.signer,
+            hash_algorithm=hashes.SHA1(),
+        )
 
 
 def _create_certificate_signing_request_zip(signer: Signer, private_key: RSAPrivateKey, sucursal: str):

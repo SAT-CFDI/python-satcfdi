@@ -77,7 +77,7 @@ setuptools.setup(
         'lxml >= 4.9.0',
         'weasyprint >= 57.0',
         'requests >= 2.0.0',
-        'cryptography >= 38.0.0,<39.0.0',
+        'cryptography >= 39.0.0',
         'pytz >= 2022.5',
         'xlsxwriter >= 3.0.0',
         'pyOpenSSL >= 22.0.0',
