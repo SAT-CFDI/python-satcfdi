@@ -188,14 +188,14 @@ def test_create_signing_request_zip(folder, password, zip_date, sucursal, rfc, f
     # check something?
 
 
-def test_pcks7():
-    with open(os.path.join(current_dir, 'certifica', 'test_create.pcks7'), 'rb') as f:
+def test_pkcs7():
+    with open(os.path.join(current_dir, 'certifica', 'test_create.pkcs7'), 'rb') as f:
         data = f.read()
 
     zip_data = b'123'
     signer = get_signer('cacx7605101p8')
 
-    with mock.patch(f'{module}.certifica.pcks7.datetime') as d:
+    with mock.patch(f'{module}.certifica.pkcs7.datetime') as d:
         d.utcnow = mock.Mock(return_value=datetime(2023, 6, 28, 19, 28, 1, tzinfo=timezone.utc))
 
         assert data == create_pkcs7(zip_data, signer, hash_algorithm=hashes.SHA1())
