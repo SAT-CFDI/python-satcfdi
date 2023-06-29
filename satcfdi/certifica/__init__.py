@@ -10,7 +10,7 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 from cryptography.hazmat.primitives.serialization import pkcs7
 
-from .pcks7 import create_pkcs7
+from .pkcs7 import create_pkcs7
 from ..models import Signer, Certificate, RFC, RFCType
 from ..ans1e import *
 from ..models.certificate import CertificateType
