@@ -10,7 +10,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
 
-def create_pkcs7(data, signer: Signer, hash_algorithm=hashes.SHA1()):
+def create_pkcs7(data, signer: Signer, hash_algorithm):
     cert_bytes = signer.certificate_bytes()
     issuer_der = signer.certificate.get_issuer().der()
     serial = signer.certificate.get_serial_number()

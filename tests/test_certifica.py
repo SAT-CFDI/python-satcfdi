@@ -5,6 +5,7 @@ from unittest import mock
 from zipfile import ZipInfo
 
 import pytest
+from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.serialization import load_der_private_key
 
 from satcfdi.certifica import _create_certificate_signing_request, _create_certificate_signing_request_zip, Certifica, _calculate_code, \
@@ -197,7 +198,7 @@ def test_pcks7():
     with mock.patch(f'{module}.certifica.pcks7.datetime') as d:
         d.utcnow = mock.Mock(return_value=datetime(2023, 6, 28, 19, 28, 1, tzinfo=timezone.utc))
 
-        assert data == create_pkcs7(zip_data, signer)
+        assert data == create_pkcs7(zip_data, signer, hash_algorithm=hashes.SHA1())
 
     # cert = self.signer.certificate.to_cryptography()
     # key = self.signer.key
@@ -206,4 +207,3 @@ def test_pcks7():
     # return pkcs7.PKCS7SignatureBuilder().set_data(data) \
     #     .add_signer(cert, key, hashes.SHA1()) \
     #     .sign(serialization.Encoding.DER, options)
-
