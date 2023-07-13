@@ -4,6 +4,10 @@ from decimal import Decimal
 from pprint import PrettyPrinter
 from unittest import mock
 
+from satcfdi.create.catalogos import EstadoComprobante
+
+from satcfdi.create.cfd.catalogos import TipoDeComprobante
+
 from satcfdi import __version__
 from satcfdi.cfdi import CFDI
 from satcfdi.models import Code
@@ -20,7 +24,7 @@ current_dir = os.path.dirname(__file__)
 pp = PrettyPrinter()
 
 
-def test_pac_sat():
+def test_pac_sat_cfdi():
     sat_service = SAT(environment=Environment.TEST)
 
     with mock.patch(f'requests.post') as mk:
@@ -176,3 +180,36 @@ def test_pac_sat_uuid():
         verify = verify_result(data=pp.pformat(mk.call_args.kwargs), filename=f"pac_sat_uuid.pretty.py")
         assert verify
 
+
+def test_pac_sat_rfc():
+    signer = get_signer('xiqb891116qe4')
+    sat_service = SAT(environment=Environment.TEST, signer=signer)
+
+    sat_service.token_comprobante = {
+        "Expires": datetime.utcnow() + timedelta(seconds=3600),
+        "AutenticaResult": "token_comprobante"
+    }
+
+    with open(os.path.join(current_dir, 'pac_sat_responses', 'response-with-id.xml'), 'rb') as f:
+        content = f.read()
+
+    with mock.patch(f'requests.post') as mk:
+        mk.return_value.ok = True
+        mk.return_value.content = content
+
+        res = sat_service.recover_comprobante_request(
+            tipo_solicitud=TipoDescargaMasivaTerceros.CFDI,
+            rfc_emisor="ABC123456ABC",
+            rfc_receptor="ABC123456ABC",
+            fecha_inicial=datetime(2021, 1, 1),
+            fecha_final=datetime(2021, 1, 1),
+            tipo_comprobante=TipoDeComprobante.INGRESO,
+            estado_comprobante=EstadoComprobante.VIGENTE,
+
+        )
+
+        mk.assert_called_once()
+        del mk.call_args.kwargs['headers']['User-Agent']
+
+        verify = verify_result(data=pp.pformat(mk.call_args.kwargs), filename=f"pac_sat_rfc.pretty.py")
+        assert verify
