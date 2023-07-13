@@ -514,8 +514,8 @@ class SAT(PAC):
 
     def recover_comprobante_request(
             self,
-            fecha_inicial: date = None,
-            fecha_final: date = None,
+            fecha_inicial: date = None | datetime,
+            fecha_final: date = None | datetime,
             rfc_receptor: str | Sequence[str] = None,
             rfc_emisor: str = None,
             tipo_solicitud: TipoDescargaMasivaTerceros | str = TipoDescargaMasivaTerceros.CFDI,
@@ -592,8 +592,8 @@ class SAT(PAC):
 
     def recover_comprobante_iwait(
             self,
-            fecha_inicial: date = None,
-            fecha_final: date = None,
+            fecha_inicial: date = None | datetime,
+            fecha_final: date = None | datetime,
             rfc_receptor: str | Sequence[str] = None,
             rfc_emisor: str = None,
             tipo_solicitud: TipoDescargaMasivaTerceros | str = TipoDescargaMasivaTerceros.CFDI,
