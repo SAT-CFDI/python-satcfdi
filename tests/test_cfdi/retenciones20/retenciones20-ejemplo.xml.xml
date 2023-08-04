@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<retenciones:Retenciones xmlns:retenciones="http://www.sat.gob.mx/esquemas/retencionpago/2" xmlns:arrendamientoenfideicomiso="http://www.sat.gob.mx/esquemas/retencionpago/1/arrendamientoenfideicomiso" xmlns:dividendos="http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos" xmlns:enajenaciondeacciones="http://www.sat.gob.mx/esquemas/retencionpago/1/enajenaciondeacciones" xmlns:fideicomisonoempresarial="http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial" xmlns:intereses="http://www.sat.gob.mx/esquemas/retencionpago/1/intereses" xmlns:intereseshipotecarios="http://www.sat.gob.mx/esquemas/retencionpago/1/intereseshipotecarios" xmlns:operacionesconderivados="http://www.sat.gob.mx/esquemas/retencionpago/1/operacionesconderivados" xmlns:pagosaextranjeros="http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros" xmlns:planesderetiro11="http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11" xmlns:premios="http://www.sat.gob.mx/esquemas/retencionpago/1/premios" xmlns:sectorfinanciero="http://www.sat.gob.mx/esquemas/retencionpago/1/sectorfinanciero" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.0" FolioInt="1RETENCION" Sello="" NoCertificado="30001000000300023708" Certificado="" FechaExp="2021-12-12T12:45:29" LugarExpRetenc="99999" CveRetenc="01" DescRetenc="0.00" xsi:schemaLocation="http://www.sat.gob.mx/esquemas/retencionpago/2 http://www.sat.gob.mx/esquemas/retencionpago/2/retencionpagov2.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/arrendamientoenfideicomiso http://www.sat.gob.mx/esquemas/retencionpago/1/arrendamientoenfideicomiso/arrendamientoenfideicomiso.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos/dividendos.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/enajenaciondeacciones http://www.sat.gob.mx/esquemas/retencionpago/1/enajenaciondeacciones/enajenaciondeacciones.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial http://www.sat.gob.mx/esquemas/retencionpago/1/fideicomisonoempresarial/fideicomisonoempresarial.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/intereses http://www.sat.gob.mx/esquemas/retencionpago/1/intereses/intereses.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/intereseshipotecarios http://www.sat.gob.mx/esquemas/retencionpago/1/intereseshipotecarios/intereseshipotecarios.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/operacionesconderivados http://www.sat.gob.mx/esquemas/retencionpago/1/operacionesconderivados/operacionesconderivados.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros/pagosaextranjeros.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11 http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11/planesderetiro11.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/premios http://www.sat.gob.mx/esquemas/retencionpago/1/premios/premios.xsd http://www.sat.gob.mx/esquemas/retencionpago/1/sectorfinanciero http://www.sat.gob.mx/esquemas/retencionpago/1/sectorfinanciero/sectorfinanciero.xsd http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd">
+  <retenciones:CfdiRetenRelacionados TipoRelacion="09" UUID="13fec5b0-843d-4d49-b30a-af93adcbee02"/>
+  <retenciones:Emisor RfcE="AAAA010101AAA" NomDenRazSocE="PERSONA FÍSICA DE PRUEBA" RegimenFiscalE="630"/>
+  <retenciones:Receptor NacionalidadR="Nacional">
+    <retenciones:Nacional RfcR="XAXX010101000" NomDenRazSocR="PERSONA FISICA NACIONAL DE PRUEBA" CurpR="XAXX010101HNTXXX00" DomicilioFiscalR="99999"/>
+  </retenciones:Receptor>
+  <retenciones:Periodo MesIni="01" MesFin="12" Ejercicio="2027"/>
+  <retenciones:Totales MontoTotOperacion="1.00" MontoTotGrav="1.00" MontoTotExent="1.00" MontoTotRet="1.00" UtilidadBimestral="12" ISRCorrespondiente="11.2">
+    <retenciones:ImpRetenidos BaseRet="8.0" ImpuestoRet="001" MontoRet="1.00" TipoPagoRet="02"/>
+    <retenciones:ImpRetenidos BaseRet="16.0" ImpuestoRet="002" MontoRet="1.00" TipoPagoRet="03"/>
+    <retenciones:ImpRetenidos BaseRet="16.0" ImpuestoRet="003" MontoRet="1.00" TipoPagoRet="04"/>
+  </retenciones:Totales>
+  <retenciones:Complemento>
+    <arrendamientoenfideicomiso:Arrendamientoenfideicomiso Version="1.0" PagProvEfecPorFiduc="0.00" RendimFideicom="0.00" DeduccCorresp="0.00" MontTotRet="0.00" MontResFiscDistFibras="0.00" MontOtrosConceptDistr="0.00" DescrMontOtrosConceptDistr="NO HAY"/>
+    <dividendos:Dividendos Version="1.0">
+      <dividendos:DividOUtil CveTipDivOUtil="01" MontISRAcredRetMexico="0.00" MontISRAcredRetExtranjero="0.00" MontRetExtDivExt="0.00" TipoSocDistrDiv="Sociedad Nacional" MontISRAcredNal="0.1" MontDivAcumNal="10.1" MontDivAcumExt="10.1"/>
+      <dividendos:Remanente ProporcionRem="10.0"/>
+    </dividendos:Dividendos>
+    <enajenaciondeacciones:EnajenaciondeAcciones Version="1.0" ContratoIntermediacion="NO HAY CONTRATO" Ganancia="0.00" Perdida="0.00"/>
+    <fideicomisonoempresarial:Fideicomisonoempresarial Version="1.0">
+      <fideicomisonoempresarial:IngresosOEntradas MontTotEntradasPeriodo="0.00" PartPropAcumDelFideicom="0.00" PropDelMontTot="20.815484">
+        <fideicomisonoempresarial:IntegracIngresos Concepto="ESTE ES EL CONCEPTO"/>
+      </fideicomisonoempresarial:IngresosOEntradas>
+      <fideicomisonoempresarial:DeduccOSalidas MontTotEgresPeriodo="0.00" PartPropDelFideicom="0.00" PropDelMontTot="20.000000">
+        <fideicomisonoempresarial:IntegracEgresos ConceptoS="Nada"/>
+      </fideicomisonoempresarial:DeduccOSalidas>
+      <fideicomisonoempresarial:RetEfectFideicomiso MontRetRelPagFideic="0.00" DescRetRelPagFideic="Descripción"/>
+    </fideicomisonoempresarial:Fideicomisonoempresarial>
+    <intereses:Intereses Version="1.0" SistFinanciero="NO" RetiroAORESRetInt="NO" OperFinancDerivad="NO" MontIntNominal="1.000" MontIntReal="2.000" Perdida="3.000"/>
+    <intereseshipotecarios:Intereseshipotecarios Version="1.0" CreditoDeInstFinanc="NO" SaldoInsoluto="0.00" PropDeducDelCredit="0.00" MontTotIntNominalesDev="0.00" MontTotIntNominalesDevYPag="0.00" MontTotIntRealPagDeduc="0.00" NumContrato="10000000000"/>
+    <operacionesconderivados:Operacionesconderivados Version="1.0" MontGanAcum="1.0" MontPerdDed="1.0"/>
+    <pagosaextranjeros:Pagosaextranjeros Version="1.0" EsBenefEfectDelCobro="SI">
+      <pagosaextranjeros:NoBeneficiario PaisDeResidParaEfecFisc="IT" ConceptoPago="6" DescripcionConcepto="ESTA ES LA DESCRIPCION"/>
+      <pagosaextranjeros:Beneficiario RFC="AAAA010101AA0" CURP="AAAA010101HJCXXX01" NomDenRazSocB="PRUEBA DE PERSONA FISICA" ConceptoPago="6" DescripcionConcepto="ESTA ES LA DESCRIPCION"/>
+    </pagosaextranjeros:Pagosaextranjeros>
+    <planesderetiro11:Planesderetiro Version="1.1" SistemaFinanc="NO" MontTotAportAnioInmAnterior="0.00" MontIntRealesDevengAniooInmAnt="0.00" HuboRetirosAnioInmAntPer="NO" MontTotRetiradoAnioInmAntPer="0.00" MontTotExentRetiradoAnioInmAnt="0.00" MontTotExedenteAnioInmAnt="0.00" HuboRetirosAnioInmAnt="SI" MontTotRetiradoAnioInmAnt="0.00">
+      <planesderetiro11:AportacionesODepositos TipoAportacionODeposito="c" MontAportODep="1000000.00" RFCFiduciaria="AAAA010101AA0"/>
+    </planesderetiro11:Planesderetiro>
+    <premios:Premios Version="1.0" EntidadFederativa="18" MontTotPago="50000" MontTotPagoGrav="50000" MontTotPagoExent="0"/>
+    <sectorfinanciero:SectorFinanciero Version="1.0" IdFideicom="191216" NomFideicom="NOMBRE DEL FIDEICOM" DescripFideicom="DEScRIPCION DEL FIDEICOM"/>
+    <tfd:TimbreFiscalDigital Version="1.1" UUID="02e3bc7c-beda-41bf-8a6b-f74915e9b61f" FechaTimbrado="2021-12-09T16:24:00" RfcProvCertif="AAA010101AAA" SelloCFD="Gnm1yXaIig5hr1dJ+88gjLY5usQxXP2s+zdmlLl4iokWENaUUlhpG/crkUFEzcJfdq1FbBxV/d/GN50MGuw2fP5f6MkRYz75UKaKfzubUak+SCkDzYot5jZRkO6hXKe4+KAfaulP7wa8Q7oSW5ccivppLnikme0CS3KtGBrQHU/q3pjNrw+jMvsnpUc1tx91REqMWrzMTZ2D6UkGdqn8i/0mLRU2vT8vPaNg/Hr2jpVVAgQmPtfvnfnORCWSm/5qZg9Tli7nTRRVwupF4o9ajH2/Is7LoCsIgZUg3wCHkZCjaKk2mJoK7FyMTsPXRRSGhoYgwi1kNHs1aY4RHNwe5w==" NoCertificadoSAT="30001000000300023699" SelloSAT="f1aiyIzFn04YNpLzS6+BN5V+qchEzrjo3yiBvbzSMSqd90OEL46+FCfZVZXCeev4yj2t27mhgWOhu6uBI/R6HRb5/U0VDc7XgUE+IZ4UV00Xd6HJXAZAGXH6+ebKYpxjxevz3C0zKrvsneQBMUPlG8zgnU1hJkyNrDp2KD3ybq71VO4r3kLHL/KtSlqZhoKtGPUWJ06Q3vDQ15WI3sOUbg2cuyJ2LIr3U+EYP4BHnCiHgq/S3KwWIqEAZxz/6lm4J3ZTnhFI9GTtMQWPyKCGxyRiRV9jX8sVuo9QL/ZijimHT8eUpeuxz/2rY0OmfmKrNzEm7wb7SU/oxfMskuHK5A=="/>
+  </retenciones:Complemento>
+</retenciones:Retenciones>

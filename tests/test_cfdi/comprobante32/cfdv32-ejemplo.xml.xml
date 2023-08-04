@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.2" serie="C" folio="38" fecha="2015-02-18T11:49:20" sello="MMakX8Q1RyedjoNEQdHN64DgpZesmkcPSye2Tb+nELqFNNzITTicyc7WRcr/gj4UQX1ffhBuWmO959453o4pkMO9omip2DiM0Ud2KitU58+P4yRyxdjhmaRS9QSsUSpcKIrLB4viSJ9GD32pJYnxmpxYi8+GO+n3HvIAMHega+A=" formaDePago="PAGO EN UNA SOLA EXHIBICION" noCertificado="20001000000100005867" certificado="MIIEdDCCA1ygAwIBAgIUMjAwMDEwMDAwMDAxMDAwMDU4NjcwDQYJKoZIhvcNAQEFBQAwggFvMRgwFgYDVQQDDA9BLkMuIGRlIHBydWViYXMxLzAtBgNVBAoMJlNlcnZpY2lvIGRlIEFkbWluaXN0cmFjacOzbiBUcmlidXRhcmlhMTgwNgYDVQQLDC9BZG1pbmlzdHJhY2nDs24gZGUgU2VndXJpZGFkIGRlIGxhIEluZm9ybWFjacOzbjEpMCcGCSqGSIb3DQEJARYaYXNpc25ldEBwcnVlYmFzLnNhdC5nb2IubXgxJjAkBgNVBAkMHUF2LiBIaWRhbGdvIDc3LCBDb2wuIEd1ZXJyZXJvMQ4wDAYDVQQRDAUwNjMwMDELMAkGA1UEBhMCTVgxGTAXBgNVBAgMEERpc3RyaXRvIEZlZGVyYWwxEjAQBgNVBAcMCUNveW9hY8OhbjEVMBMGA1UELRMMU0FUOTcwNzAxTk4zMTIwMAYJKoZIhvcNAQkCDCNSZXNwb25zYWJsZTogSMOpY3RvciBPcm5lbGFzIEFyY2lnYTAeFw0xMjA3MjcxNzAyMDBaFw0xNjA3MjcxNzAyMDBaMIHbMSkwJwYDVQQDEyBBQ0NFTSBTRVJWSUNJT1MgRU1QUkVTQVJJQUxFUyBTQzEpMCcGA1UEKRMgQUNDRU0gU0VSVklDSU9TIEVNUFJFU0FSSUFMRVMgU0MxKTAnBgNVBAoTIEFDQ0VNIFNFUlZJQ0lPUyBFTVBSRVNBUklBTEVTIFNDMSUwIwYDVQQtExxBQUEwMTAxMDFBQUEgLyBIRUdUNzYxMDAzNFMyMR4wHAYDVQQFExUgLyBIRUdUNzYxMDAzTURGUk5OMDkxETAPBgNVBAsTCFVuaWRhZCAxMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC2TTQSPONBOVxpXv9wLYo8jezBrb34i/tLx8jGdtyy27BcesOav2c1NS/Gdv10u9SkWtwdy34uRAVe7H0a3VMRLHAkvp2qMCHaZc4T8k47Jtb9wrOEh/XFS8LgT4y5OQYo6civfXXdlvxWU/gdM/e6I2lg6FGorP8H4GPAJ/qCNwIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQUFAAOCAQEATxMecTpMbdhSHo6KVUg4QVF4Op2IBhiMaOrtrXBdJgzGotUFcJgdBCMjtTZXSlq1S4DG1jr8p4NzQlzxsdTxaB8nSKJ4KEMgIT7E62xRUj15jI49qFz7f2uMttZLNThipunsN/NF1XtvESMTDwQFvas/Ugig6qwEfSZc0MDxMpKLEkEePmQwtZD+zXFSMVa6hmOu4M+FzGiRXbj4YJXn9Myjd8xbL/c+9UIcrYoZskxDvMxc6/6M3rNNDY3OFhBK+V/sPMzWWGt8S1yjmtPfXgFs1t65AZ2hcTwTAuHrKwDatJ1ZPfa482ZBROAAX1waz7WwXp0gso7sDCm2/yUVww==" subTotal="35000.00" descuento="0" Moneda="Pesos" total="40600.00" tipoDeComprobante="ingreso" metodoDePago="No Identificado" LugarExpedicion="Monterrey, Nuevo León" NumCtaPago="No Identificado" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigital.xsd">
+  <cfdi:Emisor rfc="AAA010101AAA" nombre="Empresa de Pruebas SA">
+    <cfdi:DomicilioFiscal calle="Encinos" noExterior="1452" colonia="Fracc. San Pedro" municipio="Monterrey" estado="Nuevo León" pais="México" codigoPostal="64000"/>
+    <cfdi:RegimenFiscal Regimen="Regimen General de Ley Personas Morales de Prueba"/>
+  </cfdi:Emisor>
+  <cfdi:Receptor rfc="E&amp;Ñ831019M53" nombre="Exportadora de Ganado HOLSTEIN S.A.">
+    <cfdi:Domicilio calle="Av. Principal" noExterior="102" colonia="Ejido La Siembra" localidad="Ejido La Siembra" municipio="Zacatecas" estado="Zacatecas" pais="México" codigoPostal="99170"/>
+  </cfdi:Receptor>
+  <cfdi:Conceptos>
+    <cfdi:Concepto cantidad="1" unidad="LTE" descripcion="Módulo de embarque serie A-6743-Ñ" valorUnitario="35000.00" importe="35000.00"/>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos totalImpuestosRetenidos="0.00" totalImpuestosTrasladados="5600.00">
+    <cfdi:Retenciones>
+      <cfdi:Retencion impuesto="ISR" importe="0.00"/>
+      <cfdi:Retencion impuesto="IVA" importe="0.00"/>
+    </cfdi:Retenciones>
+    <cfdi:Traslados>
+      <cfdi:Traslado impuesto="IVA" tasa="16.00" importe="5600.00"/>
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
+  <cfdi:Complemento>
+    <tfd:TimbreFiscalDigital version="1.0" UUID="e403f396-6a57-4625-adb4-bb436b00789f" FechaTimbrado="2015-02-17T11:49:20" selloCFD="MMakX8Q1RyedjoNEQdHN64DgpZesmkcPSye2Tb+nELqFNNzITTicyc7WRcr/gj4UQX1ffhBuWmO959453o4pkMO9omip2DiM0Ud2KitU58+P4yRyxdjhmaRS9QSsUSpcKIrLB4viSJ9GD32pJYnxmpxYi8+GO+n3HvIAMHega+A=" noCertificadoSAT="20001000000100005761" selloSAT="HZcDZ/W0obh9pzd6XGSXfAEEzCp1bYLYHmptBRZLhYGgyo/nYegLpv1ULshKA2WiFnf9OpiemBQ9q0Z/To8QFINH1JqTBtEu0lo+8NWDBi6Zwc2VsR3uYE6ZmZKdQS7LtSt6uSqCiejXDqIV57EkJy3LE6JnTBsbQ7GmST1Wx/M="/>
+  </cfdi:Complemento>
+</cfdi:Comprobante>

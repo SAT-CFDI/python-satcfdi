@@ -4,8 +4,6 @@ import os
 import pytest
 
 from satcfdi.cfdi import CFDI
-from satcfdi.transform import HUSO_HORARIOS
-from satcfdi.catalogs import catalog_code, select_all
 from tests.constants import CFDI_FILES
 from tests.utils import verify_result, XElementPrettyPrinter
 
@@ -20,8 +18,8 @@ def verify_invoice(invoice, path):
     verify = verify_result(data=pp.pformat(invoice), filename=f"{path}.pretty.py")
     assert verify
 
-    # verify = verify_result(data=invoice.xml_bytes(pretty_print=True), filename=f"{path}.xml")
-    # assert verify
+    verify = verify_result(data=invoice.xml_bytes(pretty_print=True), filename=f"{path}.xml")
+    assert verify
 
     verify = verify_result(data=invoice.html_str(), filename=f"{path}.html")
     assert verify

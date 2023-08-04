@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:cartaporte20="http://www.sat.gob.mx/CartaPorte20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="4.0" Fecha="2021-12-08T23:59:59" Sello="" FormaPago="02" NoCertificado="30001000000300023708" Certificado="" SubTotal="0" Moneda="XXX" Total="0" TipoDeComprobante="P" Exportacion="03" LugarExpedicion="99999" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/CartaPorte20 http://www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte20.xsd">
+  <cfdi:CfdiRelacionados TipoRelacion="09">
+    <cfdi:CfdiRelacionado UUID="F4F09AEF-57F2-4BE0-A828-87D1A80ED61C"/>
+  </cfdi:CfdiRelacionados>
+  <cfdi:Emisor Rfc=" AAA010101AAA" Nombre="Esta es una demostración" RegimenFiscal="622"/>
+  <cfdi:Receptor Rfc="BASJ600902KL9" Nombre="Juanito Bananas De la Sierra" DomicilioFiscalReceptor="99999" RegimenFiscalReceptor="630" UsoCFDI="P01"/>
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Descripcion" ValorUnitario="0" Importe="0" ObjetoImp="01"/>
+  </cfdi:Conceptos>
+  <cfdi:Complemento>
+    <cartaporte20:CartaPorte Version="2.0" TranspInternac="Sí" EntradaSalidaMerc="Salida" PaisOrigenDestino="ZZZ" ViaEntradaSalida="05" TotalDistRec="123.9">
+      <cartaporte20:Ubicaciones>
+        <cartaporte20:Ubicacion TipoUbicacion="Origen" IDUbicacion="OR123456" RFCRemitenteDestinatario="AAA010101AAA" NombreRemitenteDestinatario="NombreRemitenteDestinatario" NumRegIdTrib="123456" ResidenciaFiscal="ZZZ" NumEstacion="EF001" NombreEstacion="NombreEstacion" NavegacionTrafico="Cabotaje" FechaHoraSalidaLlegada="2021-11-01T01:23:59" TipoEstacion="03" DistanciaRecorrida="123.45">
+          <cartaporte20:Domicilio Calle="Calle" NumeroExterior="2" NumeroInterior="1" Colonia="Colonia" Localidad="Localidad" Referencia="Referencia" Municipio="Municipio" Estado="Mexico City" Pais="MEX" CodigoPostal="11850"/>
+        </cartaporte20:Ubicacion>
+        <cartaporte20:Ubicacion TipoUbicacion="Destino" IDUbicacion="DE234567" RFCRemitenteDestinatario="BASJ600902KL9" NombreRemitenteDestinatario="NombreRemitenteDestinatario" NumRegIdTrib="012345" ResidenciaFiscal="ZZZ" NumEstacion="EF001" NombreEstacion="NombreEstacion" NavegacionTrafico="Cabotaje" FechaHoraSalidaLlegada="2021-11-01T01:23:59" TipoEstacion="03" DistanciaRecorrida="123.45">
+          <cartaporte20:Domicilio Calle="Calle" NumeroExterior="2" NumeroInterior="1" Colonia="Colonia" Localidad="Localidad" Referencia="Referencia" Municipio="Municipio" Estado="Estado" Pais="ZZZ" CodigoPostal="123456"/>
+        </cartaporte20:Ubicacion>
+      </cartaporte20:Ubicaciones>
+      <cartaporte20:Mercancias PesoBrutoTotal="100.123" UnidadPeso="SM3" PesoNetoTotal="101.234" NumTotalMercancias="1" CargoPorTasacion="10.123456">
+        <cartaporte20:Mercancia BienesTransp="60141405" ClaveSTCC="1234567" Descripcion="Descripcion" Cantidad="1.000001" ClaveUnidad="ZZ" Unidad="Unidad" Dimensiones="30/40/30cm" MaterialPeligroso="No" CveMaterialPeligroso="M0005" Embalaje="Z01" DescripEmbalaje="DescripEmbalaje" PesoEnKg="1.123" ValorMercancia="10.123456" Moneda="ZWL" FraccionArancelaria="9807000100" UUIDComercioExt="c09b4f17-601c-40a1-b446-addb087e7e2b">
+          <cartaporte20:Pedimentos Pedimento="12  34  5678  1234567"/>
+          <cartaporte20:GuiasIdentificacion NumeroGuiaIdentificacion="1234567890" DescripGuiaIdentificacion="DescripGuiaIdentificacion" PesoGuiaIdentificacion="1.234"/>
+          <cartaporte20:CantidadTransporta Cantidad="1.000001" IDOrigen="OR123456" IDDestino="DE654321" CvesTransporte="05"/>
+          <cartaporte20:DetalleMercancia UnidadPesoMerc="SM3" PesoBruto="11.000" PesoNeto="9.00" PesoTara="9.123" NumPiezas="42"/>
+        </cartaporte20:Mercancia>
+        <cartaporte20:Autotransporte PermSCT="TPAF01" NumPermisoSCT="6789">
+          <cartaporte20:IdentificacionVehicular ConfigVehicular="C2" PlacaVM="123ABC" AnioModeloVM="2021"/>
+          <cartaporte20:Seguros AseguraRespCivil="AseguraRespCivil" PolizaRespCivil="PolizaRespCivil" AseguraMedAmbiente="AseguraMedAmbiente" PolizaMedAmbiente="PolizaMedAmbiente" AseguraCarga="AseguraCarga" PolizaCarga="PolizaCarga" PrimaSeguro="12.123456"/>
+          <cartaporte20:Remolques>
+            <cartaporte20:Remolque SubTipoRem="CTR032" Placa="Placa"/>
+          </cartaporte20:Remolques>
+        </cartaporte20:Autotransporte>
+        <cartaporte20:TransporteMaritimo PermSCT="TPAF03" NumPermisoSCT="567" NombreAseg="2367" NumPolizaSeguro="631" TipoEmbarcacion="B15" Matricula="ABC3456" NumeroOMI="IMO1234567" AnioEmbarcacion="2021" NombreEmbarc="789" NacionalidadEmbarc="ZZZ" UnidadesDeArqBruto="23.456" TipoCarga="PYD" NumCertITC="NumCertITC" Eslora="678" Manga="12" Calado="876" LineaNaviera="LineaNaviera" NombreAgenteNaviero="NombreAgenteNaviero" NumAutorizacionNaviero="SCT418/021/2021" NumViaje="78" NumConocEmbarc="789">
+          <cartaporte20:Contenedor MatriculaContenedor="ABC45678901" TipoContenedor="CM009" NumPrecinto="123456"/>
+        </cartaporte20:TransporteMaritimo>
+        <cartaporte20:TransporteAereo PermSCT="TPTA04" NumPermisoSCT="NumPermisoSCT" MatriculaAeronave="A123456" NombreAseg="NombreAseg" NumPolizaSeguro="345" NumeroGuia="12345678901234" LugarContrato="LugarContrato" CodigoTransportista="CA156" RFCEmbarcador="AAA010101AAA" NumRegIdTribEmbarc="NumRegIdTribEmbarc" ResidenciaFiscalEmbarc="ZZZ" NombreEmbarcador="NombreEmbarcador"/>
+        <cartaporte20:TransporteFerroviario TipoDeServicio="TS04" TipoDeTrafico="TT04" NombreAseg="NombreAseg" NumPolizaSeguro="NumPolizaSeguro">
+          <cartaporte20:DerechosDePaso TipoDerechoDePaso="CDP119" KilometrajePagado="12.3"/>
+          <cartaporte20:Carro TipoCarro="TC05" MatriculaCarro="MatriculaCarro" GuiaCarro="GuiaCarro" ToneladasNetasCarro="12.001">
+            <cartaporte20:Contenedor TipoContenedor="TC05" PesoContenedorVacio="9.998" PesoNetoMercancia="10.001"/>
+          </cartaporte20:Carro>
+        </cartaporte20:TransporteFerroviario>
+      </cartaporte20:Mercancias>
+      <cartaporte20:FiguraTransporte>
+        <cartaporte20:TiposFigura TipoFigura="04" RFCFigura="BASJ600902KL9" NumLicencia="12345678" NombreFigura="3456" NumRegIdTribFigura="123456" ResidenciaFiscalFigura="ZZZ">
+          <cartaporte20:PartesTransporte ParteTransporte="PT12"/>
+          <cartaporte20:Domicilio Calle="Calle" NumeroExterior="2" NumeroInterior="1" Colonia="Colonia" Localidad="Localidad" Referencia="Referencia" Municipio="Municipio" Estado="Estado" Pais="ZZZ" CodigoPostal="123456"/>
+        </cartaporte20:TiposFigura>
+      </cartaporte20:FiguraTransporte>
+    </cartaporte20:CartaPorte>
+  </cfdi:Complemento>
+</cfdi:Comprobante>

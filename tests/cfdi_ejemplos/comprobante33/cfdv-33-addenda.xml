@@ -43,15 +43,5 @@
         </cfdi:Traslados>
     </cfdi:Impuestos>
 	<cfdi:Addenda>
-		<otro:AddendaEmisor>
-			<otro:AddendaMG>
-				<otro:MG descripcion=" TICKET No: 1724993394380039641809 TR No: 6829"/>
-			</otro:AddendaMG>
-			<otro:InformacionAdicionalPuntoDeVenta/>
-		</otro:AddendaEmisor>
-		<bfa2:AddendaBuzonFiscal version="2.0">
-			<bfa2:TipoDocumento descripcion="Factura" nombreCorto="FAC">Hola</bfa2:TipoDocumento>
-            <bfa2:CFD totalConLetra="Cuarenta  mil seiscientos pesos 00/100 M.N."/>
-        </bfa2:AddendaBuzonFiscal>
 	</cfdi:Addenda>
 </cfdi:Comprobante>

@@ -1,17 +1,4 @@
-{'Addenda': {'AddendaBuzonFiscal': {'CFD': {'totalConLetra': 'Cuarenta  mil '
-                                                             'seiscientos '
-                                                             'pesos 00/100 '
-                                                             'M.N.'},
-                                    'TipoDocumento': {'_text': 'Hola',
-                                                      'descripcion': 'Factura',
-                                                      'nombreCorto': 'FAC'},
-                                    'version': '2.0'},
-             'AddendaEmisor': {'AddendaMG': {'MG': {'descripcion': ' TICKET '
-                                                                   'No: '
-                                                                   '1724993394380039641809 '
-                                                                   'TR No: '
-                                                                   '6829'}},
-                               'InformacionAdicionalPuntoDeVenta': CFDI({})}},
+{'Addenda': {},
  'Certificado': '',
  'CfdiRelacionados': {'CfdiRelacionado': ['ED1752FE-E865-4FF2-BFE1-0F552E770DC9'],
                       'TipoRelacion': Code('02', 'Nota de débito de los documentos relacionados')},
