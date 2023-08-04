@@ -1,0 +1,284 @@
+<html>
+<head>
+	<title>CFDI</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+@page {
+	@bottom-left{
+		content: "Comprobante" " versión: " "3.3";
+		font:7.47pt Arial;
+	}
+	@bottom-center{
+		content: "Este documento es una representación impresa de un CFDI";
+		font:7.47pt Arial;
+	}
+	@bottom-right{
+		content: "Página " counter(page) " de " counter(pages);
+		font:7.47pt Arial;
+	}
+}
+@media print {
+    .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+}
+body {
+	font-family: Arial;
+	font-size: 9pt;
+}
+h3 {
+	margin-top:-10px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#333;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h4 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#555;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h5 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 8.6pt;
+	background-color:#777;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	padding-left: 10px;
+	text-align: left;
+	color: white;
+	letter-spacing: 2px;
+	font-weight: bold;
+}
+.h {
+	font-size: 9.89pt;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.c {
+	font-size: 8.6pt;
+}
+.ci {
+	font-size: 7.47pt;
+}
+.cii {
+	font-size: 6.5pt;
+}
+.ciii {
+	font-size: 5.65pt;
+}
+table {
+	font-size: 8.6pt;
+	width: 100%;
+	border-collapse: collapse;
+	border: none;
+	border-spacing: 0;
+}
+table table {
+	font-size: 7.47pt;
+}
+table table table {
+	font-size: 6.5pt;
+}
+table table table table {
+	font-size: 5.65pt;
+}
+table th {
+	background-color:#e0e0e0;
+}
+table table th {
+	background-color:#e8e8e8;
+}
+table table table th {
+	background-color:#f0f0f0;
+}
+table table table table th {
+	background-color:#f8f8f8;
+}
+.htd {
+	text-align: right;
+	width: 1px;
+	white-space: nowrap;
+	font-weight: bold;
+}
+.nb {
+	break-inside: avoid;
+}
+.cen {
+	text-align: center;
+}
+.r {
+	text-align: right;
+}
+.rbt {
+	text-align: right;
+	border-top: 1px solid black;
+}
+th {
+	padding: 1px;
+	vertical-align: center;
+	text-align: center;
+	border-right: 2px solid white;
+}
+th:last-child {
+	border-right: 0px solid white;
+}
+td {
+	vertical-align: top;
+	padding-right: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+tr:last-child td {
+	padding-bottom: none;
+}
+td:last-child {
+	padding-right: none;
+}
+tr {
+	break-inside: avoid;
+}
+.tot {
+	margin-left: 50%;
+	width: 50%;
+}
+table.tot {
+	margin-top: 1px;
+	break-inside: avoid;
+}
+table.tot tr:first-child {
+	border-top: 1px solid;
+}
+hr {
+	border: none;
+	height: 1px;
+	background-color: black;
+	break-after: avoid;
+}
+ul {
+	margin: 0;
+}	</style>
+</head>
+<body>
+<h3>CFDI de Ingreso</h3>
+<table>
+	<tr>
+		<th style="width: 10%">Serie</th>
+		<th style="width: 10%">Folio</th>
+		<th style="width: 40%">Emisor</th>
+		<th style="width: 40%">Receptor</th>
+	</tr>
+	<tr>
+		<td class="cen">&nbsp;</td>
+		<td class="cen">&nbsp;</td>
+		<td rowspan="13">
+			<div class="h cen"><b>&nbsp;</b></div>
+			<div><b>RFC: </b> AAA010101AAA</div><div><b>Régimen Fiscal: </b>622 - Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras</div>
+			<div><b>C.P.: </b>45079</div>
+			<div><b>No. Certificado: </b>40001000000300000337</div>
+		</td>
+		<td rowspan="13">
+			<div class="h cen"><b>&nbsp;</b></div>
+			<div><b>RFC: </b>BASJ600902KL9</div>
+		</td>
+	</tr>
+	<tr>
+	  	<th colspan="2">Fecha de Emisión</th>
+	</tr>
+	<tr>
+		<td colspan="2" class="cen">2017-05-01 01:23:59</td>
+	</tr>
+</table>
+<table style="margin-top: 2px">
+	<tr>
+		<th style="width: 20%">Moneda</th>
+		<th style="width: 26.67%">Método de Pago</th>
+		<th style="width: 26.67%">Forma de Pago</th>
+		<th style="width: 26.67%">Uso CFDI</th>
+	</tr>
+	<tr class="cen">
+		<td>MXN - Peso Mexicano</td>
+		<td>&nbsp;</td>
+		<td>Cheque nominativo</td>
+		<td>Gastos en general</td>
+	</tr>
+	<tr>
+		<th>Tipo de Cambio</th>
+		<th>Exportación</th>
+		<th colspan="2">Condiciones de Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td colspan="2">&nbsp;</td>
+	</tr>
+</table>
+<br>
+<h5>Conceptos</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 55%;">Descripción</th>
+			<th style="width: 12%;">Cantidad</th>
+			<th style="width: 11%;">Valor Unitario</th>
+			<th style="width: 11%;">Descuento</th>
+			<th style="width: 11%;">Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				ACERO
+				<div class="ci">
+					<div><b>Clave SAT: </b>01010101 - No existe en el catálogo</div>
+					
+				</div>
+			</td>
+			<td class="r">
+				1.5
+				<div class="ci">C81 - Radián</div>
+				<div class="cii">&nbsp;</div>
+			</td>
+			<td class="r">
+				1,500,000
+			</td>
+			<td class="r">
+				&nbsp;
+			</td>
+			<td class="r">
+				2,250,000
+			</td>
+		</tr>
+	</tbody>
+</table>
+<table class="tot">
+	<tr class="r">
+		<td><b>Subtotal</b></td>
+		<td></td>
+		<td></td>
+		<td>1,000</td>
+	</tr>
+	<tr class="r h">
+		<td>
+			<b>Total</b>
+		</td>
+		<td></td>
+		<td></td>
+		<td>1,500</td>
+	</tr>
+</table><div><br></div>
+		<h4>Detallista</h4>
+<table><tr><td class='htd'>Request for Payment Identification:</td><td><table><tr><td class='htd'>Entity Type:</td><td>INVOICE</td></tr></table></td></tr><tr><td class='htd'>Special Instruction:</td><td><table><thead><tr><th>Text</th><th>Code</th></tr></thead><tbody><tr><td><ul><li>Monto de la venta</li></ul></td><td>ZZZ</td></tr></tbody></table></td></tr><tr><td class='htd'>Order Identification:</td><td><table><tr><td class='htd'>Reference Identification:</td><td><table><thead><tr><th>_text</th><th>Type</th></tr></thead><tbody><tr><td>
+        4500536101</td><td>ON</td></tr></tbody></table></td></tr></table></td></tr><tr><td class='htd'>Additional Information:</td><td><table><thead><tr><th>_text</th><th>Type</th></tr></thead><tbody><tr><td>None</td><td>ATZ</td></tr></tbody></table></td></tr><tr><td class='htd'>Buyer:</td><td><table><tr><td class='htd'>Gln:</td><td>0000000000000</td></tr><tr><td class='htd'>Contact Information:</td><td><table><tr><td class='htd'>Person or Department Name:</td><td><table><tr><td class='htd'>Text:</td><td>000</td></tr></table></td></tr></table></td></tr></table></td></tr><tr><td class='htd'>Currency:</td><td><table><thead><tr><th>Currency Function</th><th>Currency ISO Code</th><th>Rate of Change</th></tr></thead><tbody><tr><td><ul><li>BILLING_CURRENCY</li></ul></td><td>MXN</td><td></td></tr><tr><td><ul><li>PAYMENT_CURRENCY</li></ul></td><td>USD</td><td>1.000000</td></tr></tbody></table></td></tr><tr><td class='htd'>Type:</td><td>SimpleInvoiceType</td></tr><tr><td class='htd'>Content Version:</td><td>1.3.1</td></tr><tr><td class='htd'>Document Structure Version:</td><td>AMC8.1</td></tr><tr><td class='htd'>Document Status:</td><td>ORIGINAL</td></tr></table></body>
+</html>

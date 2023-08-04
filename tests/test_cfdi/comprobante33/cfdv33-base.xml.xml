@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:iedu="http://www.sat.gob.mx/iedu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="3.3" Serie="A" Folio="123ABC" Fecha="2017-05-20T23:23:59" Sello="" FormaPago="02" NoCertificado="40001000000300000337" Certificado="" CondicionesDePago="CONDICIONES" SubTotal="1000" Descuento="0.00" Moneda="MXN" TipoCambio="1.0" Total="1500" TipoDeComprobante="I" MetodoPago="PUE" LugarExpedicion="45079" Confirmacion="Az123" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/iedu http://www.sat.gob.mx/sitio_internet/cfd/iedu/iedu.xsd">
+  <cfdi:CfdiRelacionados TipoRelacion="02">
+    <cfdi:CfdiRelacionado UUID="ED1752FE-E865-4FF2-BFE1-0F552E770DC9"/>
+  </cfdi:CfdiRelacionados>
+  <cfdi:Emisor Rfc=" AAA010101AAA" Nombre="Esta es una demostración" RegimenFiscal="622"/>
+  <cfdi:Receptor Rfc="BASJ600902KL9" Nombre="Juanito Bananas De la Sierra" ResidenciaFiscal="MEX" NumRegIdTrib="987654321" UsoCFDI="G03"/>
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="00001" Cantidad="1.5" ClaveUnidad="C81" Unidad="TONELADA" Descripcion="ACERO" ValorUnitario="1500000" Importe="2250000">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="2250000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="360000"/>
+        </cfdi:Traslados>
+        <cfdi:Retenciones>
+          <cfdi:Retencion Base="2250000" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.300000" Importe="247500"/>
+        </cfdi:Retenciones>
+      </cfdi:Impuestos>
+      <cfdi:CuentaPredial Numero="51888"/>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="95141904" NoIdentificacion="00002" Cantidad="1.6" ClaveUnidad="WEE" Unidad="TONELADA" Descripcion="ALUMINIO" ValorUnitario="1500" Importe="2400">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="2400" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="384"/>
+        </cfdi:Traslados>
+        <cfdi:Retenciones>
+          <cfdi:Retencion Base="2400" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.300000" Importe="264"/>
+        </cfdi:Retenciones>
+      </cfdi:Impuestos>
+      <cfdi:InformacionAduanera NumeroPedimento="15  48  4567  6001234"/>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="84101604" NoIdentificacion="00003" Cantidad="1.7" ClaveUnidad="G66" Unidad="TONELADA" Descripcion="ZAMAC" ValorUnitario="10000" Importe="17000" Descuento="0">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="17000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="2720"/>
+        </cfdi:Traslados>
+        <cfdi:Retenciones>
+          <cfdi:Retencion Base="17000" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.300000" Importe="1870"/>
+        </cfdi:Retenciones>
+      </cfdi:Impuestos>
+      <cfdi:Parte ClaveProdServ="25201513" NoIdentificacion="055155" Cantidad="1.0" Unidad="UNIDAD" Descripcion="PARTE EJEMPLO" ValorUnitario="1.00" Importe="1.00">
+        <cfdi:InformacionAduanera NumeroPedimento="15  48  4567  6001235"/>
+      </cfdi:Parte>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="6201" Cantidad="1.00" ClaveUnidad="Q24" Unidad="PIEZA" Descripcion="SOME MERCHANDISE" ValorUnitario="33.00" Importe="33.00">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="33.00" Impuesto="002" TipoFactor="Exento"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+      <cfdi:CuentaPredial Numero="51888"/>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="54101500" Cantidad="10" ClaveUnidad="APZ" Descripcion="Lapiz Berol del No. 2" ValorUnitario="123.45" Importe="1234.50">
+      <cfdi:ComplementoConcepto>
+        <iedu:instEducativas version="1.0" nombreAlumno="Juanito Pérez Niño" CURP="JUAN010101MAZBCÑ90" nivelEducativo="Preescolar" autRVOE="1234" rfcPago="ABC010101AAA"/>
+      </cfdi:ComplementoConcepto>
+    </cfdi:Concepto>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos TotalImpuestosRetenidos="247500" TotalImpuestosTrasladados="360000">
+    <cfdi:Retenciones>
+      <cfdi:Retencion Impuesto="001" Importe="247000"/>
+      <cfdi:Retencion Impuesto="003" Importe="500"/>
+    </cfdi:Retenciones>
+    <cfdi:Traslados>
+      <cfdi:Traslado Impuesto="002" TipoFactor="Tasa" TasaOCuota="1.600000" Importe="360000"/>
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
+</cfdi:Comprobante>

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd"
+                  LugarExpedicion="72420"
+                  MetodoPago="PUE"
+                  TipoDeComprobante="I"
+                  Total="939.98"
+                  Moneda="MXN"
+                  Certificado=""
+                  SubTotal="810.33"
+                  NoCertificado="00001000000123456789"
+                  FormaPago="28"
+                  Sello=""
+                  Fecha="2021-07-10T14:23:05"
+                  Version="3.3"
+                  xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+	<cfdi:Emisor Rfc="ABC123456ABC"
+	             Nombre="ARMY JAN LEOL TOMAS"
+	             RegimenFiscal="612"/>
+	<cfdi:Receptor Rfc="DES123456ABC"
+	               Nombre="DESARROLLOS"
+	               UsoCFDI="G03"/>
+	<cfdi:Conceptos>
+		<cfdi:Concepto ClaveProdServ="60106400"
+		               Cantidad="1"
+		               ClaveUnidad="H87"
+		               Descripcion="MALLA PARA DESOLDAR"
+		               ValorUnitario="24.13"
+		               Importe="24.13">
+			<cfdi:Impuestos>
+				<cfdi:Traslados>
+					<cfdi:Traslado Base="24.13"
+					               Impuesto="002"
+					               TipoFactor="Tasa"
+					               TasaOCuota="0.160000"
+					               Importe="3.86"/>
+				</cfdi:Traslados>
+			</cfdi:Impuestos>
+		</cfdi:Concepto>
+		<cfdi:Concepto ClaveProdServ="60106400"
+		               Cantidad="4"
+		               ClaveUnidad="H87"
+		               Descripcion="ARDUINO PRO MICRO ATMEGA32U4"
+		               ValorUnitario="196.55"
+		               Importe="786.20">
+			<cfdi:Impuestos>
+				<cfdi:Traslados>
+					<cfdi:Traslado Base="786.20"
+					               Impuesto="002"
+					               TipoFactor="Tasa"
+					               TasaOCuota="0.160000"
+					               Importe="125.79"/>
+				</cfdi:Traslados>
+			</cfdi:Impuestos>
+		</cfdi:Concepto>
+	</cfdi:Conceptos>
+	<cfdi:Impuestos TotalImpuestosTrasladados="129.65">
+		<cfdi:Traslados>
+			<cfdi:Traslado Impuesto="002"
+			               TipoFactor="Tasa"
+			               TasaOCuota="0.160000"
+			               Importe="129.65"/>
+		</cfdi:Traslados>
+	</cfdi:Impuestos>
+	<cfdi:Complemento>
+		<registrofiscal:CFDIRegistroFiscal xmlns:schemaLocation="http://www.sat.gob.mx/registrofiscal http://www.sat.gob.mx/sitio_internet/cfd/cfdiregistrofiscal/cfdiregistrofiscal.xsd"
+		                                   Version="1.0"
+		                                   Folio="2107200000004798"
+		                                   xmlns:registrofiscal="http://www.sat.gob.mx/registrofiscal"/>
+	</cfdi:Complemento>
+</cfdi:Comprobante>

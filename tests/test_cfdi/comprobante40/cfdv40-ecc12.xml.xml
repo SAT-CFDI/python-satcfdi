@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:ecc12="http://www.sat.gob.mx/EstadoDeCuentaCombustible12" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="4.0" Fecha="2021-12-08T23:59:59" Sello="" FormaPago="02" NoCertificado="30001000000300023708" Certificado="" SubTotal="0" Moneda="XXX" Total="0" TipoDeComprobante="P" Exportacion="03" LugarExpedicion="99999" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/EstadoDeCuentaCombustible12 http://www.sat.gob.mx/sitio_internet/cfd/EstadoDeCuentaCombustible/ecc12.xsd">
+  <cfdi:CfdiRelacionados TipoRelacion="09">
+    <cfdi:CfdiRelacionado UUID="F4F09AEF-57F2-4BE0-A828-87D1A80ED61C"/>
+  </cfdi:CfdiRelacionados>
+  <cfdi:Emisor Rfc=" AAA010101AAA" Nombre="Esta es una demostración" RegimenFiscal="622"/>
+  <cfdi:Receptor Rfc="BASJ600902KL9" Nombre="Juanito Bananas De la Sierra" DomicilioFiscalReceptor="99999" RegimenFiscalReceptor="630" UsoCFDI="P01"/>
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Descripcion" ValorUnitario="0" Importe="0" ObjetoImp="01"/>
+  </cfdi:Conceptos>
+  <cfdi:Complemento>
+    <ecc12:EstadoDeCuentaCombustible Version="1.2" TipoOperacion="Tarjeta" NumeroDeCuenta="1234" SubTotal="5678.90" Total="5678.90">
+      <ecc12:Conceptos>
+        <ecc12:ConceptoEstadoDeCuentaCombustible Identificador="IDstring" Fecha="2017-05-30T23:59:59" Rfc="AAA010101AAA" ClaveEstacion="1234567890" Cantidad="100.001" TipoCombustible="2" Unidad="01" NombreCombustible="Gasolina" FolioOperacion="567" ValorUnitario="123.45" Importe="12345.12">
+          <ecc12:Traslados>
+            <ecc12:Traslado Impuesto="IVA" TasaOCuota="10.500001" Importe="12.34"/>
+            <ecc12:Traslado Impuesto="IEPS" TasaOCuota="11.00" Importe="13.45"/>
+          </ecc12:Traslados>
+        </ecc12:ConceptoEstadoDeCuentaCombustible>
+      </ecc12:Conceptos>
+    </ecc12:EstadoDeCuentaCombustible>
+  </cfdi:Complemento>
+</cfdi:Comprobante>

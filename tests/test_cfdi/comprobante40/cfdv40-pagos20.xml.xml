@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:pago20="http://www.sat.gob.mx/Pagos20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="4.0" Fecha="2021-12-08T23:59:59" Sello="" FormaPago="02" NoCertificado="30001000000300023708" Certificado="" SubTotal="0" Moneda="XXX" Total="0" TipoDeComprobante="P" Exportacion="03" LugarExpedicion="99999" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd">
+  <cfdi:CfdiRelacionados TipoRelacion="09">
+    <cfdi:CfdiRelacionado UUID="F4F09AEF-57F2-4BE0-A828-87D1A80ED61C"/>
+  </cfdi:CfdiRelacionados>
+  <cfdi:Emisor Rfc=" AAA010101AAA" Nombre="Esta es una demostración" RegimenFiscal="622"/>
+  <cfdi:Receptor Rfc="BASJ600902KL9" Nombre="Juanito Bananas De la Sierra" DomicilioFiscalReceptor="99999" RegimenFiscalReceptor="630" UsoCFDI="P01"/>
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Pago" ValorUnitario="0" Importe="0" ObjetoImp="01"/>
+  </cfdi:Conceptos>
+  <cfdi:Complemento>
+    <pago20:Pagos Version="2.0">
+      <pago20:Totales MontoTotalPagos="15166.65"/>
+      <pago20:Pago FechaPago="2021-12-03T12:37:13" FormaDePagoP="03" MonedaP="MXN" Monto="6066.66" RfcEmisorCtaOrd="AAA010101AAA" CtaOrdenante="0123456789" RfcEmisorCtaBen="BAS120130AZ1" CtaBeneficiario="3456789012">
+        <pago20:DoctoRelacionado IdDocumento="C1DF8D01-8436-4E7D-BECF-20F31624280D" Serie="D" Folio="12345" MonedaDR="MXN" NumParcialidad="2" ImpSaldoAnt="6066.66" ImpPagado="6066.66" ImpSaldoInsoluto="0" ObjetoImpDR="01"/>
+      </pago20:Pago>
+      <pago20:Pago FechaPago="2021-12-04T12:38:15" FormaDePagoP="03" MonedaP="MXN" Monto="5055.55" RfcEmisorCtaOrd="AAA010101AAA" CtaOrdenante="0123456789" RfcEmisorCtaBen="BAS120130AZ1" CtaBeneficiario="3456789012">
+        <pago20:DoctoRelacionado IdDocumento="CB675288-97C8-45C2-9618-27FEF433AD59" Serie="D" Folio="12345" MonedaDR="MXN" NumParcialidad="2" ImpSaldoAnt="5055.55" ImpPagado="5055.55" ImpSaldoInsoluto="0" ObjetoImpDR="01"/>
+      </pago20:Pago>
+      <pago20:Pago FechaPago="2021-12-05T12:39:43" FormaDePagoP="03" MonedaP="MXN" Monto="4044.44" RfcEmisorCtaOrd="AAA010101AAA" CtaOrdenante="0123456789" RfcEmisorCtaBen="BAS120130AZ1" CtaBeneficiario="3456789012">
+        <pago20:DoctoRelacionado IdDocumento="CB36554D-AF7B-4EBC-97CB-8C40FDFD9E20" Serie="D" Folio="12345" MonedaDR="MXN" NumParcialidad="2" ImpSaldoAnt="4044.44" ImpPagado="4044.44" ImpSaldoInsoluto="0" ObjetoImpDR="01"/>
+      </pago20:Pago>
+    </pago20:Pagos>
+  </cfdi:Complemento>
+</cfdi:Comprobante>

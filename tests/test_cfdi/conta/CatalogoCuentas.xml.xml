@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<catalogocuentas:Catalogo xmlns:catalogocuentas="www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="1.1" RFC="&amp;&amp;&amp;000000000" Mes="01" Anio="2057" Sello="Sello0" noCertificado="noCertificado1111111" Certificado="Certificado0" xsi:schemaLocation="www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas http://www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas/CatalogoCuentas_1_1.xsd">
+  <catalogocuentas:Ctas CodAgrup="000" NumCta="NumCta0" Desc="Desc0" SubCtaDe="SubCtaDe0" Nivel="50" Natur="A"/>
+  <catalogocuentas:Ctas CodAgrup="000" NumCta="NumCta1" Desc="Desc1" SubCtaDe="SubCtaDe1" Nivel="50" Natur="A"/>
+</catalogocuentas:Catalogo>

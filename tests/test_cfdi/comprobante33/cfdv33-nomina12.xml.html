@@ -1,0 +1,462 @@
+<html>
+<head>
+	<title>CFDI</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+@page {
+	@bottom-left{
+		content: "Comprobante" " versión: " "3.3";
+		font:7.47pt Arial;
+	}
+	@bottom-center{
+		content: "Este documento es una representación impresa de un CFDI";
+		font:7.47pt Arial;
+	}
+	@bottom-right{
+		content: "Página " counter(page) " de " counter(pages);
+		font:7.47pt Arial;
+	}
+}
+@media print {
+    .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+}
+body {
+	font-family: Arial;
+	font-size: 9pt;
+}
+h3 {
+	margin-top:-10px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#333;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h4 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#555;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h5 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 8.6pt;
+	background-color:#777;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	padding-left: 10px;
+	text-align: left;
+	color: white;
+	letter-spacing: 2px;
+	font-weight: bold;
+}
+.h {
+	font-size: 9.89pt;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.c {
+	font-size: 8.6pt;
+}
+.ci {
+	font-size: 7.47pt;
+}
+.cii {
+	font-size: 6.5pt;
+}
+.ciii {
+	font-size: 5.65pt;
+}
+table {
+	font-size: 8.6pt;
+	width: 100%;
+	border-collapse: collapse;
+	border: none;
+	border-spacing: 0;
+}
+table table {
+	font-size: 7.47pt;
+}
+table table table {
+	font-size: 6.5pt;
+}
+table table table table {
+	font-size: 5.65pt;
+}
+table th {
+	background-color:#e0e0e0;
+}
+table table th {
+	background-color:#e8e8e8;
+}
+table table table th {
+	background-color:#f0f0f0;
+}
+table table table table th {
+	background-color:#f8f8f8;
+}
+.htd {
+	text-align: right;
+	width: 1px;
+	white-space: nowrap;
+	font-weight: bold;
+}
+.nb {
+	break-inside: avoid;
+}
+.cen {
+	text-align: center;
+}
+.r {
+	text-align: right;
+}
+.rbt {
+	text-align: right;
+	border-top: 1px solid black;
+}
+th {
+	padding: 1px;
+	vertical-align: center;
+	text-align: center;
+	border-right: 2px solid white;
+}
+th:last-child {
+	border-right: 0px solid white;
+}
+td {
+	vertical-align: top;
+	padding-right: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+tr:last-child td {
+	padding-bottom: none;
+}
+td:last-child {
+	padding-right: none;
+}
+tr {
+	break-inside: avoid;
+}
+.tot {
+	margin-left: 50%;
+	width: 50%;
+}
+table.tot {
+	margin-top: 1px;
+	break-inside: avoid;
+}
+table.tot tr:first-child {
+	border-top: 1px solid;
+}
+hr {
+	border: none;
+	height: 1px;
+	background-color: black;
+	break-after: avoid;
+}
+ul {
+	margin: 0;
+}	</style>
+</head>
+<body>
+<h3>CFDI de Ingreso</h3>
+<table>
+	<tr>
+		<th style="width: 10%">Serie</th>
+		<th style="width: 10%">Folio</th>
+		<th style="width: 40%">Emisor</th>
+		<th style="width: 40%">Receptor</th>
+	</tr>
+	<tr>
+		<td class="cen">&nbsp;</td>
+		<td class="cen">&nbsp;</td>
+		<td rowspan="13">
+			<div class="h cen"><b>&nbsp;</b></div>
+			<div><b>RFC: </b> AAA010101AAA</div><div><b>Régimen Fiscal: </b>622 - Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras</div>
+			<div><b>C.P.: </b>45079</div>
+			<div><b>No. Certificado: </b>40001000000300000337</div>
+		</td>
+		<td rowspan="13">
+			<div class="h cen"><b>&nbsp;</b></div>
+			<div><b>RFC: </b>BASJ600902KL9</div>
+		</td>
+	</tr>
+	<tr>
+	  	<th colspan="2">Fecha de Emisión</th>
+	</tr>
+	<tr>
+		<td colspan="2" class="cen">2017-05-01 01:23:59</td>
+	</tr>
+</table>
+<table style="margin-top: 2px">
+	<tr>
+		<th style="width: 20%">Moneda</th>
+		<th style="width: 26.67%">Método de Pago</th>
+		<th style="width: 26.67%">Forma de Pago</th>
+		<th style="width: 26.67%">Uso CFDI</th>
+	</tr>
+	<tr class="cen">
+		<td>MXN - Peso Mexicano</td>
+		<td>&nbsp;</td>
+		<td>Cheque nominativo</td>
+		<td>Gastos en general</td>
+	</tr>
+	<tr>
+		<th>Tipo de Cambio</th>
+		<th>Exportación</th>
+		<th colspan="2">Condiciones de Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td colspan="2">&nbsp;</td>
+	</tr>
+</table>
+<br>
+<h5>Conceptos</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 55%;">Descripción</th>
+			<th style="width: 12%;">Cantidad</th>
+			<th style="width: 11%;">Valor Unitario</th>
+			<th style="width: 11%;">Descuento</th>
+			<th style="width: 11%;">Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				ACERO
+				<div class="ci">
+					<div><b>Clave SAT: </b>01010101 - No existe en el catálogo</div>
+					
+				</div>
+			</td>
+			<td class="r">
+				1.5
+				<div class="ci">C81 - Radián</div>
+				<div class="cii">&nbsp;</div>
+			</td>
+			<td class="r">
+				1,500,000
+			</td>
+			<td class="r">
+				&nbsp;
+			</td>
+			<td class="r">
+				2,250,000
+			</td>
+		</tr>
+	</tbody>
+</table>
+<table class="tot">
+	<tr class="r">
+		<td><b>Subtotal</b></td>
+		<td></td>
+		<td></td>
+		<td>1,000</td>
+	</tr>
+	<tr class="r h">
+		<td>
+			<b>Total</b>
+		</td>
+		<td></td>
+		<td></td>
+		<td>1,500</td>
+	</tr>
+</table><div><br></div>
+		<h4>Nomina</h4>
+<table>
+	<tr>
+		<th style="width: 20%">Tipo Nómina</th>
+		<th style="width: 40%">Emisor</th>
+		<th style="width: 40%">Receptor</th>
+	</tr>
+	<tr>
+		<td class="cen">Nómina ordinaria</td>
+		<td rowspan="13">
+			<div><b>Entidad SNCF: </b><table><tr><td class='htd'>Origen Recurso:</td><td>IP - Ingresos propios</td></tr><tr><td class='htd'>Monto Recurso Propio:</td><td>123.45</td></tr></table></div><div><b>CURP: </b>OAAJ840102HJCVRN00</div><div><b>Registro Patronal: </b>E23-12345-12-1</div><div><b>RFC Patrón Origen: </b>AAA010101AAA</div>
+		</td>
+		<td rowspan="13">
+			<div><b>Subcontratación: </b><table><thead><tr><th>RFC Labora</th><th>Porcentaje de Tiempo</th></tr></thead><tbody><tr><td>AAA010101AAA</td><td>23.45</td></tr><tr><td>BBB010101AAA</td><td>13.45</td></tr></tbody></table></div><div><b>CURP: </b>OAAJ840102HJCVRN00</div><div><b>No. de Seguridad Social: </b>123456789012345</div><div><b>Fecha de Inicio Relación Laboral: </b>2013-04-11</div><div><b>Antigüedad: </b>P3Y2M23D</div><div><b>Tipo Contrato: </b>01 - Contrato de trabajo por tiempo indeterminado</div><div><b>Sindicalizado: </b>Sí</div><div><b>Tipo Jornada: </b>02 - Nocturna</div><div><b>Régimen de Contratación: </b>03 - Jubilados</div><div><b>No. Empleado: </b>001</div><div><b>Departamento: </b>001</div><div><b>Puesto: </b>Programador</div><div><b>Riesgo Puesto: </b>3 - Clase III</div><div><b>Periodicidad de Pago: </b>04 - Quincenal</div><div><b>Banco: </b>002 - BANAMEX</div><div><b>Cuenta Bancaria: </b>1234567890</div><div><b>Salario Base: </b>123.45</div><div><b>Salario Diario: </b>123.45</div><div><b>Entidad Federativa: </b>AGU - Aguascalientes</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Fecha Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>2016-10-15</td>
+	</tr>
+	<tr>
+		<th>No. de Días Pagados</th>
+	</tr>
+	<tr class="cen">
+		<td>15</td>
+	</tr>
+	<tr>
+		<th>Fecha Inicial de Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>2016-10-01</td>
+	</tr>
+	<tr>
+		<th>Fecha Final de Pago</th>
+	</tr>
+	<tr class="cen">
+		<td>2016-10-15</td>
+	</tr>
+</table>
+<br>
+<h5>Percepciones</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 35%;">Tipo de Percepción</th>
+			<th style="width: 11%;">Clave</th>
+			<th>Concepto</th>
+			<th style="width: 11%;">Importe Gravado</th>
+			<th style="width: 11%;">Importe Exento</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Sueldos, Salarios Rayas y Jornales</td>
+			<td>AAA</td>
+			<td>Sueldo Regular</td>
+			<td class="r">89.00</td>
+			<td class="r">90.00</td>
+		</tr>
+		<tr>
+			<td>Fondo de Ahorro</td>
+			<td>BBB</td>
+			<td>Sueldo Regular</td>
+			<td class="r">89.00</td>
+			<td class="r">90.00</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td class="rbt"><b>Total</b></td>
+			<td class="rbt">123.45</td>
+			<td class="rbt">123.45</td>
+		</tr>
+	</tbody>
+</table>
+<table class="tot">
+	<tr class="r">
+		<td><b>Total Sueldos</b></td>
+		<td>123.45</td>
+	</tr>
+</table>
+<br>
+<h5>Incapacidades</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 56%;">Tipo de Incapacidad</th>
+			<th style="width: 22%;">Días de Incapacidad</th>
+			<th style="width: 22%;">Importe Monetario</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Riesgo de trabajo</td>
+			<td class="r">1</td>
+			<td class="r">22.45</td>
+		</tr>
+		<tr>
+			<td>Enfermedad en general</td>
+			<td class="r">2</td>
+			<td class="r">22.45</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<h5>Deducciones</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 35%;">Tipo de Deducción</th>
+			<th style="width: 11%;">Clave</th>
+			<th>Concepto</th>
+			<th style="width: 11%;">Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Seguridad social</td>
+			<td>XXX</td>
+			<td>Deduccion Semanal</td>
+			<td class="r">10.00</td>
+		</tr>
+		<tr>
+			<td>Ajuste en Viáticos exentos</td>
+			<td>YYY</td>
+			<td>Deduccion Semanal</td>
+			<td class="r">10.00</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td class="rbt"><b>Total</b></td>
+			<td class="rbt">123.45</td>
+		</tr>
+	</tbody>
+</table>
+<table class="tot">
+	<tr class="r">
+		<td><b>Total Otras Deucciones</b></td>
+		<td>123.45</td>
+	</tr>
+	<tr class="r">
+		<td><b>Total Impuesto Retenidos</b></td>
+		<td>123.45</td>
+	</tr>
+</table>
+<br>
+<h5>Otros Pagos</h5>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 35%;">Tipo de Otro Pago</th>
+			<th style="width: 11%;">Clave</th>
+			<th>Concepto</th>
+			<th style="width: 11%;">Importe</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Reintegro de ISR pagado en exceso (siempre que no haya sido enterado al SAT)</td>
+			<td>003</td>
+			<td>Otro pago 111</td>
+			<td class="r">1,234.56</td>
+		</tr>
+		<tr>
+			<td>Subsidio para el empleo (efectivamente entregado al trabajador)</td>
+			<td>003</td>
+			<td>Otro pago 222</td>
+			<td class="r">1,234.56</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td class="rbt"><b>Total</b></td>
+			<td class="rbt">123.45</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

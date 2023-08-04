@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:cce11="http://www.sat.gob.mx/ComercioExterior11" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="3.3" Fecha="2017-05-01T01:23:59" Sello="" FormaPago="02" NoCertificado="40001000000300000337" Certificado="" SubTotal="1000" Moneda="MXN" Total="1500" TipoDeComprobante="I" LugarExpedicion="45079" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd">
+  <cfdi:Emisor Rfc=" AAA010101AAA" RegimenFiscal="622"/>
+  <cfdi:Receptor Rfc="BASJ600902KL9" UsoCFDI="G03"/>
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="01010101" Cantidad="1.5" ClaveUnidad="C81" Descripcion="ACERO" ValorUnitario="1500000" Importe="2250000"/>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos/>
+  <cfdi:Complemento>
+    <cce11:ComercioExterior Version="1.1" MotivoTraslado="99" TipoOperacion="2" ClaveDePedimento="A1" CertificadoOrigen="1" NumCertificadoOrigen="DEADBEEF-CAFE-BABE-1234-DECADE012345" NumeroExportadorConfiable="1" Incoterm="FOB" Subdivision="1" Observaciones="obs" TipoCambioUSD="234.5678" TotalUSD="123.45">
+      <cce11:Emisor Curp="PEPJ800101HDFBCDQ8">
+        <cce11:Domicilio Calle="c" NumeroExterior="123X" NumeroInterior="12A" Colonia="0750" Localidad="105" Referencia="r" Municipio="033" Estado="ZAC" Pais="ZZZ" CodigoPostal="99999"/>
+      </cce11:Emisor>
+      <cce11:Propietario NumRegIdTrib="1234567" ResidenciaFiscal="ZZZ"/>
+      <cce11:Receptor NumRegIdTrib="234567890">
+        <cce11:Domicilio Calle="c" NumeroExterior="2" NumeroInterior="99" Colonia="0197" Localidad="007" Referencia="r1" Municipio="039" Estado="NLE" Pais="ZZZ" CodigoPostal="99999"/>
+      </cce11:Receptor>
+      <cce11:Destinatario NumRegIdTrib="654321" Nombre="Nombre">
+        <cce11:Domicilio Calle="c3" NumeroExterior="3A" NumeroInterior="101" Colonia="0202" Localidad="007" Referencia="rd" Municipio="039" Estado="BCN" Pais="ZZZ" CodigoPostal="64290"/>
+      </cce11:Destinatario>
+      <cce11:Mercancias>
+        <cce11:Mercancia NoIdentificacion="n100" FraccionArancelaria="99999999" CantidadAduana="0.001" UnidadAduana="99" ValorUnitarioAduana="234.56" ValorDolares="123.45">
+          <cce11:DescripcionesEspecificas Marca="Marca" Modelo="Modelo" SubModelo="SubModelo" NumeroSerie="NumeroSerie"/>
+        </cce11:Mercancia>
+        <cce11:Mercancia NoIdentificacion="n101" FraccionArancelaria="99999999" CantidadAduana="0.001" UnidadAduana="99" ValorUnitarioAduana="234.56" ValorDolares="123.45">
+          <cce11:DescripcionesEspecificas Marca="Marca" Modelo="Modelo" SubModelo="SubModelo" NumeroSerie="NumeroSerie"/>
+        </cce11:Mercancia>
+      </cce11:Mercancias>
+    </cce11:ComercioExterior>
+  </cfdi:Complemento>
+</cfdi:Comprobante>

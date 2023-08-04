@@ -1,0 +1,213 @@
+<html>
+<head>
+	<title>CFDI</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+@page {
+	@bottom-left{
+		content: "Retenciones" " versión: " "2.0";
+		font:7.47pt Arial;
+	}
+	@bottom-center{
+		content: "Este documento es una representación impresa de un CFDI";
+		font:7.47pt Arial;
+	}
+	@bottom-right{
+		content: "Página " counter(page) " de " counter(pages);
+		font:7.47pt Arial;
+	}
+}
+@media print {
+    .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+}
+body {
+	font-family: Arial;
+	font-size: 9pt;
+}
+h3 {
+	margin-top:-10px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#333;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h4 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#555;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h5 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 8.6pt;
+	background-color:#777;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	padding-left: 10px;
+	text-align: left;
+	color: white;
+	letter-spacing: 2px;
+	font-weight: bold;
+}
+.h {
+	font-size: 9.89pt;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.c {
+	font-size: 8.6pt;
+}
+.ci {
+	font-size: 7.47pt;
+}
+.cii {
+	font-size: 6.5pt;
+}
+.ciii {
+	font-size: 5.65pt;
+}
+table {
+	font-size: 8.6pt;
+	width: 100%;
+	border-collapse: collapse;
+	border: none;
+	border-spacing: 0;
+}
+table table {
+	font-size: 7.47pt;
+}
+table table table {
+	font-size: 6.5pt;
+}
+table table table table {
+	font-size: 5.65pt;
+}
+table th {
+	background-color:#e0e0e0;
+}
+table table th {
+	background-color:#e8e8e8;
+}
+table table table th {
+	background-color:#f0f0f0;
+}
+table table table table th {
+	background-color:#f8f8f8;
+}
+.htd {
+	text-align: right;
+	width: 1px;
+	white-space: nowrap;
+	font-weight: bold;
+}
+.nb {
+	break-inside: avoid;
+}
+.cen {
+	text-align: center;
+}
+.r {
+	text-align: right;
+}
+.rbt {
+	text-align: right;
+	border-top: 1px solid black;
+}
+th {
+	padding: 1px;
+	vertical-align: center;
+	text-align: center;
+	border-right: 2px solid white;
+}
+th:last-child {
+	border-right: 0px solid white;
+}
+td {
+	vertical-align: top;
+	padding-right: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+tr:last-child td {
+	padding-bottom: none;
+}
+td:last-child {
+	padding-right: none;
+}
+tr {
+	break-inside: avoid;
+}
+.tot {
+	margin-left: 50%;
+	width: 50%;
+}
+table.tot {
+	margin-top: 1px;
+	break-inside: avoid;
+}
+table.tot tr:first-child {
+	border-top: 1px solid;
+}
+hr {
+	border: none;
+	height: 1px;
+	background-color: black;
+	break-after: avoid;
+}
+ul {
+	margin: 0;
+}	</style>
+</head>
+<body>
+<h3>Constancia de Percepciones y Retenciones</h3>
+<table>
+	<tr>
+		<th style="width: 20%">Folio</th>
+		<th style="width: 40%">Emisor</th>
+		<th style="width: 40%">Receptor</th>
+	</tr>
+	<tr>
+		<td class="cen">&nbsp;</td>
+		<td rowspan="13">
+			<div class="h cen"><b>PERSONA FÍSICA DE PRUEBA</b></div>
+			<b>RFC: </b>&nbsp;<br/>
+		</td>
+		<td rowspan="13">
+			<div class="h cen"><b>PERSONA FISICA NACIONAL DE PRUEBA</b></div>
+			<b>Número Registro Fiscal: </b>&nbsp;<br/>
+			<b>Nacionalidad: </b> &nbsp;
+		</td>
+		</tr>
+	<tr>
+		<th>Fecha de Emisión</th>
+	</tr>
+	<tr>
+		<td class="cen">2021-12-12 12:45:29</td>
+	</tr>
+</table>
+<table style="margin-top: 2px">
+	<tr>
+		<th style="width: 20%">Clave de Retención</th>
+		<th>Periodo</th>
+	</tr>
+	<tr class="cen">
+		<td>01 - Servicios profesionales</td>
+		<td>01 - Enero a 12 - Diciembre del &nbsp;</td>
+	</tr>
+</table>
+<h5>Totales</h5>
+<table><tr><td class='htd'>Impuestos Retenidos:</td><td><table><thead><tr><th>Monto Ret</th><th>Tipo Pago Retenido</th></tr></thead><tbody><tr><td>1.00</td><td>02 - Pago definitivo IEPS</td></tr></tbody></table></td></tr><tr><td class='htd'>Monto Total Operación:</td><td>1.00</td></tr><tr><td class='htd'>Monto Total Grav:</td><td>1.00</td></tr><tr><td class='htd'>Monto Total Exento:</td><td>1.00</td></tr><tr><td class='htd'>Monto Total Ret:</td><td>1.00</td></tr><tr><td class='htd'>ISRCorrespondiente:</td><td>11.2</td></tr></table>
+</body>
+</html>
