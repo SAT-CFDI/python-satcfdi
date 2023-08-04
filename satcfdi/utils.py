@@ -3,7 +3,15 @@ from collections.abc import Sequence, Mapping
 
 from lxml import etree
 
-parser = etree.XMLParser(no_network=True, remove_comments=True, remove_blank_text=True, huge_tree=True, collect_ids=False, remove_pis=True)
+parser = etree.XMLParser(
+    no_network=True,
+    remove_comments=True,
+    remove_blank_text=True,
+    huge_tree=True,
+    collect_ids=False,
+    remove_pis=True,
+    recover=True
+)
 
 
 class ScalarMap(dict):
