@@ -49,7 +49,7 @@ THIS IS A TESTING TEMPLATE
 					{% if c.Impuestos.Traslados %}
 					{% for v in iterate(c.Impuestos.Traslados) %}
 					<tr>
-						<td>{% if loop.first %}+ <b>Translados</b>{% endif %}</td>
+						<td>{% if loop.first %}+ <b>Traslados</b>{% endif %}</td>
 						<td>{{ v.Base }}</td>
 						<td>{{ v.Impuesto | desc }}</td>
 						<td>{{ tasa_cuota( v.TipoFactor, v.TasaOCuota) }}</td>
@@ -97,7 +97,7 @@ THIS IS A TESTING TEMPLATE
 	<tr class="r">
 		<td>
 			{% if loop.first %}
-			+ <b>Translados</b>
+			+ <b>Traslados</b>
 			{% endif %}
 		</td>
 		<td>{{ v.Impuesto | desc }}</td>
