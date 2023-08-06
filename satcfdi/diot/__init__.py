@@ -341,7 +341,7 @@ class DIOT(Representable):
             complementaria: DatosComplementaria = None,
             proveedores: ProveedorTercero | Sequence[ProveedorTercero] = None
     ):
-        proveedores = iterate(proveedores)
+        proveedores = list(iterate(proveedores))
 
         self.datos_identificacion = datos_identificacion
         self.datos_generales = DatosGenerales(
