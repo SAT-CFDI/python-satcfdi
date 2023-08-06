@@ -194,7 +194,8 @@ __________________________________
 .. code-block:: python
 
     from datetime import datetime
-    from satcfdi.models import Signer, CFDI
+    from satcfdi.models import Signer
+    from satcfdi.cfdi import CFDI
     from satcfdi.create.cfd import cfdi40
     
     # Load signing certificate

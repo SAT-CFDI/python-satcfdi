@@ -106,7 +106,7 @@ ____________________
 
 .. code-block:: python
 
-    from satcfdi import CFDI
+    from satcfdi.cfdi import CFDI
     
     # from file
     invoice = CFDI.from_file('comprobante.xml')
