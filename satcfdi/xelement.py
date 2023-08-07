@@ -1,4 +1,3 @@
-import json
 from lxml import etree
 
 from .transform import SchemaCollector, cfdi_schemas, validate_xsd
@@ -60,17 +59,6 @@ class XElement(ScalarMap):
     def xml_bytes(self, pretty_print=False, xml_declaration=True, validate=False, include_schema_location=False) -> bytes:
         xml = self.to_xml(validate=validate, include_schema_location=include_schema_location)
         return etree.tostring(xml, xml_declaration=xml_declaration, encoding="UTF-8", pretty_print=pretty_print)
-
-    def json_write(self, target, pretty_print=False):
-        if isinstance(target, str):
-            with open(target, 'w') as f:
-                json.dump(self, f, ensure_ascii=False, default=str, indent=2 if pretty_print else None)
-                return
-
-        json.dump(self, target, ensure_ascii=False, default=str, indent=2 if pretty_print else None)
-
-    def json_str(self, pretty_print=False) -> str:
-        return json.dumps(self, ensure_ascii=False, default=str, indent=2 if pretty_print else None)
 
     def __repr__(self):
         # return '%s.%s(%s)' % (self.__class__.__module__,

@@ -182,7 +182,7 @@ ____________________
     invoice.xml_write("my_invoice.xml")
     
     # JSON
-    invoice.json_write("my_invoice.json", pretty_print=True)
+    render.json_write(invoice, "my_invoice.json", pretty_print=True)
     
     # HTML
     render.html_write(invoice, "my_invoice.html")
@@ -190,6 +190,11 @@ ____________________
     # PDF
     render.pdf_write(invoice, "my_invoice.pdf")
     
+    # Multiple HTML
+    render.html_write([invoice1, invoice2], "my_invoice.html")
+    
+    # Multiple PDF
+    render.pdf_write([invoice1, invoice2], "my_invoice.pdf")
 
 
 Contributing

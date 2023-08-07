@@ -21,13 +21,7 @@ ______________________
 
 .. code-block:: python
 
-    # JSON
-    json = invoice.json_str()
-    # save to file
-    invoice.json_write("_comprobante_.json")
-    # .. or alternative
-    with open("_stream_comprobante_.json", 'w', encoding='utf-8') as f:
-        invoice.json_write(f)
+    from satcfdi import render
     
     # XML
     xml = invoice.xml_bytes()
@@ -36,6 +30,14 @@ ______________________
     # .. or alternative
     with open("_stream_comprobante_.xml", 'wb') as f:
         invoice.xml_write(f)
+    
+    # JSON
+    json = render.json_str(invoice)
+    # save to file
+    render.json_write(invoice, "_comprobante_.json")
+    # .. or alternative
+    with open("_stream_comprobante_.json", 'w', encoding='utf-8') as f:
+        render.json_write(invoice, f)
     
     # HTML
     html = render.html_str(invoice)

@@ -125,4 +125,4 @@ def test_copy_cfdi():
     copy = invoice.copy()
     verify_invoice(copy, f"{xml_file}")
 
-    copy.json_str(pretty_print=True)
+    render.json_str(copy, pretty_print=True)
