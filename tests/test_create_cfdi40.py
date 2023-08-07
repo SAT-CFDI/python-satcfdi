@@ -5,6 +5,7 @@ from unittest import mock
 
 import pytest
 
+from satcfdi import render
 from satcfdi.cfdi import CFDI
 from satcfdi.create.cfd import cfdi40, nomina12
 from satcfdi.create.cfd.cfdi40 import PagoComprobante
@@ -39,7 +40,7 @@ def verify_invoice(invoice, path, include_metadata=False):
     verify = verify_result(data=invoice.xml_bytes(pretty_print=True), filename=f"{path}.xml")
     assert verify
 
-    verify = verify_result(data=invoice.html_str(), filename=f"{path}.html")
+    verify = verify_result(data=render.html_str(invoice), filename=f"{path}.html")
     assert verify
 
 

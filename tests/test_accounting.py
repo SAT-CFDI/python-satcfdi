@@ -4,12 +4,12 @@ from unittest import mock
 
 import xlsxwriter
 
+from satcfdi import render
 from satcfdi.models import DatePeriod
 from satcfdi.accounting._ansi_colors import *
 from satcfdi.accounting.formatters import SatCFDI
 from satcfdi.accounting.process import filter_invoices_iter, invoices_export, invoices_print, payments_print, \
     complement_invoices_data, payments_export, num2col, filter_payments_iter, payments_retentions_export, filter_retenciones_iter, retenciones_print, payments_groupby_receptor
-from satcfdi.printer import Representable
 from tests.utils import verify_result
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
@@ -101,11 +101,11 @@ def test_single_html_file():
         c = myCFDI.from_file(f)
         all_invoices.append(c)
 
-    res = Representable.html_str_all(all_invoices)
+    res = render.html_str(all_invoices)
     verify_result(res, "multiple_invoices.html")
 
-    Representable.html_write_all(
-        objs=all_invoices,
+    render.html_write(
+        xlm=all_invoices,
         target=os.path.join(current_dir, "test_accounting", "multiple_invoices2.html"),
     )
 

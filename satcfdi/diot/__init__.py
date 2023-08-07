@@ -9,7 +9,6 @@ from .code import *
 from .utils import _format_rfc, DIOTWriter, encrypt_triple_des, period_code, catalog_code
 from ..ans1e import *
 from ..models import RFC, RFCType, CURP, Certificate
-from ..printer import Representable
 from ..utils import iterate
 
 __all__ = [
@@ -331,7 +330,7 @@ class DatosGenerales:
         }
 
 
-class DIOT(Representable):
+class DIOT:
     tag = "DIOT"
 
     def __init__(

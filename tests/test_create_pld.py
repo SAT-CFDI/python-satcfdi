@@ -4,6 +4,7 @@ from datetime import date
 
 import pytest
 
+from satcfdi import render
 from satcfdi.cfdi import CFDI
 from satcfdi.exceptions import SchemaValidationError
 from satcfdi.create.pld import ari
@@ -21,7 +22,7 @@ def verify_invoice(invoice, path):
     verify = verify_result(data=invoice.xml_bytes(pretty_print=True), filename=f"{path}.xml")
     assert verify
 
-    verify = verify_result(data=invoice.html_str(), filename=f"{path}.html")
+    verify = verify_result(data=render.html_str(invoice), filename=f"{path}.html")
     assert verify
 
 

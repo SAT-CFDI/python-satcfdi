@@ -38,19 +38,19 @@ ______________________
         invoice.xml_write(f)
     
     # HTML
-    html = invoice.html_str()
+    html = render.html_str(invoice)
     # save to file
-    invoice.html_write("_comprobante_.html")
+    render.html_write(invoice, "_comprobante_.html")
     # .. or alternative
     with open("_stream_comprobante_.html", 'w', encoding='utf-8') as f:
         invoice.html_write(f)
     
     # PDF
-    pdf = invoice.pdf_bytes()
+    pdf = render.pdf_bytes(invoice)
     # save to file
-    invoice.pdf_write("_comprobante_.pdf")
+    render.pdf_write(invoice, "_comprobante_.pdf")
     # .. or alternative
     with open("_stream_comprobante_.pdf", 'wb') as f:
-        invoice.pdf_write(f)
+        render.pdf_write(invoice, f)
     
 

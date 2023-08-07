@@ -1,14 +1,13 @@
 import json
 from lxml import etree
 
-from .printer import Representable
 from .transform import SchemaCollector, cfdi_schemas, validate_xsd
 from .utils import ScalarMap, parser
 from .transform.objectify import cfdi_objectify
 from .transform.xmlify import cfdi_xmlify
 
 
-class XElement(ScalarMap, Representable):
+class XElement(ScalarMap):
     tag = None
 
     def to_xml(self, validate=False, include_schema_location=False) -> etree.Element:

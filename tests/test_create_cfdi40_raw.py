@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from decimal import Decimal
 
+from satcfdi import render
 from satcfdi.create.cfd import cfdi40
 from satcfdi.pacs.sat import SAT
 from tests.utils import get_signer, verify_result, XElementPrettyPrinter
@@ -25,7 +26,7 @@ def verify_invoice(invoice, path, include_metadata=False):
     verify = verify_result(data=invoice.xml_bytes(pretty_print=True), filename=f"{path}.xml")
     assert verify
 
-    verify = verify_result(data=invoice.html_str(), filename=f"{path}.html")
+    verify = verify_result(data=render.html_str(invoice), filename=f"{path}.html")
     assert verify
 
 

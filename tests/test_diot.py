@@ -5,6 +5,7 @@ from io import BytesIO
 from unittest import mock
 from zipfile import ZipInfo
 
+from satcfdi import render
 from satcfdi.diot.code import Periodo, TipoOperacion, TipoTercero, Pais
 from satcfdi.diot import DatosIdentificacion, DatosComplementaria, ProveedorTercero, DIOT
 from tests.utils import get_signer, verify_result
@@ -301,7 +302,7 @@ def test_create_declaracion_diot_moral_full():
 
 
 def verify_invoice(invoice, path):
-    verify = verify_result(data=invoice.html_str(), filename=f"{path}.html")
+    verify = verify_result(data=render.html_str(invoice), filename=f"{path}.html")
     assert verify
 
 

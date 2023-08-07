@@ -176,6 +176,8 @@ ____________________
 
 .. code-block:: python
 
+    from satcfdi import render
+    
     # XML
     invoice.xml_write("my_invoice.xml")
     
@@ -183,10 +185,10 @@ ____________________
     invoice.json_write("my_invoice.json", pretty_print=True)
     
     # HTML
-    invoice.html_write("my_invoice.html")
+    render.html_write(invoice, "my_invoice.html")
     
     # PDF
-    invoice.pdf_write("my_invoice.pdf")
+    render.pdf_write(invoice, "my_invoice.pdf")
     
 
 

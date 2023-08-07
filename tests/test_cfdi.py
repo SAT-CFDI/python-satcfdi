@@ -3,6 +3,7 @@ import os
 
 import pytest
 
+from satcfdi import render
 from satcfdi.cfdi import CFDI
 from tests.constants import CFDI_FILES
 from tests.utils import verify_result, XElementPrettyPrinter
@@ -21,10 +22,10 @@ def verify_invoice(invoice, path):
     verify = verify_result(data=invoice.xml_bytes(pretty_print=True), filename=f"{path}.xml")
     assert verify
 
-    verify = verify_result(data=invoice.html_str(), filename=f"{path}.html")
+    verify = verify_result(data=render.html_str(invoice), filename=f"{path}.html")
     assert verify
 
-    invoice.pdf_write(os.path.join(current_dir, "test_cfdi", f"{path}.pdf"))
+    render.pdf_write(invoice, target=os.path.join(current_dir, "test_cfdi", f"{path}.pdf"))
 
 
 @pytest.mark.parametrize('xml_file', CFDI_FILES)
