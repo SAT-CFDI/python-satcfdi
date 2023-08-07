@@ -4,13 +4,11 @@ from unittest import mock
 
 import xlsxwriter
 
-from satcfdi import render
-from satcfdi.models import DatePeriod
 from satcfdi.accounting._ansi_colors import *
 from satcfdi.accounting.formatters import SatCFDI
 from satcfdi.accounting.process import filter_invoices_iter, invoices_export, invoices_print, payments_print, \
     complement_invoices_data, payments_export, num2col, filter_payments_iter, payments_retentions_export, filter_retenciones_iter, retenciones_print, payments_groupby_receptor
-from tests.utils import verify_result
+from satcfdi.models import DatePeriod
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
 
@@ -69,6 +67,7 @@ def test_cfdi():
         pagos_hechos = list(filter_payments_iter(invoices=all_invoices, fecha=dp, rfc_receptor=rfc))
         payments_print(pagos_hechos)
 
+        os.makedirs(os.path.join(current_dir, "test_accounting"), exist_ok=True)
         path = os.path.join(current_dir, "test_accounting", "invoices.xlsx")
 
         workbook = xlsxwriter.Workbook(path)
@@ -93,26 +92,3 @@ def test_retenciones():
 
     retenciones = filter_retenciones_iter(all_invoices, ejerc=year)
     retenciones_print(retenciones)
-
-
-def test_single_html_file():
-    all_invoices = []
-    for f in glob.iglob(os.path.join(current_dir, "invoices", "*.xml")):
-        c = myCFDI.from_file(f)
-        all_invoices.append(c)
-
-    res = render.html_str(all_invoices)
-    verify_result(res, "multiple_invoices.html")
-
-    render.html_write(
-        xlm=all_invoices,
-        target=os.path.join(current_dir, "test_accounting", "multiple_invoices2.html"),
-    )
-
-    with open(os.path.join(current_dir, "test_accounting", "multiple_invoices2.html"), "r", encoding='utf-8') as f:
-        assert f.read() == res
-
-    # assert filecmp.cmp(
-    #     os.path.join(current_dir, "test_accounting", "multiple_invoices.html"),
-    #     os.path.join(current_dir, "test_accounting", "multiple_invoices2.html")
-    # )

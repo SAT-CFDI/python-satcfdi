@@ -12,7 +12,8 @@ try:
 except OSError as ex:
     weasyprint = None
 
-PDF_INIT_TEMPLATE = DefaultCFDIEnvironment.get_template("_init.html")
+MAIN_TEMPLATE = DefaultCFDIEnvironment.get_template("_main.html")
+BODY_TEMPLATE = DefaultCFDIEnvironment.get_template("_body.html")
 
 
 def json_write(xlm: XElement, target, pretty_print=False):
@@ -28,34 +29,34 @@ def json_str(xlm: XElement, pretty_print=False) -> str:
     return json.dumps(xlm, ensure_ascii=False, default=str, indent=2 if pretty_print else None)
 
 
-def html_write(xlm: XElement | Sequence[XElement], target, init_template=PDF_INIT_TEMPLATE):
+def html_write(xlm: XElement | Sequence[XElement], target, template=MAIN_TEMPLATE):
     if isinstance(xlm, Sequence):
-        init_template.stream({"c": [(QName(a.tag).localname, a) for a in xlm], "k": '_multiple'}).dump(target)
+        template.stream({"c": [(QName(a.tag).localname, a) for a in xlm], "k": '_multiple'}).dump(target)
     else:
-        init_template.stream({"c": xlm, "k": QName(xlm.tag).localname}).dump(target)
+        template.stream({"c": xlm, "k": QName(xlm.tag).localname}).dump(target)
 
 
-def html_str(xlm: XElement | Sequence[XElement], init_template=PDF_INIT_TEMPLATE) -> str:
+def html_str(xlm: XElement | Sequence[XElement], template=MAIN_TEMPLATE) -> str:
     if isinstance(xlm, Sequence):
-        return init_template.render({"c": [(QName(a.tag).localname, a) for a in xlm], "k": '_multiple'})
+        return template.render({"c": [(QName(a.tag).localname, a) for a in xlm], "k": '_multiple'})
     else:
-        return init_template.render({"c": xlm, "k": QName(xlm.tag).localname})
+        return template.render({"c": xlm, "k": QName(xlm.tag).localname})
 
 
-def pdf_write(xlm: XElement | Sequence[XElement], target, init_template=PDF_INIT_TEMPLATE):
+def pdf_write(xlm: XElement | Sequence[XElement], target, template=MAIN_TEMPLATE):
     if weasyprint is None:
         raise ImportError("weasyprint is not installed")
 
-    weasyprint.HTML(string=html_str(xlm, init_template=init_template)).write_pdf(
+    weasyprint.HTML(string=html_str(xlm, template=template)).write_pdf(
         target=target,
         stylesheets=[PDF_CSS]
     )
 
 
-def pdf_bytes(xlm: XElement | Sequence[XElement], init_template=PDF_INIT_TEMPLATE) -> bytes:
+def pdf_bytes(xlm: XElement | Sequence[XElement], template=MAIN_TEMPLATE) -> bytes:
     if weasyprint is None:
         raise ImportError("weasyprint is not installed")
 
-    return weasyprint.HTML(string=html_str(xlm, init_template=init_template)).write_pdf(
+    return weasyprint.HTML(string=html_str(xlm, template=template)).write_pdf(
         stylesheets=[PDF_CSS]
     )

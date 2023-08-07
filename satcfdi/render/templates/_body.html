@@ -7,15 +7,4 @@
 	{% endfor %}
 {% endif %}
 {% endmacro %}
-<html>
-<head>
-	<title>CFDI</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<style>
-		{% include '_style.css' %}
-	</style>
-</head>
-<body>
-	{% include k + '.html' %}
-</body>
-</html>
+{% include k + '.html' %}
