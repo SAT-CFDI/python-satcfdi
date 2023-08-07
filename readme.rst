@@ -176,7 +176,7 @@ ____________________
 
 .. code-block:: python
 
-    from satcfdi import render
+    from satcfdi import render, BODY_TEMPLATE
     
     # XML
     invoice.xml_write("my_invoice.xml")
@@ -195,6 +195,9 @@ ____________________
     
     # Multiple PDF
     render.pdf_write([invoice1, invoice2], "my_invoice.pdf")
+    
+    # HTML Body only
+    html_body = render.html_str(invoice, template=BODY_TEMPLATE)
 
 
 Contributing

@@ -3,6 +3,7 @@ import os
 
 from satcfdi import render
 from satcfdi.cfdi import CFDI
+from satcfdi.render import BODY_TEMPLATE
 from satcfdi.render.environment import CFDIEnvironment
 from tests.utils import verify_result
 
@@ -51,3 +52,20 @@ def test_custom_template():
     )
 
     verify_custom_template(cfdi, xml_file)
+
+
+def test_body_html():
+    xml_file = "cfdv40-ejemplo.xml"
+    cfdi = CFDI.from_file(
+        os.path.join(current_dir, 'cfdi_ejemplos/comprobante40', xml_file)
+    )
+
+    body_html = render.html_str(cfdi, template=BODY_TEMPLATE)
+
+    verify = verify_result(
+        data=body_html,
+        filename=f"{xml_file}.body.html"
+    )
+    assert verify
+
+
