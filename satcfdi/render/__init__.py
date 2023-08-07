@@ -51,6 +51,7 @@ def pdf_write(xlm: XElement | Sequence[XElement], target, init_template=PDF_INIT
         stylesheets=[PDF_CSS]
     )
 
+
 def pdf_bytes(xlm: XElement | Sequence[XElement], init_template=PDF_INIT_TEMPLATE) -> bytes:
     if weasyprint is None:
         raise ImportError("weasyprint is not installed")
