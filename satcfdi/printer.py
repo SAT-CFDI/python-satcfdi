@@ -7,63 +7,57 @@ except OSError as ex:
     weasyprint = None
 
 from .render import PDF_INIT_TEMPLATE
-from .render.environment import CFDIEnvironment
 
 
 class Representable:
     tag = None
 
-    def html_write(self, target, templates_path=None):
-        if templates_path:
-            env = CFDIEnvironment(templates_path=templates_path)
-            init_template = env.get_template("_init.html")
-        else:
-            init_template = PDF_INIT_TEMPLATE
-
+    def html_write(self, target, init_template=PDF_INIT_TEMPLATE):
         init_template.stream({"c": self, "k": QName(self.tag).localname}).dump(target)
 
-    def html_str(self, templates_path=None) -> str:
-        if templates_path:
-            env = CFDIEnvironment(templates_path=templates_path)
-            init_template = env.get_template("_init.html")
-        else:
-            init_template = PDF_INIT_TEMPLATE
-
+    def html_str(self, init_template=PDF_INIT_TEMPLATE) -> str:
         return init_template.render({"c": self, "k": QName(self.tag).localname})
 
-    def pdf_write(self, target, templates_path=None):
+    def pdf_write(self, target, init_template=PDF_INIT_TEMPLATE):
         if weasyprint is None:
             raise ImportError("weasyprint is not installed")
 
-        weasyprint.HTML(string=self.html_str(templates_path=templates_path)).write_pdf(
+        weasyprint.HTML(string=self.html_str(init_template=init_template)).write_pdf(
             target=target,
             stylesheets=[PDF_CSS]
         )
 
-    def pdf_bytes(self, templates_path=None) -> bytes:
+    def pdf_bytes(self, init_template=PDF_INIT_TEMPLATE) -> bytes:
         if weasyprint is None:
             raise ImportError("weasyprint is not installed")
 
-        return weasyprint.HTML(string=self.html_str(templates_path=templates_path)).write_pdf(
+        return weasyprint.HTML(string=self.html_str(init_template=init_template)).write_pdf(
             stylesheets=[PDF_CSS]
         )
 
     @staticmethod
-    def html_write_all(objs, target, templates_path=None):
-        if templates_path:
-            env = CFDIEnvironment(templates_path=templates_path)
-            init_template = env.get_template("_multiple.html")
-        else:
-            init_template = PDF_INIT_TEMPLATE
-
+    def html_write_all(objs, target, init_template=PDF_INIT_TEMPLATE):
         init_template.stream({"c": [(QName(a.tag).localname, a) for a in objs], "k": '_multiple'}).dump(target)
 
     @staticmethod
-    def html_str_all(objs, templates_path=None) -> str:
-        if templates_path:
-            env = CFDIEnvironment(templates_path=templates_path)
-            init_template = env.get_template("_multiple.html")
-        else:
-            init_template = PDF_INIT_TEMPLATE
-
+    def html_str_all(objs, init_template=PDF_INIT_TEMPLATE) -> str:
         return init_template.render({"c": [(QName(a.tag).localname, a) for a in objs], "k": '_multiple'})
+
+    @staticmethod
+    def pdf_write_all(objs, target, init_template=PDF_INIT_TEMPLATE):
+        if weasyprint is None:
+            raise ImportError("weasyprint is not installed")
+
+        weasyprint.HTML(string=Representable.html_str_all(objs, init_template=init_template)).write_pdf(
+            target=target,
+            stylesheets=[PDF_CSS]
+        )
+
+    @staticmethod
+    def pdf_bytes_all(objs, init_template=PDF_INIT_TEMPLATE) -> bytes:
+        if weasyprint is None:
+            raise ImportError("weasyprint is not installed")
+
+        return weasyprint.HTML(string=Representable.html_str_all(objs, init_template=init_template)).write_pdf(
+            stylesheets=[PDF_CSS]
+        )
