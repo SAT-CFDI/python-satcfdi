@@ -176,7 +176,8 @@ ____________________
 
 .. code-block:: python
 
-    from satcfdi import render, BODY_TEMPLATE
+    from satcfdi import render
+    from satcfdi.render import BODY_TEMPLATE
     
     # XML
     invoice.xml_write("my_invoice.xml")
