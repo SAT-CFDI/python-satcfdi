@@ -47,6 +47,43 @@ class EstadoSolicitud(IntEnum):
     VENCIDA = 6
 
 
+class CodigoEstadoSolicitud(StrEnum):
+    # 5000 Solicitud recibida con éxito
+    # Indica que la solicitud de descarga que se está
+    # verificando fue aceptada.
+    EXITO = "5000"
+
+    # 5002 Se agotó las solicitudes
+    # de por vida
+    # Para el caso de descarga de tipo CFDI, se tiene un
+    # límite máximo para solicitudes con los mismos
+    # parámetros (Fecha Inicial, Fecha Final, RfcEmisor,
+    # RfcReceptor).
+    AGOTADO = "5002"
+
+    # 5003 Tope máximo Indica que en base a los parámetros de consulta
+    # se está superando el tope máximo de CFDI o
+    # Metadata, por solicitud de descarga masiva.
+    TOPE_MAXIMO = "5003"
+
+    # 5004 No se encontró la información
+    # Indica que la solicitud de descarga que se está
+    # verificando no generó paquetes por falta de
+    # información.
+    NO_ENCONTRADO = "5004"
+
+    # 5005 Solicitud duplicada En caso de que exista una solicitud vigente con
+    # los mismos parámetros (Fecha Inicial, Fecha Final,
+    # RfcEmisor, RfcReceptor, TipoSolicitud), no se
+    # permitirá generar una nueva solicitud.
+    DUPLICADO = "5005"
+
+    # 404 Error no Controlado Error genérico, en caso de presentarse realizar
+    # nuevamente la petición y si persiste el error
+    # levantar un RMA.
+    ERROR_NO_CONTROLADO = "404"
+
+
 class TipoDescargaMasivaTerceros(StrEnum):
     CFDI = 'CFDI'
     METADATA = 'Metadata'
@@ -236,8 +273,7 @@ class _CFDIVerificaSolicitudDescarga(_SATRequest):
             at = node.attrib.get('CodEstatus')
             if at is not None:
                 result['CodEstatus'] = at
-            estado_solicitud = int(node.attrib['EstadoSolicitud'])
-            result['EstadoSolicitud'] = Code(estado_solicitud, EstadoSolicitud(estado_solicitud).name)
+            result['EstadoSolicitud'] = int(node.attrib['EstadoSolicitud'])
             at = node.attrib.get('CodigoEstadoSolicitud')
             if at is not None:
                 result['CodigoEstadoSolicitud'] = at
