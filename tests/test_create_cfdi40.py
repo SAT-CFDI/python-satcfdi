@@ -144,8 +144,8 @@ def test_create_invoice_render(rfc, xml_file, traslados, retenciones, total, tra
     path = f"{xml_file}_stamped"
 
     os.makedirs(os.path.join(current_dir, 'renders'), exist_ok=True)
-    invoice.html_write(target=os.path.join(current_dir, 'renders', f"{path}.html"))
-    invoice.pdf_write(target=os.path.join(current_dir, 'renders', f"{path}.pdf"))
+    render.html_write(invoice, target=os.path.join(current_dir, 'renders', f"{path}.html"))
+    render.pdf_write(invoice, target=os.path.join(current_dir, 'renders', f"{path}.pdf"))
 
 
 @pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total, traslado_incluido', invoices)

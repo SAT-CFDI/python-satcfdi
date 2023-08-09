@@ -3,6 +3,7 @@ import logging
 import sys
 from typing import List, Optional
 
+from .. import render
 from ..cfdi import CFDI, CFDIError
 
 logging.basicConfig(level=logging.INFO)
@@ -32,7 +33,7 @@ def main(args: Optional[List[str]] = None) -> int:
             for file in glob.iglob(file):
                 cfdi = CFDI.from_file(filename=file)
                 target = (file[:-4] if file.endswith(".xml") else file) + ".pdf"
-                cfdi.pdf_write(target=target)
+                render.pdf_write(cfdi, target=target)
                 logger.info(f"PDF created: '{file}'")
 
         case "html":
@@ -45,7 +46,7 @@ def main(args: Optional[List[str]] = None) -> int:
             for file in glob.iglob(file):
                 cfdi = CFDI.from_file(filename=file)
                 target = (file[:-4] if file.endswith(".xml") else file) + ".html"
-                cfdi.html_write(target=target)
+                render.html_write(cfdi, target=target)
                 logger.info(f"HTML created: '{file}'")
 
         case "json":
@@ -58,7 +59,7 @@ def main(args: Optional[List[str]] = None) -> int:
             for file in glob.iglob(file):
                 cfdi = CFDI.from_file(filename=file)
                 target = (file[:-4] if file.endswith(".xml") else file) + ".json"
-                cfdi.json_write(target=target, pretty_print=True)
+                render.json_write(cfdi, target=target, pretty_print=True)
                 logger.info(f"JSON created: '{file}'")
 
         case "help":

@@ -27,6 +27,8 @@ _____________________________________
 .. code-block:: python
 
     from datetime import date
+    
+    from satcfdi import render
     from satcfdi.diot import *
     
     diot = DIOT(
@@ -106,5 +108,5 @@ _____________________________________
     package = diot.generate_package()
     print(package)
     
-    diot.pdf_write('diot.pdf')
+    render.pdf_write(diot, 'diot.pdf')
     
