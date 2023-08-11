@@ -156,7 +156,7 @@
 		<td>{{ r[1] }}</td>
 	</tr>
 	{% endfor %}
-	{% for r in [('IVA', c.Totales.TotalRetencionesIVA), ('ISR', c.Totales.TotalRetencionesISR), ('IEPS', c.Totales.TotalRetencionesIEPS)] if r[1] %}
+	{% for r in [('ISR', c.Totales.TotalRetencionesISR), ('IVA', c.Totales.TotalRetencionesIVA), ('IEPS', c.Totales.TotalRetencionesIEPS)] if r[1] %}
 	<tr class="r">
 		<td><b>{% if loop.first %}Totales Retenciónes MXN{% endif %}</b></td>
 		<td>{{ r[0] }}</td>
