@@ -6,7 +6,7 @@ from unittest import mock
 import pytest
 
 
-from satcfdi.csf import retrieve, _parse_response
+from satcfdi.csf import retrieve, _parse_response, _find_regimen
 from tests.utils import verify_result
 
 current_dir = os.path.dirname(__file__)
@@ -65,4 +65,9 @@ def test_parse_response(file):
 
     res = _parse_response(data)
     pprint(res)
+
+
+def test_regimen_name():
+    res = _find_regimen('Régimen de las Actividades Empresariales con ingresos a través de Plataformas Tecnológicas.')
+    assert res == '625'
 
