@@ -71,3 +71,5 @@ def test_regimen_name():
     res = _find_regimen('Régimen de las Actividades Empresariales con ingresos a través de Plataformas Tecnológicas.')
     assert res == '625'
 
+    res = _find_regimen('NotFound')
+    assert res == None
