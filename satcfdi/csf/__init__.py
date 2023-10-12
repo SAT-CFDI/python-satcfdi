@@ -36,9 +36,9 @@ def _request_constancia(rfc: str, id_cif: str):
 
 
 def _find_regimen(regimen):
-    regimen = regimen.rstrip('.')
+    regimen = regimen.rstrip('.').lower()
     for k, v in select_all('C756_c_RegimenFiscal').items():
-        if regimen.endswith(v):
+        if regimen.endswith(v.lower()):
             return Code(k, v)
     return Code(None, regimen)
 
