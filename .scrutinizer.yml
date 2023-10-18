@@ -18,6 +18,9 @@ build:
         - command: python -m pylint-run
           # use_website_config: true
     tests:
+      dependencies_setup:
+        override:
+        - command: pip install setuptools
       project_setup:
         override:
         - command: pip install .[test]
