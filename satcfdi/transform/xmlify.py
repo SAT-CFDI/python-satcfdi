@@ -11911,6 +11911,450 @@ def domicilio6(name, data):
     self.attrib['Pais'] = strcode(data['Pais'])
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
+def carta_porte2(name, data):
+    col = SchemaCollector()
+    cfdi_schemas[data.tag](col, data)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=col.nsmap)
+    el = data['Ubicaciones']
+    st = SubElement(self, '{http://www.sat.gob.mx/CartaPorte30}Ubicaciones')
+    for r in iterate(el):
+        st.append(ubicacion3('Ubicacion', r))
+    el = data['Mercancias']
+    self.append(mercancias2('Mercancias', el))
+    el = data.get('FiguraTransporte')
+    if el is not None:
+        st = SubElement(self, '{http://www.sat.gob.mx/CartaPorte30}FiguraTransporte')
+        for r in iterate(el):
+            st.append(tipos_figura1('TiposFigura', r))
+    self.attrib['Version'] = data['Version']
+    self.attrib['IdCCP'] = data['IdCCP']
+    self.attrib['TranspInternac'] = data['TranspInternac']
+    if (a := data.get('RegimenAduanero')) is not None:
+        self.attrib['RegimenAduanero'] = a
+    if (a := data.get('EntradaSalidaMerc')) is not None:
+        self.attrib['EntradaSalidaMerc'] = a
+    if (a := data.get('PaisOrigenDestino')) is not None:
+        self.attrib['PaisOrigenDestino'] = strcode(a)
+    if (a := data.get('ViaEntradaSalida')) is not None:
+        self.attrib['ViaEntradaSalida'] = strcode(a)
+    if (a := data.get('TotalDistRec')) is not None:
+        self.attrib['TotalDistRec'] = fmt_decimal(a)
+    if (a := data.get('RegistroISTMO')) is not None:
+        self.attrib['RegistroISTMO'] = a
+    if (a := data.get('UbicacionPoloOrigen')) is not None:
+        self.attrib['UbicacionPoloOrigen'] = a
+    if (a := data.get('UbicacionPoloDestino')) is not None:
+        self.attrib['UbicacionPoloDestino'] = a
+    return self
+def ubicacion3(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    el = data.get('Domicilio')
+    if el is not None:
+        self.append(domicilio7('Domicilio', el))
+    self.attrib['TipoUbicacion'] = data['TipoUbicacion']
+    if (a := data.get('IDUbicacion')) is not None:
+        self.attrib['IDUbicacion'] = a
+    self.attrib['RFCRemitenteDestinatario'] = str(data['RFCRemitenteDestinatario'])
+    if (a := data.get('NombreRemitenteDestinatario')) is not None:
+        self.attrib['NombreRemitenteDestinatario'] = a
+    if (a := data.get('NumRegIdTrib')) is not None:
+        self.attrib['NumRegIdTrib'] = a
+    if (a := data.get('ResidenciaFiscal')) is not None:
+        self.attrib['ResidenciaFiscal'] = strcode(a)
+    if (a := data.get('NumEstacion')) is not None:
+        self.attrib['NumEstacion'] = strcode(a)
+    if (a := data.get('NombreEstacion')) is not None:
+        self.attrib['NombreEstacion'] = a
+    if (a := data.get('NavegacionTrafico')) is not None:
+        self.attrib['NavegacionTrafico'] = a
+    self.attrib['FechaHoraSalidaLlegada'] = data['FechaHoraSalidaLlegada'].isoformat(timespec='seconds')
+    if (a := data.get('TipoEstacion')) is not None:
+        self.attrib['TipoEstacion'] = strcode(a)
+    if (a := data.get('DistanciaRecorrida')) is not None:
+        self.attrib['DistanciaRecorrida'] = fmt_decimal(a)
+    return self
+def domicilio7(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    if (a := data.get('Calle')) is not None:
+        self.attrib['Calle'] = a
+    if (a := data.get('NumeroExterior')) is not None:
+        self.attrib['NumeroExterior'] = a
+    if (a := data.get('NumeroInterior')) is not None:
+        self.attrib['NumeroInterior'] = a
+    if (a := data.get('Colonia')) is not None:
+        self.attrib['Colonia'] = a
+    if (a := data.get('Localidad')) is not None:
+        self.attrib['Localidad'] = a
+    if (a := data.get('Referencia')) is not None:
+        self.attrib['Referencia'] = a
+    if (a := data.get('Municipio')) is not None:
+        self.attrib['Municipio'] = a
+    self.attrib['Estado'] = data['Estado']
+    self.attrib['Pais'] = strcode(data['Pais'])
+    self.attrib['CodigoPostal'] = data['CodigoPostal']
+    return self
+def mercancias2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    el = data['Mercancia']
+    for r in iterate(el):
+        self.append(mercancia2('Mercancia', r))
+    el = data.get('Autotransporte')
+    if el is not None:
+        self.append(autotransporte1('Autotransporte', el))
+    el = data.get('TransporteMaritimo')
+    if el is not None:
+        self.append(transporte_maritimo2('TransporteMaritimo', el))
+    el = data.get('TransporteAereo')
+    if el is not None:
+        self.append(transporte_aereo2('TransporteAereo', el))
+    el = data.get('TransporteFerroviario')
+    if el is not None:
+        self.append(transporte_ferroviario2('TransporteFerroviario', el))
+    self.attrib['PesoBrutoTotal'] = fmt_decimal(data['PesoBrutoTotal'])
+    self.attrib['UnidadPeso'] = strcode(data['UnidadPeso'])
+    if (a := data.get('PesoNetoTotal')) is not None:
+        self.attrib['PesoNetoTotal'] = fmt_decimal(a)
+    self.attrib['NumTotalMercancias'] = str(data['NumTotalMercancias'])
+    if (a := data.get('CargoPorTasacion')) is not None:
+        self.attrib['CargoPorTasacion'] = fmt_decimal(a)
+    if (a := data.get('LogisticaInversaRecoleccionDevolucion')) is not None:
+        self.attrib['LogisticaInversaRecoleccionDevolucion'] = a
+    return self
+def mercancia2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    el = data.get('DocumentacionAduanera')
+    if el is not None:
+        for r in iterate(el):
+            self.append(documentacion_aduanera0('DocumentacionAduanera', r))
+    el = data.get('GuiasIdentificacion')
+    if el is not None:
+        for r in iterate(el):
+            self.append(guias_identificacion1('GuiasIdentificacion', r))
+    el = data.get('CantidadTransporta')
+    if el is not None:
+        for r in iterate(el):
+            self.append(cantidad_transporta2('CantidadTransporta', r))
+    el = data.get('DetalleMercancia')
+    if el is not None:
+        self.append(detalle_mercancia2('DetalleMercancia', el))
+    self.attrib['BienesTransp'] = strcode(data['BienesTransp'])
+    if (a := data.get('ClaveSTCC')) is not None:
+        self.attrib['ClaveSTCC'] = a
+    self.attrib['Descripcion'] = data['Descripcion']
+    self.attrib['Cantidad'] = fmt_decimal(data['Cantidad'])
+    self.attrib['ClaveUnidad'] = strcode(data['ClaveUnidad'])
+    if (a := data.get('Unidad')) is not None:
+        self.attrib['Unidad'] = a
+    if (a := data.get('Dimensiones')) is not None:
+        self.attrib['Dimensiones'] = a
+    if (a := data.get('MaterialPeligroso')) is not None:
+        self.attrib['MaterialPeligroso'] = a
+    if (a := data.get('CveMaterialPeligroso')) is not None:
+        self.attrib['CveMaterialPeligroso'] = strcode(a)
+    if (a := data.get('Embalaje')) is not None:
+        self.attrib['Embalaje'] = strcode(a)
+    if (a := data.get('DescripEmbalaje')) is not None:
+        self.attrib['DescripEmbalaje'] = a
+    if (a := data.get('SectorCOFEPRIS')) is not None:
+        self.attrib['SectorCOFEPRIS'] = a
+    if (a := data.get('NombreIngredienteActivo')) is not None:
+        self.attrib['NombreIngredienteActivo'] = a
+    if (a := data.get('NomQuimico')) is not None:
+        self.attrib['NomQuimico'] = a
+    if (a := data.get('DenominacionGenericaProd')) is not None:
+        self.attrib['DenominacionGenericaProd'] = a
+    if (a := data.get('DenominacionDistintivaProd')) is not None:
+        self.attrib['DenominacionDistintivaProd'] = a
+    if (a := data.get('Fabricante')) is not None:
+        self.attrib['Fabricante'] = a
+    if (a := data.get('FechaCaducidad')) is not None:
+        self.attrib['FechaCaducidad'] = a.isoformat()
+    if (a := data.get('LoteMedicamento')) is not None:
+        self.attrib['LoteMedicamento'] = a
+    if (a := data.get('FormaFarmaceutica')) is not None:
+        self.attrib['FormaFarmaceutica'] = a
+    if (a := data.get('CondicionesEspTransp')) is not None:
+        self.attrib['CondicionesEspTransp'] = a
+    if (a := data.get('RegistroSanitarioFolioAutorizacion')) is not None:
+        self.attrib['RegistroSanitarioFolioAutorizacion'] = a
+    if (a := data.get('PermisoImportacion')) is not None:
+        self.attrib['PermisoImportacion'] = a
+    if (a := data.get('FolioImpoVUCEM')) is not None:
+        self.attrib['FolioImpoVUCEM'] = a
+    if (a := data.get('NumCAS')) is not None:
+        self.attrib['NumCAS'] = a
+    if (a := data.get('RazonSocialEmpImp')) is not None:
+        self.attrib['RazonSocialEmpImp'] = a
+    if (a := data.get('NumRegSanPlagCOFEPRIS')) is not None:
+        self.attrib['NumRegSanPlagCOFEPRIS'] = a
+    if (a := data.get('DatosFabricante')) is not None:
+        self.attrib['DatosFabricante'] = a
+    if (a := data.get('DatosFormulador')) is not None:
+        self.attrib['DatosFormulador'] = a
+    if (a := data.get('DatosMaquilador')) is not None:
+        self.attrib['DatosMaquilador'] = a
+    if (a := data.get('UsoAutorizado')) is not None:
+        self.attrib['UsoAutorizado'] = a
+    self.attrib['PesoEnKg'] = fmt_decimal(data['PesoEnKg'])
+    if (a := data.get('ValorMercancia')) is not None:
+        self.attrib['ValorMercancia'] = fmt_decimal(a)
+    if (a := data.get('Moneda')) is not None:
+        self.attrib['Moneda'] = strcode(a)
+    if (a := data.get('FraccionArancelaria')) is not None:
+        self.attrib['FraccionArancelaria'] = strcode(a)
+    if (a := data.get('UUIDComercioExt')) is not None:
+        self.attrib['UUIDComercioExt'] = str(a)
+    if (a := data.get('TipoMateria')) is not None:
+        self.attrib['TipoMateria'] = a
+    if (a := data.get('DescripcionMateria')) is not None:
+        self.attrib['DescripcionMateria'] = a
+    return self
+def documentacion_aduanera0(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['TipoDocumento'] = data['TipoDocumento']
+    if (a := data.get('NumPedimento')) is not None:
+        self.attrib['NumPedimento'] = a
+    if (a := data.get('IdentDocAduanero')) is not None:
+        self.attrib['IdentDocAduanero'] = a
+    if (a := data.get('RFCImpo')) is not None:
+        self.attrib['RFCImpo'] = str(a)
+    return self
+def guias_identificacion1(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['NumeroGuiaIdentificacion'] = data['NumeroGuiaIdentificacion']
+    self.attrib['DescripGuiaIdentificacion'] = data['DescripGuiaIdentificacion']
+    self.attrib['PesoGuiaIdentificacion'] = fmt_decimal(data['PesoGuiaIdentificacion'])
+    return self
+def cantidad_transporta2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['Cantidad'] = fmt_decimal(data['Cantidad'])
+    self.attrib['IDOrigen'] = data['IDOrigen']
+    self.attrib['IDDestino'] = data['IDDestino']
+    if (a := data.get('CvesTransporte')) is not None:
+        self.attrib['CvesTransporte'] = strcode(a)
+    return self
+def detalle_mercancia2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['UnidadPesoMerc'] = strcode(data['UnidadPesoMerc'])
+    self.attrib['PesoBruto'] = fmt_decimal(data['PesoBruto'])
+    self.attrib['PesoNeto'] = fmt_decimal(data['PesoNeto'])
+    self.attrib['PesoTara'] = fmt_decimal(data['PesoTara'])
+    if (a := data.get('NumPiezas')) is not None:
+        self.attrib['NumPiezas'] = str(a)
+    return self
+def autotransporte1(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    el = data['IdentificacionVehicular']
+    self.append(identificacion_vehicular2('IdentificacionVehicular', el))
+    el = data['Seguros']
+    self.append(seguros1('Seguros', el))
+    el = data.get('Remolques')
+    if el is not None:
+        st = SubElement(self, '{http://www.sat.gob.mx/CartaPorte30}Remolques')
+        for r in iterate(el):
+            st.append(remolque2('Remolque', r))
+    self.attrib['PermSCT'] = strcode(data['PermSCT'])
+    self.attrib['NumPermisoSCT'] = data['NumPermisoSCT']
+    return self
+def identificacion_vehicular2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['ConfigVehicular'] = strcode(data['ConfigVehicular'])
+    self.attrib['PesoBrutoVehicular'] = fmt_decimal(data['PesoBrutoVehicular'])
+    self.attrib['PlacaVM'] = data['PlacaVM']
+    self.attrib['AnioModeloVM'] = str(data['AnioModeloVM'])
+    return self
+def seguros1(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['AseguraRespCivil'] = data['AseguraRespCivil']
+    self.attrib['PolizaRespCivil'] = data['PolizaRespCivil']
+    if (a := data.get('AseguraMedAmbiente')) is not None:
+        self.attrib['AseguraMedAmbiente'] = a
+    if (a := data.get('PolizaMedAmbiente')) is not None:
+        self.attrib['PolizaMedAmbiente'] = a
+    if (a := data.get('AseguraCarga')) is not None:
+        self.attrib['AseguraCarga'] = a
+    if (a := data.get('PolizaCarga')) is not None:
+        self.attrib['PolizaCarga'] = a
+    if (a := data.get('PrimaSeguro')) is not None:
+        self.attrib['PrimaSeguro'] = fmt_decimal(a)
+    return self
+def remolque2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['SubTipoRem'] = strcode(data['SubTipoRem'])
+    self.attrib['Placa'] = data['Placa']
+    return self
+def transporte_maritimo2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    el = data.get('Contenedor')
+    if el is not None:
+        for r in iterate(el):
+            self.append(contenedor4('Contenedor', r))
+    el = data.get('RemolquesCCP')
+    if el is not None:
+        st = SubElement(self, '{http://www.sat.gob.mx/CartaPorte30}RemolquesCCP')
+        for r in iterate(el):
+            st.append(remolque_ccp0('RemolqueCCP', r))
+    if (a := data.get('PermSCT')) is not None:
+        self.attrib['PermSCT'] = strcode(a)
+    if (a := data.get('NumPermisoSCT')) is not None:
+        self.attrib['NumPermisoSCT'] = a
+    if (a := data.get('NombreAseg')) is not None:
+        self.attrib['NombreAseg'] = a
+    if (a := data.get('NumPolizaSeguro')) is not None:
+        self.attrib['NumPolizaSeguro'] = a
+    self.attrib['TipoEmbarcacion'] = strcode(data['TipoEmbarcacion'])
+    self.attrib['Matricula'] = data['Matricula']
+    self.attrib['NumeroOMI'] = data['NumeroOMI']
+    if (a := data.get('AnioEmbarcacion')) is not None:
+        self.attrib['AnioEmbarcacion'] = str(a)
+    if (a := data.get('NombreEmbarc')) is not None:
+        self.attrib['NombreEmbarc'] = a
+    self.attrib['NacionalidadEmbarc'] = strcode(data['NacionalidadEmbarc'])
+    self.attrib['UnidadesDeArqBruto'] = fmt_decimal(data['UnidadesDeArqBruto'])
+    self.attrib['TipoCarga'] = strcode(data['TipoCarga'])
+    if (a := data.get('Eslora')) is not None:
+        self.attrib['Eslora'] = fmt_decimal(a)
+    if (a := data.get('Manga')) is not None:
+        self.attrib['Manga'] = fmt_decimal(a)
+    if (a := data.get('Calado')) is not None:
+        self.attrib['Calado'] = fmt_decimal(a)
+    if (a := data.get('Puntal')) is not None:
+        self.attrib['Puntal'] = fmt_decimal(a)
+    if (a := data.get('LineaNaviera')) is not None:
+        self.attrib['LineaNaviera'] = a
+    self.attrib['NombreAgenteNaviero'] = data['NombreAgenteNaviero']
+    self.attrib['NumAutorizacionNaviero'] = strcode(data['NumAutorizacionNaviero'])
+    if (a := data.get('NumViaje')) is not None:
+        self.attrib['NumViaje'] = a
+    if (a := data.get('NumConocEmbarc')) is not None:
+        self.attrib['NumConocEmbarc'] = a
+    if (a := data.get('PermisoTempNavegacion')) is not None:
+        self.attrib['PermisoTempNavegacion'] = a
+    return self
+def contenedor4(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['TipoContenedor'] = strcode(data['TipoContenedor'])
+    if (a := data.get('MatriculaContenedor')) is not None:
+        self.attrib['MatriculaContenedor'] = a
+    if (a := data.get('NumPrecinto')) is not None:
+        self.attrib['NumPrecinto'] = a
+    if (a := data.get('IdCCPRelacionado')) is not None:
+        self.attrib['IdCCPRelacionado'] = a
+    if (a := data.get('PlacaVMCCP')) is not None:
+        self.attrib['PlacaVMCCP'] = a
+    if (a := data.get('FechaCertificacionCCP')) is not None:
+        self.attrib['FechaCertificacionCCP'] = a.isoformat(timespec='seconds')
+    return self
+def remolque_ccp0(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['SubTipoRemCCP'] = strcode(data['SubTipoRemCCP'])
+    self.attrib['PlacaCCP'] = data['PlacaCCP']
+    return self
+def transporte_aereo2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['PermSCT'] = strcode(data['PermSCT'])
+    self.attrib['NumPermisoSCT'] = data['NumPermisoSCT']
+    if (a := data.get('MatriculaAeronave')) is not None:
+        self.attrib['MatriculaAeronave'] = a
+    if (a := data.get('NombreAseg')) is not None:
+        self.attrib['NombreAseg'] = a
+    if (a := data.get('NumPolizaSeguro')) is not None:
+        self.attrib['NumPolizaSeguro'] = a
+    self.attrib['NumeroGuia'] = data['NumeroGuia']
+    if (a := data.get('LugarContrato')) is not None:
+        self.attrib['LugarContrato'] = a
+    self.attrib['CodigoTransportista'] = strcode(data['CodigoTransportista'])
+    if (a := data.get('RFCEmbarcador')) is not None:
+        self.attrib['RFCEmbarcador'] = str(a)
+    if (a := data.get('NumRegIdTribEmbarc')) is not None:
+        self.attrib['NumRegIdTribEmbarc'] = a
+    if (a := data.get('ResidenciaFiscalEmbarc')) is not None:
+        self.attrib['ResidenciaFiscalEmbarc'] = strcode(a)
+    if (a := data.get('NombreEmbarcador')) is not None:
+        self.attrib['NombreEmbarcador'] = a
+    return self
+def transporte_ferroviario2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    el = data.get('DerechosDePaso')
+    if el is not None:
+        for r in iterate(el):
+            self.append(derechos_de_paso2('DerechosDePaso', r))
+    el = data['Carro']
+    for r in iterate(el):
+        self.append(carro2('Carro', r))
+    self.attrib['TipoDeServicio'] = strcode(data['TipoDeServicio'])
+    self.attrib['TipoDeTrafico'] = strcode(data['TipoDeTrafico'])
+    if (a := data.get('NombreAseg')) is not None:
+        self.attrib['NombreAseg'] = a
+    if (a := data.get('NumPolizaSeguro')) is not None:
+        self.attrib['NumPolizaSeguro'] = a
+    return self
+def derechos_de_paso2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['TipoDerechoDePaso'] = strcode(data['TipoDerechoDePaso'])
+    self.attrib['KilometrajePagado'] = fmt_decimal(data['KilometrajePagado'])
+    return self
+def carro2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    el = data.get('Contenedor')
+    if el is not None:
+        for r in iterate(el):
+            self.append(contenedor5('Contenedor', r))
+    self.attrib['TipoCarro'] = strcode(data['TipoCarro'])
+    self.attrib['MatriculaCarro'] = data['MatriculaCarro']
+    self.attrib['GuiaCarro'] = data['GuiaCarro']
+    self.attrib['ToneladasNetasCarro'] = fmt_decimal(data['ToneladasNetasCarro'])
+    return self
+def contenedor5(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['TipoContenedor'] = strcode(data['TipoContenedor'])
+    self.attrib['PesoContenedorVacio'] = fmt_decimal(data['PesoContenedorVacio'])
+    self.attrib['PesoNetoMercancia'] = fmt_decimal(data['PesoNetoMercancia'])
+    return self
+def tipos_figura1(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    el = data.get('PartesTransporte')
+    if el is not None:
+        for r in iterate(el):
+            self.append(partes_transporte1('PartesTransporte', r))
+    el = data.get('Domicilio')
+    if el is not None:
+        self.append(domicilio8('Domicilio', el))
+    self.attrib['TipoFigura'] = strcode(data['TipoFigura'])
+    if (a := data.get('RFCFigura')) is not None:
+        self.attrib['RFCFigura'] = str(a)
+    if (a := data.get('NumLicencia')) is not None:
+        self.attrib['NumLicencia'] = a
+    self.attrib['NombreFigura'] = data['NombreFigura']
+    if (a := data.get('NumRegIdTribFigura')) is not None:
+        self.attrib['NumRegIdTribFigura'] = a
+    if (a := data.get('ResidenciaFiscalFigura')) is not None:
+        self.attrib['ResidenciaFiscalFigura'] = strcode(a)
+    return self
+def partes_transporte1(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap={'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    self.attrib['ParteTransporte'] = strcode(data)
+    return self
+def domicilio8(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
+    if (a := data.get('Calle')) is not None:
+        self.attrib['Calle'] = a
+    if (a := data.get('NumeroExterior')) is not None:
+        self.attrib['NumeroExterior'] = a
+    if (a := data.get('NumeroInterior')) is not None:
+        self.attrib['NumeroInterior'] = a
+    if (a := data.get('Colonia')) is not None:
+        self.attrib['Colonia'] = a
+    if (a := data.get('Localidad')) is not None:
+        self.attrib['Localidad'] = a
+    if (a := data.get('Referencia')) is not None:
+        self.attrib['Referencia'] = a
+    if (a := data.get('Municipio')) is not None:
+        self.attrib['Municipio'] = a
+    self.attrib['Estado'] = data['Estado']
+    self.attrib['Pais'] = strcode(data['Pais'])
+    self.attrib['CodigoPostal'] = data['CodigoPostal']
+    return self
 def comercio_exterior0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
@@ -11933,7 +12377,7 @@ def comercio_exterior0(name, data):
     if el is not None:
         st = SubElement(self, '{http://www.sat.gob.mx/ComercioExterior11}Mercancias')
         for r in iterate(el):
-            st.append(mercancia2('Mercancia', r))
+            st.append(mercancia3('Mercancia', r))
     self.attrib['Version'] = data['Version']
     if (a := data.get('MotivoTraslado')) is not None:
         self.attrib['MotivoTraslado'] = strcode(a)
@@ -11961,11 +12405,11 @@ def emisor6(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data.get('Domicilio')
     if el is not None:
-        self.append(domicilio7('Domicilio', el))
+        self.append(domicilio9('Domicilio', el))
     if (a := data.get('Curp')) is not None:
         self.attrib['Curp'] = a
     return self
-def domicilio7(name, data):
+def domicilio9(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
@@ -11993,11 +12437,11 @@ def receptor6(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data.get('Domicilio')
     if el is not None:
-        self.append(domicilio8('Domicilio', el))
+        self.append(domicilioa('Domicilio', el))
     if (a := data.get('NumRegIdTrib')) is not None:
         self.attrib['NumRegIdTrib'] = a
     return self
-def domicilio8(name, data):
+def domicilioa(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
@@ -12020,13 +12464,13 @@ def destinatario1(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data['Domicilio']
     for r in iterate(el):
-        self.append(domicilio9('Domicilio', r))
+        self.append(domiciliob('Domicilio', r))
     if (a := data.get('NumRegIdTrib')) is not None:
         self.attrib['NumRegIdTrib'] = a
     if (a := data.get('Nombre')) is not None:
         self.attrib['Nombre'] = a
     return self
-def domicilio9(name, data):
+def domiciliob(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
@@ -12045,7 +12489,7 @@ def domicilio9(name, data):
     self.attrib['Pais'] = strcode(data['Pais'])
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
-def mercancia2(name, data):
+def mercancia3(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data.get('DescripcionesEspecificas')
     if el is not None:
@@ -12088,7 +12532,7 @@ def comercio_exterior1(name, data):
     if el is not None:
         st = SubElement(self, '{http://www.sat.gob.mx/ComercioExterior}Mercancias')
         for r in iterate(el):
-            st.append(mercancia3('Mercancia', r))
+            st.append(mercancia4('Mercancia', r))
     self.attrib['Version'] = data['Version']
     self.attrib['TipoOperacion'] = strcode(data['TipoOperacion'])
     if (a := data.get('ClaveDePedimento')) is not None:
@@ -12124,7 +12568,7 @@ def receptor7(name, data):
 def destinatario2(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
     el = data['Domicilio']
-    self.append(domicilioa('Domicilio', el))
+    self.append(domicilioc('Domicilio', el))
     if (a := data.get('NumRegIdTrib')) is not None:
         self.attrib['NumRegIdTrib'] = a
     if (a := data.get('Rfc')) is not None:
@@ -12134,7 +12578,7 @@ def destinatario2(name, data):
     if (a := data.get('Nombre')) is not None:
         self.attrib['Nombre'] = a
     return self
-def domicilioa(name, data):
+def domicilioc(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
@@ -12153,7 +12597,7 @@ def domicilioa(name, data):
     self.attrib['Pais'] = strcode(data['Pais'])
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
-def mercancia3(name, data):
+def mercancia4(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
     el = data.get('DescripcionesEspecificas')
     if el is not None:
@@ -14516,6 +14960,10 @@ def s_carta_porte1(data):
     if data.get('Version') == '2.0':
         return carta_porte1('CartaPorte', data)
     raise NamespaceMismatchError(data)
+def s_carta_porte2(data):
+    if data.get('Version') == '3.0':
+        return carta_porte2('CartaPorte', data)
+    raise NamespaceMismatchError(data)
 def s_comercio_exterior0(data):
     if data.get('Version') == '1.1':
         return comercio_exterior0('ComercioExterior', data)
@@ -14774,6 +15222,7 @@ cfdi_xmlify = {
     '{http://www.sat.gob.mx/cfd/4}Comprobante': s_comprobante1,
     '{http://www.sat.gob.mx/CartaPorte}CartaPorte': s_carta_porte0,
     '{http://www.sat.gob.mx/CartaPorte20}CartaPorte': s_carta_porte1,
+    '{http://www.sat.gob.mx/CartaPorte30}CartaPorte': s_carta_porte2,
     '{http://www.sat.gob.mx/ComercioExterior11}ComercioExterior': s_comercio_exterior0,
     '{http://www.sat.gob.mx/ComercioExterior}ComercioExterior': s_comercio_exterior1,
     '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible0,

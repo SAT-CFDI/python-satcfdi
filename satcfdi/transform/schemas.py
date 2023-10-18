@@ -3926,6 +3926,10 @@ def carta_porte1(col, data):
     col.add_map('cartaporte20', 'http://www.sat.gob.mx/CartaPorte20')
     col.add_schema('http://www.sat.gob.mx/CartaPorte20 http://www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte20.xsd')
     col.add_base('www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte20.xsd')
+def carta_porte2(col, data):
+    col.add_map('cartaporte30', 'http://www.sat.gob.mx/CartaPorte30')
+    col.add_schema('http://www.sat.gob.mx/CartaPorte30 http://www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte30.xsd')
+    col.add_base('www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte30.xsd')
 def comercio_exterior0(col, data):
     col.add_map('cce11', 'http://www.sat.gob.mx/ComercioExterior11')
     col.add_schema('http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd')
@@ -4229,6 +4233,9 @@ def s_carta_porte0(col, data):
 def s_carta_porte1(col, data):
     if data.get('Version') == '2.0':
         carta_porte1(col, data)
+def s_carta_porte2(col, data):
+    if data.get('Version') == '3.0':
+        carta_porte2(col, data)
 def s_comercio_exterior0(col, data):
     if data.get('Version') == '1.1':
         comercio_exterior0(col, data)
@@ -4450,6 +4457,7 @@ cfdi_schemas = {
     '{http://www.sat.gob.mx/cfd/4}Comprobante': s_comprobante1,
     '{http://www.sat.gob.mx/CartaPorte}CartaPorte': s_carta_porte0,
     '{http://www.sat.gob.mx/CartaPorte20}CartaPorte': s_carta_porte1,
+    '{http://www.sat.gob.mx/CartaPorte30}CartaPorte': s_carta_porte2,
     '{http://www.sat.gob.mx/ComercioExterior11}ComercioExterior': s_comercio_exterior0,
     '{http://www.sat.gob.mx/ComercioExterior}ComercioExterior': s_comercio_exterior1,
     '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible0,
