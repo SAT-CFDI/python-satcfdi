@@ -1,7 +1,7 @@
 build:
   environment:
     python:
-      version: 3.12.0
+      version: 3.11.0
 
       # Whether to setup a virtual environment in the repository root directory.
       # Defaults to true if omitted.
@@ -20,7 +20,7 @@ build:
     tests:
       project_setup:
         override:
-        - command: pip install setuptools .[test]
+        - command: pip install .[test]
       tests:
         override:
         - command: coverage run -m pytest tests/
