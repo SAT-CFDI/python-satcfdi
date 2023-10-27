@@ -145,13 +145,22 @@ class Traslado(ScalarMap):
             'Importe': importe,
         })
 
+    @classmethod
+    def parse(cls, impuesto: str):
+        parts = impuesto.split("|")
+        return cls(
+            impuesto=parts[0],
+            tipo_factor=parts[1],
+            tasa_o_cuota=Decimal(parts[2]) if len(parts) > 2 else None,
+        )
+
 
 class Retencion(ScalarMap):
     """
     Nodo requerido para la información detallada de un traslado de impuesto específico.
 
     :param base: Atributo requerido para señalar la suma de los atributos Base de los conceptos del impuesto trasladado. No se permiten valores negativos.
-    :param impuesto: Atributo requerido para señalar la clave del tipo de impuesto trasladado.
+    :param impuesto: Atributo requerido para señalar la clave del tipo de impuesto retencion.
     :param tipo_factor: Atributo requerido para señalar la clave del tipo de factor que se aplica a la base del impuesto.
     :param tasa_o_cuota: Atributo condicional para señalar el valor de la tasa o cuota del impuesto que se traslada por los conceptos amparados en el comprobante.
     :param importe: Atributo condicional para señalar la suma del importe del impuesto trasladado, agrupado por impuesto, TipoFactor y TasaOCuota. No se permiten valores negativos.
@@ -163,7 +172,7 @@ class Retencion(ScalarMap):
             tipo_factor: str,
             tasa_o_cuota: Decimal | int = None,
             importe: Decimal | int = None,
-            base: Decimal | int = None
+            base: Decimal | int = None,
     ):
         super().__init__({
             'Base': base,
@@ -172,6 +181,15 @@ class Retencion(ScalarMap):
             'TasaOCuota': tasa_o_cuota,
             'Importe': importe,
         })
+
+    @classmethod
+    def parse(cls, impuesto: str):
+        parts = impuesto.split("|")
+        return cls(
+            impuesto=parts[0],
+            tipo_factor=parts[1],
+            tasa_o_cuota=Decimal(parts[2]) if len(parts) > 2 else None,
+        )
 
 
 class Impuestos(ScalarMap):
@@ -330,18 +348,10 @@ class PagoComprobante:
 
 
 def _make_conceptos(conceptos, rnd_fn):
-    def parse(impuesto: str):
-        parts = impuesto.split("|")
-        return {
-            'Impuesto': CatImpuesto.get(parts[0], parts[0]),
-            'TipoFactor': parts[1],
-            'TasaOCuota': Decimal(parts[2]) if len(parts) > 2 else None,
-        }
-
     def make_concepto(concepto):
         impuestos = concepto.get("Impuestos") or {}
-        trasladados = [x if isinstance(x, dict) else parse(x) for x in iterate(impuestos.get("Traslados"))]
-        retenciones = [x if isinstance(x, dict) else parse(x) for x in iterate(impuestos.get("Retenciones"))]
+        trasladados = [x if isinstance(x, dict) else Traslado.parse(x) for x in iterate(impuestos.get("Traslados"))]
+        retenciones = [x if isinstance(x, dict) else Retencion.parse(x) for x in iterate(impuestos.get("Retenciones"))]
 
         if concepto.get('_traslados_incluidos'):
             s_tasa = sum(c["TasaOCuota"] for c in trasladados if c["TipoFactor"] == "Tasa")
