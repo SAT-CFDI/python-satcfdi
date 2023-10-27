@@ -9,8 +9,7 @@ ______________________
     from decimal import Decimal
     from satcfdi.models import Signer
     from satcfdi.create.cfd import cfdi40
-    from satcfdi.create.cfd.catalogos import RegimenFiscal, UsoCFDI, MetodoPago
-    
+    from satcfdi.create.cfd.catalogos import RegimenFiscal, UsoCFDI, MetodoPago, Impuesto, TipoFactor
     
     # Load signing certificate
     signer = Signer.load(
@@ -45,8 +44,23 @@ ______________________
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('1250.30'),
                 impuestos=cfdi40.Impuestos(
-                    traslados='IVA|Tasa|0.160000',
-                    retenciones=['ISR|Tasa|0.100000', 'IVA|Tasa|0.106667'],
+                    traslados=cfdi40.Traslado(
+                            impuesto=Impuesto.IVA,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.160000'),
+                        ),
+                    retenciones=[
+                        cfdi40.Retencion(
+                            impuesto=Impuesto.ISR,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.100000'),
+                        ),
+                        cfdi40.Retencion(
+                            impuesto=Impuesto.IVA,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.106667'),
+                        )
+                    ],
                 ),
                 _traslados_incluidos=False  # indica si el valor unitario incluye los traslados
             )
@@ -232,6 +246,8 @@ _______________________
 .. code-block:: python
 
     from decimal import Decimal
+    
+    from satcfdi.create.cfd.catalogos import Impuesto, TipoFactor
     from satcfdi.models import Signer
     from satcfdi.create.addendas import dvz11
     from satcfdi.create.cfd import cfdi40
@@ -269,8 +285,23 @@ _______________________
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('325.30'),
                 impuestos=cfdi40.Impuestos(
-                    traslados='IVA|Tasa|0.160000',
-                    retenciones=['ISR|Tasa|0.100000', 'IVA|Tasa|0.106667'],
+                    traslados=cfdi40.Traslado(
+                            impuesto=Impuesto.IVA,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.160000'),
+                        ),
+                    retenciones=[
+                        cfdi40.Retencion(
+                            impuesto=Impuesto.ISR,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.100000'),
+                        ),
+                        cfdi40.Retencion(
+                            impuesto=Impuesto.IVA,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.106667'),
+                        )
+                    ],
                 ),
                 _traslados_incluidos=False
             )

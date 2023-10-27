@@ -46,8 +46,8 @@ def test_comercio_digital_test():
             descripcion='SERVICIOS DE RENTA',
             valor_unitario=Decimal("1.00"),
             impuestos=cfdi40.Impuestos(
-                traslados=cfdi40.Impuesto.parse('002|Tasa|0.160000'),
-                retenciones=[cfdi40.Impuesto.parse('001|Tasa|0.100000'), cfdi40.Impuesto.parse('002|Tasa|0.106667')],
+                traslados='002|Tasa|0.160000',
+                retenciones=['001|Tasa|0.100000', '002|Tasa|0.106667'],
             ),
             _traslados_incluidos=True
         )

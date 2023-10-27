@@ -7,10 +7,6 @@ from ...cfdi import CFDI
 from ...utils import ScalarMap
 
 
-class Impuesto(cfdi40.Impuesto):
-    pass
-
-
 class CfdiRelacionados(ScalarMap):
     """
     Nodo opcional para precisar la información de los comprobantes relacionados.

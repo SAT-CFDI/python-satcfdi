@@ -10,7 +10,7 @@ from satcfdi.cfdi import CFDI
 from satcfdi.create.cfd import cfdi40, nomina12
 from satcfdi.create.cfd.cfdi40 import PagoComprobante
 from satcfdi.pacs.sat import SAT
-from tests.utils import get_signer, verify_result, _uuid, get_rfc_pac, stamp_v11, SAT_Certificate_Store_Pruebas, XElementPrettyPrinter
+from tests.utils import get_signer, verify_result, _uuid, stamp_v11, SAT_Certificate_Store_Pruebas, XElementPrettyPrinter
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)
@@ -18,13 +18,13 @@ current_filename = os.path.splitext(os.path.basename(__file__))[0]
 sat = SAT()
 
 invoices = [
-    ('xiqb891116qe4', "xiqb891116qe4_ingreso_noobjeto", None, [cfdi40.Impuesto.parse('001|Tasa|0.100000')], '13851.27', False),
-    ('xiqb891116qe4', "xiqb891116qe4_ingreso_exento", cfdi40.Impuesto.parse('002|Exento'), [cfdi40.Impuesto.parse('001|Tasa|0.100000')], '13851.27', False),
-    ('xiqb891116qe4', "xiqb891116qe4_ingreso_iva16", 'IVA|Tasa|0.160000', ['ISR|Tasa|0.100000', cfdi40.Impuesto.parse('IVA|Tasa|0.106667')], '14672.08', False),
+    ('xiqb891116qe4', "xiqb891116qe4_ingreso_noobjeto", None, ['001|Tasa|0.100000'], '13851.27', False),
+    ('xiqb891116qe4', "xiqb891116qe4_ingreso_exento", '002|Exento', ['001|Tasa|0.100000'], '13851.27', False),
+    ('xiqb891116qe4', "xiqb891116qe4_ingreso_iva16", 'IVA|Tasa|0.160000', ['ISR|Tasa|0.100000', 'IVA|Tasa|0.106667'], '14672.08', False),
     ('h&e951128469', "h&e951128469_ingreso_noobjeto", None, None, '15390.30', False),
-    ('h&e951128469', "h&e951128469_ingreso_exento", cfdi40.Impuesto.parse('002|Exento'), None, '15390.30', False),
-    ('h&e951128469', "h&e951128469_ingreso_iva16", cfdi40.Impuesto.parse('002|Tasa|0.160000'), None, '17852.75', False),
-    ('h&e951128469', "h&e951128469_ingreso_ieps_exento", cfdi40.Impuesto.parse('003|Exento'), None, '15390.30', False)
+    ('h&e951128469', "h&e951128469_ingreso_exento", '002|Exento', None, '15390.30', False),
+    ('h&e951128469', "h&e951128469_ingreso_iva16", '002|Tasa|0.160000', None, '17852.75', False),
+    ('h&e951128469', "h&e951128469_ingreso_ieps_exento", '003|Exento', None, '15390.30', False)
 ]
 
 
@@ -79,7 +79,7 @@ def test_traslados_incluidos():
                     descripcion='SERVICIOS DE FACTURACION',
                     valor_unitario=valor,
                     impuestos=cfdi40.Impuestos(
-                        traslados=cfdi40.Impuesto.parse('002|Tasa|0.160000'),
+                        traslados='002|Tasa|0.160000',
                         retenciones=None,
                     ),
                     _traslados_incluidos=True

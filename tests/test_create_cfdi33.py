@@ -18,13 +18,13 @@ current_filename = os.path.splitext(os.path.basename(__file__))[0]
 sat = SAT()
 
 invoices = [
-    ('xiqb891116qe4', "xiqb891116qe4_ingreso_noobjeto", None, [cfdi33.Impuesto.parse('001|Tasa|0.100000')], '13851.27', False),
+    ('xiqb891116qe4', "xiqb891116qe4_ingreso_noobjeto", None, ['001|Tasa|0.100000'], '13851.27', False),
     # ('xiqb891116qe4', "xiqb891116qe4_ingreso_exento", cfdi33.Traslado.IVA_EXENTO, [cfdi33.Retencion.ISR10], '13851.27', False),
-    ('xiqb891116qe4', "xiqb891116qe4_ingreso_iva16", cfdi33.Impuesto.parse('002|Tasa|0.160000'),
-     [cfdi33.Impuesto.parse('001|Tasa|0.100000'), cfdi33.Impuesto.parse('002|Tasa|0.106667')], '14672.08', False),
+    ('xiqb891116qe4', "xiqb891116qe4_ingreso_iva16", '002|Tasa|0.160000',
+     ['001|Tasa|0.100000', '002|Tasa|0.106667'], '14672.08', False),
     ('h&e951128469', "h&e951128469_ingreso_noobjeto", None, None, '15390.30', False),
     # ('h&e951128469', "h&e951128469_ingreso_exento", cfdi33.Traslado.IVA_EXENTO, None, '15390.30', False),
-    ('h&e951128469', "h&e951128469_ingreso_iva16", cfdi33.Impuesto.parse('002|Tasa|0.160000'), None, '17852.75', False),
+    ('h&e951128469', "h&e951128469_ingreso_iva16", '002|Tasa|0.160000', None, '17852.75', False),
     # ('h&e951128469', "h&e951128469_ingreso_ieps_exento", cfdi33.Traslado.IEPS_EXENTO, None, '15390.30', False)
 ]
 
