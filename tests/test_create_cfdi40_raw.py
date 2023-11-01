@@ -5,6 +5,7 @@ from decimal import Decimal
 
 from satcfdi import render
 from satcfdi.create.cfd import cfdi40
+from satcfdi.create.cfd.catalogos import Impuesto, TipoFactor
 from satcfdi.pacs.sat import SAT
 from tests.utils import get_signer, verify_result, XElementPrettyPrinter
 
@@ -56,10 +57,18 @@ def test_create_raw():
                 "Descripcion": "SERVICIOS DE FACTURACION",
                 "ValorUnitario": Decimal(15390.30),
                 "Impuestos": {
-                    "Traslados": 'IVA|Tasa|0.160000',
+                    "Traslados": cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.160000')),
                     "Retenciones": [
-                        'ISR|Tasa|0.100000',
-                        'IVA|Tasa|0.106667',
+                        cfdi40.Retencion(
+                            impuesto=Impuesto.ISR,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.100000'),
+                        ),
+                        cfdi40.Retencion(
+                            impuesto=Impuesto.IVA,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.106667'),
+                        )
                     ]
                 },
                 "CuentaPredial": "1234567890",
@@ -106,10 +115,18 @@ def test_create_raw_no_signature():
                 "Descripcion": "SERVICIOS DE FACTURACION",
                 "ValorUnitario": Decimal(15390.30),
                 "Impuestos": {
-                    "Traslados": 'IVA|Tasa|0.160000',
+                    "Traslados": cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.160000')),
                     "Retenciones": [
-                        'ISR|Tasa|0.100000',
-                        'IVA|Tasa|0.106667',
+                        cfdi40.Retencion(
+                            impuesto=Impuesto.ISR,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.100000'),
+                        ),
+                        cfdi40.Retencion(
+                            impuesto=Impuesto.IVA,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.106667'),
+                        )
                     ]
                 },
                 "CuentaPredial": "1234567890",
@@ -162,10 +179,10 @@ def test_create_no_signature():
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('15390.30'),
                 impuestos=cfdi40.Impuestos(
-                    traslados='IVA|Tasa|0.160000',
+                    traslados=cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.160000')),
                     retenciones=[
-                        'ISR|Tasa|0.100000',
-                        'IVA|Tasa|0.106667',
+                        cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000')),
+                        cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.106667')),
                     ],
                 ),
                 _traslados_incluidos=False

@@ -2,6 +2,7 @@
 from collections.abc import *
 from decimal import Decimal
 
+from satcfdi.create.cfd.catalogos import Impuesto as CatImpuesto
 from . import cfdi40, pago10
 from ...cfdi import CFDI
 from ...utils import ScalarMap
@@ -68,7 +69,7 @@ class Traslado(ScalarMap):
     Nodo requerido para la información detallada de un traslado de impuesto específico.
 
     :param base: Atributo requerido para señalar la suma de los atributos Base de los conceptos del impuesto trasladado. No se permiten valores negativos.
-    :param impuesto: Atributo requerido para señalar la clave del tipo de impuesto trasladado.
+    :param impuesto: Atributo requerido para señalar la clave del tipo de impuesto retencion.
     :param tipo_factor: Atributo requerido para señalar la clave del tipo de factor que se aplica a la base del impuesto.
     :param tasa_o_cuota: Atributo condicional para señalar el valor de la tasa o cuota del impuesto que se traslada por los conceptos amparados en el comprobante.
     :param importe: Atributo condicional para señalar la suma del importe del impuesto trasladado, agrupado por impuesto, TipoFactor y TasaOCuota. No se permiten valores negativos.
@@ -76,15 +77,15 @@ class Traslado(ScalarMap):
 
     def __init__(
             self,
-            base: Decimal | int,
             impuesto: str,
             tipo_factor: str,
             tasa_o_cuota: Decimal | int = None,
             importe: Decimal | int = None,
+            base: Decimal | int = None,
     ):
         super().__init__({
             'Base': base,
-            'Impuesto': impuesto,
+            'Impuesto': CatImpuesto.get(impuesto, impuesto),
             'TipoFactor': tipo_factor,
             'TasaOCuota': tasa_o_cuota,
             'Importe': importe,
@@ -104,15 +105,15 @@ class Retencion(ScalarMap):
 
     def __init__(
             self,
-            base: Decimal | int,
             impuesto: str,
             tipo_factor: str,
             tasa_o_cuota: Decimal | int = None,
             importe: Decimal | int = None,
+            base: Decimal | int = None,
     ):
         super().__init__({
             'Base': base,
-            'Impuesto': impuesto,
+            'Impuesto': CatImpuesto.get(impuesto, impuesto),
             'TipoFactor': tipo_factor,
             'TasaOCuota': tasa_o_cuota,
             'Importe': importe,

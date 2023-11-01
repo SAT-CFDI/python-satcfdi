@@ -4,6 +4,7 @@ from datetime import datetime
 from decimal import Decimal
 from unittest import mock
 
+from satcfdi.create.cfd.catalogos import Impuesto, TipoFactor
 from satcfdi.pacs import Environment
 from satcfdi.pacs.diverza import Diverza
 from satcfdi.create.cfd import cfdi33, cfdi40, pago20
@@ -71,8 +72,23 @@ def test_diverza_stamp():
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('15390.30'),
                 impuestos=cfdi33.Impuestos(
-                    traslados='002|Tasa|0.160000',
-                    retenciones=['001|Tasa|0.100000', '002|Tasa|0.106667'],
+                    traslados=cfdi33.Traslado(
+                        impuesto=Impuesto.IVA,
+                        tipo_factor=TipoFactor.TASA,
+                        tasa_o_cuota=Decimal('0.160000'),
+                    ),
+                    retenciones=[
+                        cfdi33.Retencion(
+                            impuesto=Impuesto.ISR,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.100000'),
+                        ),
+                        cfdi33.Retencion(
+                            impuesto=Impuesto.IVA,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.106667'),
+                        )
+                    ],
                 )
             )
         ]
@@ -149,8 +165,8 @@ def test_diverza_stamp_v40():
                 descripcion='SERVICIOS DE FACTURACION',
                 valor_unitario=Decimal('15390.30'),
                 impuestos=cfdi40.Impuestos(
-                    traslados='002|Tasa|0.160000',
-                    retenciones=['001|Tasa|0.100000', '002|Tasa|0.106667'],
+                    traslados=cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.160000')),
+                    retenciones=[cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000')), cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.106667'))],
                 )
             )
         ]

@@ -6,6 +6,7 @@ from unittest import mock
 from requests.auth import HTTPBasicAuth
 
 from satcfdi.create.cfd import cfdi40
+from satcfdi.create.cfd.catalogos import Impuesto, TipoFactor
 from satcfdi.pacs import Environment
 from satcfdi.pacs.prodigia import Prodigia
 from utils import get_signer, verify_result
@@ -49,8 +50,8 @@ def test_prodigia_test():
             descripcion='SERVICIOS DE RENTA',
             valor_unitario=Decimal("1.00"),
             impuestos=cfdi40.Impuestos(
-                traslados='002|Tasa|0.160000',
-                retenciones=['001|Tasa|0.100000', '002|Tasa|0.106667'],
+                traslados=cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.160000')),
+                retenciones=[cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000')), cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.106667'))],
             ),
             _traslados_incluidos=True
         )
