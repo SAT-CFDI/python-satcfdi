@@ -145,6 +145,15 @@ class Traslado(ScalarMap):
             'Importe': importe,
         })
 
+    @classmethod  # obsolete
+    def parse(cls, impuesto: str):
+        parts = impuesto.split("|")
+        return cls(
+            impuesto=parts[0],
+            tipo_factor=parts[1],
+            tasa_o_cuota=Decimal(parts[2]) if len(parts) > 2 else None,
+        )
+
 
 class Retencion(ScalarMap):
     """
@@ -172,6 +181,15 @@ class Retencion(ScalarMap):
             'TasaOCuota': tasa_o_cuota,
             'Importe': importe,
         })
+
+    @classmethod  # obsolete
+    def parse(cls, impuesto: str):
+        parts = impuesto.split("|")
+        return cls(
+            impuesto=parts[0],
+            tipo_factor=parts[1],
+            tasa_o_cuota=Decimal(parts[2]) if len(parts) > 2 else None,
+        )
 
 
 class Impuestos(ScalarMap):
@@ -332,8 +350,8 @@ class PagoComprobante:
 def _make_conceptos(conceptos, rnd_fn):
     def make_concepto(concepto):
         impuestos = concepto.get("Impuestos") or {}
-        trasladados = [x for x in iterate(impuestos.get("Traslados"))]
-        retenciones = [x for x in iterate(impuestos.get("Retenciones"))]
+        trasladados = [x if isinstance(x, dict) else Traslado.parse(x) for x in iterate(impuestos.get("Traslados"))]
+        retenciones = [x if isinstance(x, dict) else Retencion.parse(x) for x in iterate(impuestos.get("Retenciones"))]
 
         if concepto.get('_traslados_incluidos'):
             s_tasa = sum(c["TasaOCuota"] for c in trasladados if c["TipoFactor"] == "Tasa")
