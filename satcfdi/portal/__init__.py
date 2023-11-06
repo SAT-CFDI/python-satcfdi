@@ -3,31 +3,11 @@ import pickle
 from time import time
 
 import requests
-from requests.adapters import HTTPAdapter
-from urllib3.util.ssl_ import create_urllib3_context
 from requests.structures import CaseInsensitiveDict
 
-from .utils import get_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
-from ..models import Signer
+from .utils import get_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id, SSLAdapter
 from ..exceptions import ResponseError
-
-
-# Ciphers compatible with SAT Services
-CIPHERS = (
-    'ECDHE+AESGCM:ECDHE+CHACHA20:DHE+AESGCM:DHE+CHACHA20:ECDH+AESGCM:'
-    'DH+AESGCM:ECDH+AES:DH+AES:RSA+AESGCM:RSA+AES:!aNULL:!eNULL:!MD5:!DSS'
-    ':HIGH:!DH'
-)
-
-
-class SSLAdapter(HTTPAdapter):
-    def init_poolmanager(self, *args, **kwargs):
-        kwargs['ssl_context'] = create_urllib3_context(ciphers=CIPHERS)
-        return super().init_poolmanager(*args, **kwargs)
-
-    def proxy_manager_for(self, *args, **kwargs):
-        kwargs['ssl_context'] = create_urllib3_context(ciphers=CIPHERS)
-        return super().proxy_manager_for(*args, **kwargs)
+from ..models import Signer
 
 
 class PortalManager(requests.Session):
