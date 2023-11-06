@@ -3,7 +3,8 @@ import pickle
 from time import time
 
 import requests
-import urllib3
+from requests.adapters import HTTPAdapter
+from urllib3.util.ssl_ import create_urllib3_context
 from requests.structures import CaseInsensitiveDict
 
 from .utils import get_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
@@ -11,13 +12,28 @@ from ..models import Signer
 from ..exceptions import ResponseError
 
 
+# Ciphers compatible with SAT Services
+CIPHERS = (
+    'ECDHE+AESGCM:ECDHE+CHACHA20:DHE+AESGCM:DHE+CHACHA20:ECDH+AESGCM:'
+    'DH+AESGCM:ECDH+AES:DH+AES:RSA+AESGCM:RSA+AES:!aNULL:!eNULL:!MD5:!DSS'
+    ':HIGH:!DH'
+)
+
+
+class SSLAdapter(HTTPAdapter):
+    def init_poolmanager(self, *args, **kwargs):
+        kwargs['ssl_context'] = create_urllib3_context(ciphers=CIPHERS)
+        return super().init_poolmanager(*args, **kwargs)
+
+    def proxy_manager_for(self, *args, **kwargs):
+        kwargs['ssl_context'] = create_urllib3_context(ciphers=CIPHERS)
+        return super().proxy_manager_for(*args, **kwargs)
+
+
 class PortalManager(requests.Session):
     def __init__(self, signer: Signer):
         super().__init__()
-        try:
-            urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
-        except:
-            pass
+        self.mount('https://', SSLAdapter())
         self.signer = signer
 
         self.headers = CaseInsensitiveDict(
