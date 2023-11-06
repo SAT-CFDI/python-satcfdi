@@ -219,3 +219,99 @@ class SATFacturaElectronica(PortalManager):
             }
         )
         return json.loads(res)
+
+
+class SATPortalConstancia(PortalManager):
+    BASE_URL = 'https://login.siat.sat.gob.mx'
+
+    def login(self):
+        res = self.get(
+            url=f'{self.BASE_URL}/nidp/idff/sso?id=fiel_Aviso'
+        )
+        assert res.status_code == 200
+        action, data = get_form(res)
+        if action is None:
+            return res
+
+        return self.fiel_login(
+            login_response=self.form(action, res.request.url, data)
+        )
+
+    def generar_constancia_login(self):
+        res = self.get(
+            url="https://rfcampc.siat.sat.gob.mx/app/seg/SessionBroker?url=/PTSC/IdcSiat/autc/ReimpresionTramite/ConsultaTramite.jsf&parametro=c&idSessionBit=&idSessionBit=null",
+            allow_redirects=True
+        )
+        assert res.status_code == 200
+
+        # Execute Authentication Request
+        action, data = get_form(res)
+        if action == "https://login.siat.sat.gob.mx/nidp/saml2/sso":
+            res = self.form(action, res.request.url, data)
+            assert res.status_code == 200
+
+            # Execute Authentication Response
+            action, data = get_form(res)
+            assert action == "https://rfcampc.siat.sat.gob.mx/saml2/sp/acs/post"
+            res = self.form(action, res.request.url, data)
+            assert res.status_code == 200
+
+        # Execute formReimpAcuse
+        action, data = get_form(res)
+        if action == "https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/autc/ReimpresionTramite/ConsultaTramite.jsf":
+            data = {
+                'javax.faces.partial.ajax': "true",
+                'javax.faces.source': 'formReimpAcuse:j_idt50',
+                'javax.faces.partial.execute': '@all',
+                'formReimpAcuse:j_idt50': 'formReimpAcuse:j_idt50',
+                'formReimpAcuse': 'formReimpAcuse',
+                'formReimpAcuse:tipoTramite_input': '0',
+                'formReimpAcuse:tipoTramite_focus': '',
+                'formReimpAcuse:fechaInicio_input:': '',
+                'formReimpAcuse:fechaFin_input': '',
+                'formReimpAcuse:folio': '',
+                'javax.faces.ViewState': data['javax.faces.ViewState']
+            }
+            res = self.form(action, res.request.url, data)
+            assert res.status_code == 200
+        return res
+
+
+class SATPortalOpinionCumplimiento(PortalManager):
+    BASE_URL = 'https://login.mat.sat.gob.mx'
+
+    def login(self):
+        res = self.get(
+            url=f'{self.BASE_URL}/nidp/app/login?id=contr-dual-eFirma-totp'
+        )
+        assert res.status_code == 200
+        action, data = get_form(res)
+
+        res = self.form(action, res.request.url, data)
+        assert res.status_code == 200
+
+        res = self.form(action, res.request.url, data)
+        assert res.status_code == 200
+
+        res = self.form(action, res.request.url, data)
+        assert res.status_code == 200
+
+        return res
+
+    def generar_opinion_cumplimiento_login(self):
+        res = self.get(
+            url="https://ptsc32d.clouda.sat.gob.mx/?/reporteOpinion32DContribuyente",
+            allow_redirects=True
+        )
+        assert res.status_code == 200
+
+        # Execute Authentication Request
+        action, data = get_form(res)
+        if action.startswith("https://login.mat.sat.gob.mx/nidp//app/login"):
+            res = self.form(action, res.request.url, data)
+            assert res.status_code == 200
+
+            # Execute Authentication Response
+            action, data = get_form(res)
+            res = self.form(action, res.request.url, data)
+            assert res.status_code == 200
