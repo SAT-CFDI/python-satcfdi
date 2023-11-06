@@ -237,7 +237,8 @@ class SATPortalConstancia(PortalManager):
             login_response=self.form(action, res.request.url, data)
         )
 
-    def generar_constancia_login(self):
+    def generar_constancia(self):
+        self.login()
         res = self.get(
             url="https://rfcampc.siat.sat.gob.mx/app/seg/SessionBroker?url=/PTSC/IdcSiat/autc/ReimpresionTramite/ConsultaTramite.jsf&parametro=c&idSessionBit=&idSessionBit=null",
             allow_redirects=True
@@ -274,7 +275,12 @@ class SATPortalConstancia(PortalManager):
             }
             res = self.form(action, res.request.url, data)
             assert res.status_code == 200
-        return res
+
+        res = self.get(
+            url='https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/IdcGeneraConstancia.jsf'
+        )
+        assert res.status_code == 200
+        return res.content
 
 
 class SATPortalOpinionCumplimiento(PortalManager):
