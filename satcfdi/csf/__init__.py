@@ -1,16 +1,13 @@
 from datetime import datetime
-import requests
-import urllib3
-from bs4 import BeautifulSoup
-from .. import __version__
-from ..models import Code
-from ..exceptions import ResponseError
-from ..catalogs import select_all
 
-try:
-    urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH'
-except:
-    pass
+import requests
+from bs4 import BeautifulSoup
+
+from .. import __version__
+from ..catalogs import select_all
+from ..exceptions import ResponseError
+from ..models import Code
+from ..sat_requests_utils import SSLAdapter
 
 
 def retrieve(rfc: str, id_cif: str):
@@ -23,16 +20,18 @@ def url(rfc: str, id_cif: str):
 
 
 def _request_constancia(rfc: str, id_cif: str):
-    res = requests.get(
-        url=url(rfc, id_cif),
-        headers={
-            "User-Agent": __version__.__user_agent__,
-        }
-    )
-    if res.ok:
-        return res.content
-    else:
-        raise ResponseError(res)
+    with requests.Session() as s:
+        s.mount('https://', SSLAdapter())
+        res = s.get(
+            url=url(rfc, id_cif),
+            headers={
+                "User-Agent": __version__.__user_agent__,
+            }
+        )
+        if res.ok:
+            return res.content
+        else:
+            raise ResponseError(res)
 
 
 def _find_regimen(regimen):

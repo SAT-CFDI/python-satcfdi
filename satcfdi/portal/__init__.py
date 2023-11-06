@@ -5,9 +5,10 @@ from time import time
 import requests
 from requests.structures import CaseInsensitiveDict
 
-from .utils import get_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id, SSLAdapter
+from .utils import get_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
 from ..exceptions import ResponseError
 from ..models import Signer
+from ..sat_requests_utils import SSLAdapter
 
 
 class PortalManager(requests.Session):

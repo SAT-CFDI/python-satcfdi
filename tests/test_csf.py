@@ -24,7 +24,7 @@ def test_get_constancia(file):
     with open(os.path.join(current_dir, 'csf', file), 'rb') as f:
         data = f.read()
 
-    with mock.patch(f'requests.get') as mk:
+    with mock.patch(f'requests.sessions.Session.get') as mk:
         mk.return_value.content = data
 
         res = retrieve('RFC', 'ID_CIF')
