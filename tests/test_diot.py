@@ -48,7 +48,7 @@ def test_create_filename():
             periodo=Periodo.OCTUBRE,
             proveedores=[]
         )
-        assert diot._tmp_filename() == 'XIQB891116QE40DOTAAM1MCMB811401'
+        assert diot.filename() == 'XIQB891116QE40DOTAAM1MCMB811401'
 
     with mock.patch(f'{module}.diot.datetime') as m:
         p = ProveedorTercero(
@@ -64,7 +64,7 @@ def test_create_filename():
             periodo=Periodo.OCTUBRE,
             proveedores=[p for _ in range(40001)]
         )
-        assert diot._tmp_filename() == 'XIQB891116QE40DOTAAM1MCMB813202'
+        assert diot.filename() == 'XIQB891116QE40DOTAAM1MCMB813202'
 
     rfc = "OÑO120726RX3"
     with mock.patch(f'{module}.diot.datetime') as m:
@@ -77,7 +77,7 @@ def test_create_filename():
             periodo=Periodo.OCTUBRE,
             proveedores=[]
         )
-        assert diot._tmp_filename() == '_OÑO120726RX30DOTAAM1MCMB817181'
+        assert diot.filename() == '_OÑO120726RX30DOTAAM1MCMB817181'
 
 
 xiqb891116qe4_issuer = DatosIdentificacion(
@@ -105,7 +105,7 @@ def test_create_declaracion_diot():
     # Verify FILENAME
     with mock.patch(f'{module}.diot.datetime') as m:
         m.now = mock.Mock(return_value=datetime(2022, 11, 8, 11, 40))
-        tmp_filename = diot._tmp_filename()
+        tmp_filename = diot.filename()
         assert tmp_filename == text_file
 
     # Verify ZIP

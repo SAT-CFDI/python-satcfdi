@@ -402,7 +402,7 @@ class DIOT:
 
         w.end()
 
-    def _tmp_filename(self):
+    def filename(self):
         rfc = self.datos_identificacion.rfc
 
         if len(rfc) == 12:
@@ -487,15 +487,15 @@ class DIOT:
                         e(data_encrypted.getvalue(), nr=0, cls=Classes.Context)
         e.stream(target)
 
-    def generate_package(self, dirname: str = None) -> str:
+    def generate_package(self, dirname: str = None, filename: str = None) -> str:
         """
         Generate Package, return filename
         """
-        tmp_filename = self._tmp_filename()
+        filename = filename or self.filename()
         if dirname:
-            filename = os.path.join(dirname, tmp_filename + ".dec")
+            out_file = os.path.join(dirname, filename + ".dec")
         else:
-            filename = tmp_filename + ".dec"
-        with open(filename, 'wb') as f:
-            self._encrypted_write(f, tmp_filename)
-        return filename
+            out_file = filename + ".dec"
+        with open(out_file, 'wb') as f:
+            self._encrypted_write(f, filename)
+        return out_file
