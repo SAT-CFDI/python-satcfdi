@@ -210,6 +210,34 @@ class ProveedorTercero:
         if self.devoluciones is not None:
             w(302261, 1, 1, self.devoluciones)
 
+    def to_list(self):
+        return [
+            self.tipo_tercero,
+            self.tipo_operacion,
+            self.rfc,
+            self.id_fiscal,
+            self.nombre_extranjero,
+            self.pais,
+            self.nacionalidad,
+            self.iva16,
+            "",
+            self.iva16_na,
+            "",
+            "",
+            self.iva_rfn,
+            "",
+            self.iva_rfn_na,
+            self.iva_import16,
+            self.iva_import16_na,
+            "",
+            "",
+            self.iva_import_exento,
+            self.iva0,
+            self.iva_exento,
+            self.retenido,
+            self.devoluciones
+        ]
+
 
 class DatosComplementaria:
     def __init__(
@@ -338,7 +366,7 @@ class DIOT:
             datos_identificacion: DatosIdentificacion,
             periodo: Periodo,
             complementaria: DatosComplementaria = None,
-            proveedores: ProveedorTercero | Sequence[ProveedorTercero] = None
+            proveedores: Sequence[ProveedorTercero] = None
     ):
         proveedores = list(iterate(proveedores))
 
@@ -397,6 +425,11 @@ class DIOT:
         suffix = "2" if len(self.proveedores) > 40000 else "1"
 
         return f"{rfc}{v_dem}{n_formulario}{ver_clte}{ver_form}{period}{mes_inicial}{period}{mes_final}{anio}{mes}{dia}{hora}{suffix}"
+
+    def export(self, target):
+        for p in self.proveedores:
+            target.write("|".join(str(v or "") for v in p.to_list()).encode('windows-1252'))
+            target.write(b"|\r\n")
 
     def plain_bytes(self) -> bytes:
         with BytesIO() as b:
