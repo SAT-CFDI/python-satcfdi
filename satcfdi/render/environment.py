@@ -129,6 +129,9 @@ class CFDIEnvironment(Environment):
 
         @self.filter
         def simple(data, *args):
+            if not data:
+                return do_mark_safe("&nbsp;")
+
             def fields():
                 for k in args or data.keys():
                     if v := data.get(k):
