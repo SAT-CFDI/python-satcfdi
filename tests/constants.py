@@ -2,6 +2,7 @@
 CFDI_FILES = [
     'comprobante32/cfdv32-ejemplo.xml',
     'comprobante32/cfdv32-instituciones-educativas.xml',
+    'comprobante32/cfdv32-nomina.xml',
 
     'comprobante33/cfdv33-base.xml',
     'comprobante33/cfdv33-cce11.xml',
