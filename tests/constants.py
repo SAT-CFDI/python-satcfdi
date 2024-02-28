@@ -1,81 +1,17 @@
+import os
+from os import walk
 
-CFDI_FILES = [
-    'comprobante32/cfdv32-ejemplo.xml',
-    'comprobante32/cfdv32-instituciones-educativas.xml',
-    'comprobante32/cfdv32-nomina.xml',
+current_dir = os.path.dirname(__file__)
 
-    'comprobante33/cfdv33-base.xml',
-    'comprobante33/cfdv33-cce11.xml',
-    'comprobante33/cfdv33-cce11-codigos-ivalidos.xml',
-    'comprobante33/cfdv33-cce11-min.xml',
-    'comprobante33/cfdv33-detallista-min.xml',
-    'comprobante33/cfdv33-detallista.xml',
-    'comprobante33/cfdv33-iedu.xml',
-    'comprobante33/cfdv33-min.xml',
-    'comprobante33/cfdv33-nomina12.xml',
-    'comprobante33/cfdv33-pagos10-minok.xml',
-    'comprobante33/cfdv33-pagos10.xml',
-    'comprobante33/cfdv33-signed-tfd.xml',
-    'comprobante33/cfdv-33-addenda.xml',
-    'comprobante33/cfdv33-multiples-tasas.xml',
+CFDI_FILES = []
 
-    'comprobante40/cfdv40-aerolineas.xml',
-    'comprobante40/cfdv40-cartaporte20-min.xml',
-    'comprobante40/cfdv40-cartaporte20.xml',
-    'comprobante40/cfdv40-cce11.xml',
-    'comprobante40/cfdv40-certdestruccion.xml',
-    'comprobante40/cfdv40-consumodecombustibles11.xml',
-    'comprobante40/cfdv40-detallista-min.xml',
-    'comprobante40/cfdv40-detallista.xml',
-    'comprobante40/cfdv40-divisas.xml',
-    'comprobante40/cfdv40-donat11.xml',
-    'comprobante40/cfdv40-ecc12.xml',
-    'comprobante40/cfdv40-ejemplo-signed-tfd.xml',
-    'comprobante40/cfdv40-ejemplo.xml',
-    'comprobante40/cfdv40-gceh.xml',
-    'comprobante40/cfdv40-iedu.xml',
-    'comprobante40/cfdv40-ieeh.xml',
-    'comprobante40/cfdv40-implocal.xml',
-    'comprobante40/cfdv40-ine11.xml',
-    'comprobante40/cfdv40-leyendasfisc.xml',
-    'comprobante40/cfdv40-min.xml',
-    'comprobante40/cfdv40-nomina12.xml',
-    'comprobante40/cfdv40-notariospublicos.xml',
-    'comprobante40/cfdv40-obrasarte.xml',
-    'comprobante40/cfdv40-pagoenespecie.xml',
-    'comprobante40/cfdv40-pagos20-all.xml',
-    'comprobante40/cfdv40-pagos20-min.xml',
-    'comprobante40/cfdv40-pagos20.xml',
-    'comprobante40/cfdv40-pfic.xml',
-    'comprobante40/cfdv40-registrofiscal.xml',
-    'comprobante40/cfdv40-renovacionysustitucionvehiculos.xml',
-    'comprobante40/cfdv40-servicioparcial.xml',
-    'comprobante40/cfdv40-tpe.xml',
-    'comprobante40/cfdv40-valesdedespensa.xml',
-    'comprobante40/cfdv40-vehiculousado.xml',
-    'comprobante40/cfdv40-venta11.xml',
+walk_path = os.path.join(current_dir, 'cfdi_ejemplos')
+for (dirpath, dirnames, filenames) in walk(walk_path):
+    print(dirpath, dirnames)
+    rel_path = os.path.relpath(dirpath, walk_path)
+    for f in filenames:
+        CFDI_FILES.append(os.path.join(rel_path, f))
 
-    'conta/balanza.xml',
-    'conta/CatalogoCuentas.xml',
-    'conta/poliza.xml',
-
-    'retenciones10/retenciones10-arrendamiento-en-fideicomiso.xml',
-    'retenciones10/retenciones10-dividendos.xml',
-    'retenciones10/retenciones10-ejemplo.xml',
-    'retenciones10/retenciones10-enajenacion_de_acciones.xml',
-    'retenciones10/retenciones10-intereses-hipotecarios.xml',
-    'retenciones10/retenciones10-intereses.xml',
-    'retenciones10/retenciones10-operaciones-con-derivados.xml',
-    'retenciones10/retenciones10-pagos-a-extranjeros.xml',
-    'retenciones10/retenciones10-planes-de-retiro.xml',
-    'retenciones10/retenciones10-premios.xml',
-    'retenciones10/retenciones10-sector-financiero.xml',
-    'retenciones10/retenciones10.xml',
-
-    'retenciones20/retenciones20-ejemplo.xml',
-    'retenciones20/retenciones20-min-comps.xml',
-    'retenciones20/retenciones20-min.xml',
-]
 
 PERSONAS_FISICAS = [
     'CACX7605101P8',
