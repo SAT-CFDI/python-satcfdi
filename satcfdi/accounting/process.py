@@ -69,11 +69,11 @@ def filter_invoices_iter(
     for r in invoices:
         if _compare(r["Emisor"]["Rfc"], rfc_emisor) \
                 and _compare(r["Receptor"]["Rfc"], rfc_receptor) \
-                and _compare(r.estatus, estatus) \
+                and _compare(r.estatus(), estatus) \
                 and _compare(r["Fecha"], fecha) \
                 and _compare(r.get("MetodoPago"), payment_method) \
                 and _compare(r["TipoDeComprobante"], invoice_type) \
-                and _compare(r.saldo_pendiente, pending_balance):
+                and _compare(r.saldo_pendiente(), pending_balance):
             yield r
 
 
@@ -122,7 +122,7 @@ def invoice_def():
         'IVA Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(Impuesto.IVA, {}).get("Importe")),
         'ISR Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(Impuesto.ISR, {}).get("Importe")),
         'Total': (12, True, lambda i: i["Total"]),
-        'Pendiente': (12, True, lambda i: i.saldo_pendiente or None),
+        'Pendiente': (12, True, lambda i: i.saldo_pendiente() or None),
         'Pagos': (35, False, format_pagos),
         'Relaciones': (35, False, format_relaciones),
         'Estado CFDI': (35, False, format_estado_cfdi),

@@ -1,11 +1,13 @@
 import glob
 import os
 from unittest import mock
-
+from uuid import UUID
+from datetime import datetime
 import xlsxwriter
 
 from satcfdi.accounting._ansi_colors import *
 from satcfdi.accounting.formatters import SatCFDI
+from satcfdi.create.catalogos import EstadoComprobante
 from satcfdi.accounting.process import filter_invoices_iter, invoices_export, invoices_print, payments_print, \
     complement_invoices_data, payments_export, num2col, filter_payments_iter, payments_retentions_export, filter_retenciones_iter, retenciones_print, payments_groupby_receptor
 from satcfdi.models import DatePeriod
@@ -24,9 +26,8 @@ def test_ansi():
 
 
 class myCFDI(SatCFDI):
-    @SatCFDI.estatus.getter
-    def estatus(self) -> str:
-        return '1'
+    def estatus(self) -> EstadoComprobante:
+        return EstadoComprobante.VIGENTE
 
     def consulta_estado(self):
         return {}
@@ -47,6 +48,18 @@ def test_cfdi():
     for c in all_invoices.values():
         d = c.ultima_num_parcialidad
         assert d >= 0
+
+    cfdi_pagado = all_invoices[UUID("6d7434a6-e3f2-47ad-9e4c-08849946afa0")]
+
+    assert cfdi_pagado.ultima_num_parcialidad == 1
+    assert cfdi_pagado.saldo_pendiente() == 0
+    assert cfdi_pagado.saldo_pendiente(datetime(2020, 1, 2)) == cfdi_pagado['Total']
+    assert cfdi_pagado.saldo_pendiente(datetime(2020, 1, 3)) == 0
+
+    cfdi_pagado.payments[0].comprobante.estatus = lambda: EstadoComprobante.CANCELADO
+
+    assert cfdi_pagado.ultima_num_parcialidad == 0
+    assert cfdi_pagado.saldo_pendiente() == cfdi_pagado['Total']
 
     with mock.patch('builtins.print') as p:
         ingresos_pendientes = list(filter_invoices_iter(invoices=all_invoices.values(), fecha=dp, rfc_emisor=rfc, invoice_type="I", pending_balance=lambda x: x > 0))

@@ -32,8 +32,7 @@ class SatCFDI(CFDI):
     def name(self):
         return self.get("Serie", "") + self.get("Folio", "")
 
-    @property
-    def saldo_pendiente(self) -> Decimal | None:
+    def saldo_pendiente(self, date=None) -> Decimal | None:
         if self["TipoDeComprobante"] == TipoDeComprobante.INGRESO:
             # Nota de crédito de los documentos relacionados
             credit_notes = sum(
@@ -41,12 +40,15 @@ class SatCFDI(CFDI):
                 for c in self.relations
                 if c.cfdi_relacionados["TipoRelacion"] == TipoRelacion.NOTA_DE_CREDITO_DE_LOS_DOCUMENTOS_RELACIONADOS
                 and c.comprobante['TipoDeComprobante'] == TipoDeComprobante.EGRESO
-                and c.comprobante.estatus == EstadoComprobante.VIGENTE
+                and c.comprobante.estatus() == EstadoComprobante.VIGENTE
+                and (not date or c.comprobante['Fecha'] <= date)
             )
             insoluto = min(
                 (c.docto_relacionado['ImpSaldoInsoluto']
                  for c in self.payments
-                 if c.comprobante.estatus == EstadoComprobante.VIGENTE),
+                 if c.comprobante.estatus() == EstadoComprobante.VIGENTE
+                 and (not date or c.pago['FechaPago'] <= date)
+                 ),
                 default=None
             )
             if insoluto is not None:
@@ -62,12 +64,11 @@ class SatCFDI(CFDI):
 
     @property
     def ultima_num_parcialidad(self) -> int:
-        return max((c.docto_relacionado['NumParcialidad'] for c in self.payments), default=0)
+        return max((c.docto_relacionado['NumParcialidad'] for c in self.payments if c.comprobante.estatus() == EstadoComprobante.VIGENTE), default=0)
 
     def consulta_estado(self) -> dict:
         raise NotImplementedError()
 
-    @property
     def estatus(self) -> EstadoComprobante:
         raise NotImplementedError()
 
