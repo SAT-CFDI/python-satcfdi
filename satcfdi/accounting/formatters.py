@@ -49,11 +49,7 @@ def format_fecha_pago(payment: PaymentsDetails):
     if payment.pago:
         return payment.pago["FechaPago"]
 
-    def_pagado = payment.comprobante.saldo_pendiente() == 0
-    if def_pagado:
-        return payment.comprobante["Fecha"]
-    else:
-        return "Pendiente"
+    return payment.comprobante["Fecha"]
 
 
 def format_estado_cfdi(cfdi: SatCFDI):
