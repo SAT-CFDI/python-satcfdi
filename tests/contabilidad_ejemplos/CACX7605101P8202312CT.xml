@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<catalogocuentas:Catalogo xmlns:catalogocuentas="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="1.3" RFC="CACX7605101P8" Mes="12" Anio="2023" xsi:schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas/CatalogoCuentas_1_3.xsd">
+  <catalogocuentas:Ctas CodAgrup="102" NumCta="1102" Desc="BANCOS" Nivel="1" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="102.01" NumCta="1102.1" Desc="NACIONALES" SubCtaDe="1102" Nivel="2" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="102.01" NumCta="1102.1.1" Desc="HSBC" SubCtaDe="1102.1" Nivel="3" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="102.02" NumCta="1102.2" Desc="EXTRANJEROS" SubCtaDe="1102" Nivel="2" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="105" NumCta="1103" Desc="CLIENTES" Nivel="1" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="105.01" NumCta="1103.1" Desc="CLIENTES NACIONALES" SubCtaDe="1103" Nivel="2" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="105.02" NumCta="1103.2" Desc="CLIENTES EXTRANJEROS" SubCtaDe="1103" Nivel="2" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="113" NumCta="1104" Desc="IMPUESTOS A FAVOR" Nivel="1" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="113.01" NumCta="1104.1" Desc="IVA A FAVOR" SubCtaDe="1104" Nivel="2" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="208" NumCta="2153" Desc="IMPUESTOS TRASLADAOS COBRADOS" Nivel="1" Natur="A"/>
+  <catalogocuentas:Ctas CodAgrup="208.01" NumCta="2153.1" Desc="IVA TRASLADADO COBRADO" SubCtaDe="2153" Nivel="2" Natur="A"/>
+  <catalogocuentas:Ctas CodAgrup="209" NumCta="2152" Desc="IMPUESTOS TRASLADADOS NO COBRADOS" Nivel="1" Natur="A"/>
+  <catalogocuentas:Ctas CodAgrup="209.01" NumCta="2152.1" Desc="IVA TRASLADADO NO COBRADO" SubCtaDe="2152" Nivel="2" Natur="A"/>
+  <catalogocuentas:Ctas CodAgrup="216" NumCta="2151" Desc="IMPUESTOS RETENIDOS" Nivel="1" Natur="A"/>
+  <catalogocuentas:Ctas CodAgrup="216.03" NumCta="2151.1" Desc="IMPUESTOS RETENIDOS DE ISR" SubCtaDe="2151" Nivel="2" Natur="A"/>
+  <catalogocuentas:Ctas CodAgrup="216.03" NumCta="2151.1.1" Desc="IMPUESTOS RETENIDOS DE ISR ACREDITABLE" SubCtaDe="2151.1" Nivel="3" Natur="A"/>
+  <catalogocuentas:Ctas CodAgrup="216.03" NumCta="2151.1.2" Desc="IMPUESTOS RETENIDOS DE ISR PENDIENTE" SubCtaDe="2151.1" Nivel="3" Natur="A"/>
+  <catalogocuentas:Ctas CodAgrup="401" NumCta="4100" Desc="INGRESOS" Nivel="1" Natur="A"/>
+  <catalogocuentas:Ctas CodAgrup="401.22" NumCta="4100.1" Desc="INGRESOS POR VENTAS" SubCtaDe="4100" Nivel="2" Natur="A"/>
+</catalogocuentas:Catalogo>

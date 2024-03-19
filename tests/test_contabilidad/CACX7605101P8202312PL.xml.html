@@ -5,7 +5,7 @@
 	<style>
 @page {
 	@bottom-left{
-		content: "Balanza" " versión: " "1.1";
+		content: "Polizas" " versión: " "1.3";
 		font:7.47pt Arial;
 	}
 	@bottom-center{
@@ -171,65 +171,88 @@ ul {
 }	</style>
 </head>
 <body>
-<h3>Balanza de Comprobación</h3>
+<h3>Pólizas</h3>
 <table>
 	<tr>
 		<th style="width: 25%">RFC</th>
 		<th style="width: 25%">Año</th>
 		<th style="width: 25%">Mes</th>
-		<th style="width: 25%">TipoEnvio</th>
+		<th style="width: 25%">Tipo Solicitud</th>
 	</tr>
 	<tr>
-		<td class="cen">AAA010101AAA</td>
-		<td class="cen">2015</td>
-		<td class="cen">01</td>
-		<td class="cen">C</td>
+		<td class="cen">CACX7605101P8</td>
+		<td class="cen">2023</td>
+		<td class="cen">12</td>
+		<td class="cen">AF</td>
 	</tr>
 </table>
 <br>
 <table>
 	<thead>
 		<tr>
-			<th style="width: 20%;">No. Cuenta</th>
-			<th style="width: 20%;">Saldo Inicial</th>
-			<th style="width: 20%;">Debe</th>
-			<th style="width: 20%;">Haber</th>
-			<th style="width: 20%;">Saldo Final</th>
+			<th style="width: 20%;">NumUnIdenPol</th>
+			<th style="width: 60%;">Concepto</th>
+			<th style="width: 20%;">Fecha</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			<td class="l">
-				NumCta1
+				2023-12-I-0001
 			</td>
-			<td class="r">
-				-1,073,741,773.00
+			<td class="l">
+				Ingreso - Venta
 			</td>
-			<td class="r">
-				-1,073,741,773.00
-			</td>
-			<td class="r">
-				-1,073,741,773.00
-			</td>
-			<td class="r">
-				-1,073,741,773.00
+			<td class="l">
+				2023-12-01
 			</td>
 		</tr>
-		<tr>
-			<td class="l">
-				NumCta3
-			</td>
-			<td class="r">
-				-1,073,741,773.00
-			</td>
-			<td class="r">
-				-1,073,741,773.00
-			</td>
-			<td class="r">
-				-1,073,741,773.00
-			</td>
-			<td class="r">
-				-1,073,741,773.00
+		<tr style="break-before: avoid;">
+			<td colspan="3" style="padding-left: 5%; padding-right: 0%;">
+				<table >
+					<tr>
+						<th style="width: 10%;">NumCta</th>
+						<th style="width: 54%;">Descripción Cuenta</th>
+						<th style="width: 12%;">Concepto</th>
+						<th style="width: 12%;">Debe</th>
+						<th style="width: 12%;">Haber</th>
+					</tr>
+					<tr>
+						<td class="l">4100.1</td>
+						<td class="l">INGRESOS</td>
+						<td class="r">Subtotal</td>
+						<td class="r">0</td>
+						<td class="r">13,544.00</td>
+					</tr>
+					<tr>
+						<td class="l">2152.1</td>
+						<td class="l">IVA TRASLADADO NO COBRADO</td>
+						<td class="r">IVA Trasladado</td>
+						<td class="r">0</td>
+						<td class="r">2,167.04</td>
+					</tr>
+					<tr>
+						<td class="l">2151.1.2</td>
+						<td class="l">IMPUESTOS RETENIDOS DE ISR PENDIENTE</td>
+						<td class="r">ISR Retenido</td>
+						<td class="r">1,354.40</td>
+						<td class="r">0</td>
+					</tr>
+					<tr>
+						<td class="l">1104.1</td>
+						<td class="l">IVA A FAVOR</td>
+						<td class="r">IVA Retenido</td>
+						<td class="r">1,444.70</td>
+						<td class="r">0</td>
+					</tr>
+					<tr>
+						<td class="l">1103.1</td>
+						<td class="l">CLIENTES NACIONALES</td>
+						<td class="r">Total</td>
+						<td class="r">14,911.94</td>
+						<td class="r">0</td>
+					</tr>
+				</table>
 			</td>
 		</tr>
 	</tbody>

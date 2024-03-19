@@ -4,13 +4,20 @@ from os import walk
 current_dir = os.path.dirname(__file__)
 
 CFDI_FILES = []
+CONTABILIDAD_FILES = []
 
 walk_path = os.path.join(current_dir, 'cfdi_ejemplos')
 for (dirpath, dirnames, filenames) in walk(walk_path):
-    print(dirpath, dirnames)
     rel_path = os.path.relpath(dirpath, walk_path)
     for f in filenames:
         CFDI_FILES.append(os.path.join(rel_path, f))
+
+
+walk_path = os.path.join(current_dir, 'contabilidad_ejemplos')
+for (dirpath, dirnames, filenames) in walk(walk_path):
+    rel_path = os.path.relpath(dirpath, walk_path)
+    for f in filenames:
+        CONTABILIDAD_FILES.append(os.path.join(rel_path, f))
 
 
 PERSONAS_FISICAS = [

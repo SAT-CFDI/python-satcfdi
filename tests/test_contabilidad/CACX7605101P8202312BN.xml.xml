@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<BCE:Balanza xmlns:BCE="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="1.3" RFC="CACX7605101P8" Mes="12" Anio="2023" TipoEnvio="N" xsi:schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion/BalanzaComprobacion_1_3.xsd">
+  <BCE:Ctas NumCta="1103" SaldoIni="0" Debe="12911.94" Haber="0" SaldoFin="12911.94"/>
+  <BCE:Ctas NumCta="1103.1" SaldoIni="0" Debe="12911.94" Haber="0" SaldoFin="12911.94"/>
+  <BCE:Ctas NumCta="1104" SaldoIni="0" Debe="1444.70" Haber="0" SaldoFin="1444.70"/>
+  <BCE:Ctas NumCta="1104.1" SaldoIni="0" Debe="1444.70" Haber="0" SaldoFin="1444.70"/>
+  <BCE:Ctas NumCta="2152" SaldoIni="0" Debe="0" Haber="2167.04" SaldoFin="2167.04"/>
+  <BCE:Ctas NumCta="2152.1" SaldoIni="0" Debe="0" Haber="2167.04" SaldoFin="2167.04"/>
+  <BCE:Ctas NumCta="2151" SaldoIni="0" Debe="1354.40" Haber="0" SaldoFin="-1354.40"/>
+  <BCE:Ctas NumCta="2151.1" SaldoIni="0" Debe="1354.40" Haber="0" SaldoFin="-1354.40"/>
+  <BCE:Ctas NumCta="2151.1.2" SaldoIni="0" Debe="1354.40" Haber="0" SaldoFin="-1354.40"/>
+  <BCE:Ctas NumCta="4100" SaldoIni="0" Debe="0" Haber="13544.00" SaldoFin="13544.00"/>
+  <BCE:Ctas NumCta="4100.1" SaldoIni="0" Debe="0" Haber="13544.00" SaldoFin="13544.00"/>
+</BCE:Balanza>

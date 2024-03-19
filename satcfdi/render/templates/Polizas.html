@@ -1,0 +1,64 @@
+<h3>Pólizas</h3>
+<table>
+	<tr>
+		<th style="width: 25%">RFC</th>
+		<th style="width: 25%">Año</th>
+		<th style="width: 25%">Mes</th>
+		<th style="width: 25%">Tipo Solicitud</th>
+	</tr>
+	<tr>
+		<td class="cen">{{ c.RFC }}</td>
+		<td class="cen">{{ c.Anio }}</td>
+		<td class="cen">{{ c.Mes }}</td>
+		<td class="cen">{{ c.TipoSolicitud }}</td>
+	</tr>
+</table>
+<br>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 20%;">NumUnIdenPol</th>
+			<th style="width: 60%;">Concepto</th>
+			<th style="width: 20%;">Fecha</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for c in iterate(c.Poliza) %}
+		<tr>
+			<td class="l">
+				{{ c.NumUnIdenPol }}
+			</td>
+			<td class="l">
+				{{ c.Concepto }}
+			</td>
+			<td class="l">
+				{{ c.Fecha }}
+			</td>
+		</tr>
+		{% if c.Transaccion %}
+		<tr style="break-before: avoid;">
+			<td colspan="3" style="padding-left: 5%; padding-right: 0%;">
+				<table >
+					<tr>
+						<th style="width: 10%;">NumCta</th>
+						<th style="width: 54%;">Descripción Cuenta</th>
+						<th style="width: 12%;">Concepto</th>
+						<th style="width: 12%;">Debe</th>
+						<th style="width: 12%;">Haber</th>
+					</tr>
+					{% for c in c.Transaccion %}
+					<tr>
+						<td class="l">{{ c.NumCta }}</td>
+						<td class="l">{{ c.DesCta }}</td>
+						<td class="r">{{ c.Concepto }}</td>
+						<td class="r">{{ c.Debe }}</td>
+						<td class="r">{{ c.Haber }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</tbody>
+</table>

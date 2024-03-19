@@ -1,0 +1,526 @@
+<html>
+<head>
+	<title>CFDI</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+@page {
+	@bottom-left{
+		content: "Catalogo" " versión: " "1.3";
+		font:7.47pt Arial;
+	}
+	@bottom-center{
+		content: "Este documento es una representación impresa de un CFDI";
+		font:7.47pt Arial;
+	}
+	@bottom-right{
+		content: "Página " counter(page) " de " counter(pages);
+		font:7.47pt Arial;
+	}
+}
+@media print {
+    .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+}
+body {
+	font-family: Arial;
+	font-size: 9pt;
+}
+h3 {
+	margin-top:-10px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#333;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h4 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 9.89pt;
+	background-color:#555;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	color: white;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+h5 {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 8.6pt;
+	background-color:#777;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	padding-left: 10px;
+	text-align: left;
+	color: white;
+	letter-spacing: 2px;
+	font-weight: bold;
+}
+.h {
+	font-size: 9.89pt;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.c {
+	font-size: 8.6pt;
+}
+.ci {
+	font-size: 7.47pt;
+}
+.cii {
+	font-size: 6.5pt;
+}
+.ciii {
+	font-size: 5.65pt;
+}
+table {
+	font-size: 8.6pt;
+	width: 100%;
+	border-collapse: collapse;
+	border: none;
+	border-spacing: 0;
+}
+table table {
+	font-size: 7.47pt;
+}
+table table table {
+	font-size: 6.5pt;
+}
+table table table table {
+	font-size: 5.65pt;
+}
+table th {
+	background-color:#e0e0e0;
+}
+table table th {
+	background-color:#e8e8e8;
+}
+table table table th {
+	background-color:#f0f0f0;
+}
+table table table table th {
+	background-color:#f8f8f8;
+}
+.htd {
+	text-align: right;
+	width: 1px;
+	white-space: nowrap;
+	font-weight: bold;
+}
+.nb {
+	break-inside: avoid;
+}
+.cen {
+	text-align: center;
+}
+.r {
+	text-align: right;
+}
+.rbt {
+	text-align: right;
+	border-top: 1px solid black;
+}
+th {
+	padding: 1px;
+	vertical-align: center;
+	text-align: center;
+	border-right: 2px solid white;
+}
+th:last-child {
+	border-right: 0px solid white;
+}
+td {
+	vertical-align: top;
+	padding-right: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+tr:last-child td {
+	padding-bottom: none;
+}
+td:last-child {
+	padding-right: none;
+}
+tr {
+	break-inside: avoid;
+}
+.tot {
+	margin-left: 50%;
+	width: 50%;
+}
+table.tot {
+	margin-top: 1px;
+	break-inside: avoid;
+}
+table.tot tr:first-child {
+	border-top: 1px solid;
+}
+hr {
+	border: none;
+	height: 1px;
+	background-color: black;
+	break-after: avoid;
+}
+ul {
+	margin: 0;
+}	</style>
+</head>
+<body>
+<h3>Catálogo de Cuentas</h3>
+<table>
+	<tr>
+		<th style="width: 25%">RFC</th>
+		<th style="width: 25%">Año</th>
+		<th style="width: 25%">Mes</th>
+		<th style="width: 25%"></th>
+	</tr>
+	<tr>
+		<td class="cen">CACX7605101P8</td>
+		<td class="cen">2023</td>
+		<td class="cen">12</td>
+		<td class="cen"></td>
+	</tr>
+</table>
+<br>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 10%;">No Cuenta</th>
+			<th style="width: 45%;">Desc</th>
+			<th style="width: 5%;">Nivel</th>
+			<th style="width: 5%;">Natur</th>
+			<th style="width: 35%;">Código Agrupador</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="l">
+				1102
+			</td>
+			<td class="l">
+				BANCOS
+			</td>
+			<td class="l">
+				1
+			</td>
+			<td class="l">
+				D
+			</td>
+			<td class="l">
+				102 - Bancos
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				1102.1
+			</td>
+			<td class="l">
+				NACIONALES
+			</td>
+			<td class="l">
+				2
+			</td>
+			<td class="l">
+				D
+			</td>
+			<td class="l">
+				102.01 - Bancos nacionales
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				1102.1.1
+			</td>
+			<td class="l">
+				HSBC
+			</td>
+			<td class="l">
+				3
+			</td>
+			<td class="l">
+				D
+			</td>
+			<td class="l">
+				102.01 - Bancos nacionales
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				1102.2
+			</td>
+			<td class="l">
+				EXTRANJEROS
+			</td>
+			<td class="l">
+				2
+			</td>
+			<td class="l">
+				D
+			</td>
+			<td class="l">
+				102.02 - Bancos extranjeros
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				1103
+			</td>
+			<td class="l">
+				CLIENTES
+			</td>
+			<td class="l">
+				1
+			</td>
+			<td class="l">
+				D
+			</td>
+			<td class="l">
+				105 - Clientes
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				1103.1
+			</td>
+			<td class="l">
+				CLIENTES NACIONALES
+			</td>
+			<td class="l">
+				2
+			</td>
+			<td class="l">
+				D
+			</td>
+			<td class="l">
+				105.01 - Clientes nacionales
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				1103.2
+			</td>
+			<td class="l">
+				CLIENTES EXTRANJEROS
+			</td>
+			<td class="l">
+				2
+			</td>
+			<td class="l">
+				D
+			</td>
+			<td class="l">
+				105.02 - Clientes extranjeros
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				1104
+			</td>
+			<td class="l">
+				IMPUESTOS A FAVOR
+			</td>
+			<td class="l">
+				1
+			</td>
+			<td class="l">
+				D
+			</td>
+			<td class="l">
+				113 - Impuestos a favor
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				1104.1
+			</td>
+			<td class="l">
+				IVA A FAVOR
+			</td>
+			<td class="l">
+				2
+			</td>
+			<td class="l">
+				D
+			</td>
+			<td class="l">
+				113.01 - IVA a favor
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				2153
+			</td>
+			<td class="l">
+				IMPUESTOS TRASLADAOS COBRADOS
+			</td>
+			<td class="l">
+				1
+			</td>
+			<td class="l">
+				A
+			</td>
+			<td class="l">
+				208 - Impuestos trasladados cobrados
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				2153.1
+			</td>
+			<td class="l">
+				IVA TRASLADADO COBRADO
+			</td>
+			<td class="l">
+				2
+			</td>
+			<td class="l">
+				A
+			</td>
+			<td class="l">
+				208.01 - IVA trasladado cobrado
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				2152
+			</td>
+			<td class="l">
+				IMPUESTOS TRASLADADOS NO COBRADOS
+			</td>
+			<td class="l">
+				1
+			</td>
+			<td class="l">
+				A
+			</td>
+			<td class="l">
+				209 - Impuestos trasladados no cobrados
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				2152.1
+			</td>
+			<td class="l">
+				IVA TRASLADADO NO COBRADO
+			</td>
+			<td class="l">
+				2
+			</td>
+			<td class="l">
+				A
+			</td>
+			<td class="l">
+				209.01 - IVA trasladado no cobrado
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				2151
+			</td>
+			<td class="l">
+				IMPUESTOS RETENIDOS
+			</td>
+			<td class="l">
+				1
+			</td>
+			<td class="l">
+				A
+			</td>
+			<td class="l">
+				216 - Impuestos retenidos
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				2151.1
+			</td>
+			<td class="l">
+				IMPUESTOS RETENIDOS DE ISR
+			</td>
+			<td class="l">
+				2
+			</td>
+			<td class="l">
+				A
+			</td>
+			<td class="l">
+				216.03 - Impuestos retenidos de ISR por arrendamiento
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				2151.1.1
+			</td>
+			<td class="l">
+				IMPUESTOS RETENIDOS DE ISR ACREDITABLE
+			</td>
+			<td class="l">
+				3
+			</td>
+			<td class="l">
+				A
+			</td>
+			<td class="l">
+				216.03 - Impuestos retenidos de ISR por arrendamiento
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				2151.1.2
+			</td>
+			<td class="l">
+				IMPUESTOS RETENIDOS DE ISR PENDIENTE
+			</td>
+			<td class="l">
+				3
+			</td>
+			<td class="l">
+				A
+			</td>
+			<td class="l">
+				216.03 - Impuestos retenidos de ISR por arrendamiento
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				4100
+			</td>
+			<td class="l">
+				INGRESOS
+			</td>
+			<td class="l">
+				1
+			</td>
+			<td class="l">
+				A
+			</td>
+			<td class="l">
+				401 - Ingresos
+			</td>
+		</tr>
+		<tr>
+			<td class="l">
+				4100.1
+			</td>
+			<td class="l">
+				INGRESOS POR VENTAS
+			</td>
+			<td class="l">
+				2
+			</td>
+			<td class="l">
+				A
+			</td>
+			<td class="l">
+				401.22 - Ingresos por arrendamiento
+			</td>
+		</tr>
+	</tbody>
+</table></body>
+</html>

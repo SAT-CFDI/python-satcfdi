@@ -1,0 +1,48 @@
+<h3>Catálogo de Cuentas</h3>
+<table>
+	<tr>
+		<th style="width: 25%">RFC</th>
+		<th style="width: 25%">Año</th>
+		<th style="width: 25%">Mes</th>
+		<th style="width: 25%"></th>
+	</tr>
+	<tr>
+		<td class="cen">{{ c.RFC }}</td>
+		<td class="cen">{{ c.Anio }}</td>
+		<td class="cen">{{ c.Mes }}</td>
+		<td class="cen"></td>
+	</tr>
+</table>
+<br>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 10%;">No Cuenta</th>
+			<th style="width: 45%;">Desc</th>
+			<th style="width: 5%;">Nivel</th>
+			<th style="width: 5%;">Natur</th>
+			<th style="width: 35%;">Código Agrupador</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for c in iterate(c.Ctas) %}
+		<tr>
+			<td class="l">
+				{{ c.NumCta }}
+			</td>
+			<td class="l">
+				{{ c.Desc }}
+			</td>
+			<td class="l">
+				{{ c.Nivel }}
+			</td>
+			<td class="l">
+				{{ c.Natur }}
+			</td>
+			<td class="l">
+				{{ c.CodAgrup }}
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
