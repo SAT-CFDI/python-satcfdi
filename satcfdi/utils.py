@@ -21,14 +21,16 @@ class ScalarMap(dict):
 def iterate(item):
     if isinstance(item, str | bytes | ScalarMap):
         yield item
-    elif isinstance(item, Mapping):
-        yield from item.values()
-    elif isinstance(item, Sequence):
-        yield from item
-    elif item is None:
         return
-    else:
-        yield item
+    if isinstance(item, Mapping):
+        yield from item.values()
+        return
+    if isinstance(item, Sequence):
+        yield from item
+        return
+    if item is None:
+        return
+    yield item
 
 
 class StrEnum(str, enum.Enum):  # Compatible with Python 3.10
