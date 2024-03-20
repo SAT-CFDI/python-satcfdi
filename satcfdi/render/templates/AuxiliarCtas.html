@@ -1,0 +1,69 @@
+<h3>Auxiliar de Cuentas</h3>
+<table>
+	<tr>
+		<th style="width: 25%">RFC</th>
+		<th style="width: 25%">Año</th>
+		<th style="width: 25%">Mes</th>
+		<th style="width: 25%">Tipo Solicitud</th>
+	</tr>
+	<tr>
+		<td class="cen">{{ c.RFC }}</td>
+		<td class="cen">{{ c.Anio }}</td>
+		<td class="cen">{{ c.Mes }}</td>
+		<td class="cen">{{ c.TipoSolicitud }}</td>
+	</tr>
+</table>
+<br>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 15%;">NumCta</th>
+			<th style="width: 61%;">DesCta</th>
+			<th style="width: 12%;">SaldoIni</th>
+			<th style="width: 12%;">SaldoFin</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for c in iterate(c.Cuenta) %}
+		<tr>
+			<td class="l">
+				{{ c.NumCta }}
+			</td>
+			<td class="l">
+				{{ c.DesCta }}
+			</td>
+			<td class="r">
+				{{ c.SaldoIni }}
+			</td>
+			<td class="r">
+				{{ c.SaldoFin }}
+			</td>
+		</tr>
+		{% if c.DetalleAux %}
+		<tr style="break-before: avoid;">
+			<td colspan="4" style="padding-left: 5%; padding-right: 0%; background-color:#ffffff;">
+				<table >
+					<tr>
+						<th style="width: 10%;">Fecha</th>
+						<th style="width: 20%;">NumUnIdenPol</th>
+						<th style="width: 46%;">Concepto</th>
+						<th style="width: 12%;">Debe</th>
+						<th style="width: 12%;">Haber</th>
+					</tr>
+					{% for c in c.DetalleAux %}
+					<tr>
+						<td class="l">{{ c.Fecha }}</td>
+						<td class="l">{{ c.NumUnIdenPol }}</td>
+						<td class="l">{{ c.Concepto }}</td>
+						<td class="r">{{ c.Debe }}</td>
+						<td class="r">{{ c.Haber }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+				<br>
+			</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</tbody>
+</table>

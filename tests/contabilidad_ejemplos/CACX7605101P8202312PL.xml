@@ -17,4 +17,21 @@
       <PLZ:CompNal UUID_CFDI="a262228b-b105-4b90-9b02-ffe0e2d881cc" RFC="EWE1709045U0" MontoTotal="14911.94"/>
     </PLZ:Transaccion>
   </PLZ:Poliza>
+  <PLZ:Poliza NumUnIdenPol="2023-12-I-0001" Fecha="2023-12-01" Concepto="Ingreso - Venta">
+    <PLZ:Transaccion NumCta="4100.1" DesCta="INGRESOS" Concepto="Subtotal" Debe="0" Haber="13544.00">
+      <PLZ:CompNal UUID_CFDI="a262228b-b105-4b90-9b02-ffe0e2d881cc" RFC="EWE1709045U0" MontoTotal="14911.94"/>
+    </PLZ:Transaccion>
+    <PLZ:Transaccion NumCta="2152.1" DesCta="IVA TRASLADADO NO COBRADO" Concepto="IVA Trasladado" Debe="0" Haber="2167.04">
+      <PLZ:CompNal UUID_CFDI="a262228b-b105-4b90-9b02-ffe0e2d881cc" RFC="EWE1709045U0" MontoTotal="14911.94"/>
+    </PLZ:Transaccion>
+    <PLZ:Transaccion NumCta="2151.1.2" DesCta="IMPUESTOS RETENIDOS DE ISR PENDIENTE" Concepto="ISR Retenido" Debe="1354.40" Haber="0">
+      <PLZ:CompNal UUID_CFDI="a262228b-b105-4b90-9b02-ffe0e2d881cc" RFC="EWE1709045U0" MontoTotal="14911.94"/>
+    </PLZ:Transaccion>
+    <PLZ:Transaccion NumCta="1104.1" DesCta="IVA A FAVOR" Concepto="IVA Retenido" Debe="1444.70" Haber="0">
+      <PLZ:CompNal UUID_CFDI="a262228b-b105-4b90-9b02-ffe0e2d881cc" RFC="EWE1709045U0" MontoTotal="14911.94"/>
+    </PLZ:Transaccion>
+    <PLZ:Transaccion NumCta="1103.1" DesCta="CLIENTES NACIONALES" Concepto="Total" Debe="14911.94" Haber="0">
+      <PLZ:CompNal UUID_CFDI="a262228b-b105-4b90-9b02-ffe0e2d881cc" RFC="EWE1709045U0" MontoTotal="14911.94"/>
+    </PLZ:Transaccion>
+  </PLZ:Poliza>
 </PLZ:Polizas>

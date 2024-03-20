@@ -1,0 +1,57 @@
+<h3>Auxiliar de Folios</h3>
+<table>
+	<tr>
+		<th style="width: 25%">RFC</th>
+		<th style="width: 25%">Año</th>
+		<th style="width: 25%">Mes</th>
+		<th style="width: 25%">Tipo Solicitud</th>
+	</tr>
+	<tr>
+		<td class="cen">{{ c.RFC }}</td>
+		<td class="cen">{{ c.Anio }}</td>
+		<td class="cen">{{ c.Mes }}</td>
+		<td class="cen">{{ c.TipoSolicitud }}</td>
+	</tr>
+</table>
+<br>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 15%;">NumUnIdenPol</th>
+			<th style="width: 61%;">Fecha</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for c in iterate(c.DetAuxFol) %}
+		<tr>
+			<td class="l">
+				{{ c.NumUnIdenPol }}
+			</td>
+			<td class="l">
+				{{ c.Fecha }}
+			</td>
+		</tr>
+		{% if c.ComprNal %}
+		<tr style="break-before: avoid;">
+			<td colspan="2" style="padding-left: 5%; padding-right: 0%; background-color:#ffffff;">
+				<table >
+					<tr>
+						<th style="width: 40%;">UUID_CFDI</th>
+						<th style="width: 40%;">RFC</th>
+						<th style="width: 20%;">MontoTotal</th>
+					</tr>
+					{% for c in c.ComprNal %}
+					<tr>
+						<td class="l">{{ c.UUID_CFDI }}</td>
+						<td class="l">{{ c.RFC }}</td>
+						<td class="r">{{ c.MontoTotal }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+				<br>
+			</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</tbody>
+</table>

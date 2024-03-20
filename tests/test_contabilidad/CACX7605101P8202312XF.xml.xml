@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<RepAux:RepAuxFol xmlns:RepAux="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="1.3" RFC="CACX7605101P8" Mes="12" Anio="2023" TipoSolicitud="AF" xsi:schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios/AuxiliarFolios_1_3.xsd">
+  <RepAux:DetAuxFol NumUnIdenPol="2023-12-I-0001" Fecha="2023-12-01">
+    <RepAux:ComprNal UUID_CFDI="8f03c0b1-766c-4785-b89f-5cd4edac4a71" MontoTotal="12911.94" RFC="EWE1709045U0"/>
+  </RepAux:DetAuxFol>
+  <RepAux:DetAuxFol NumUnIdenPol="2023-12-E-0001" Fecha="2023-12-27">
+    <RepAux:ComprNal UUID_CFDI="fd8b18a0-89e3-4099-8753-fe92d1dc3b98" MontoTotal="2420.00" RFC="CACX7605101P8"/>
+  </RepAux:DetAuxFol>
+  <RepAux:DetAuxFol NumUnIdenPol="2023-12-E-0002" Fecha="2023-12-22">
+    <RepAux:ComprNal UUID_CFDI="648abbdd-4bb0-4c29-8917-d97de1783396" MontoTotal="400.00" RFC="CACX7605101P8"/>
+  </RepAux:DetAuxFol>
+  <RepAux:DetAuxFol NumUnIdenPol="2023-12-C-0001" Fecha="2023-12-01">
+    <RepAux:ComprNal UUID_CFDI="8f03c0b1-766c-4785-b89f-5cd4edac4a71" MontoTotal="12911.94" RFC="EWE1709045U0"/>
+  </RepAux:DetAuxFol>
+  <RepAux:DetAuxFol NumUnIdenPol="2023-12-C-0002" Fecha="2023-12-27">
+    <RepAux:ComprNal UUID_CFDI="fd8b18a0-89e3-4099-8753-fe92d1dc3b98" MontoTotal="2420.00" RFC="CACX7605101P8"/>
+  </RepAux:DetAuxFol>
+  <RepAux:DetAuxFol NumUnIdenPol="2023-12-C-0003" Fecha="2023-12-22">
+    <RepAux:ComprNal UUID_CFDI="648abbdd-4bb0-4c29-8917-d97de1783396" MontoTotal="400.00" RFC="CACX7605101P8"/>
+  </RepAux:DetAuxFol>
+</RepAux:RepAuxFol>
