@@ -77,8 +77,8 @@ def filter_invoices_iter(
             yield r
 
 
-def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, fecha=None) -> Sequence[PaymentsDetails]:
-    for r in filter_invoices_iter(invoices.values(), rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor, estatus='1', fecha=None):
+def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, fecha=None, invoice_type=None) -> Sequence[PaymentsDetails]:
+    for r in filter_invoices_iter(invoices.values(), rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor, estatus='1', fecha=None, invoice_type=invoice_type):
         match r['TipoDeComprobante']:
             case "I":
                 if r['MetodoPago'] == MetodoPago.PAGO_EN_UNA_SOLA_EXHIBICION:
@@ -95,6 +95,14 @@ def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_
                                 docto_relacionado=dr,
                                 comprobante_pagado=invoices[UUID(dr["IdDocumento"])]
                             )
+            case "E":
+                if _compare(r["Fecha"], fecha):
+                    rel = list(cfdi_rel for cfdi_rel in r.cfdi_relacionados(TipoRelacion.NOTA_DE_CREDITO_DE_LOS_DOCUMENTOS_RELACIONADOS))
+                    if len(rel) == 0:
+                        continue
+                    assert len(rel) == 1
+                    cp = invoices[rel[0]]
+                    yield PaymentsDetails(comprobante=r, comprobante_pagado=cp)
 
 
 def filter_retenciones_iter(invoices, ejerc: int):
@@ -162,7 +170,7 @@ def payment_def():
         'Factura Pagada': (12, False, lambda i: format_head(i.comprobante_pagado) if i.pago else "misma"),
         'Fecha de Pago': (12, False, lambda i: format_fecha_pago(i)),
 
-        'Pagado': (12, False, lambda i: i.total),
+        'Pagado': (12, True, lambda i: i.total),
         'Saldo Ant': (12, False, lambda i: i.docto_relacionado["ImpSaldoAnt"] if i.pago else i.comprobante["Total"]),
         'Saldo Insoluto': (12, False, lambda i: i.docto_relacionado["ImpSaldoInsoluto"] if i.pago else 0),
         'Parcialidad': (12, False, lambda i: i.docto_relacionado["NumParcialidad"] if i.pago else None),

@@ -3,6 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 from uuid import UUID
 
+from satcfdi.utils import iterate
 
 from ..create.catalogos import EstadoComprobante
 from ..create.cfd.catalogos import MetodoPago, TipoDeComprobante, TipoRelacion
@@ -75,6 +76,12 @@ class SatCFDI(CFDI):
     @property
     def fecha_cancelacion(self) -> datetime | None:
         raise NotImplementedError()
+
+    def cfdi_relacionados(self, tipo_relacion: TipoRelacion = None):
+        for cfdi_rel in iterate(self.get("CfdiRelacionados")):
+            if cfdi_rel["TipoRelacion"] == tipo_relacion:
+                for uuid in cfdi_rel["CfdiRelacionado"]:
+                    yield UUID(uuid)
 
 
 @dataclass(slots=True, init=True)
