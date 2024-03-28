@@ -84,7 +84,10 @@ def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_
                 if r['MetodoPago'] == MetodoPago.PAGO_EN_UNA_SOLA_EXHIBICION:
                     if not r.payments:
                         if _compare(r["Fecha"], fecha):
-                            yield PaymentsDetails(comprobante=r)
+                            yield PaymentsDetails(
+                                comprobante=r,
+                                comprobante_pagado=r
+                            )
             case "P":
                 for p in r["Complemento"]["Pagos"]["Pago"]:
                     if _compare(p['FechaPago'], fecha):
@@ -98,11 +101,12 @@ def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_
             case "E":
                 if _compare(r["Fecha"], fecha):
                     rel = list(cfdi_rel for cfdi_rel in r.cfdi_relacionados(TipoRelacion.NOTA_DE_CREDITO_DE_LOS_DOCUMENTOS_RELACIONADOS))
-                    if len(rel) == 0:
-                        continue
-                    assert len(rel) == 1
-                    cp = invoices[rel[0]]
-                    yield PaymentsDetails(comprobante=r, comprobante_pagado=cp)
+                    assert len(rel) <= 1
+                    if len(rel) == 1:
+                        cp = invoices[rel[0]]
+                        yield PaymentsDetails(comprobante=r, comprobante_pagado=cp)
+                    else:
+                        yield PaymentsDetails(comprobante=r, comprobante_pagado=r)
 
 
 def filter_retenciones_iter(invoices, ejerc: int):
