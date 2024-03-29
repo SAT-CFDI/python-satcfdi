@@ -20,3 +20,12 @@ from ..models import Signer, Certificate
 #         self.legal_name = legal_name or signer.legal_name
 #         self.tax_system = tax_system
 #         self.certificate_number = certificate_number or (signer.certificate_number if signer else "")
+
+
+class Signable256(dict):
+    def sign(self, signer: Signer):
+        self['NoCertificado'] = signer.certificate_number
+        self['Certificado'] = signer.certificate_base64()
+        self['Sello'] = signer.sign_sha256(
+            self.cadena_original().encode()
+        )

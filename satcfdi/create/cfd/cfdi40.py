@@ -490,13 +490,6 @@ class Comprobante(CFDI):
         self['Total'] = total
         self['Descuento'] = descuento or None
 
-    def sign(self, signer: Signer):
-        self['NoCertificado'] = signer.certificate_number
-        self['Certificado'] = signer.certificate_base64()
-        self['Sello'] = signer.sign_sha256(
-            self.cadena_original().encode()
-        )
-
     @classmethod
     def pago(
             cls,

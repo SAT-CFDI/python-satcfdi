@@ -1,6 +1,7 @@
 import logging
 import os
 import lxml.etree
+from satcfdi.models import Signer
 
 from .exceptions import CFDIError
 from .transform import *
@@ -82,3 +83,10 @@ class CFDI(XElement):
         transform = xslt_transform(self.tag, self['Version'])
         xml = super().to_xml()
         return str(transform(xml))
+
+    def sign(self, signer: Signer):
+        self['NoCertificado'] = signer.certificate_number
+        self['Certificado'] = signer.certificate_base64()
+        self['Sello'] = signer.sign_sha256(
+            self.cadena_original().encode()
+        )
