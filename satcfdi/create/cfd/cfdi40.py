@@ -6,7 +6,6 @@ from decimal import Decimal
 
 from satcfdi.create.cfd.catalogos import Impuesto as CatImpuesto
 from . import pago20
-from .. import Signer
 from ..compute import make_impuestos, rounder, make_impuesto, \
     make_impuestos_dr_parcial
 from ...cfdi import CFDI
