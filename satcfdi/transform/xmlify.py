@@ -9109,6 +9109,7 @@ def spei_tercero0(name, data):
     self.attrib['sello'] = data['Sello']
     self.attrib['numeroCertificado'] = data['NumeroCertificado']
     self.attrib['cadenaCDA'] = data['CadenaCDA']
+    self.attrib['claveRastreo'] = data['ClaveRastreo']
     return self
 def ordenante0(name, data):
     self = Element(name)

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<SPEI_Tercero xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" FechaOperacion="2020-04-01" Hora="10:04:21" ClaveSPEI="40021" sello="sello" numeroCertificado="2345345342532" cadenaCDA="cadena" xsi:schemaLocation="">
+<SPEI_Tercero xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" FechaOperacion="2020-04-01" Hora="10:04:21" ClaveSPEI="40021" sello="sello" numeroCertificado="2345345342532" cadenaCDA="cadena" claveRastreo="12345623452" xsi:schemaLocation="">
   <Ordenante BancoEmisor="BANCO2" Nombre="SULTANITA" TipoCuenta="40" Cuenta="25345234634254" RFC="MCF2453ASAS"/>
   <Beneficiario BancoReceptor="BANCO1" Nombre="JUANITO PEREZ" TipoCuenta="40" Cuenta="1234123412421421" RFC="ABC1234208343" Concepto="PAGO" IVA="0.00" MontoPago="100.00"/>
 </SPEI_Tercero>

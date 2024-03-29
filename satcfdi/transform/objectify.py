@@ -8762,6 +8762,7 @@ def spei_tercero0(cls, node):
     self['Sello'] = node.attrib['sello']
     self['NumeroCertificado'] = node.attrib['numeroCertificado']
     self['CadenaCDA'] = node.attrib['cadenaCDA']
+    self['ClaveRastreo'] = node.attrib['claveRastreo']
     return self
 def ordenante0(cls, node):
     self = ScalarMap()

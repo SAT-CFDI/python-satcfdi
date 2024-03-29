@@ -7,6 +7,7 @@
                   'RFC': 'ABC1234208343',
                   'TipoCuenta': Decimal('40')},
  'CadenaCDA': 'cadena',
+ 'ClaveRastreo': '12345623452',
  'ClaveSPEI': 40021,
  'FechaOperacion': datetime.date(2020, 4, 1),
  'Hora': datetime.time(10, 4, 21),
