@@ -9111,7 +9111,7 @@ def spei_tercero0(name, data):
     self.attrib['cadenaCDA'] = data['CadenaCDA']
     return self
 def ordenante0(name, data):
-    self = Element('{%s}%s' % ('', name), nsmap=data.get('_nsmap') or {None: ''})
+    self = Element(name)
     self.attrib['BancoEmisor'] = data['BancoEmisor']
     self.attrib['Nombre'] = data['Nombre']
     self.attrib['TipoCuenta'] = fmt_decimal(data['TipoCuenta'])
@@ -9119,7 +9119,7 @@ def ordenante0(name, data):
     self.attrib['RFC'] = data['RFC']
     return self
 def beneficiario0(name, data):
-    self = Element('{%s}%s' % ('', name), nsmap=data.get('_nsmap') or {None: ''})
+    self = Element(name)
     self.attrib['BancoReceptor'] = data['BancoReceptor']
     self.attrib['Nombre'] = data['Nombre']
     self.attrib['TipoCuenta'] = fmt_decimal(data['TipoCuenta'])
