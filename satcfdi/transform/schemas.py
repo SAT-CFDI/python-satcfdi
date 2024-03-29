@@ -3660,6 +3660,8 @@ def solicitud_aceptacion_rechazo0(col, data):
     col.add_map(None, 'http://cancelacfd.sat.gob.mx')
     col.add_schema('http://cancelacfd.sat.gob.mx SolicitudAceptacionRechazo.xsd')
     col.add_base('SolicitudAceptacionRechazo.xsd')
+def spei_tercero0(col, data):
+    pass
 def diverza0(col, data):
     col.add_map('dvz', 'http://www.diverza.com/ns/addenda/diverza/1')
     col.add_schema('http://www.diverza.com/ns/addenda/diverza/1 http://www.diverza.com/schema/xsd/Addenda_Diverza_v1.1.xsd')
@@ -4100,6 +4102,8 @@ def s_cancelacion1(col, data):
     cancelacion1(col, data)
 def s_solicitud_aceptacion_rechazo0(col, data):
     solicitud_aceptacion_rechazo0(col, data)
+def s_spei_tercero0(col, data):
+    spei_tercero0(col, data)
 def s_diverza0(col, data):
     if data.get('Version') == '1.1':
         diverza0(col, data)
@@ -4407,6 +4411,7 @@ cfdi_schemas = {
     '{http://cancelacfd.sat.gob.mx}Cancelacion': s_cancelacion0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1}Cancelacion': s_cancelacion1,
     '{http://cancelacfd.sat.gob.mx}SolicitudAceptacionRechazo': s_solicitud_aceptacion_rechazo0,
+    'SPEI_Tercero': s_spei_tercero0,
     '{http://www.diverza.com/ns/addenda/diverza/1}diverza': s_diverza0,
     '{http://www.uif.shcp.gob.mx/recepcion/ari}archivo': s_archivo0,
     '{http://www.uif.shcp.gob.mx/recepcion/avi}archivo': s_archivo1,

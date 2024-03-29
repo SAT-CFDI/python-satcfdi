@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SPEI_Tercero FechaOperacion="2020-04-01"
+              Hora="10:04:21"
+              ClaveSPEI="40021"
+              sello="sello"
+              numeroCertificado="2345345342532"
+              cadenaCDA="cadena"
+              claveRastreo="12345623452">
+	<Beneficiario BancoReceptor="BANCO1"
+	              Nombre="JUANITO PEREZ"
+	              TipoCuenta="40"
+	              Cuenta="1234123412421421"
+	              RFC="ABC1234208343"
+	              Concepto="PAGO"
+	              IVA="0.00"
+	              MontoPago="100.00"/>
+	<Ordenante BancoEmisor="BANCO2"
+	           Nombre="SULTANITA"
+	           TipoCuenta="40"
+	           Cuenta="25345234634254"
+	           RFC="MCF2453ASAS"/>
+</SPEI_Tercero>

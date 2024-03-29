@@ -5,7 +5,7 @@ import pytest
 
 from satcfdi import render
 from satcfdi.cfdi import CFDI
-from tests.constants import CFDI_FILES, CONTABILIDAD_FILES
+from tests.constants import CFDI_FILES, CONTABILIDAD_FILES, SPEI_FILES
 from tests.utils import verify_result, XElementPrettyPrinter
 
 module = 'satcfdi'
@@ -32,6 +32,15 @@ def verify_invoice(invoice, path):
 def test_generate_pdf(caplog, xml_file):
     cfdi = CFDI.from_file(
         os.path.join(current_dir, 'contabilidad_ejemplos', xml_file)
+    )
+
+    verify_invoice(cfdi, xml_file)
+
+
+@pytest.mark.parametrize('xml_file', SPEI_FILES)
+def test_generate_spei_pdf(caplog, xml_file):
+    cfdi = CFDI.from_file(
+        os.path.join(current_dir, 'spei_ejemplos', xml_file)
     )
 
     verify_invoice(cfdi, xml_file)

@@ -8749,6 +8749,40 @@ def folios0(cls, node):
     el = node.find('{http://cancelacfd.sat.gob.mx}Respuesta')
     self['Respuesta'] = el.text
     return self
+def spei_tercero0(cls, node):
+    self = cls()
+    self.tag = node.tag
+    el = node.find('Ordenante')
+    self['Ordenante'] = ordenante0(cls, el)
+    el = node.find('Beneficiario')
+    self['Beneficiario'] = beneficiario0(cls, el)
+    self['FechaOperacion'] = date.fromisoformat(node.attrib['FechaOperacion'])
+    self['Hora'] = time.fromisoformat(node.attrib['Hora'])
+    self['ClaveSPEI'] = Xint(node.attrib['ClaveSPEI'])
+    self['Sello'] = node.attrib['sello']
+    self['NumeroCertificado'] = node.attrib['numeroCertificado']
+    self['CadenaCDA'] = node.attrib['cadenaCDA']
+    return self
+def ordenante0(cls, node):
+    self = ScalarMap()
+    self['BancoEmisor'] = node.attrib['BancoEmisor']
+    self['Nombre'] = node.attrib['Nombre']
+    self['TipoCuenta'] = Decimal(node.attrib['TipoCuenta'])
+    self['Cuenta'] = Decimal(node.attrib['Cuenta'])
+    self['RFC'] = node.attrib['RFC']
+    return self
+def beneficiario0(cls, node):
+    self = ScalarMap()
+    self['BancoReceptor'] = node.attrib['BancoReceptor']
+    self['Nombre'] = node.attrib['Nombre']
+    self['TipoCuenta'] = Decimal(node.attrib['TipoCuenta'])
+    self['Cuenta'] = Decimal(node.attrib['Cuenta'])
+    self['RFC'] = node.attrib['RFC']
+    self['Concepto'] = node.attrib['Concepto']
+    if (a := node.attrib.get('IVA')) is not None:
+        self['IVA'] = Decimal(a)
+    self['MontoPago'] = Decimal(node.attrib['MontoPago'])
+    return self
 def diverza0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9700,7 +9734,7 @@ def pagosaextranjeros0(cls, node):
         self['NoBeneficiario'] = no_beneficiario0(cls, el)
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros}Beneficiario')
     if el is not None:
-        self['Beneficiario'] = beneficiario0(cls, el)
+        self['Beneficiario'] = beneficiario1(cls, el)
     self['Version'] = node.attrib['Version']
     self['EsBenefEfectDelCobro'] = node.attrib['EsBenefEfectDelCobro']
     return self
@@ -9710,7 +9744,7 @@ def no_beneficiario0(cls, node):
     self['ConceptoPago'] = catalog_code('Ccb0_c_TipoContribuyenteSujetoRetencion', node.attrib['ConceptoPago'])
     self['DescripcionConcepto'] = node.attrib['DescripcionConcepto']
     return self
-def beneficiario0(cls, node):
+def beneficiario1(cls, node):
     self = ScalarMap()
     self['RFC'] = node.attrib['RFC']
     self['CURP'] = node.attrib['CURP']
@@ -13830,14 +13864,14 @@ def inmueble0(cls, node):
 def complemento_spei0(cls, node):
     self = cls()
     self.tag = node.tag
-    self['SPEI_Tercero'] = [spei_tercero0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/spei}SPEI_Tercero')]
+    self['SPEI_Tercero'] = [spei_tercero1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/spei}SPEI_Tercero')]
     return self
-def spei_tercero0(cls, node):
+def spei_tercero1(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/spei}Ordenante')
-    self['Ordenante'] = ordenante0(cls, el)
+    self['Ordenante'] = ordenante1(cls, el)
     el = node.find('{http://www.sat.gob.mx/spei}Beneficiario')
-    self['Beneficiario'] = beneficiario1(cls, el)
+    self['Beneficiario'] = beneficiario2(cls, el)
     self['FechaOperacion'] = date.fromisoformat(node.attrib['FechaOperacion'])
     self['Hora'] = time.fromisoformat(node.attrib['Hora'])
     self['ClaveSPEI'] = Xint(node.attrib['ClaveSPEI'])
@@ -13845,7 +13879,7 @@ def spei_tercero0(cls, node):
     self['NumeroCertificado'] = node.attrib['numeroCertificado']
     self['CadenaCDA'] = node.attrib['cadenaCDA']
     return self
-def ordenante0(cls, node):
+def ordenante1(cls, node):
     self = ScalarMap()
     self['BancoEmisor'] = node.attrib['BancoEmisor']
     self['Nombre'] = node.attrib['Nombre']
@@ -13853,7 +13887,7 @@ def ordenante0(cls, node):
     self['Cuenta'] = Decimal(node.attrib['Cuenta'])
     self['RFC'] = node.attrib['RFC']
     return self
-def beneficiario1(cls, node):
+def beneficiario2(cls, node):
     self = ScalarMap()
     self['BancoReceptor'] = node.attrib['BancoReceptor']
     self['Nombre'] = node.attrib['Nombre']
@@ -14010,6 +14044,8 @@ def s_cancelacion1(cls, node):
     return cancelacion1(cls, node)
 def s_solicitud_aceptacion_rechazo0(cls, node):
     return solicitud_aceptacion_rechazo0(cls, node)
+def s_spei_tercero0(cls, node):
+    return spei_tercero0(cls, node)
 def s_diverza0(cls, node):
     if node.attrib.get('version') == '1.1':
         return diverza0(cls, node)
@@ -14386,6 +14422,7 @@ cfdi_objectify = {
     '{http://cancelacfd.sat.gob.mx}Cancelacion': s_cancelacion0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1}Cancelacion': s_cancelacion1,
     '{http://cancelacfd.sat.gob.mx}SolicitudAceptacionRechazo': s_solicitud_aceptacion_rechazo0,
+    'SPEI_Tercero': s_spei_tercero0,
     '{http://www.diverza.com/ns/addenda/diverza/1}diverza': s_diverza0,
     '{http://www.uif.shcp.gob.mx/recepcion/ari}archivo': s_archivo0,
     '{http://www.uif.shcp.gob.mx/recepcion/avi}archivo': s_archivo1,

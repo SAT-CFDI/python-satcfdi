@@ -9095,6 +9095,41 @@ def folios0(name, data):
     el = data['Respuesta']
     self.append(simple_element('{http://cancelacfd.sat.gob.mx}Respuesta', nsmap={None: 'http://cancelacfd.sat.gob.mx'}, text=el))
     return self
+def spei_tercero0(name, data):
+    col = SchemaCollector()
+    cfdi_schemas[data.tag](col, data)
+    self = Element('{%s}%s' % ('', name), nsmap=col.nsmap)
+    el = data['Ordenante']
+    self.append(ordenante0('Ordenante', el))
+    el = data['Beneficiario']
+    self.append(beneficiario0('Beneficiario', el))
+    self.attrib['FechaOperacion'] = data['FechaOperacion'].isoformat()
+    self.attrib['Hora'] = str(data['Hora'])
+    self.attrib['ClaveSPEI'] = str(data['ClaveSPEI'])
+    self.attrib['sello'] = data['Sello']
+    self.attrib['numeroCertificado'] = data['NumeroCertificado']
+    self.attrib['cadenaCDA'] = data['CadenaCDA']
+    return self
+def ordenante0(name, data):
+    self = Element('{%s}%s' % ('', name), nsmap=data.get('_nsmap') or {None: ''})
+    self.attrib['BancoEmisor'] = data['BancoEmisor']
+    self.attrib['Nombre'] = data['Nombre']
+    self.attrib['TipoCuenta'] = fmt_decimal(data['TipoCuenta'])
+    self.attrib['Cuenta'] = fmt_decimal(data['Cuenta'])
+    self.attrib['RFC'] = data['RFC']
+    return self
+def beneficiario0(name, data):
+    self = Element('{%s}%s' % ('', name), nsmap=data.get('_nsmap') or {None: ''})
+    self.attrib['BancoReceptor'] = data['BancoReceptor']
+    self.attrib['Nombre'] = data['Nombre']
+    self.attrib['TipoCuenta'] = fmt_decimal(data['TipoCuenta'])
+    self.attrib['Cuenta'] = fmt_decimal(data['Cuenta'])
+    self.attrib['RFC'] = data['RFC']
+    self.attrib['Concepto'] = data['Concepto']
+    if (a := data.get('IVA')) is not None:
+        self.attrib['IVA'] = fmt_decimal(a)
+    self.attrib['MontoPago'] = fmt_decimal(data['MontoPago'])
+    return self
 def diverza0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
@@ -10124,7 +10159,7 @@ def pagosaextranjeros0(name, data):
         self.append(no_beneficiario0('NoBeneficiario', el))
     el = data.get('Beneficiario')
     if el is not None:
-        self.append(beneficiario0('Beneficiario', el))
+        self.append(beneficiario1('Beneficiario', el))
     self.attrib['Version'] = data['Version']
     self.attrib['EsBenefEfectDelCobro'] = data['EsBenefEfectDelCobro']
     return self
@@ -10134,7 +10169,7 @@ def no_beneficiario0(name, data):
     self.attrib['ConceptoPago'] = strcode(data['ConceptoPago'])
     self.attrib['DescripcionConcepto'] = data['DescripcionConcepto']
     return self
-def beneficiario0(name, data):
+def beneficiario1(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros', name), nsmap=data.get('_nsmap') or {'pagosaextranjeros': 'http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros'})
     self.attrib['RFC'] = data['RFC']
     self.attrib['CURP'] = data['CURP']
@@ -14598,14 +14633,14 @@ def complemento_spei0(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/spei', name), nsmap=col.nsmap)
     el = data['SPEI_Tercero']
     for r in iterate(el):
-        self.append(spei_tercero0('SPEI_Tercero', r))
+        self.append(spei_tercero1('SPEI_Tercero', r))
     return self
-def spei_tercero0(name, data):
+def spei_tercero1(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/spei', name), nsmap=data.get('_nsmap') or {'spei': 'http://www.sat.gob.mx/spei'})
     el = data['Ordenante']
-    self.append(ordenante0('Ordenante', el))
+    self.append(ordenante1('Ordenante', el))
     el = data['Beneficiario']
-    self.append(beneficiario1('Beneficiario', el))
+    self.append(beneficiario2('Beneficiario', el))
     self.attrib['FechaOperacion'] = data['FechaOperacion'].isoformat()
     self.attrib['Hora'] = str(data['Hora'])
     self.attrib['ClaveSPEI'] = str(data['ClaveSPEI'])
@@ -14613,7 +14648,7 @@ def spei_tercero0(name, data):
     self.attrib['numeroCertificado'] = data['NumeroCertificado']
     self.attrib['cadenaCDA'] = data['CadenaCDA']
     return self
-def ordenante0(name, data):
+def ordenante1(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/spei', name), nsmap=data.get('_nsmap') or {'spei': 'http://www.sat.gob.mx/spei'})
     self.attrib['BancoEmisor'] = data['BancoEmisor']
     self.attrib['Nombre'] = data['Nombre']
@@ -14621,7 +14656,7 @@ def ordenante0(name, data):
     self.attrib['Cuenta'] = fmt_decimal(data['Cuenta'])
     self.attrib['RFC'] = data['RFC']
     return self
-def beneficiario1(name, data):
+def beneficiario2(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/spei', name), nsmap=data.get('_nsmap') or {'spei': 'http://www.sat.gob.mx/spei'})
     self.attrib['BancoReceptor'] = data['BancoReceptor']
     self.attrib['Nombre'] = data['Nombre']
@@ -14796,6 +14831,8 @@ def s_cancelacion1(data):
     return cancelacion1('Cancelacion', data)
 def s_solicitud_aceptacion_rechazo0(data):
     return solicitud_aceptacion_rechazo0('SolicitudAceptacionRechazo', data)
+def s_spei_tercero0(data):
+    return spei_tercero0('SPEI_Tercero', data)
 def s_diverza0(data):
     if data.get('Version') == '1.1':
         return diverza0('diverza', data)
@@ -15172,6 +15209,7 @@ cfdi_xmlify = {
     '{http://cancelacfd.sat.gob.mx}Cancelacion': s_cancelacion0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1}Cancelacion': s_cancelacion1,
     '{http://cancelacfd.sat.gob.mx}SolicitudAceptacionRechazo': s_solicitud_aceptacion_rechazo0,
+    'SPEI_Tercero': s_spei_tercero0,
     '{http://www.diverza.com/ns/addenda/diverza/1}diverza': s_diverza0,
     '{http://www.uif.shcp.gob.mx/recepcion/ari}archivo': s_archivo0,
     '{http://www.uif.shcp.gob.mx/recepcion/avi}archivo': s_archivo1,

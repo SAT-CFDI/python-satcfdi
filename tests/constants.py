@@ -5,6 +5,7 @@ current_dir = os.path.dirname(__file__)
 
 CFDI_FILES = []
 CONTABILIDAD_FILES = []
+SPEI_FILES = []
 
 walk_path = os.path.join(current_dir, 'cfdi_ejemplos')
 for (dirpath, dirnames, filenames) in walk(walk_path):
@@ -19,6 +20,12 @@ for (dirpath, dirnames, filenames) in walk(walk_path):
     for f in filenames:
         CONTABILIDAD_FILES.append(os.path.join(rel_path, f))
 
+
+walk_path = os.path.join(current_dir, 'spei_ejemplos')
+for (dirpath, dirnames, filenames) in walk(walk_path):
+    rel_path = os.path.relpath(dirpath, walk_path)
+    for f in filenames:
+        SPEI_FILES.append(os.path.join(rel_path, f))
 
 PERSONAS_FISICAS = [
     'CACX7605101P8',
