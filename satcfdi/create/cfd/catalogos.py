@@ -135,6 +135,7 @@ class ObjetoImp(StrEnum):
     SI_OBJETO_DE_IMPUESTO = '02'
     SI_OBJETO_DEL_IMPUESTO_Y_NO_OBLIGADO_AL_DESGLOSE = '03'
     SI_OBJETO_DEL_IMPUESTO_Y_NO_CAUSA_IMPUESTO = '04'
+    SI_OBJETO_DEL_IMPUESTO_IVA_CREDITO_PODEBI = '05'
 
 
 class Banco(StrEnum):
@@ -155,7 +156,7 @@ class Banco(StrEnum):
     INVEX = '059'
     BANSI = '060'
     AFIRME = '062'
-    BANORTE_IXE = '072'
+    BANORTE = '072'
     THE_ROYAL_BANK = '102'
     AMERICAN_EXPRESS = '103'
     BAMSA = '106'
@@ -175,7 +176,7 @@ class Banco(StrEnum):
     ACTINVER = '133'
     WAL_MART = '134'
     NAFIN = '135'
-    INTERCAM_BANCO = '136'
+    INTERBANCO = '136'
     BANCOPPEL = '137'
     ABC_CAPITAL = '138'
     UBS_BANK = '139'
@@ -244,5 +245,6 @@ class Banco(StrEnum):
     LIBERTAD = '670'
     CLS = '901'
     INDEVAL = '902'
+    NA = '999'
 
 

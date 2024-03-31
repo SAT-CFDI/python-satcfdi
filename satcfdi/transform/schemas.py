@@ -3937,6 +3937,10 @@ def comercio_exterior0(col, data):
     col.add_schema('http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd')
     col.add_base('www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd')
 def comercio_exterior1(col, data):
+    col.add_map('cce20', 'http://www.sat.gob.mx/ComercioExterior20')
+    col.add_schema('http://www.sat.gob.mx/ComercioExterior20 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd')
+    col.add_base('www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd')
+def comercio_exterior2(col, data):
     col.add_map('cce', 'http://www.sat.gob.mx/ComercioExterior')
     col.add_schema('http://www.sat.gob.mx/ComercioExterior http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior/ComercioExterior10.xsd')
     col.add_base('www.sat.gob.mx/sitio_internet/cfd/ComercioExterior/ComercioExterior10.xsd')
@@ -4244,8 +4248,11 @@ def s_comercio_exterior0(col, data):
     if data.get('Version') == '1.1':
         comercio_exterior0(col, data)
 def s_comercio_exterior1(col, data):
-    if data.get('Version') == '1.0':
+    if data.get('Version') == '2.0':
         comercio_exterior1(col, data)
+def s_comercio_exterior2(col, data):
+    if data.get('Version') == '1.0':
+        comercio_exterior2(col, data)
 def s_estado_de_cuenta_combustible0(col, data):
     if data.get('Version') == '1.1' and data.get('TipoOperacion') == 'Tarjeta':
         estado_de_cuenta_combustible0(col, data)
@@ -4464,7 +4471,8 @@ cfdi_schemas = {
     '{http://www.sat.gob.mx/CartaPorte20}CartaPorte': s_carta_porte1,
     '{http://www.sat.gob.mx/CartaPorte30}CartaPorte': s_carta_porte2,
     '{http://www.sat.gob.mx/ComercioExterior11}ComercioExterior': s_comercio_exterior0,
-    '{http://www.sat.gob.mx/ComercioExterior}ComercioExterior': s_comercio_exterior1,
+    '{http://www.sat.gob.mx/ComercioExterior20}ComercioExterior': s_comercio_exterior1,
+    '{http://www.sat.gob.mx/ComercioExterior}ComercioExterior': s_comercio_exterior2,
     '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible0,
     '{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible1,
     '{http://www.sat.gob.mx/GastosHidrocarburos10}GastosHidrocarburos': s_gastos_hidrocarburos0,
