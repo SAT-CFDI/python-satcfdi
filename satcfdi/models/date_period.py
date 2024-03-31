@@ -14,7 +14,7 @@ class DatePeriod:
         self.day = day
 
     def __eq__(self, other):
-        if isinstance(other, date):
+        if isinstance(other, date | DatePeriod):
             for s, o in ((self.year, other.year), (self.month, other.month), (self.day, other.day)):
                 if s is not None and s != o:
                     return False
@@ -23,13 +23,13 @@ class DatePeriod:
         return NotImplemented
 
     def __ne__(self, other):
-        if isinstance(other, date):
+        if isinstance(other, date | DatePeriod):
             return not self.__eq__(other)
 
         return NotImplemented
 
     def __gt__(self, other):
-        if isinstance(other, date):
+        if isinstance(other, date | DatePeriod):
             for s, o in ((self.year, other.year), (self.month, other.month), (self.day, other.day)):
                 if s is not None and s != o:
                     return s > o
@@ -38,13 +38,13 @@ class DatePeriod:
         return NotImplemented
 
     def __ge__(self, other):
-        if isinstance(other, date):
+        if isinstance(other, date | DatePeriod):
             return self > other or self == other
 
         return NotImplemented
 
     def __lt__(self, other):
-        if isinstance(other, date):
+        if isinstance(other, date | DatePeriod):
             for s, o in ((self.year, other.year), (self.month, other.month), (self.day, other.day)):
                 if s is not None and s != o:
                     return s < o
@@ -53,7 +53,7 @@ class DatePeriod:
         return NotImplemented
 
     def __le__(self, other):
-        if isinstance(other, date):
+        if isinstance(other, date | DatePeriod):
             return self < other or self == other
 
         return NotImplemented
@@ -65,3 +65,13 @@ class DatePeriod:
                 res += f.format(n)
 
         return res
+
+    def __hash__(self):
+        return (self.year or 0) * 1000 + (self.month or 0) * 100 + (self.day or 0)
+
+    def strftime(self, fmt):
+        return (fmt
+                .replace("%Y", str(self.year))
+                .replace("%m", str(self.month))
+                .replace("%d", str(self.day))
+                )
