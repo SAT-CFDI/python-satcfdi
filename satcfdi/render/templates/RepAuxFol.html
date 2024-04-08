@@ -36,15 +36,19 @@
 			<td colspan="2" style="padding-left: 5%; padding-right: 0%; background-color:#ffffff;">
 				<table >
 					<tr>
-						<th style="width: 40%;">UUID_CFDI</th>
-						<th style="width: 40%;">RFC</th>
-						<th style="width: 20%;">MontoTotal</th>
+						<th style="width: 35%;">UUID_CFDI</th>
+						<th style="width: 35%;">RFC</th>
+						<th style="width: 10%;">MontoTotal</th>
+						<th style="width: 10%;">Moneda</th>
+						<th style="width: 10%;">TipCamb</th>
 					</tr>
-					{% for c in c.ComprNal %}
+					{% for c in iterate(c.ComprNal) %}
 					<tr>
 						<td class="l">{{ c.UUID_CFDI }}</td>
 						<td class="l">{{ c.RFC }}</td>
 						<td class="r">{{ c.MontoTotal }}</td>
+						<td class="r">{{ c.Moneda }}</td>
+						<td class="r">{{ c.TipCamb }}</td>
 					</tr>
 					{% endfor %}
 				</table>
