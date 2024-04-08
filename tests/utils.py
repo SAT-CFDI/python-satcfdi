@@ -1,3 +1,4 @@
+import filecmp
 import inspect
 import os
 import uuid
@@ -95,6 +96,39 @@ class XElementPrettyPrinter(PrettyPrinter):
     _dispatch = PrettyPrinter._dispatch.copy()
     _dispatch[XElement.__repr__] = PrettyPrinter._pprint_dict
     _dispatch[defaultdict.__repr__] = PrettyPrinter._pprint_dict
+
+
+def compare_directories(dir1, dir2):
+    # Check if both paths are directories
+    if not (os.path.isdir(dir1) and os.path.isdir(dir2)):
+        return False
+
+    # Use filecmp to compare directories
+    dcmp = filecmp.dircmp(dir1, dir2)
+
+    # Check for common files that are different
+    if dcmp.diff_files:
+        for f in dcmp.diff_files:
+            if f.endswith(".xlsx"):
+                continue
+            else:
+                print(f"Files that are different: {dcmp.diff_files} in {dir2}")
+                return False
+
+    # Check for files present in one directory but not in the other
+    if dcmp.left_only or dcmp.right_only:
+        print(f"Files present only in one directory: {dcmp.left_only + dcmp.right_only} in {dir2}")
+        return False
+
+    # Check for subdirectories that are not present in both directories
+    if dcmp.subdirs:
+        for subdir in dcmp.subdirs:
+            subdir1 = os.path.join(dir1, subdir)
+            subdir2 = os.path.join(dir2, subdir)
+            if not compare_directories(subdir1, subdir2):
+                return False
+
+    return True
 
 
 if __name__ == "__main__":

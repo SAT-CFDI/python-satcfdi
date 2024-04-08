@@ -248,7 +248,7 @@ def num2col(n):
     return name
 
 
-def excel_export(workbook: xlsxwriter.workbook.Workbook, name, invoices, columns):
+def excel_export(workbook: xlsxwriter.workbook.Workbook, name, invoices, columns, row_height=3):
     worksheet = workbook.add_worksheet(name)
 
     for n, (w, s, f) in enumerate(columns.values()):
@@ -275,7 +275,7 @@ def excel_export(workbook: xlsxwriter.workbook.Workbook, name, invoices, columns
     number_format = workbook.add_format({'num_format': '0.00'})
     number_format.set_align('top')
 
-    row_height = 20 * 3
+    row_height = 20 * row_height
     r = 0
     for r, i in enumerate(invoices):
         worksheet.set_row_pixels(1 + r, row_height)

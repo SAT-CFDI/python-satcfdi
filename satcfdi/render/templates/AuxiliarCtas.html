@@ -50,7 +50,7 @@
 						<th style="width: 12%;">Debe</th>
 						<th style="width: 12%;">Haber</th>
 					</tr>
-					{% for c in c.DetalleAux %}
+					{% for c in iterate(c.DetalleAux) %}
 					<tr>
 						<td class="l">{{ c.Fecha }}</td>
 						<td class="l">{{ c.NumUnIdenPol }}</td>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<catalogocuentas:Catalogo xmlns:catalogocuentas="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="1.3" RFC="CACX7605101P8" Mes="02" Anio="2024" xsi:schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas/CatalogoCuentas_1_3.xsd">
+  <catalogocuentas:Ctas CodAgrup="100" NumCta="1000" Desc="Activos" Nivel="1" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="102" NumCta="1020" Desc="Bancos" SubCtaDe="1000" Nivel="2" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="102.01" NumCta="1020.01" Desc="Bancos Nacionales" SubCtaDe="1020" Nivel="2" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="102.02" NumCta="1020.02" Desc="Bancos Extranjeros" SubCtaDe="1020" Nivel="2" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="105" NumCta="1050" Desc="Clientes" SubCtaDe="1000" Nivel="2" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="105.01" NumCta="1050.01" Desc="Clientes Nacionales" SubCtaDe="1050" Nivel="2" Natur="D"/>
+  <catalogocuentas:Ctas CodAgrup="105.02" NumCta="1050.02" Desc="Clientes Extranjeros" SubCtaDe="1050" Nivel="2" Natur="D"/>
+</catalogocuentas:Catalogo>
