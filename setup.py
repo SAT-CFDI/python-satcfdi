@@ -100,6 +100,7 @@ setuptools.setup(
         'test': [
             'coverage',
             'pytest',
+            'PyYAML'
         ],
         'docs': [
             'Sphinx >= 5.3.0',
