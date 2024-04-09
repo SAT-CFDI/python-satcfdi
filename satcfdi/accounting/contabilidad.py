@@ -51,11 +51,13 @@ def output_file(file, folder, fiel=None, generate_pdf=False):
 
 
 def calcular_saldos(cuentas, polizas):
+    max_level = 1
     for c in cuentas.values():
         # c['SaldoIni'] = 0
         c['Debe'] = 0
         c['Haber'] = 0
         c['SaldoFin'] = 0
+        max_level = max(max_level, c['Nivel'])
 
     for p in polizas:
         for t in p["Transaccion"]:
@@ -65,7 +67,7 @@ def calcular_saldos(cuentas, polizas):
             cuenta["Haber"] += t["Haber"]
 
     # Fill Parents
-    for level in range(4, 1, -1):
+    for level in range(max_level, 1, -1):
         for k, v in cuentas.items():
             if v['Nivel'] == level:
                 parent = v['SubCtaDe']
