@@ -1,12 +1,9 @@
 import logging
 import os
-
 import pytest
 import yaml
-from satdigitalinvoice.file_data_managers import DuplicateKeySafeLoader
 
 from satcfdi.models import DatePeriod
-
 from satcfdi import render
 from satcfdi.accounting.contabilidad import generar_contabilidad
 from satcfdi.cfdi import CFDI
@@ -72,7 +69,7 @@ def test_generate_contabilidad_simple():
     os.makedirs(os.path.join(current_dir, 'test_contabilidad_electronica/out/simple'), exist_ok=True)
 
     with open(os.path.join(current_dir, 'contabilidad_electronica', 'cuentas.yaml'), 'r', encoding='utf-8') as f:
-        cuentas = yaml.load(f, Loader=DuplicateKeySafeLoader)
+        cuentas = yaml.load(f, Loader=yaml.SafeLoader)
 
     generar_contabilidad(
         dp=DatePeriod(2024, 2),
