@@ -1,6 +1,10 @@
 import os
 from typing import Sequence
 
+from satcfdi.zip import zip_create, ZipData, zip_file
+
+from satcfdi.catalogs import select, catalog_code
+
 from satcfdi.utils import iterate
 
 from satcfdi.create.contabilidad.AuxiliarCtas13 import AuxiliarCtas, Cuenta, DetalleAux
@@ -29,61 +33,34 @@ def filename(file):
     raise ValueError(f"Unknown file type: {file.tag}")
 
 
-def output_file(file, folder, fiel=None, generate_pdf=False):
+def output_file(file, folder, fiel=None, generate_pdf=False, zip_xml=False):
     if fiel:
         file.sign(fiel)
 
     output_file = os.path.join(folder, filename(file))
-    file.xml_write(
-        output_file,
-        pretty_print=True,
-        xml_declaration=True
-    )
+    if zip_xml:
+        zip_file(output_file[:-4] + '.zip', [
+            ZipData(
+                filename(file),
+                file.xml_bytes(xml_declaration=True)
+            )
+        ])
+    else:
+        file.xml_write(
+            output_file,
+            pretty_print=True,
+            xml_declaration=True
+        )
+
     if generate_pdf:
-        # render.html_write(file, output_file[:-4] + ".html")
         render.pdf_write(file, output_file[:-4] + ".pdf")
     else:
-        # delete file
         try:
             os.remove(output_file[:-4] + ".pdf")
         except FileNotFoundError:
             pass
 
     return output_file
-
-
-def calcular_saldos(cuentas, polizas):
-    max_level = 1
-    for c in cuentas.values():
-        # c['SaldoIni'] = 0
-        c['Debe'] = 0
-        c['Haber'] = 0
-        c['SaldoFin'] = 0
-        max_level = max(max_level, c['Nivel'])
-
-    for p in polizas:
-        for t in p["Transaccion"]:
-            num_cta = t["NumCta"]
-            cuenta = cuentas[num_cta]
-            cuenta["Debe"] += t["Debe"]
-            cuenta["Haber"] += t["Haber"]
-
-    # Fill Parents
-    for level in range(max_level, 1, -1):
-        for k, v in cuentas.items():
-            if v['Nivel'] == level:
-                parent = v['SubCtaDe']
-                if parent:
-                    p_cuenta = cuentas[parent]
-                    p_cuenta['Debe'] += v['Debe']
-                    p_cuenta['Haber'] += v['Haber']
-
-    # Fill SaldoFin
-    for c in cuentas.values():
-        if c["Natur"] == "D":
-            c["SaldoFin"] += c["SaldoIni"] + c["Debe"] - c["Haber"]
-        else:
-            c["SaldoFin"] += c["SaldoIni"] + c["Haber"] - c["Debe"]
 
 
 def generar_contabilidad(
@@ -98,8 +75,10 @@ def generar_contabilidad(
         numero_tramite=None,
         folder=None,
         fiel=None,
-        generate_pdf=False):
-
+        generate_pdf=False,
+        zip_xml=False
+):
+    validate_cuentas(cuentas)
     validate_polizas(polizas)
     calcular_saldos(cuentas, polizas)
 
@@ -112,7 +91,7 @@ def generar_contabilidad(
         num_tramite=numero_tramite,
         poliza=polizas
     )
-    output_file(plz, folder, fiel, generate_pdf=generate_pdf)
+    output_file(plz, folder, fiel, generate_pdf=generate_pdf, zip_xml=zip_xml)
 
     cat = Catalogo(
         rfc=rfc_emisor,
@@ -120,7 +99,7 @@ def generar_contabilidad(
         anio=dp.year,
         ctas=[
             Ctas(
-                cod_agrup=v["CodAgrup"].split("_")[0],
+                cod_agrup=v["CodAgrup"],
                 num_cta=k,
                 desc=v["Desc"],
                 nivel=v["Nivel"],
@@ -129,7 +108,7 @@ def generar_contabilidad(
             ) for k, v in cuentas.items()
         ]
     )
-    cato = output_file(cat, folder, fiel)
+    output_file(cat, folder, fiel, zip_xml=zip_xml)
 
     ban = Balanza(
         rfc=rfc_emisor,
@@ -142,7 +121,7 @@ def generar_contabilidad(
             **v,
         } for k, v in cuentas.items() if v["SaldoIni"] or v["Debe"] or v["Haber"] or v["SaldoFin"]],
     )
-    bano = output_file(ban, folder, fiel)
+    output_file(ban, folder, fiel, zip_xml=zip_xml)
 
     aux_detalles = group_aux_cuentas(polizas)
     aux = AuxiliarCtas(
@@ -162,7 +141,7 @@ def generar_contabilidad(
             ) for k, v in cuentas.items() if k in aux_detalles
         ]
     )
-    output_file(aux, folder, fiel, generate_pdf=generate_pdf)
+    output_file(aux, folder, fiel, generate_pdf=generate_pdf, zip_xml=zip_xml)
 
     auxf = RepAuxFol(
         rfc=rfc_emisor,
@@ -173,11 +152,11 @@ def generar_contabilidad(
         num_tramite=numero_tramite,
         det_aux_fol=list(group_aux_folios(polizas))
     )
-    output_file(auxf, folder, fiel, generate_pdf=generate_pdf)
+    output_file(auxf, folder, fiel, generate_pdf=generate_pdf, zip_xml=zip_xml)
 
     imprimir_contablidad(
-        catalogo_cuentas=cato,
-        balanza_comprobacion=bano,
+        catalogo_cuentas=cat,
+        balanza_comprobacion=ban,
         archivo_excel=os.path.join(folder, filename(ban)[:-4] + ".xlsx")
     )
 
@@ -230,30 +209,45 @@ def group_aux_folios(polizas):
         )
 
 
+def validate_cuentas(cuentas):
+    # validar cuentas
+    for k, v in cuentas.items():
+        assert k
+        v['_Lowest'] = True
+        assert v['Natur'] in ['A', 'D']
+        if v['SubCtaDe']:
+            assert v['SubCtaDe'] in cuentas, f"Parent account {v['SubCtaDe']} not found for {k}"
+            v['Nivel'] = cuentas[v['SubCtaDe']]['Nivel'] + 1
+        else:
+            v['Nivel'] = 1
+
+        v['CodAgrup'] = catalog_code('Cb9f_c_CodAgrup', v['CodAgrup'])
+        assert v['CodAgrup'].description, f"Unknown CodAgrup: {v['CodAgrup']}"
+
+    for k, v in cuentas.items():
+        if v['SubCtaDe']:
+            cuentas[v['SubCtaDe']]['_Lowest'] = False
+
+
+def sign(cta):
+    if cta['Natur'] == 'D':
+        return 1
+    return -1
+
+
 def validate_saldos(cuentas):
-    total = 0
     totales = {}
     for k, v in cuentas.items():
-        if v['Nivel'] == 1:
-            if v['Natur'] == 'D':
-                total += v['SaldoFin']
-            else:
-                total -= v['SaldoFin']
-        else:
-            totales.setdefault(v['SubCtaDe'], 0)
-            if v['Natur'] == 'D':
-                totales[v['SubCtaDe']] += v['SaldoFin']
-            else:
-                totales[v['SubCtaDe']] -= v['SaldoFin']
+        sub_cta = v.get('SubCtaDe')
+        totales.setdefault(sub_cta, 0)
+        totales[sub_cta] += v['SaldoFin'] * sign(v)
 
-    assert total == 0
     for k, v in totales.items():
-        if cuentas[k]['Natur'] == 'D':
-            if v != cuentas[k]['SaldoFin']:
+        if k:
+            if v != cuentas[k]['SaldoFin'] * sign(cuentas[k]):
                 raise ValueError(f"Error in {k}: {v} != {cuentas[k]['SaldoFin']}")
         else:
-            if v != -cuentas[k]['SaldoFin']:
-                raise ValueError(f"Error in {k}: {v} != {cuentas[k]['SaldoFin']}")
+            assert v == 0
 
 
 def validate_polizas(polizas):
@@ -263,3 +257,36 @@ def validate_polizas(polizas):
         if u in num_un:
             raise ValueError(f"Repeated NumUnIdenPol: {u}")
         num_un.add(u)
+
+
+def calcular_saldos(cuentas, polizas):
+    max_level = 1
+    for c in cuentas.values():
+        # c['SaldoIni'] = 0
+        c['Debe'] = 0
+        c['Haber'] = 0
+        c['SaldoFin'] = 0
+        max_level = max(max_level, c['Nivel'])
+
+    for p in polizas:
+        for t in p["Transaccion"]:
+            num_cta = t["NumCta"]
+            cuenta = cuentas[num_cta]
+            assert cuenta["_Lowest"], f"Account {num_cta} is not a lowest level account"
+            cuenta["Debe"] += t["Debe"]
+            cuenta["Haber"] += t["Haber"]
+
+    # Fill Parents
+    for level in range(max_level, 1, -1):
+        for k, v in cuentas.items():
+            if v['Nivel'] == level:
+                parent = v['SubCtaDe']
+                if parent:
+                    p_cuenta = cuentas[parent]
+                    p_cuenta['Debe'] += v['Debe']
+                    p_cuenta['Haber'] += v['Haber']
+
+    # Fill SaldoFin
+    for c in cuentas.values():
+        s = sign(c)
+        c["SaldoFin"] += c["SaldoIni"] + c["Debe"] * s - c["Haber"] * s

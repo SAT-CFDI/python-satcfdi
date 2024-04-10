@@ -1,7 +1,9 @@
 import datetime
 import logging
 import os
+from unittest import mock
 from uuid import UUID
+from zipfile import ZipInfo
 
 import pytest
 import yaml
@@ -69,59 +71,93 @@ def test_generate_contabilidad_empty():
     )
 
 
+polizas = [
+    Poliza(
+        num_un_iden_pol="1",
+        fecha=datetime.date(2024, 2, 1),
+        concepto="Compra de equipo de computo",
+        transaccion=[
+            Transaccion(
+                num_cta="1020.01",
+                des_cta="Bancos",
+                concepto="Nal",
+                debe=10000,
+                haber=0,
+                comp_nal=[
+                    CompNal(
+                        uuid_cfdi='a4f4fea5-e798-4ab3-a2e5-75f741f4ecca',
+                        rfc="CACX7605101P8",
+                        monto_total=10000
+                    )
+                ]
+            ),
+            Transaccion(
+                num_cta="1020.02",
+                des_cta="Bancos",
+                concepto="Ext",
+                debe=0,
+                haber=10000,
+                comp_nal=[
+                    CompNal(
+                        uuid_cfdi='a4f4fea5-e798-4ab3-a2e5-75f741f4ecca',
+                        rfc="CACX7605101P8",
+                        monto_total=10000
+                    )
+                ]
+            )
+        ]
+    )
+]
+
+
 def test_generate_contabilidad_simple():
-    os.makedirs(os.path.join(current_dir, 'test_contabilidad_electronica/out/simple'), exist_ok=True)
+    path = 'simple'
+    os.makedirs(os.path.join(current_dir, 'test_contabilidad_electronica/out', path), exist_ok=True)
 
     with open(os.path.join(current_dir, 'contabilidad_electronica', 'cuentas.yaml'), 'r', encoding='utf-8') as f:
         cuentas = yaml.load(f, Loader=yaml.SafeLoader)
 
-    polizas = [
-        Poliza(
-            num_un_iden_pol="1",
-            fecha=datetime.date(2024, 2, 1),
-            concepto="Compra de equipo de computo",
-            transaccion=[
-                Transaccion(
-                    num_cta="1020.01",
-                    des_cta="Bancos",
-                    concepto="Nal",
-                    debe=10000,
-                    haber=0,
-                    comp_nal=[
-                        CompNal(
-                            uuid_cfdi='a4f4fea5-e798-4ab3-a2e5-75f741f4ecca',
-                            rfc="CACX7605101P8",
-                            monto_total=10000
-                        )
-                    ]
-                ),
-                Transaccion(
-                    num_cta="1020.02",
-                    des_cta="Bancos",
-                    concepto="Ext",
-                    debe=0,
-                    haber=10000,
-                    comp_nal=[
-                        CompNal(
-                            uuid_cfdi='a4f4fea5-e798-4ab3-a2e5-75f741f4ecca',
-                            rfc="CACX7605101P8",
-                            monto_total=10000
-                        )
-                    ]
-                )
-            ]
-        )
-    ]
     generar_contabilidad(
         dp=DatePeriod(2024, 2),
         rfc_emisor="CACX7605101P8",
         cuentas=cuentas,
         polizas=polizas,
-        folder=os.path.join(current_dir, 'test_contabilidad_electronica/out/simple'),
-        tipo_solicitud='AF'
+        folder=os.path.join(current_dir, 'test_contabilidad_electronica/out', path),
+        tipo_solicitud='AF',
+        zip_xml=False
     )
 
     assert compare_directories(
-        os.path.join(current_dir, 'test_contabilidad_electronica/ref/simple'),
-        os.path.join(current_dir, 'test_contabilidad_electronica/out/simple')
+        os.path.join(current_dir, 'test_contabilidad_electronica/ref', path),
+        os.path.join(current_dir, 'test_contabilidad_electronica/out', path)
+    )
+
+
+def test_generate_contabilidad_zip():
+    path = 'simple_zip'
+    os.makedirs(os.path.join(current_dir, 'test_contabilidad_electronica/out', path), exist_ok=True)
+
+    with open(os.path.join(current_dir, 'contabilidad_electronica', 'cuentas.yaml'), 'r', encoding='utf-8') as f:
+        cuentas = yaml.load(f, Loader=yaml.SafeLoader)
+
+    def zi(filename):
+        return ZipInfo(
+            filename=filename,
+            date_time=(2022, 11, 8, 11, 41, 8)  # time.localtime(time.time())[:6]
+        )
+
+    with mock.patch(f'{module}.zip.ZipInfo', zi) as m:
+        generar_contabilidad(
+            dp=DatePeriod(2024, 2),
+            rfc_emisor="CACX7605101P8",
+            cuentas=cuentas,
+            polizas=polizas,
+            folder=os.path.join(current_dir, 'test_contabilidad_electronica/out', path),
+            tipo_solicitud='AF',
+            zip_xml=True
+        )
+
+    assert compare_directories(
+        os.path.join(current_dir, 'test_contabilidad_electronica/ref', path),
+        os.path.join(current_dir, 'test_contabilidad_electronica/out', path)
     )

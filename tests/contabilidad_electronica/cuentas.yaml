@@ -3,7 +3,6 @@
   Desc: Activos
   Natur: D
   CodAgrup: '100' # Activo
-  Nivel: 1
   SubCtaDe:
   SaldoIni: 0
 
@@ -13,21 +12,18 @@
   Desc: Bancos
   Natur: D
   CodAgrup: '102' # Bancos nacionales
-  Nivel: 2
   SubCtaDe: '1000'
   SaldoIni: 0
 '1020.01':
   Desc: Bancos Nacionales
   Natur: D
   CodAgrup: '102.01' # Bancos nacionales
-  Nivel: 2
   SubCtaDe: '1020'
   SaldoIni: 0
 '1020.02':
   Desc: Bancos Extranjeros
   Natur: D
   CodAgrup: '102.02' # Bancos extranjeros
-  Nivel: 2
   SubCtaDe: '1020'
   SaldoIni: 0
 
@@ -36,20 +32,17 @@
   Desc: Clientes
   Natur: D
   CodAgrup: '105' # Clientes
-  Nivel: 2
   SubCtaDe: '1000'
   SaldoIni: 0
 '1050.01':
   Desc: Clientes Nacionales
   Natur: D
   CodAgrup: '105.01' # Clientes nacionales
-  Nivel: 2
   SubCtaDe: '1050'
   SaldoIni: 0
 '1050.02':
   Desc: Clientes Extranjeros
   Natur: D
   CodAgrup: '105.02' # Clientes extranjeros
-  Nivel: 2
   SubCtaDe: '1050'
   SaldoIni: 0
