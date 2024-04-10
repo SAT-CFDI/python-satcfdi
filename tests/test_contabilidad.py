@@ -1,7 +1,11 @@
+import datetime
 import logging
 import os
+from uuid import UUID
+
 import pytest
 import yaml
+from satcfdi.create.contabilidad.PLZ13 import Poliza, Transaccion, CompNal
 
 from satcfdi.models import DatePeriod
 from satcfdi import render
@@ -71,12 +75,50 @@ def test_generate_contabilidad_simple():
     with open(os.path.join(current_dir, 'contabilidad_electronica', 'cuentas.yaml'), 'r', encoding='utf-8') as f:
         cuentas = yaml.load(f, Loader=yaml.SafeLoader)
 
+    polizas = [
+        Poliza(
+            num_un_iden_pol="1",
+            fecha=datetime.date(2024, 2, 1),
+            concepto="Compra de equipo de computo",
+            transaccion=[
+                Transaccion(
+                    num_cta="1020.01",
+                    des_cta="Bancos",
+                    concepto="Nal",
+                    debe=10000,
+                    haber=0,
+                    comp_nal=[
+                        CompNal(
+                            uuid_cfdi='a4f4fea5-e798-4ab3-a2e5-75f741f4ecca',
+                            rfc="CACX7605101P8",
+                            monto_total=10000
+                        )
+                    ]
+                ),
+                Transaccion(
+                    num_cta="1020.02",
+                    des_cta="Bancos",
+                    concepto="Ext",
+                    debe=0,
+                    haber=10000,
+                    comp_nal=[
+                        CompNal(
+                            uuid_cfdi='a4f4fea5-e798-4ab3-a2e5-75f741f4ecca',
+                            rfc="CACX7605101P8",
+                            monto_total=10000
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
     generar_contabilidad(
         dp=DatePeriod(2024, 2),
         rfc_emisor="CACX7605101P8",
         cuentas=cuentas,
-        polizas=[],
+        polizas=polizas,
         folder=os.path.join(current_dir, 'test_contabilidad_electronica/out/simple'),
+        tipo_solicitud='AF'
     )
 
     assert compare_directories(

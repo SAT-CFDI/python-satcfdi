@@ -1,2 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<RepAux:RepAuxFol xmlns:RepAux="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="1.3" RFC="CACX7605101P8" Mes="02" Anio="2024" TipoSolicitud="" xsi:schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios/AuxiliarFolios_1_3.xsd"/>
+<RepAux:RepAuxFol xmlns:RepAux="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="1.3" RFC="CACX7605101P8" Mes="02" Anio="2024" TipoSolicitud="AF" xsi:schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios/AuxiliarFolios_1_3.xsd">
+  <RepAux:DetAuxFol NumUnIdenPol="1" Fecha="2024-02-01">
+    <RepAux:ComprNal UUID_CFDI="a4f4fea5-e798-4ab3-a2e5-75f741f4ecca" MontoTotal="10000" RFC="CACX7605101P8"/>
+  </RepAux:DetAuxFol>
+</RepAux:RepAuxFol>

@@ -1,6 +1,8 @@
 import os
 from typing import Sequence
 
+from satcfdi.utils import iterate
+
 from satcfdi.create.contabilidad.AuxiliarCtas13 import AuxiliarCtas, Cuenta, DetalleAux
 from satcfdi.create.contabilidad.BCE13 import Balanza
 from satcfdi.create.contabilidad.PLZ13 import Polizas, CompNal, Poliza
@@ -97,6 +99,8 @@ def generar_contabilidad(
         folder=None,
         fiel=None,
         generate_pdf=False):
+
+    validate_polizas(polizas)
     calcular_saldos(cuentas, polizas)
 
     plz = Polizas(
@@ -125,7 +129,7 @@ def generar_contabilidad(
             ) for k, v in cuentas.items()
         ]
     )
-    output_file(cat, folder, fiel)
+    cato = output_file(cat, folder, fiel)
 
     ban = Balanza(
         rfc=rfc_emisor,
@@ -138,7 +142,7 @@ def generar_contabilidad(
             **v,
         } for k, v in cuentas.items() if v["SaldoIni"] or v["Debe"] or v["Haber"] or v["SaldoFin"]],
     )
-    output_file(ban, folder, fiel)
+    bano = output_file(ban, folder, fiel)
 
     aux_detalles = group_aux_cuentas(polizas)
     aux = AuxiliarCtas(
@@ -172,8 +176,8 @@ def generar_contabilidad(
     output_file(auxf, folder, fiel, generate_pdf=generate_pdf)
 
     imprimir_contablidad(
-        catalogo_cuentas=cat,
-        balanza_comprobacion=ban,
+        catalogo_cuentas=cato,
+        balanza_comprobacion=bano,
         archivo_excel=os.path.join(folder, filename(ban)[:-4] + ".xlsx")
     )
 
@@ -189,7 +193,7 @@ def group_aux_cuentas(polizas):
                 DetalleAux(
                     fecha=p["Fecha"],
                     num_un_iden_pol=p["NumUnIdenPol"],
-                    concepto=t["Concepto"],
+                    concepto=p["Concepto"] + " " + t["Concepto"],
                     debe=t["Debe"],
                     haber=t["Haber"],
                 )
@@ -199,10 +203,30 @@ def group_aux_cuentas(polizas):
 
 def group_aux_folios(polizas):
     for p in polizas:
+        compr_nal = []
+        compr_nal_otr = []
+        compr_ext = []
+
+        for t in p["Transaccion"]:
+            if c := t.get('CompNal'):
+                for c in iterate(c):
+                    if c not in compr_nal:
+                        compr_nal.append(c)
+            if c := t.get('CompNalOtr'):
+                for c in iterate(c):
+                    if c not in compr_nal_otr:
+                        compr_nal_otr.append(c)
+            if c := t.get('CompExt'):
+                for c in iterate(c):
+                    if c not in compr_ext:
+                        compr_ext.append(c)
+
         yield DetAuxFol(
             num_un_iden_pol=p["NumUnIdenPol"],
             fecha=p["Fecha"],
-            compr_nal=p.comp_nal,
+            compr_nal=compr_nal,
+            compr_nal_otr=compr_nal_otr,
+            compr_ext=compr_ext,
         )
 
 
@@ -225,6 +249,17 @@ def validate_saldos(cuentas):
     assert total == 0
     for k, v in totales.items():
         if cuentas[k]['Natur'] == 'D':
-            assert v == cuentas[k]['SaldoFin']
+            if v != cuentas[k]['SaldoFin']:
+                raise ValueError(f"Error in {k}: {v} != {cuentas[k]['SaldoFin']}")
         else:
-            assert v == -cuentas[k]['SaldoFin']
+            if v != -cuentas[k]['SaldoFin']:
+                raise ValueError(f"Error in {k}: {v} != {cuentas[k]['SaldoFin']}")
+
+
+def validate_polizas(polizas):
+    num_un = set()
+    for p in polizas:
+        u = p['NumUnIdenPol']
+        if u in num_un:
+            raise ValueError(f"Repeated NumUnIdenPol: {u}")
+        num_un.add(u)

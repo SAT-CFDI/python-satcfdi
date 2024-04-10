@@ -22,10 +22,10 @@ def imprimir_contablidad(
         balanza_comprobacion,
         archivo_excel
 ):
-    # ct = CFDI.from_file(catalogo_cuentas)
-    # bc = CFDI.from_file(balanza_comprobacion)
-    ct = catalogo_cuentas
-    bc = balanza_comprobacion
+    ct = CFDI.from_file(catalogo_cuentas)
+    bc = CFDI.from_file(balanza_comprobacion)
+    # ct = catalogo_cuentas
+    # bc = balanza_comprobacion
 
     ctas = {
         c['NumCta']: {
