@@ -221,8 +221,9 @@ def validate_cuentas(cuentas):
         else:
             v['Nivel'] = 1
 
-        v['CodAgrup'] = catalog_code('Cb9f_c_CodAgrup', v['CodAgrup'])
-        assert v['CodAgrup'].description, f"Unknown CodAgrup: {v['CodAgrup']}"
+        if isinstance(v['CodAgrup'], str):
+            v['CodAgrup'] = catalog_code('Cb9f_c_CodAgrup', v['CodAgrup'])
+            assert v['CodAgrup'].description, f"Unknown CodAgrup: {v['CodAgrup']}"
 
     for k, v in cuentas.items():
         if v['SubCtaDe']:
