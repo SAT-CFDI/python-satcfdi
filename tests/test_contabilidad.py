@@ -79,7 +79,7 @@ polizas = [
         transaccion=[
             Transaccion(
                 num_cta="1020.01",
-                des_cta="Bancos",
+                des_cta='',
                 concepto="Nal",
                 debe=10000,
                 haber=0,
@@ -93,7 +93,7 @@ polizas = [
             ),
             Transaccion(
                 num_cta="1020.02",
-                des_cta="Bancos",
+                des_cta='',
                 concepto="Ext",
                 debe=0,
                 haber=10000,

@@ -273,6 +273,7 @@ def calcular_saldos(cuentas, polizas):
         for t in p["Transaccion"]:
             num_cta = t["NumCta"]
             cuenta = cuentas[num_cta]
+            t['DesCta'] = cuenta['Desc']
             assert cuenta["_Lowest"], f"Account {num_cta} is not a lowest level account"
             cuenta["Debe"] += t["Debe"]
             cuenta["Haber"] += t["Haber"]
