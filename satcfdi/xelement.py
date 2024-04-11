@@ -46,8 +46,8 @@ class XElement(ScalarMap):
     def from_string(cls, string) -> 'XElement':
         return cls.from_xml(etree.fromstring(string, parser=parser))
 
-    def xml_write(self, target, pretty_print=False, xml_declaration=True):
-        xml = self.to_xml()
+    def xml_write(self, target, pretty_print=False, xml_declaration=True, validate=False, include_schema_location=False):
+        xml = self.to_xml(validate=validate, include_schema_location=include_schema_location)
         et = etree.ElementTree(xml)
         et.write(
             target,
