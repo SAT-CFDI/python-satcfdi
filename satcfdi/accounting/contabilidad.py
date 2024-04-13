@@ -84,7 +84,7 @@ def generar_contabilidad(
 
     plz = Polizas(
         rfc=rfc_emisor,
-        mes=str(dp.month).zfill(2),
+        mes="{:02d}".format(dp.month),
         anio=dp.year,
         tipo_solicitud=tipo_solicitud,
         num_orden=numero_orden,
@@ -95,7 +95,7 @@ def generar_contabilidad(
 
     cat = Catalogo(
         rfc=rfc_emisor,
-        mes=str(dp.month).zfill(2),
+        mes="{:02d}".format(dp.month),
         anio=dp.year,
         ctas=[
             Ctas(
@@ -112,7 +112,7 @@ def generar_contabilidad(
 
     ban = Balanza(
         rfc=rfc_emisor,
-        mes=str(dp.month).zfill(2),
+        mes="{:02d}".format(dp.month),
         anio=dp.year,
         tipo_envio=tipo_envio,
         fecha_mod_bal=fecha_mod_bal,
@@ -126,7 +126,7 @@ def generar_contabilidad(
     aux_detalles = group_aux_cuentas(polizas)
     aux = AuxiliarCtas(
         rfc=rfc_emisor,
-        mes=str(dp.month).zfill(2),
+        mes="{:02d}".format(dp.month),
         anio=dp.year,
         tipo_solicitud=tipo_solicitud,
         num_orden=numero_orden,
@@ -145,7 +145,7 @@ def generar_contabilidad(
 
     auxf = RepAuxFol(
         rfc=rfc_emisor,
-        mes=str(dp.month).zfill(2),
+        mes="{:02d}".format(dp.month),
         anio=dp.year,
         tipo_solicitud=tipo_solicitud,
         num_orden=numero_orden,
