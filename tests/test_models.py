@@ -1,5 +1,6 @@
 import logging
 import os
+import types
 from datetime import date, datetime
 from itertools import chain
 from unittest import mock
@@ -30,7 +31,17 @@ sat = SAT()
 
 
 def test_descarga_certificado_sat_pac():
-    cert = sat.recover_certificate("00001000000504465028")
+    with open(os.path.join(current_dir, 'pac_sat_responses', '00001000000504465028.cer'), 'rb') as f:
+        data = f.read()
+
+    def req(*args, **kwargs):
+        a = types.SimpleNamespace()
+        a.status_code = 200
+        a.content = data
+        return a
+
+    with mock.patch(f'requests.get', req) as mk:
+        cert = sat.recover_certificate("00001000000504465028")
 
     # assert cert.issuer().startswith("1.2.840.113549.1.9.2=responsable: ADMINISTRACION CENTRAL DE SERVICIOS TRIBUTARIOS AL CONTRIBUYE")
     # assert cert.subject().startswith(r"OU=MEGAPACSAT970701NN301,2.5.4.5=\ / GARJ750416HDFRVR09,2.5.4.45=SAT970701NN3 / GARJ7504168N4,O=SERVIC")

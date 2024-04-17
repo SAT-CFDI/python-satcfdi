@@ -1,4 +1,5 @@
 import os.path
+import types
 from datetime import datetime, timedelta
 from decimal import Decimal
 from pprint import PrettyPrinter
@@ -81,13 +82,24 @@ def test_pac_sat_cfdi():
 
 
 def test_listado69b():
-    listado = _get_listado_69b()
-    assert "SAT970701NN3" not in listado
-    assert len(listado) > 12000
-    values = [e.value for e in TaxpayerStatus]
+    with open(os.path.join(current_dir, 'pac_sat_responses', 'listado_69b.txt'), 'rb') as f:
+        data = f.read()
 
-    assert all(x in values for x in listado.values())
-    assert listado['AAL081211JP0'] == TaxpayerStatus.DEFINITIVO.value
+    def req(*args, **kwargs):
+        a = types.SimpleNamespace()
+        a.status_code = 200
+        a.content = data
+        return a
+
+    with mock.patch(f'requests.get', req) as mk:
+
+        listado = _get_listado_69b()
+        assert "SAT970701NN3" not in listado
+        assert len(listado) > 12000
+        values = [e.value for e in TaxpayerStatus]
+
+        assert all(x in values for x in listado.values())
+        assert listado['AAL081211JP0'] == TaxpayerStatus.DEFINITIVO.value
 
 
 def test_sat_list_69b():

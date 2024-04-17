@@ -1,10 +1,10 @@
 import json
 import os
+import types
 from pprint import pprint
 from unittest import mock
 
 import pytest
-
 
 from satcfdi.csf import retrieve, _parse_response, _find_regimen
 from tests.utils import verify_result
@@ -50,8 +50,13 @@ def test_get_constancia_invalid(file):
     with open(os.path.join(current_dir, 'csf', file), 'rb') as f:
         data = f.read()
 
-    with mock.patch(f'requests.get') as mk:
-        mk.return_value.content = data
+    def req(*args, **kwargs):
+        a = types.SimpleNamespace()
+        a.content = data
+        a.ok = True
+        return a
+
+    with mock.patch(f'requests.sessions.Session.get', req) as mk:
 
         with pytest.raises(ValueError) as excinfo:
             res = retrieve('RFC', 'ID_CIF')
@@ -76,8 +81,3 @@ def test_regimen_name():
 
     res = _find_regimen('NotFound')
     assert res == None
-
-
-
-
-
