@@ -93,19 +93,19 @@ def test_listado69b():
 
     with mock.patch(f'requests.get', req) as mk:
 
-        listado = _get_listado_69b()
+        listado = _get_listado_69b(refresh_time=-100000)
         assert "SAT970701NN3" not in listado
-        assert len(listado) > 12000
+        assert len(listado) == 3
         values = [e.value for e in TaxpayerStatus]
 
         assert all(x in values for x in listado.values())
-        assert listado['AAL081211JP0'] == TaxpayerStatus.DEFINITIVO.value
+        assert listado['AAA090909HHH'] == TaxpayerStatus.SENTENCIA_FAVORABLE.value
 
 
 def test_sat_list_69b():
     sat_service = SAT(environment=Environment.TEST)
-    res = sat_service.list_69b('AAL081211JP0')
-    assert res == TaxpayerStatus.DEFINITIVO
+    res = sat_service.list_69b('AAA191919HHH')
+    assert res == TaxpayerStatus.DESVIRTUADO
 
 
 def test_sat_list_69b_notfound():
