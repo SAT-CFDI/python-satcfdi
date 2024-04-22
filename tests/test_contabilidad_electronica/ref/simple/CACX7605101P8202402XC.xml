@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<AuxiliarCtas:AuxiliarCtas xmlns:AuxiliarCtas="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas" Version="1.3" RFC="CACX7605101P8" Mes="02" Anio="2024" TipoSolicitud="AF">
+<AuxiliarCtas:AuxiliarCtas xmlns:AuxiliarCtas="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="1.3" RFC="CACX7605101P8" Mes="02" Anio="2024" TipoSolicitud="AF" xsi:schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas/AuxiliarCtas_1_3.xsd">
   <AuxiliarCtas:Cuenta NumCta="1020.01" DesCta="Bancos Nacionales" SaldoIni="0" SaldoFin="10000">
     <AuxiliarCtas:DetalleAux Fecha="2024-02-01" NumUnIdenPol="1" Concepto="Compra de equipo de computo Nal" Debe="10000" Haber="0"/>
   </AuxiliarCtas:Cuenta>

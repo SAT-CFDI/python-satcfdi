@@ -22,6 +22,20 @@ class XElement(ScalarMap):
 
         return xml
 
+    def xml_write(self, target, pretty_print=False, xml_declaration=True, validate=False, include_schema_location=False):
+        xml = self.to_xml(validate=validate, include_schema_location=include_schema_location)
+        et = etree.ElementTree(xml)
+        et.write(
+            target,
+            xml_declaration=xml_declaration,
+            encoding="UTF-8",
+            pretty_print=pretty_print
+        )
+
+    def xml_bytes(self, pretty_print=False, xml_declaration=True, validate=False, include_schema_location=False) -> bytes:
+        xml = self.to_xml(validate=validate, include_schema_location=include_schema_location)
+        return etree.tostring(xml, xml_declaration=xml_declaration, encoding="UTF-8", pretty_print=pretty_print)
+
     def process(self, validate=False) -> 'XElement':
         return XElement.from_xml(self.to_xml(validate=validate))
 
@@ -45,20 +59,6 @@ class XElement(ScalarMap):
     @classmethod
     def from_string(cls, string) -> 'XElement':
         return cls.from_xml(etree.fromstring(string, parser=parser))
-
-    def xml_write(self, target, pretty_print=False, xml_declaration=True, validate=False, include_schema_location=False):
-        xml = self.to_xml(validate=validate, include_schema_location=include_schema_location)
-        et = etree.ElementTree(xml)
-        et.write(
-            target,
-            xml_declaration=xml_declaration,
-            encoding="UTF-8",
-            pretty_print=pretty_print
-        )
-
-    def xml_bytes(self, pretty_print=False, xml_declaration=True, validate=False, include_schema_location=False) -> bytes:
-        xml = self.to_xml(validate=validate, include_schema_location=include_schema_location)
-        return etree.tostring(xml, xml_declaration=xml_declaration, encoding="UTF-8", pretty_print=pretty_print)
 
     def __repr__(self):
         # return '%s.%s(%s)' % (self.__class__.__module__,

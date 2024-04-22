@@ -19,6 +19,9 @@ class CFDI(XElement):
     def to_xml(self, validate=False, include_schema_location=True) -> lxml.etree.Element:
         return super().to_xml(validate, include_schema_location)
 
+    def xml_write(self, target, pretty_print=False, xml_declaration=True, validate=False, include_schema_location=True) -> bytes:
+        return super().xml_write(target, pretty_print=pretty_print, xml_declaration=xml_declaration, validate=validate, include_schema_location=include_schema_location)
+
     def xml_bytes(self, pretty_print=False, xml_declaration=True, validate=False, include_schema_location=True) -> bytes:
         return super().xml_bytes(pretty_print=pretty_print, xml_declaration=xml_declaration, validate=validate, include_schema_location=include_schema_location)
 

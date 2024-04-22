@@ -42,14 +42,13 @@ def output_file(file, folder, fiel=None, generate_pdf=False, zip_xml=False):
         zip_file(output_file[:-4] + '.zip', [
             ZipData(
                 filename(file),
-                file.xml_bytes(xml_declaration=True)
+                file.xml_bytes()
             )
         ])
     else:
         file.xml_write(
             output_file,
-            pretty_print=True,
-            xml_declaration=True
+            pretty_print=True
         )
 
     if generate_pdf:
