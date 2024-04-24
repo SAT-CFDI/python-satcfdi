@@ -191,11 +191,13 @@ def payment_def():
 def retenciones_def():
     return {
         'RFC de la Institucion': (12, False, lambda i: i["Emisor"].get("RfcE") or i["Emisor"].get("RFCEmisor")),
+        'Nombre': (12, False, lambda i: i["Emisor"].get('NomDenRazSocE')),
         'Monto de los intereses nominales': (12, False, lambda i: i["Complemento"]["Intereses"]["MontIntNominal"]),
         'Monto de los intereses reales': (12, False, lambda i: i["Complemento"]["Intereses"]["MontIntReal"]),
         'Perdida': (12, False, lambda i: i["Complemento"]["Intereses"]["Perdida"]),
         'ISR Retenido': (
-        12, False, lambda i: sum(x["MontoRet"] for x in i["Totales"]['ImpRetenidos'] if x.get("Impuesto") == TipoImpuesto.ISR) if 'ImpRetenidos' in i["Totales"] else None)
+            12, False, lambda i: sum(x["MontoRet"] for x in i["Totales"]['ImpRetenidos'] if x.get("Impuesto") == TipoImpuesto.ISR or x.get("ImpuestoRet") == '001') if 'ImpRetenidos' in i["Totales"] else None
+        )
     }
 
 
