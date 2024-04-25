@@ -10,6 +10,9 @@
 		<td rowspan="13">
 			<div class="h cen"><b>{{ c.Emisor.NomDenRazSocE }}</b></div>
 			<b>RFC: </b>{{ c.Emisor.RfcE or c.Emisor.RFCEmisor }}<br/>
+			<b>Régimen Fiscal: </b>{{ c.Emisor.RegimenFiscalE }}<br/>
+			<b>C.P.: </b>{{ c.LugarExpRetenc | code }}<br/>
+			<b>No. Certificado: </b>{{ c.NoCertificado }}<br/>
 		</td>
 		<td rowspan="13">
 			{% if c.Receptor.Nacional %}
