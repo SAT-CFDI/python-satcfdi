@@ -9,17 +9,19 @@
 		<td class="cen">{{ c.FolioInt }}</td>
 		<td rowspan="13">
 			<div class="h cen"><b>{{ c.Emisor.NomDenRazSocE }}</b></div>
-			<b>RFC: </b>{{ c.Emisor.RFCEmisor }}<br/>
+			<b>RFC: </b>{{ c.Emisor.RfcE or c.Emisor.RFCEmisor }}<br/>
 		</td>
 		<td rowspan="13">
 			{% if c.Receptor.Nacional %}
 			<div class="h cen"><b>{{ c.Receptor.Nacional.NomDenRazSocR }}</b></div>
-			<b>RFC: </b>{{ c.Receptor.Nacional.RFCRecep }}<br/>
+			<b>RFC: </b>{{ c.Receptor.Nacional.RfcR or c.Receptor.Nacional.RFCRecep }}<br/>
+			<b>CURP: </b>{{ c.Receptor.Nacional.CurpR }}<br/>
+			<b>Domicilio Fiscal: </b>{{ c.Receptor.Nacional.DomicilioFiscalR }}<br/>
 			{% else %}
 			<div class="h cen"><b>{{ c.Receptor.Extranjero.NomDenRazSocR }}</b></div>
 			<b>Número Registro Fiscal: </b>{{ c.Receptor.Extranjero.NumRegIdTrib }}<br/>
 			{% endif %}
-			<b>Nacionalidad: </b> {{ c.Receptor.Nacionalidad }}
+			<b>Nacionalidad: </b> {{ c.Receptor.NacionalidadR or c.Receptor.Nacionalidad }}
 		</td>
 		</tr>
 	<tr>
@@ -36,7 +38,7 @@
 	</tr>
 	<tr class="cen">
 		<td>{{ c.CveRetenc }}</td>
-		<td>{{ c.Periodo.MesIni | mes }} a {{ c.Periodo.MesFin | mes }} del {{ c.Periodo.Ejerc }}</td>
+		<td>{{ c.Periodo.MesIni | mes }} a {{ c.Periodo.MesFin | mes }} del {{ c.Periodo.Ejercicio or c.Periodo.Ejerc }}</td>
 	</tr>
 </table>
 <h5>Totales</h5>
