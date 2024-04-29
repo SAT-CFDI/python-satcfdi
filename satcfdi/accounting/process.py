@@ -190,13 +190,13 @@ def payment_def():
 
 def retenciones_def():
     return {
-        'RFC de la Institucion': (12, False, lambda i: i["Emisor"].get("RfcE") or i["Emisor"].get("RFCEmisor")),
-        'Nombre': (12, False, lambda i: i["Emisor"].get('NomDenRazSocE')),
-        'Monto de los intereses nominales': (12, False, lambda i: i["Complemento"]["Intereses"]["MontIntNominal"]),
-        'Monto de los intereses reales': (12, False, lambda i: i["Complemento"]["Intereses"]["MontIntReal"]),
-        'Perdida': (12, False, lambda i: i["Complemento"]["Intereses"]["Perdida"]),
+        'RFC de la Institucion': (18, False, lambda i: i["Emisor"].get("RfcE") or i["Emisor"].get("RFCEmisor")),
+        'Nombre': (36, False, lambda i: i["Emisor"].get('NomDenRazSocE')),
+        'Monto de los intereses nominales': (12, True, lambda i: i["Complemento"]["Intereses"]["MontIntNominal"]),
+        'Monto de los intereses reales': (12, True, lambda i: i["Complemento"]["Intereses"]["MontIntReal"]),
+        'Perdida': (12, True, lambda i: i["Complemento"]["Intereses"]["Perdida"]),
         'ISR Retenido': (
-            12, False, lambda i: sum(x["MontoRet"] for x in i["Totales"]['ImpRetenidos'] if x.get("Impuesto") == TipoImpuesto.ISR or x.get("ImpuestoRet") == '001') if 'ImpRetenidos' in i["Totales"] else None
+            12, True, lambda i: sum(x["MontoRet"] for x in i["Totales"]['ImpRetenidos'] if x.get("Impuesto") == TipoImpuesto.ISR or x.get("ImpuestoRet") == '001') if 'ImpRetenidos' in i["Totales"] else None
         )
     }
 
@@ -307,7 +307,7 @@ def payments_export(workbook, name, payments: Sequence[PaymentsDetails]):
 
 
 def retentions_export(workbook, name, retentions: Sequence[SatCFDI]):
-    excel_export(workbook, name, retentions, retenciones_def())
+    excel_export(workbook, name, retentions, retenciones_def(), row_height=1)
 
 
 # EXPORT TO TXT
