@@ -47,6 +47,7 @@
     :alt: Discord
 
 |imageActivity| |imageDoc| |imageTests| |imageCodeQL| |imagePublish| |imageReleases| |imageDownloads| |imageVersions| |imageContributors| |imageScrutinizer| |imageCoverage| |imageDiscord|
+
 SAT-CFDI
 ==========================
 
