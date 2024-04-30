@@ -1,42 +1,41 @@
 .. |image1| image:: https://img.shields.io/github/commit-activity/m/SAT-CFDI/python-satcfdi
     :target: https://github.com/badges/SAT-CFDI/python-satcfdi
     :alt: Activity
-    :height: 10
 .. |image2| image:: https://readthedocs.org/projects/satcfdi/badge?version=latest
     :target: https://satcfdi.readthedocs.io?badge=latest
     :alt: Documentation Status
-    :height: 10
 .. |image3| image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/tests.yml/badge.svg
     :target: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/tests.yml
     :alt: Tests
-    :height: 10
-.. image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/codeql.yml/badge.svg
+.. |image4| image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/codeql.yml/badge.svg
     :target: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/codeql.yml
     :alt: CodeQL
-.. image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/publish.yml/badge.svg
+.. |image5| image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/publish.yml/badge.svg
     :target: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/publish.yml
     :alt: Publish
-.. image:: https://img.shields.io/github/v/release/SAT-CFDI/python-satcfdi.svg?logo=git&style=flat
+.. |image6| image:: https://img.shields.io/github/v/release/SAT-CFDI/python-satcfdi.svg?logo=git&style=flat
     :target: https://github.com/SAT-CFDI/python-satcfdi/releases
     :alt: Releases
-.. image:: https://pepy.tech/badge/satcfdi/month
+.. |image7| image:: https://pepy.tech/badge/satcfdi/month
     :target: https://pepy.tech/project/satcfdi
     :alt: Downloads
-.. image:: https://img.shields.io/pypi/pyversions/satcfdi.svg
+.. |image8| image:: https://img.shields.io/pypi/pyversions/satcfdi.svg
     :target: https://pypi.org/project/satcfdi
     :alt: Supported Versions
-.. image:: https://img.shields.io/github/contributors/SAT-CFDI/python-satcfdi.svg
+.. |image9| image:: https://img.shields.io/github/contributors/SAT-CFDI/python-satcfdi.svg
     :target: https://github.com/SAT-CFDI/python-satcfdi/graphs/contributors
     :alt: Contributors
-.. image:: https://scrutinizer-ci.com/g/SAT-CFDI/python-satcfdi/badges/quality-score.png?b=main
+.. |image10| image:: https://scrutinizer-ci.com/g/SAT-CFDI/python-satcfdi/badges/quality-score.png?b=main
     :target: https://scrutinizer-ci.com/g/SAT-CFDI/python-satcfdi/?branch=main
     :alt: Scrutinizer Code Quality
-.. image:: https://scrutinizer-ci.com/g/SAT-CFDI/python-satcfdi/badges/coverage.png?b=main
+.. |image11| image:: https://scrutinizer-ci.com/g/SAT-CFDI/python-satcfdi/badges/coverage.png?b=main
     :target: https://scrutinizer-ci.com/g/SAT-CFDI/python-satcfdi/code-structure/main/code-coverage/satcfdi/
     :alt: Code Coverage
-.. image:: https://img.shields.io/discord/1045508868807073792?logo=discord&style=flat
+.. |image12| image:: https://img.shields.io/discord/1045508868807073792?logo=discord&style=flat
     :target: https://discord.gg/6WA9QvZcRn
     :alt: Discord
+
+|image1| |image2| |image3| |image4| |image5| |image6| |image7| |image8| |image9| |image10| |image11| |image12|
 
 SAT-CFDI
 ==========================
