@@ -1,12 +1,15 @@
-.. image:: https://img.shields.io/github/commit-activity/m/SAT-CFDI/python-satcfdi
+.. |image1| image:: https://img.shields.io/github/commit-activity/m/SAT-CFDI/python-satcfdi
     :target: https://github.com/badges/SAT-CFDI/python-satcfdi
     :alt: Activity
-.. image:: https://readthedocs.org/projects/satcfdi/badge?version=latest
+    :height: 10
+.. |image2| image:: https://readthedocs.org/projects/satcfdi/badge?version=latest
     :target: https://satcfdi.readthedocs.io?badge=latest
     :alt: Documentation Status
-.. image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/tests.yml/badge.svg
+    :height: 10
+.. |image3| image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/tests.yml/badge.svg
     :target: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/tests.yml
     :alt: Tests
+    :height: 10
 .. image:: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/codeql.yml/badge.svg
     :target: https://github.com/SAT-CFDI/python-satcfdi/actions/workflows/codeql.yml
     :alt: CodeQL
