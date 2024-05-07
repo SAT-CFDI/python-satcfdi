@@ -3,9 +3,9 @@ import os
 from datetime import date
 
 import pytest
+from satcfdi.xelement import XElement
 
 from satcfdi import render
-from satcfdi.cfdi import CFDI
 from satcfdi.exceptions import SchemaValidationError
 from satcfdi.create.pld import ari
 from tests.utils import verify_result, XElementPrettyPrinter
@@ -30,14 +30,14 @@ def test_ejemplos():
     pld_ejemplos_dir = os.path.join(current_dir, 'pdl', 'ejemplos')
 
     for file in os.listdir(pld_ejemplos_dir):
-        ejemplo = CFDI.from_file(os.path.join(pld_ejemplos_dir, file))
+        ejemplo = XElement.from_file(os.path.join(pld_ejemplos_dir, file))
 
         verify_invoice(ejemplo, path=f"ejemplos/{file}")
 
 
 def test_arrendamiento_de_inmuebles_zeros():
     ari_file = os.path.join(current_dir, 'pdl', 'ejemplo_ari_zeros.xml')
-    report_f = CFDI.from_file(ari_file)
+    report_f = XElement.from_file(ari_file)
 
     report_a = ari.Archivo(
         informe=ari.InformeType(
@@ -74,7 +74,7 @@ def test_arrendamiento_de_inmuebles_zeros_invalid():
 
 def test_arrendamiento_de_inmuebles():
     ari_file = os.path.join(current_dir, 'pdl', 'ejemplo_ari.xml')
-    report_f = CFDI.from_file(ari_file)
+    report_f = XElement.from_file(ari_file)
 
     report_a = ari.Archivo(
         informe=ari.InformeType(

@@ -47,8 +47,8 @@ class XElement(ScalarMap):
     @classmethod
     def from_xml(cls, xml_root) -> 'XElement':
         obj = cfdi_objectify[xml_root.tag](cls, xml_root)
-        if not isinstance(obj, XElement):
-            obj = XElement(obj)
+        if not isinstance(obj, cls):
+            obj = cls(obj)
             obj.tag = xml_root.tag
         return obj
 
