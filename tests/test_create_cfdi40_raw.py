@@ -79,6 +79,9 @@ def test_create_raw():
         "Serie": "A",
         "Folio": "123456",
         "Moneda": "MXN",
+        "Sello": "",
+        'TipoDeComprobante': 'I',
+        'Exportacion': "01"
     }
 
     a = cfdi40.Comprobante.__new__(cfdi40.Comprobante)
@@ -139,6 +142,9 @@ def test_create_raw_no_signature():
         "Moneda": "MXN",
         'NoCertificado': '',
         'Certificado': '',
+        "Sello": "",
+        'TipoDeComprobante': 'I',
+        'Exportacion': "01"
     }
 
     a = cfdi40.Comprobante.__new__(cfdi40.Comprobante)

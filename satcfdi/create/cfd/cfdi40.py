@@ -438,8 +438,8 @@ class Comprobante(CFDI):
             fecha: datetime = None,
     ):
         super().__init__({
-            'Version': None,
-            'Fecha': fecha,
+            'Version': self.version,
+            'Fecha': fecha or datetime.now(tz=get_timezone(lugar_expedicion)).replace(tzinfo=None),
             'Sello': '',
             'SubTotal': None,
             'Moneda': moneda,
@@ -469,25 +469,16 @@ class Comprobante(CFDI):
         self.compute()
 
     def compute(self):
-        self['Version'] = self.version
-        self['Fecha'] = self.get('Fecha') or datetime.now(tz=get_timezone(self['LugarExpedicion'])).replace(tzinfo=None)
-        self['Moneda'] = self.get('Moneda') or 'MXN'
-        self['Sello'] = ''
-        self['TipoDeComprobante'] = self.get('TipoDeComprobante') or 'I'
-        self['Exportacion'] = self.get('Exportacion') or '01'
-
         self["Conceptos"] = conceptos = _make_conceptos(self["Conceptos"], rnd_fn=rounder(self["Moneda"]))
         self["SubTotal"] = sub_total = sum(c['Importe'] for c in conceptos)
         descuento = sum(c.get('Descuento') or 0 for c in conceptos)
+        self['Descuento'] = descuento or None
         self['Impuestos'] = impuestos = make_impuestos(conceptos)
-
         total = sub_total - descuento
         if impuestos:
-            total += impuestos.get('TotalImpuestosTrasladados', 0)
-            total -= impuestos.get('TotalImpuestosRetenidos', 0)
-
+            total += impuestos.get('TotalImpuestosTrasladados') or 0
+            total -= impuestos.get('TotalImpuestosRetenidos') or 0
         self['Total'] = total
-        self['Descuento'] = descuento or None
 
     @classmethod
     def pago(
