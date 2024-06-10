@@ -1,4 +1,6 @@
 from base64 import b64encode
+from dataclasses import dataclass
+from enum import Enum
 from html import unescape
 from logging import getLogger
 from typing import Dict
@@ -11,7 +13,17 @@ from satcfdi.cfdi import CFDI
 from satcfdi.pacs import Accept, Document
 
 from ..exceptions import ResponseError
-from . import PAC, Environment
+from . import PAC, CancelationAcknowledgment, CancelReason, Environment
+
+
+class DocumentStatus(Enum):
+    STAMPED = "S"
+    FINISHED = "F"
+
+
+@dataclass(init=True)
+class PendingDocument(Document):
+    status: DocumentStatus = None
 
 
 class Finkok(PAC):
@@ -23,6 +35,7 @@ class Finkok(PAC):
     RFC = "FIN1203015JA"
     namespaces = {
         "soapenv": "http://schemas.xmlsoap.org/soap/envelope/",
+        "apps": "apps.services.soap.core.views",
         "stamp": "http://facturacion.finkok.com/stamp",
     }
 
@@ -169,8 +182,10 @@ class Finkok(PAC):
         """
         return self._perform_operation(cfdi=cfdi, accept=accept, operation="stamp")
 
-    def recover(self, document_id: str, accept: Accept = Accept.XML) -> Document:
-        """Recover a document from Finkok SOAP web service by its document ID (UUID).
+    def pending_stamp(
+        self, document_id: str, accept: Accept = Accept.XML
+    ) -> PendingDocument:
+        """Check the status of a document that is pending to be sent to the SAT (by failure or quick stamp)
 
         Args:
             document_id (str): The UUID of the document to recover.
@@ -181,9 +196,13 @@ class Finkok(PAC):
             ResponseError: If the response from the Finkok SOAP web service contains an error code.
 
         Returns:
-            Document: The recovered document as a Document object with the following fields:
-                - document_id (str): The UUID of the recovered document.
-                - xml (bytes): The XML content of the recovered document.
+            PendingDocument: The PendingDocument object with the following attributes:
+            - document_id (str): The UUID of the document.
+            - xml (bytes): The XML content of the document.
+            - status (DocumentStatus): The status of the document.
+                - `STAMPED`, the document has been stamped but not sent to the SAT.
+                - `FINISHED`, the document has been stamped and sent to the SAT.
+
 
         Notes:
             - This function currently only supports accepting XML responses.
@@ -195,14 +214,23 @@ class Finkok(PAC):
         envelope = self._build_query_envelope(document_id)
         data = etree.tostring(envelope)
 
-        response = requests.post(self.stamp_url, data)
+        url = self.get_service_url("stamp")
+        response = requests.post(url, data)
         root = etree.fromstring(response.text.encode())
+        open("test.xml", "wb").write(etree.tostring(root, pretty_print=True))
 
-        error = root.find(".//{apps.services.soap.core.views}error")
-        if error is not None:
+        error = root.find(".//apps:error", self.namespaces)
+        if error is not None and error.text:
             raise ResponseError(error.text)
 
-        xml = unescape(root.find(".//{apps.services.soap.core.views}xml").text)
-        uuid = root.find(".//{apps.services.soap.core.views}uuid").text
+        status = root.find(".//apps:status", self.namespaces)
+        xml = root.find(".//apps:xml", self.namespaces)
+        uuid = root.find(".//apps:uuid", self.namespaces)
+
+        return PendingDocument(
+            document_id=uuid.text,
+            xml=unescape(xml.text).encode() if xml is not None else None,
+            status=DocumentStatus(status.text),
+        )
 
         return Document(document_id=uuid, xml=xml.encode())
