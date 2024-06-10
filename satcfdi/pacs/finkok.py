@@ -53,10 +53,17 @@ class Finkok(PAC):
         password.text = self.password
         return element
 
-    def _build_stamp_envelope(self, cfdi: CFDI) -> etree.Element:
+    def _build_sign_stamp_envelope(self, cfdi: CFDI, operation: str) -> etree.Element:
         stamp_ns = self.namespaces["stamp"]
+        match operation:
+            case "issue":
+                tag = "sign_stamp"
+            case "stamp":
+                tag = "stamp"
+            case _:
+                raise NotImplementedError("Operation not supported")
 
-        stamp = etree.Element(etree.QName(stamp_ns, "quick_stamp"))
+        stamp = etree.Element(etree.QName(stamp_ns, tag))
         xml = etree.SubElement(stamp, etree.QName(stamp_ns, "xml"))
         xml.text = b64encode(cfdi.xml_bytes()).decode("utf-8")
         stamp = self._add_auth(stamp, stamp_ns)
@@ -90,33 +97,14 @@ class Finkok(PAC):
     def stamp_url(self):
         return f"{self.host}/servicios/soap/stamp.wsdl"
 
-    def stamp(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
-        """Stamp the given CFDI with Finkok SOAP web service
-
-        Args:
-            cfdi (CFDI): The CFDI object to be stamped
-            accept (Accept, optional): The type of response to accept. Defaults to Accept.XML.
-
-        Raises:
-            NotImplementedError: If the accept parameter includes Accept.PDF
-            ResponseError: If the response from the Finkok SOAP web service contains an error code
-
-        Returns:
-            Document: The stamped CFDI as a Document object with the following fields:
-                - document_id (str): The UUID of the stamped CFDI.
-                - xml (bytes): The XML content of the stamped CFDI.
-
-        Notes:
-            - This function currently only supports accepting XML responses.
-            - If the accept parameter includes Accept.PDF, a NotImplementedError is raised.
-        """
+    def _perform_operation(self, cfdi: CFDI, accept: Accept, operation: str):
         if accept & Accept.PDF:
             raise NotImplementedError("accept PDF not supported")
 
-        envelope = self._build_stamp_envelope(cfdi)
+        envelope = self._build_sign_stamp_envelope(cfdi, operation)
         data = etree.tostring(envelope)
 
-        response = requests.post(self.stamp_url, data)
+        response = requests.post(self.stamp_url, data=data)
         root = etree.fromstring(response.text.encode())
 
         status = root.find(".//{apps.services.soap.core.views}CodEstatus")
@@ -136,6 +124,50 @@ class Finkok(PAC):
         uuid = root.find(".//{apps.services.soap.core.views}UUID").text
 
         return Document(document_id=uuid, xml=xml.encode())
+
+    def issue(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
+        """Operation to request CFDI to be sealed and stamped by Finkok.
+
+        Args:
+            cfdi (CFDI): The CFDI object to be sealed and stamped
+            accept (Accept, optional): The type of response to accept. Defaults to Accept.XML.
+
+        Raises:
+            NotImplementedError: If the accept parameter includes Accept.PDF
+            ResponseError: If the response from the Finkok SOAP web service contains an error code
+
+        Returns:
+            Document: The stamped CFDI as a Document object with the following fields:
+                - document_id (str): The UUID of the stamped CFDI.
+                - xml (bytes): The XML content of the stamped CFDI.
+
+        Notes:
+            - This function currently only supports accepting XML responses.
+            - If the accept parameter includes Accept.PDF, a NotImplementedError is raised.
+        """
+        return self._perform_operation(cfdi=cfdi, accept=accept, operation="issue")
+
+    def stamp(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
+        """Operation to request sealed CFDI to be stamped by Finkok
+
+        Args:
+            cfdi (CFDI): The CFDI object to be stamped
+            accept (Accept, optional): The type of response to accept. Defaults to Accept.XML.
+
+        Raises:
+            NotImplementedError: If the accept parameter includes Accept.PDF
+            ResponseError: If the response from the Finkok SOAP web service contains an error code
+
+        Returns:
+            Document: The stamped CFDI as a Document object with the following fields:
+                - document_id (str): The UUID of the stamped CFDI.
+                - xml (bytes): The XML content of the stamped CFDI.
+
+        Notes:
+            - This function currently only supports accepting XML responses.
+            - If the accept parameter includes Accept.PDF, a NotImplementedError is raised.
+        """
+        return self._perform_operation(cfdi=cfdi, accept=accept, operation="stamp")
 
     def recover(self, document_id: str, accept: Accept = Accept.XML) -> Document:
         """Recover a document from Finkok SOAP web service by its document ID (UUID).
