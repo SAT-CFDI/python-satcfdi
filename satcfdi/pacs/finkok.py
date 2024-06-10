@@ -1,9 +1,11 @@
-import xml.etree.ElementTree as ET
 from base64 import b64encode
+from html import unescape
 from logging import getLogger
+from typing import Dict
 from warnings import warn
 
 import requests
+from lxml import etree
 
 from satcfdi.cfdi import CFDI
 from satcfdi.pacs import Accept, Document
@@ -19,6 +21,10 @@ class Finkok(PAC):
     """
 
     RFC = "FIN1203015JA"
+    namespaces = {
+        "soapenv": "http://schemas.xmlsoap.org/soap/envelope/",
+        "stamp": "http://facturacion.finkok.com/stamp",
+    }
 
     def __init__(
         self, username: str, password: str, environment=Environment.PRODUCTION
@@ -27,25 +33,48 @@ class Finkok(PAC):
         self.username = username
         self.password = password
 
-    def _get_soap_envelope(self, cfdi: CFDI) -> ET.Element:
-        ET.register_namespace("stamp", "http://facturacion.finkok.com/stamp")
-        ET.register_namespace("SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/")
-        ET.register_namespace("xsi", "http://www.w3.org/2001/XMLSchema-instance")
+    def _build_envelope(
+        self, param_element: etree.Element, nsmap: Dict[str, str] = {}
+    ) -> etree.Element:
+        namespaces = {**self.namespaces, **nsmap}
 
-        envelope = ET.Element("{http://schemas.xmlsoap.org/soap/envelope/}Envelope")
-        envelope.append(ET.Element("{http://schemas.xmlsoap.org/soap/envelope/}Header"))
-        body = ET.SubElement(
-            envelope, "{http://schemas.xmlsoap.org/soap/envelope/}Body"
+        envelope = etree.Element(
+            etree.QName(namespaces["soapenv"], "Envelope"), nsmap=namespaces
         )
-        stamp = ET.SubElement(body, "{http://facturacion.finkok.com/stamp}quick_stamp")
-        xml = ET.SubElement(stamp, "{http://facturacion.finkok.com/stamp}xml")
-        xml.text = b64encode(cfdi.xml_bytes()).decode("utf-8")
-        username = ET.SubElement(stamp, "{http://facturacion.finkok.com/stamp}username")
-        username.text = self.username
-        password = ET.SubElement(stamp, "{http://facturacion.finkok.com/stamp}password")
-        password.text = self.password
-
+        envelope.append(etree.Element(etree.QName(namespaces["soapenv"], "Header")))
+        body = etree.SubElement(envelope, etree.QName(namespaces["soapenv"], "Body"))
+        body.append(param_element)
         return envelope
+
+    def _add_auth(self, element: etree.Element, namespace: str) -> etree.Element:
+        username = etree.SubElement(element, etree.QName(namespace, "username"))
+        username.text = self.username
+        password = etree.SubElement(element, etree.QName(namespace, "password"))
+        password.text = self.password
+        return element
+
+    def _build_stamp_envelope(self, cfdi: CFDI) -> etree.Element:
+        stamp_ns = self.namespaces["stamp"]
+
+        stamp = etree.Element(etree.QName(stamp_ns, "quick_stamp"))
+        xml = etree.SubElement(stamp, etree.QName(stamp_ns, "xml"))
+        xml.text = b64encode(cfdi.xml_bytes()).decode("utf-8")
+        stamp = self._add_auth(stamp, stamp_ns)
+
+        return self._build_envelope(
+            stamp, {"xsi": "http://www.w3.org/2001/XMLSchema-instance"}
+        )
+
+    def _build_query_envelope(self, document_id: str) -> etree.Element:
+        query_element = etree.Element(
+            etree.QName(self.namespaces["stamp"], "query_pending")
+        )
+        query_element = self._add_auth(query_element, self.namespaces["stamp"])
+        etree.SubElement(
+            query_element, etree.QName(self.namespaces["stamp"], "uuid")
+        ).text = document_id
+
+        return self._build_envelope(query_element)
 
     @property
     def host(self):
@@ -57,20 +86,41 @@ class Finkok(PAC):
             case _:
                 raise NotImplementedError("Environment not supported")
 
-    def stamp(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
+    @property
+    def stamp_url(self):
+        return f"{self.host}/servicios/soap/stamp.wsdl"
 
+    def stamp(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
+        """Stamp the given CFDI with Finkok SOAP web service
+
+        Args:
+            cfdi (CFDI): The CFDI object to be stamped
+            accept (Accept, optional): The type of response to accept. Defaults to Accept.XML.
+
+        Raises:
+            NotImplementedError: If the accept parameter includes Accept.PDF
+            ResponseError: If the response from the Finkok SOAP web service contains an error code
+
+        Returns:
+            Document: The stamped CFDI as a Document object with the following fields:
+                - document_id (str): The UUID of the stamped CFDI.
+                - xml (bytes): The XML content of the stamped CFDI.
+
+        Notes:
+            - This function currently only supports accepting XML responses.
+            - If the accept parameter includes Accept.PDF, a NotImplementedError is raised.
+        """
         if accept & Accept.PDF:
             raise NotImplementedError("accept PDF not supported")
 
-        envelope = self._get_soap_envelope(cfdi)
-        url = f"{self.host}/servicios/soap/stamp.wsdl"
-        data = ET.tostring(envelope, encoding="utf-8", xml_declaration=True)
+        envelope = self._build_stamp_envelope(cfdi)
+        data = etree.tostring(envelope)
 
-        response = requests.post(url, data)
-        stamp_response = ET.fromstring(response.text)
+        response = requests.post(self.stamp_url, data)
+        root = etree.fromstring(response.text.encode())
 
-        status = stamp_response.find(".//{apps.services.soap.core.views}CodEstatus")
-        issues = stamp_response.find(".//{apps.services.soap.core.views}Incidencias")
+        status = root.find(".//{apps.services.soap.core.views}CodEstatus")
+        issues = root.find(".//{apps.services.soap.core.views}Incidencias")
 
         for issue in issues:
             code = issue.find("{apps.services.soap.core.views}CodigoError")
@@ -82,11 +132,45 @@ class Finkok(PAC):
         logger = getLogger(f"{self.__module__}.{self.__class__.__name__}")
         logger.debug(status.text)
 
-        xml = stamp_response.find(".//{apps.services.soap.core.views}xml").text
-        uuid = stamp_response.find(".//{apps.services.soap.core.views}UUID").text
+        xml = root.find(".//{apps.services.soap.core.views}xml").text
+        uuid = root.find(".//{apps.services.soap.core.views}UUID").text
 
-        return Document(
-            document_id=uuid,
-            xml=xml.encode(),
-            pdf=None,
-        )
+        return Document(document_id=uuid, xml=xml.encode())
+
+    def recover(self, document_id: str, accept: Accept = Accept.XML) -> Document:
+        """Recover a document from Finkok SOAP web service by its document ID (UUID).
+
+        Args:
+            document_id (str): The UUID of the document to recover.
+            accept (Accept, optional): The type of response to accept. Defaults to Accept.XML.
+
+        Raises:
+            NotImplementedError: If the accept parameter includes Accept.PDF.
+            ResponseError: If the response from the Finkok SOAP web service contains an error code.
+
+        Returns:
+            Document: The recovered document as a Document object with the following fields:
+                - document_id (str): The UUID of the recovered document.
+                - xml (bytes): The XML content of the recovered document.
+
+        Notes:
+            - This function currently only supports accepting XML responses.
+            - If the accept parameter includes Accept.PDF, a NotImplementedError is raised.
+        """
+        if accept & Accept.PDF:
+            raise NotImplementedError("accept PDF not supported")
+
+        envelope = self._build_query_envelope(document_id)
+        data = etree.tostring(envelope)
+
+        response = requests.post(self.stamp_url, data)
+        root = etree.fromstring(response.text.encode())
+
+        error = root.find(".//{apps.services.soap.core.views}error")
+        if error is not None:
+            raise ResponseError(error.text)
+
+        xml = unescape(root.find(".//{apps.services.soap.core.views}xml").text)
+        uuid = root.find(".//{apps.services.soap.core.views}uuid").text
+
+        return Document(document_id=uuid, xml=xml.encode())
