@@ -73,6 +73,8 @@ class Finkok(PAC):
                 tag = "sign_stamp"
             case "stamp":
                 tag = "stamp"
+            case "quick_stamp":
+                tag = "quick_stamp"
             case _:
                 raise NotImplementedError("Operation not supported")
 
@@ -106,26 +108,32 @@ class Finkok(PAC):
             case _:
                 raise NotImplementedError("Environment not supported")
 
+    def get_service_url(self, operation: str):
+        if operation not in ["stamp", "cancel"]:
+            raise NotImplementedError(f"Operation {operation} not supported")
+        return f"{self.host}/servicios/soap/{operation}.wsdl"
+
     @property
     def stamp_url(self):
         return f"{self.host}/servicios/soap/stamp.wsdl"
 
-    def _perform_operation(self, cfdi: CFDI, accept: Accept, operation: str):
+    def _perform_stamp_operation(self, cfdi: CFDI, accept: Accept, operation: str):
         if accept & Accept.PDF:
             raise NotImplementedError("accept PDF not supported")
 
         envelope = self._build_sign_stamp_envelope(cfdi, operation)
         data = etree.tostring(envelope)
 
-        response = requests.post(self.stamp_url, data=data)
+        url = self.get_service_url("stamp")
+        response = requests.post(url, data=data)
         root = etree.fromstring(response.text.encode())
 
-        status = root.find(".//{apps.services.soap.core.views}CodEstatus")
-        issues = root.find(".//{apps.services.soap.core.views}Incidencias")
+        status = root.find(".//apps:CodEstatus", self.namespaces)
+        issues = root.find(".//apps:Incidencias", self.namespaces)
 
         for issue in issues:
-            code = issue.find("{apps.services.soap.core.views}CodigoError")
-            msg = issue.find("{apps.services.soap.core.views}MensajeIncidencia")
+            code = issue.find("apps:CodigoError", self.namespaces)
+            msg = issue.find("apps:MensajeIncidencia", self.namespaces)
             if not status:
                 raise ResponseError(f"{code.text} - {msg.text}")
             warn(f"{code.text} - {msg.text}")
@@ -180,7 +188,38 @@ class Finkok(PAC):
             - This function currently only supports accepting XML responses.
             - If the accept parameter includes Accept.PDF, a NotImplementedError is raised.
         """
-        return self._perform_operation(cfdi=cfdi, accept=accept, operation="stamp")
+        return self._perform_stamp_operation(
+            cfdi=cfdi, accept=accept, operation="stamp"
+        )
+
+    def quick_stamp(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
+        """Operation to request sealed CFDI to be stamped by Finkok using the quick stamp service.
+
+        This operation is recommended for high amount of stamp requests per second.
+
+        Args:
+            cfdi (CFDI): The CFDI object to be stamped
+            accept (Accept, optional): The type of response to accept. Defaults to Accept.XML.
+
+        Raises:
+            NotImplementedError: If the accept parameter includes Accept.PDF
+            ResponseError: If the response from the Finkok SOAP web service contains an error code
+
+        Returns:
+            Document: The stamped CFDI as a Document object with the following fields:
+                - document_id (str): The UUID of the stamped CFDI.
+                - xml (bytes): The XML content of the stamped CFDI.
+
+        Notes:
+            - This function currently only supports accepting XML responses.
+            - If the accept parameter includes Accept.PDF, a NotImplementedError is raised.
+        """
+        return self._perform_stamp_operation(
+            cfdi=cfdi, accept=accept, operation="quick_stamp"
+        )
+
+    def stamped(self, document_id: str) -> Document:
+        pass
 
     def pending_stamp(
         self, document_id: str, accept: Accept = Accept.XML
