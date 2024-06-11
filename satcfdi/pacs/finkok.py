@@ -66,7 +66,7 @@ class Finkok(PAC):
         password.text = self.password
         return element
 
-    def _build_sign_stamp_envelope(self, cfdi: CFDI, operation: str) -> etree.Element:
+    def _build_stamp_envelope(self, cfdi: CFDI, operation: str) -> etree.Element:
         stamp_ns = self.namespaces["stamp"]
         match operation:
             case "issue":
@@ -75,17 +75,17 @@ class Finkok(PAC):
                 tag = "stamp"
             case "quick_stamp":
                 tag = "quick_stamp"
+            case "stamped":
+                tag = "stamped"
             case _:
                 raise NotImplementedError("Operation not supported")
 
         stamp = etree.Element(etree.QName(stamp_ns, tag))
         xml = etree.SubElement(stamp, etree.QName(stamp_ns, "xml"))
-        xml.text = b64encode(cfdi.xml_bytes()).decode("utf-8")
+        xml.text = b64encode(cfdi.xml_bytes(xml_declaration=True))
         stamp = self._add_auth(stamp, stamp_ns)
 
-        return self._build_envelope(
-            stamp, {"xsi": "http://www.w3.org/2001/XMLSchema-instance"}
-        )
+        return self._build_envelope(stamp)
 
     def _build_query_envelope(self, document_id: str) -> etree.Element:
         query_element = etree.Element(
@@ -117,33 +117,48 @@ class Finkok(PAC):
     def stamp_url(self):
         return f"{self.host}/servicios/soap/stamp.wsdl"
 
-    def _perform_stamp_operation(self, cfdi: CFDI, accept: Accept, operation: str):
-        if accept & Accept.PDF:
-            raise NotImplementedError("accept PDF not supported")
+    def _perform_request(self, url: str, envelope: etree.Element) -> etree.Element:
+        """Sends a POST request to the specified URL with the provided XML envelope and returns the parsed XML response.
 
-        envelope = self._build_sign_stamp_envelope(cfdi, operation)
+        Args:
+            url (str): The URL to send the request to.
+            envelope (etree.Element): The XML envelope to send in the request.
+
+        Returns:
+            etree.Element: The parsed XML response from the request.
+        """
         data = etree.tostring(envelope)
-
-        url = self.get_service_url("stamp")
         response = requests.post(url, data=data)
-        root = etree.fromstring(response.text.encode())
+        return etree.fromstring(response.text.encode())
 
+    def _validate_response(self, root: etree.Element):
         status = root.find(".//apps:CodEstatus", self.namespaces)
         issues = root.find(".//apps:Incidencias", self.namespaces)
 
         for issue in issues:
             code = issue.find("apps:CodigoError", self.namespaces)
             msg = issue.find("apps:MensajeIncidencia", self.namespaces)
-            if not status:
-                raise ResponseError(f"{code.text} - {msg.text}")
-            warn(f"{code.text} - {msg.text}")
+            full_msg = f"{code.text} - {msg.text}" if code is not None else msg.text
+            if status is not None:
+                raise ResponseError(full_msg)
+            warn(full_msg)
 
-        logger = getLogger(f"{self.__module__}.{self.__class__.__name__}")
-        logger.debug(status.text)
+        if status is not None and status.text:
+            logger = getLogger(f"{self.__module__}.{self.__class__.__name__}")
+            logger.debug(status.text)
 
-        xml = root.find(".//{apps.services.soap.core.views}xml").text
-        uuid = root.find(".//{apps.services.soap.core.views}UUID").text
+    def _perform_stamp_operation(self, cfdi: CFDI, accept: Accept, operation: str):
+        if accept & Accept.PDF:
+            raise NotImplementedError("accept PDF not supported")
 
+        envelope = self._build_stamp_envelope(cfdi, operation)
+        url = self.get_service_url("stamp")
+        root = self._perform_request(url, envelope)
+
+        self._validate_response(root)
+
+        xml = root.find(".//apps:xml", self.namespaces).text
+        uuid = root.find(".//apps:UUID", self.namespaces).text
         return Document(document_id=uuid, xml=xml.encode())
 
     def issue(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
@@ -166,7 +181,9 @@ class Finkok(PAC):
             - This function currently only supports accepting XML responses.
             - If the accept parameter includes Accept.PDF, a NotImplementedError is raised.
         """
-        return self._perform_operation(cfdi=cfdi, accept=accept, operation="issue")
+        return self._perform_stamp_operation(
+            cfdi=cfdi, accept=accept, operation="issue"
+        )
 
     def stamp(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
         """Operation to request sealed CFDI to be stamped by Finkok
@@ -218,8 +235,29 @@ class Finkok(PAC):
             cfdi=cfdi, accept=accept, operation="quick_stamp"
         )
 
-    def stamped(self, document_id: str) -> Document:
-        pass
+    def stamped(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
+        """Retrieves a previously stamped XML that failed to be retrieved in the first request.
+
+        Args:
+            cfdi (CFDI): The CFDI object to be checked.
+            accept (Accept, optional): The type of response to accept. Defaults to Accept.XML.
+
+        Raises:
+            NotImplementedError: If the accept parameter includes Accept.PDF
+            ResponseError: If the response from the Finkok SOAP web service contains an error code
+
+        Returns:
+            Document: The document with the following fields:
+                - document_id (str): The UUID of the document.
+                - xml (bytes): The XML content of the document.
+
+        Notes:
+            - This function currently only supports accepting XML responses.
+            - If the accept parameter includes Accept.PDF, a NotImplementedError is raised.
+        """
+        return self._perform_stamp_operation(
+            cfdi=cfdi, accept=accept, operation="stamped"
+        )
 
     def pending_stamp(
         self, document_id: str, accept: Accept = Accept.XML
@@ -256,7 +294,6 @@ class Finkok(PAC):
         url = self.get_service_url("stamp")
         response = requests.post(url, data)
         root = etree.fromstring(response.text.encode())
-        open("test.xml", "wb").write(etree.tostring(root, pretty_print=True))
 
         error = root.find(".//apps:error", self.namespaces)
         if error is not None and error.text:
