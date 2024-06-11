@@ -345,8 +345,24 @@ class Finkok(PAC):
 
         uuid = cfdi["Complemento"]["TimbreFiscalDigital"]["UUID"]
         folio = cancelacion.Folio(uuid, reason.value, substitution_id)
-        cancellation = cancelacion.Cancelacion(signer, folio)
-        envelope = self._build_xml_envelope(cancellation, operation="cancel")
+        return self.cancel_comprobante(cancelacion.Cancelacion(signer, folio))
+
+    def cancel_comprobante(
+        self, cancelation: cancelacion.Cancelacion
+    ) -> CancelationAcknowledgment:
+        """Operation to request the cancellation of a CFDI document using a Cancelacion object.
+
+        Args:
+            cancelation (cancelacion.Cancelacion): The cancelation object.
+
+        Returns:
+            CancelationAcknowledgment: The acknowledgment of the cancellation.
+
+        Raises:
+            DocumentNotFoundError: If the document is not found.
+            ResponseError: If there is an error in the response.
+        """
+        envelope = self._build_xml_envelope(cancelation, operation="cancel")
 
         url = self.get_service_url("cancel")
         response = requests.post(url, data=etree.tostring(envelope))
