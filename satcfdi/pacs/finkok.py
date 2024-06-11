@@ -10,9 +10,10 @@ import requests
 from lxml import etree
 
 from satcfdi.cfdi import CFDI
+from satcfdi.models.signer import Signer
 from satcfdi.pacs import Accept, Document
 
-from ..exceptions import ResponseError
+from ..exceptions import DocumentNotFoundError, ResponseError
 from . import PAC, CancelationAcknowledgment, CancelReason, Environment
 
 
@@ -37,6 +38,7 @@ class Finkok(PAC):
         "soapenv": "http://schemas.xmlsoap.org/soap/envelope/",
         "apps": "apps.services.soap.core.views",
         "stamp": "http://facturacion.finkok.com/stamp",
+        "cancel": "http://facturacion.finkok.com/cancel",
     }
 
     def __init__(
@@ -309,4 +311,86 @@ class Finkok(PAC):
             status=DocumentStatus(status.text),
         )
 
-        return Document(document_id=uuid, xml=xml.encode())
+    def cancel(
+        self,
+        cfdi: CFDI,
+        reason: CancelReason,
+        substitution_id: str = None,
+        signer: Signer = None,
+    ) -> CancelationAcknowledgment:
+        """Cancels a CFDI document using the Finkok API.
+
+        Args:
+            cfdi (CFDI): The CFDI document to be canceled.
+            reason (CancelReason): The reason for canceling the CFDI document.
+            substitution_id (str, optional): The ID of the substitution document. Defaults to None.
+            signer (Signer): The signer of the CFDI document.
+
+        Returns:
+            CancelationAcknowledgment: The acknowledgment of the cancellation.
+
+        Raises:
+            ValueError: If the signer is not provided.
+            DocumentNotFoundError: If the CFDI document to cancel is not found.
+            ResponseError: If there is an error in the response from the API.
+        """
+        if signer is None:
+            raise ValueError("signer is required")
+
+        cancel_element = etree.Element(etree.QName(self.namespaces["cancel"], "cancel"))
+        uuids = etree.SubElement(
+            cancel_element, etree.QName(self.namespaces["cancel"], "UUIDS")
+        )
+        namespaces = {"apps": "apps.services.soap.core.views"}
+        etree.SubElement(
+            uuids,
+            etree.QName(namespaces["apps"], "UUID"),
+            attrib={
+                "UUID": cfdi["Complemento"]["TimbreFiscalDigital"]["UUID"],
+                "FolioSustitucion": substitution_id or "",
+                "Motivo": reason.value,
+            },
+        )
+
+        self._add_auth(cancel_element, self.namespaces["cancel"])
+
+        taxpayer_id = etree.SubElement(
+            cancel_element, etree.QName(self.namespaces["cancel"], "taxpayer_id")
+        )
+        taxpayer_id.text = cfdi["Emisor"]["Rfc"]
+
+        cert = etree.SubElement(
+            cancel_element, etree.QName(self.namespaces["cancel"], "cer")
+        )
+        cert_pem = signer.certificate_PEM()
+        pub_key = signer.public_key_PEM
+        cert.text = b64encode(pub_key + cert_pem)
+
+        private_key = etree.SubElement(
+            cancel_element, etree.QName(self.namespaces["cancel"], "key")
+        )
+        private_key.text = b64encode(signer.key_bytes(encoding="PEM"))
+
+        store_pending = etree.SubElement(
+            cancel_element, etree.QName(self.namespaces["cancel"], "store_pending")
+        )
+        store_pending.text = "0"
+
+        envelope = self._build_envelope(cancel_element, namespaces)
+
+        url = self.get_service_url("cancel")
+        response = requests.post(url, data=etree.tostring(envelope))
+        root = etree.fromstring(response.text.encode())
+
+        ws_status = root.find(".//apps:CodEstatus", self.namespaces)
+        if ws_status is not None and ws_status.text:
+            if ws_status.text.endswith("No Encontrado"):
+                raise DocumentNotFoundError(ws_status.text)
+            raise ResponseError(ws_status.text)
+
+        cancellation_status = root.find(".//apps:EstatusUUID", self.namespaces).text
+        ack = root.find(".//apps:Acuse", self.namespaces)
+
+        return CancelationAcknowledgment(
+            code=cancellation_status, acuse=unescape(ack.text).encode()
+        )
