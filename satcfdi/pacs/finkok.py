@@ -3,15 +3,16 @@ from dataclasses import dataclass
 from enum import Enum
 from html import unescape
 from logging import getLogger
-from typing import Dict
 from warnings import warn
 
 import requests
 from lxml import etree
 
 from satcfdi.cfdi import CFDI
+from satcfdi.create.cancela import cancelacion
 from satcfdi.models.signer import Signer
 from satcfdi.pacs import Accept, Document
+from satcfdi.xelement import XElement
 
 from ..exceptions import DocumentNotFoundError, ResponseError
 from . import PAC, CancelationAcknowledgment, CancelReason, Environment
@@ -48,17 +49,16 @@ class Finkok(PAC):
         self.username = username
         self.password = password
 
-    def _build_envelope(
-        self, param_element: etree.Element, nsmap: Dict[str, str] = {}
-    ) -> etree.Element:
-        namespaces = {**self.namespaces, **nsmap}
+    def _build_envelope(self, body_child: etree.Element) -> etree.Element:
+        envelope_qname = etree.QName(self.namespaces["soapenv"], "Envelope")
+        envelope = etree.Element(envelope_qname, nsmap=self.namespaces)
 
-        envelope = etree.Element(
-            etree.QName(namespaces["soapenv"], "Envelope"), nsmap=namespaces
-        )
-        envelope.append(etree.Element(etree.QName(namespaces["soapenv"], "Header")))
-        body = etree.SubElement(envelope, etree.QName(namespaces["soapenv"], "Body"))
-        body.append(param_element)
+        header_qname = etree.QName(self.namespaces["soapenv"], "Header")
+        envelope.append(etree.Element(header_qname))
+
+        body_qname = etree.QName(self.namespaces["soapenv"], "Body")
+        body = etree.SubElement(envelope, body_qname)
+        body.append(body_child)
         return envelope
 
     def _add_auth(self, element: etree.Element, namespace: str) -> etree.Element:
@@ -68,26 +68,32 @@ class Finkok(PAC):
         password.text = self.password
         return element
 
-    def _build_stamp_envelope(self, cfdi: CFDI, operation: str) -> etree.Element:
-        stamp_ns = self.namespaces["stamp"]
+    def _build_xml_envelope(self, xelement: XElement, operation: str) -> etree.Element:
         match operation:
             case "issue":
+                namespace = self.namespaces["stamp"]
                 tag = "sign_stamp"
             case "stamp":
+                namespace = self.namespaces["stamp"]
                 tag = "stamp"
             case "quick_stamp":
+                namespace = self.namespaces["stamp"]
                 tag = "quick_stamp"
             case "stamped":
+                namespace = self.namespaces["stamp"]
                 tag = "stamped"
+            case "cancel":
+                namespace = self.namespaces["cancel"]
+                tag = "cancel_signature"
             case _:
                 raise NotImplementedError("Operation not supported")
 
-        stamp = etree.Element(etree.QName(stamp_ns, tag))
-        xml = etree.SubElement(stamp, etree.QName(stamp_ns, "xml"))
-        xml.text = b64encode(cfdi.xml_bytes(xml_declaration=True))
-        stamp = self._add_auth(stamp, stamp_ns)
+        operation_element = etree.Element(etree.QName(namespace, tag))
+        xml = etree.SubElement(operation_element, etree.QName(namespace, "xml"))
+        xml.text = b64encode(xelement.xml_bytes(xml_declaration=True))
+        operation_element = self._add_auth(operation_element, namespace)
 
-        return self._build_envelope(stamp)
+        return self._build_envelope(operation_element)
 
     def _build_query_envelope(self, document_id: str) -> etree.Element:
         query_element = etree.Element(
@@ -153,7 +159,7 @@ class Finkok(PAC):
         if accept & Accept.PDF:
             raise NotImplementedError("accept PDF not supported")
 
-        envelope = self._build_stamp_envelope(cfdi, operation)
+        envelope = self._build_xml_envelope(cfdi, operation)
         url = self.get_service_url("stamp")
         root = self._perform_request(url, envelope)
 
@@ -337,46 +343,10 @@ class Finkok(PAC):
         if signer is None:
             raise ValueError("signer is required")
 
-        cancel_element = etree.Element(etree.QName(self.namespaces["cancel"], "cancel"))
-        uuids = etree.SubElement(
-            cancel_element, etree.QName(self.namespaces["cancel"], "UUIDS")
-        )
-        namespaces = {"apps": "apps.services.soap.core.views"}
-        etree.SubElement(
-            uuids,
-            etree.QName(namespaces["apps"], "UUID"),
-            attrib={
-                "UUID": cfdi["Complemento"]["TimbreFiscalDigital"]["UUID"],
-                "FolioSustitucion": substitution_id or "",
-                "Motivo": reason.value,
-            },
-        )
-
-        self._add_auth(cancel_element, self.namespaces["cancel"])
-
-        taxpayer_id = etree.SubElement(
-            cancel_element, etree.QName(self.namespaces["cancel"], "taxpayer_id")
-        )
-        taxpayer_id.text = cfdi["Emisor"]["Rfc"]
-
-        cert = etree.SubElement(
-            cancel_element, etree.QName(self.namespaces["cancel"], "cer")
-        )
-        cert_pem = signer.certificate_PEM()
-        pub_key = signer.public_key_PEM
-        cert.text = b64encode(pub_key + cert_pem)
-
-        private_key = etree.SubElement(
-            cancel_element, etree.QName(self.namespaces["cancel"], "key")
-        )
-        private_key.text = b64encode(signer.key_bytes(encoding="PEM"))
-
-        store_pending = etree.SubElement(
-            cancel_element, etree.QName(self.namespaces["cancel"], "store_pending")
-        )
-        store_pending.text = "0"
-
-        envelope = self._build_envelope(cancel_element, namespaces)
+        uuid = cfdi["Complemento"]["TimbreFiscalDigital"]["UUID"]
+        folio = cancelacion.Folio(uuid, reason.value, substitution_id)
+        cancellation = cancelacion.Cancelacion(signer, folio)
+        envelope = self._build_xml_envelope(cancellation, operation="cancel")
 
         url = self.get_service_url("cancel")
         response = requests.post(url, data=etree.tostring(envelope))
