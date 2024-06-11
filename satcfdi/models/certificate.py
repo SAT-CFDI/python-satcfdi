@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import base64
 from enum import Enum, auto
+from typing import Literal
 
 from OpenSSL import crypto
 from OpenSSL.crypto import X509
@@ -56,10 +57,36 @@ class Certificate:
     def certificate_bytes(self) -> bytes:
         return crypto.dump_certificate(crypto.FILETYPE_ASN1, self.certificate)
 
-    def certificate_base64(self) -> str:
-        return base64.b64encode(
-            self.certificate_bytes()
-        ).decode()
+    def certificate_PEM(self) -> str:
+        """Returns the certificate in PEM encoding
+
+        Returns:
+            str: The certificate in PEM encoding
+        """
+        return crypto.dump_certificate(crypto.FILETYPE_PEM, self.certificate)
+
+    def certificate_base64(self, format: Literal["ASN1", "PEM"] = "ASN1") -> str:
+        """Returns the certificate in base64 encoding
+
+        Args:
+            format (Literal["ASN1";, "PEM"], optional): The format of the certificate. Defaults to `ASN1`.
+            - `ASN1`: Returns the certificate in ASN.1 format
+            - `PEM`: Returns the certificate in PEM format
+
+        Raises:
+            ValueError: If the format is not "ASN1" or "PEM"
+
+        Returns:
+            str: The certificate in base64 encoding
+        """
+        match format:
+            case "ASN1":
+                cert = self.certificate_bytes()
+            case "PEM":
+                cert = self.certificate_PEM()
+            case _:
+                raise ValueError("format must be 'ASN1' or 'PEM'")
+        return base64.b64encode(cert).decode()
 
     def issuer(self) -> str:
         # return self.certificate.to_cryptography().issuer.rfc4514_string()
@@ -160,6 +187,10 @@ class Certificate:
 
     def public_key(self) -> rsa.RSAPublicKey:
         return self.certificate.get_pubkey().to_cryptography_key()
+
+    @property
+    def public_key_PEM(self) -> str:
+        return crypto.dump_publickey(crypto.FILETYPE_PEM, self.certificate.get_pubkey())
 
     def _verify(self, data, signature, algorithm) -> bool:
         try:
