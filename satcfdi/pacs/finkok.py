@@ -136,8 +136,8 @@ class Finkok(PAC):
             etree.Element: The parsed XML response from the request.
         """
         data = etree.tostring(envelope)
-        response = requests.post(url, data=data)
-        return etree.fromstring(response.text.encode())
+        response = requests.post(url=url, data=data)
+        return etree.fromstring(response.content)
 
     def _validate_response(self, root: etree.Element):
         status = root.find(".//apps:CodEstatus", self.namespaces)
@@ -147,7 +147,10 @@ class Finkok(PAC):
             code = issue.find("apps:CodigoError", self.namespaces)
             msg = issue.find("apps:MensajeIncidencia", self.namespaces)
             full_msg = f"{code.text} - {msg.text}" if code is not None else msg.text
-            if status is not None:
+            if (
+                status is None
+                or status.text != "Comprobante timbrado satisfactoriamente"
+            ):
                 raise ResponseError(full_msg)
             warn(full_msg)
 
