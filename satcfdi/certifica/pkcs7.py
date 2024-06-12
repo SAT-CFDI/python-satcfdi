@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, UTC
 
 from ..ans1e import Ans1Encoder, Numbers, Classes, to_utc_time
 from ..models import Signer
@@ -19,7 +19,7 @@ def create_pkcs7(data, signer: Signer, hash_algorithm):
     hash_object.update(data)
     digest = hash_object.finalize()
 
-    utctime = to_utc_time(datetime.utcnow())
+    utctime = to_utc_time(datetime.now(UTC).replace(tzinfo=None))
 
     e = Ans1Encoder()
     with e.seq():

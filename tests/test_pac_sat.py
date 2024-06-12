@@ -1,6 +1,6 @@
 import os.path
 import types
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from decimal import Decimal
 from pprint import PrettyPrinter
 from unittest import mock
@@ -118,7 +118,7 @@ def test_sat_service_authentication():
     signer = get_signer('xiqb891116qe4')
 
     with mock.patch(f'{module}.pacs.sat.datetime') as m:
-        m.utcnow = mock.Mock(return_value=datetime(2022, 1, 1))
+        m.now = mock.Mock(return_value=datetime(2022, 1, 1))
 
         req = _CFDIAutenticacion(signer=signer)
         res = req.get_payload()
@@ -131,7 +131,7 @@ def test_sat_service_solicitud():
     signer = get_signer('xiqb891116qe4')
 
     with mock.patch(f'{module}.pacs.sat.datetime') as m:
-        m.utcnow = mock.Mock(return_value=datetime(2022, 1, 1))
+        m.now = mock.Mock(return_value=datetime(2022, 1, 1))
 
         req = _CFDISolicitaDescarga(
             signer=signer,
@@ -170,7 +170,7 @@ def test_pac_sat_uuid():
     sat_service = SAT(environment=Environment.TEST, signer=signer)
 
     sat_service.token_comprobante = {
-        "Expires": datetime.utcnow() + timedelta(seconds=3600),
+        "Expires": datetime.now(UTC).replace(tzinfo=None) + timedelta(seconds=3600),
         "AutenticaResult": "token_comprobante"
     }
 
@@ -198,7 +198,7 @@ def test_pac_sat_rfc():
     sat_service = SAT(environment=Environment.TEST, signer=signer)
 
     sat_service.token_comprobante = {
-        "Expires": datetime.utcnow() + timedelta(seconds=3600),
+        "Expires": datetime.now(UTC).replace(tzinfo=None) + timedelta(seconds=3600),
         "AutenticaResult": "token_comprobante"
     }
 
