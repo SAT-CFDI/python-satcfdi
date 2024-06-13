@@ -7,7 +7,7 @@ import time
 from abc import abstractmethod
 from collections.abc import Sequence
 from datetime import date, datetime, timedelta, UTC
-from enum import IntEnum, Enum
+from enum import IntEnum, Enum, StrEnum
 from functools import cache
 from itertools import islice
 from typing import Iterator
@@ -29,7 +29,7 @@ from . import PAC, Environment, TaxpayerStatus
 from ..create.catalogos import EstadoComprobante
 from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes
 from ..transform import MEXICO_TZ, get_timezone, verify_certificate
-from ..utils import iterate, StrEnum, parser
+from ..utils import iterate, parser
 
 logger = logging.getLogger(__name__)
 current_dir = os.path.dirname(__file__)
