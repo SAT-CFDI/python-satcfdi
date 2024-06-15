@@ -1,4 +1,4 @@
-from ..utils import StrEnum
+from enum import StrEnum
 
 
 class TipoOperacion(StrEnum):

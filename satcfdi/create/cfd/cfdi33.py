@@ -64,6 +64,13 @@ class Parte(ScalarMap):
         })
 
 
+def _find_impuesto(impuesto):
+    try:
+        return CatImpuesto[impuesto]
+    except KeyError:
+        return impuesto
+
+
 class Traslado(ScalarMap):
     """
     Nodo requerido para la información detallada de un traslado de impuesto específico.
@@ -85,7 +92,7 @@ class Traslado(ScalarMap):
     ):
         super().__init__({
             'Base': base,
-            'Impuesto': CatImpuesto.get(impuesto, impuesto),
+            'Impuesto': _find_impuesto(impuesto),
             'TipoFactor': tipo_factor,
             'TasaOCuota': tasa_o_cuota,
             'Importe': importe,
@@ -113,7 +120,7 @@ class Retencion(ScalarMap):
     ):
         super().__init__({
             'Base': base,
-            'Impuesto': CatImpuesto.get(impuesto, impuesto),
+            'Impuesto': _find_impuesto(impuesto),
             'TipoFactor': tipo_factor,
             'TasaOCuota': tasa_o_cuota,
             'Importe': importe,

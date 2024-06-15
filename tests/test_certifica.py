@@ -196,7 +196,7 @@ def test_pkcs7():
     signer = get_signer('cacx7605101p8')
 
     with mock.patch(f'{module}.certifica.pkcs7.datetime') as d:
-        d.utcnow = mock.Mock(return_value=datetime(2023, 6, 28, 19, 28, 1, tzinfo=timezone.utc))
+        d.now = mock.Mock(return_value=datetime(2023, 6, 28, 19, 28, 1, tzinfo=timezone.utc))
 
         assert data == create_pkcs7(zip_data, signer, hash_algorithm=hashes.SHA1())
 

@@ -6,8 +6,8 @@ import os
 import time
 from abc import abstractmethod
 from collections.abc import Sequence
-from datetime import date, datetime, timedelta
-from enum import IntEnum, Enum
+from datetime import date, datetime, timedelta, UTC
+from enum import IntEnum, Enum, StrEnum
 from functools import cache
 from itertools import islice
 from typing import Iterator
@@ -29,7 +29,7 @@ from . import PAC, Environment, TaxpayerStatus
 from ..create.catalogos import EstadoComprobante
 from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes
 from ..transform import MEXICO_TZ, get_timezone, verify_certificate
-from ..utils import iterate, StrEnum, parser
+from ..utils import iterate, parser
 
 logger = logging.getLogger(__name__)
 current_dir = os.path.dirname(__file__)
@@ -213,7 +213,7 @@ class _CFDIAutenticacion(_SATRequest):
     DATE_TIME_FORMAT: str = '%Y-%m-%dT%H:%M:%S.%fZ'
 
     def _prepare_payload(self, root):
-        date_created = datetime.utcnow()
+        date_created = datetime.now(UTC).replace(tzinfo=None)
         date_expires = date_created + timedelta(seconds=self.arguments.get("seconds", 300))
         security = root.find('{*}Header/{*}Security')
 
@@ -364,12 +364,12 @@ class SAT(PAC):
         )
 
     def _get_token_comprobante(self):
-        if self.token_comprobante is None or self.token_comprobante["Expires"] <= datetime.utcnow() + timedelta(seconds=30):
+        if self.token_comprobante is None or self.token_comprobante["Expires"] <= datetime.now(UTC).replace(tzinfo=None) + timedelta(seconds=30):
             self.token_comprobante = self._autentica_comprobante()
         return self.token_comprobante["AutenticaResult"]
 
     def _get_token_retencion(self):
-        if self.token_retencion is None or self.token_retencion["Expires"] <= datetime.utcnow() + timedelta(seconds=30):
+        if self.token_retencion is None or self.token_retencion["Expires"] <= datetime.now(UTC).replace(tzinfo=None) + timedelta(seconds=30):
             self.token_retencion = self._autentica_retencion()
         return self.token_retencion["AutenticaResult"]
 

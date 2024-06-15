@@ -33,13 +33,13 @@ def iterate(item):
     yield item
 
 
-class StrEnum(str, enum.Enum):  # Compatible with Python 3.10
-    def __str__(self):
-        return self.value
-
-    def __format__(self, format_spec):
-        return self.value.__format__(format_spec)
-
-    @classmethod
-    def get(cls, key, default=None):
-        return cls._member_map_.get(key, default)
+# class StrEnum(str, enum.Enum):  # Compatible with Python 3.10
+#     def __str__(self):
+#         return self.value
+#
+#     def __format__(self, format_spec):
+#         return self.value.__format__(format_spec)
+#
+#     @classmethod
+#     def get(cls, key, default=None):
+#         return cls._member_map_.get(key, default)
