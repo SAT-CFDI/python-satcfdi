@@ -159,6 +159,9 @@ class Finkok(PAC):
             logger.debug(status.text)
 
     def _perform_stamp_operation(self, cfdi: CFDI, accept: Accept, operation: str):
+        if not isinstance(cfdi, CFDI):
+            raise TypeError("cfdi must be a CFDI object")
+
         if accept & Accept.PDF:
             raise NotImplementedError("accept PDF not supported")
 
