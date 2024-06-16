@@ -49,6 +49,10 @@ class Finkok(PAC):
         self.username = username
         self.password = password
 
+    @property
+    def _logger(self):
+        return getLogger(f"{self.__module__}.{self.__class__.__name__}")
+
     def _build_envelope(self, body_child: etree.Element) -> etree.Element:
         envelope_qname = etree.QName(self.namespaces["soapenv"], "Envelope")
         envelope = etree.Element(envelope_qname, nsmap=self.namespaces)
@@ -139,7 +143,7 @@ class Finkok(PAC):
         response = requests.post(url=url, data=data)
         return etree.fromstring(response.content)
 
-    def _validate_response(self, root: etree.Element):
+    def _validate_stamp_response(self, root: etree.Element):
         status = root.find(".//apps:CodEstatus", self.namespaces)
         issues = root.find(".//apps:Incidencias", self.namespaces)
 
@@ -155,8 +159,18 @@ class Finkok(PAC):
             warn(full_msg)
 
         if status is not None and status.text:
-            logger = getLogger(f"{self.__module__}.{self.__class__.__name__}")
-            logger.debug(status.text)
+            self._logger.info(status.text)
+
+    def _validate_cancel_response(self, root: etree.Element):
+        cancel_status = root.find(".//apps:EstatusCancelacion", self.namespaces)
+        if cancel_status is not None and cancel_status.text:
+            self._logger.info(cancel_status.text)
+
+        ws_status = root.find(".//apps:CodEstatus", self.namespaces)
+        if ws_status is not None and ws_status.text:
+            if ws_status.text.endswith("No Encontrado"):
+                raise DocumentNotFoundError(ws_status.text)
+            raise ResponseError(ws_status.text)
 
     def _perform_stamp_operation(self, cfdi: CFDI, accept: Accept, operation: str):
         if not isinstance(cfdi, CFDI):
@@ -169,7 +183,7 @@ class Finkok(PAC):
         url = self.get_service_url("stamp")
         root = self._perform_request(url, envelope)
 
-        self._validate_response(root)
+        self._validate_stamp_response(root)
 
         xml = root.find(".//apps:xml", self.namespaces).text
         uuid = root.find(".//apps:UUID", self.namespaces).text
@@ -368,14 +382,9 @@ class Finkok(PAC):
         envelope = self._build_xml_envelope(cancelation, operation="cancel")
 
         url = self.get_service_url("cancel")
-        response = requests.post(url, data=etree.tostring(envelope))
-        root = etree.fromstring(response.text.encode())
+        root = self._perform_request(url, envelope)
 
-        ws_status = root.find(".//apps:CodEstatus", self.namespaces)
-        if ws_status is not None and ws_status.text:
-            if ws_status.text.endswith("No Encontrado"):
-                raise DocumentNotFoundError(ws_status.text)
-            raise ResponseError(ws_status.text)
+        self._validate_cancel_response(root)
 
         cancellation_status = root.find(".//apps:EstatusUUID", self.namespaces).text
         ack = root.find(".//apps:Acuse", self.namespaces)
