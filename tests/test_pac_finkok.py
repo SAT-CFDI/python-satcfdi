@@ -4,9 +4,10 @@ from unittest import mock
 
 from utils import get_signer, verify_result
 
+from satcfdi.cfdi import CFDI
 from satcfdi.create.cfd import cfdi40
 from satcfdi.create.cfd.catalogos import Impuesto, RegimenFiscal, TipoFactor, UsoCFDI
-from satcfdi.pacs import Environment
+from satcfdi.pacs import CancelationAcknowledgment, CancelReason, Environment
 from satcfdi.pacs.finkok import DocumentStatus, Finkok, PendingDocument
 
 finkok = Finkok(
@@ -19,7 +20,10 @@ signer = get_signer("eku9003173c9", get_csd=True)
 
 emisor = cfdi40.Emisor(rfc=signer.rfc, nombre=signer.legal_name, regimen_fiscal="601")
 
-url_maping = {"stamp": "https://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl"}
+url_maping = {
+    "stamp": "https://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl",
+    "cancel": "https://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl",
+}
 
 
 def build_invoice():
@@ -131,9 +135,7 @@ def test_finkok_stamp():
 
 def test_finkok_stamped():
     current_dir = os.path.dirname(__file__)
-    invoice = cfdi40.CFDI.from_file(
-        current_dir + "/test_pac_finkok/test_finkok_stamped.xml"
-    )
+    invoice = CFDI.from_file(current_dir + "/test_pac_finkok/test_finkok_stamped.xml")
 
     with mock.patch("requests.post") as mk:
         mk.return_value.ok = True
@@ -163,3 +165,28 @@ def test_finkok_pending_stamp():
         assert mk.called
 
         assert mk.call_args.kwargs["url"] == url_maping["stamp"]
+
+
+def test_finkok_cancel():
+    cfdi = CFDI(
+        {
+            "Complemento": {
+                "TimbreFiscalDigital": {"UUID": "B107F0AC-6BC3-52CF-A3D7-5E9479414209"}
+            }
+        }
+    )
+
+    with mock.patch("requests.post") as mk:
+        mk.return_value.ok = True
+        mk.return_value.content = b'<?xml version=\'1.0\' encoding=\'UTF-8\'?>\n<senv:Envelope xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:s0="apps.services.soap.core.views" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://facturacion.finkok.com/cancel" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><senv:Body><tns:cancel_signatureResponse><tns:cancel_signatureResult><s0:Folios><s0:Folio><s0:UUID>B107F0AC-6BC3-52CF-A3D7-5E9479414209</s0:UUID><s0:EstatusUUID>201</s0:EstatusUUID><s0:EstatusCancelacion>Petici\xc3\xb3n de cancelaci\xc3\xb3n realizada exitosamente</s0:EstatusCancelacion></s0:Folio></s0:Folios><s0:Acuse>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"&gt;&lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;&lt;CancelaCFDResponse xmlns="http://cancelacfd.sat.gob.mx"&gt;&lt;CancelaCFDResult Fecha="2024-06-16T12:37:01" RfcEmisor="EKU9003173C9"&gt;&lt;Folios&gt;&lt;UUID&gt;B107F0AC-6BC3-52CF-A3D7-5E9479414209&lt;/UUID&gt;&lt;EstatusUUID&gt;201&lt;/EstatusUUID&gt;&lt;/Folios&gt;&lt;Signature Id="SelloSAT" xmlns="http://www.w3.org/2000/09/xmldsig#"&gt;&lt;SignedInfo&gt;&lt;CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/&gt;&lt;SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#hmac-sha512"/&gt;&lt;Reference URI=""&gt;&lt;Transforms&gt;&lt;Transform Algorithm="http://www.w3.org/TR/1999/REC-xpath-19991116"&gt;&lt;XPath&gt;not(ancestor-or-self::*[local-name()=\'Signature\'])&lt;/XPath&gt;&lt;/Transform&gt;&lt;/Transforms&gt;&lt;DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/&gt;&lt;DigestValue&gt;P2lENAhvzEBJuAS1aIPcpZVjYN2A73ckFc0wkj+XPA2rp6NRIVGFEPL3qCSAwl2R2+xx1ZaItMkSuv+f5t3ZGA==&lt;/DigestValue&gt;&lt;/Reference&gt;&lt;/SignedInfo&gt;&lt;SignatureValue&gt;EeXPV2EIrQtZzERdWgvrVOkl5HVcBVwZChX2Q/q9W2KzliiVWTznzVNVPqzaAvGkaZqAdv6KzbPeD9fUXTpB5g==&lt;/SignatureValue&gt;&lt;KeyInfo&gt;&lt;KeyName&gt;00001088888800000093&lt;/KeyName&gt;&lt;KeyValue&gt;&lt;RSAKeyValue&gt;&lt;Modulus&gt;yxMvUucuS+s3aeWTFZvJrrFWIdes7kIDJmO7DA5DP+ZTapofNt37fgeIHlTUdAVvd/fDKhfiwNSh+vbrNbD58X3UEdQor3ngb6zpjrDjgYsedckPLv6fro4DO0NXLCdALFqhN8ARyX77kYBnvIj1fOSVp401Vc3urLUtiEm16Kle3tOyWhfjgFzdK3oAIXF8oeei/GburWbJnpP+NeGaHVE5bkxLCBp5757nKVonXwzpfpEGuBp204NGkI2/jyA2EH8wyRN4yUvzjT7IJYrHng23klRDlJoRYwa98QQPdQSTpcrlNu8nLhpQdI/zMTLoNF2NiBCkQNuAMacKhnvlVw==&lt;/Modulus&gt;&lt;Exponent&gt;AQAB&lt;/Exponent&gt;&lt;/RSAKeyValue&gt;&lt;/KeyValue&gt;&lt;/KeyInfo&gt;&lt;/Signature&gt;&lt;/CancelaCFDResult&gt;&lt;/CancelaCFDResponse&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</s0:Acuse><s0:Fecha>2024-06-16T12:37:01</s0:Fecha><s0:RfcEmisor>EKU9003173C9</s0:RfcEmisor></tns:cancel_signatureResult></tns:cancel_signatureResponse></senv:Body></senv:Envelope>'
+
+        res = finkok.cancel(
+            cfdi=cfdi,
+            reason=CancelReason.COMPROBANTE_EMITIDO_CON_ERRORES_SIN_RELACION,
+            signer=signer,
+        )
+        assert mk.called
+        assert mk.call_args.kwargs["url"] == url_maping["cancel"]
+        assert isinstance(res, CancelationAcknowledgment)
+
+        assert res.code == "201"
