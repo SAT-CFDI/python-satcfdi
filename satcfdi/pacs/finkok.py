@@ -303,11 +303,8 @@ class Finkok(PAC):
             raise NotImplementedError("accept PDF not supported")
 
         envelope = self._build_query_envelope(document_id)
-        data = etree.tostring(envelope)
-
         url = self.get_service_url("stamp")
-        response = requests.post(url, data)
-        root = etree.fromstring(response.text.encode())
+        root = self._perform_request(url, envelope)
 
         error = root.find(".//apps:error", self.namespaces)
         if error is not None and error.text:
