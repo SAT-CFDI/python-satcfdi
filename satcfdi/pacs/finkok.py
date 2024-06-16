@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 from html import unescape
 from logging import getLogger
+from typing import Literal
 from warnings import warn
 
 import requests
@@ -36,10 +37,10 @@ class Finkok(PAC):
 
     RFC = "FIN1203015JA"
     namespaces = {
-        "soapenv": "http://schemas.xmlsoap.org/soap/envelope/",
         "apps": "apps.services.soap.core.views",
-        "stamp": "http://facturacion.finkok.com/stamp",
         "cancel": "http://facturacion.finkok.com/cancel",
+        "soapenv": "http://schemas.xmlsoap.org/soap/envelope/",
+        "stamp": "http://facturacion.finkok.com/stamp",
     }
 
     def __init__(
@@ -120,7 +121,7 @@ class Finkok(PAC):
             case _:
                 raise NotImplementedError("Environment not supported")
 
-    def get_service_url(self, operation: str):
+    def get_service_url(self, operation: Literal["stamp", "cancel"]):
         if operation not in ["stamp", "cancel"]:
             raise NotImplementedError(f"Operation {operation} not supported")
         return f"{self.host}/servicios/soap/{operation}.wsdl"
@@ -188,6 +189,20 @@ class Finkok(PAC):
         xml = root.find(".//apps:xml", self.namespaces).text
         uuid = root.find(".//apps:UUID", self.namespaces).text
         return Document(document_id=uuid, xml=xml.encode())
+
+    def _perform_cancel_operation(self, cancellation: XElement):
+        envelope = self._build_xml_envelope(cancellation, "cancel")
+        url = self.get_service_url("cancel")
+        root = self._perform_request(url, envelope)
+
+        self._validate_cancel_response(root)
+
+        cancellation_status = root.find(".//apps:EstatusUUID", self.namespaces).text
+        ack = root.find(".//apps:Acuse", self.namespaces)
+
+        return CancelationAcknowledgment(
+            code=cancellation_status, acuse=unescape(ack.text).encode()
+        )
 
     def issue(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
         """Operation to request CFDI to be sealed and stamped by Finkok.
@@ -379,16 +394,4 @@ class Finkok(PAC):
             DocumentNotFoundError: If the document is not found.
             ResponseError: If there is an error in the response.
         """
-        envelope = self._build_xml_envelope(cancelation, operation="cancel")
-
-        url = self.get_service_url("cancel")
-        root = self._perform_request(url, envelope)
-
-        self._validate_cancel_response(root)
-
-        cancellation_status = root.find(".//apps:EstatusUUID", self.namespaces).text
-        ack = root.find(".//apps:Acuse", self.namespaces)
-
-        return CancelationAcknowledgment(
-            code=cancellation_status, acuse=unescape(ack.text).encode()
-        )
+        return self._perform_cancel_operation(cancelation, False)
