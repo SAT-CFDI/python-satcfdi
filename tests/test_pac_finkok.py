@@ -7,7 +7,7 @@ from utils import get_signer, verify_result
 from satcfdi.create.cfd import cfdi40
 from satcfdi.create.cfd.catalogos import Impuesto, RegimenFiscal, TipoFactor, UsoCFDI
 from satcfdi.pacs import Environment
-from satcfdi.pacs.finkok import Finkok
+from satcfdi.pacs.finkok import DocumentStatus, Finkok, PendingDocument
 
 finkok = Finkok(
     username="user@email.com",
@@ -142,6 +142,23 @@ def test_finkok_stamped():
 
         assert verify_result(res.xml, filename="test_finkok_stamped.xml")
         assert not res.pdf
+
+        assert mk.called
+
+        assert mk.call_args.kwargs["url"] == url_maping["stamp"]
+
+
+def test_finkok_pending_stamp():
+
+    with mock.patch("requests.post") as mk:
+        mk.return_value.ok = True
+        mk.return_value.content = b'<?xml version=\'1.0\' encoding=\'UTF-8\'?>\n<senv:Envelope xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:s0="apps.services.soap.core.views" xmlns:s1="https://facturacion.finkok.com/servicios/async" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://facturacion.finkok.com/stamp" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><senv:Body><tns:query_pendingResponse><tns:query_pendingResult><s0:status>S</s0:status><s0:uuid>4C012AAE-0127-5B98-9647-5F0BA84BA552</s0:uuid><s0:error></s0:error><s0:date>2024-06-15 19:49:36.367515</s0:date></tns:query_pendingResult></tns:query_pendingResponse></senv:Body></senv:Envelope>'
+
+        res = finkok.pending_stamp("4C012AAE-0127-5B98-9647-5F0BA84BA552")
+
+        assert isinstance(res, PendingDocument)
+        assert res.document_id == "4C012AAE-0127-5B98-9647-5F0BA84BA552"
+        assert isinstance(res.status, DocumentStatus)
 
         assert mk.called
 
