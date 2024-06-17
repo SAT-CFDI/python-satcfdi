@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 from datetime import datetime
+from typing import Literal
 
 from ..w3.signature import signature_c14n_sha1
 from ...models import Signer
@@ -8,22 +9,23 @@ from ...xelement import XElement
 
 
 class Folios(ScalarMap):
-    def __init__(
-            self,
-            respuesta: str,
-            uuid: str = None,
-    ): 
+    def __init__(self, respuesta: Literal["Aceptacion", "Rechazo"], uuid: str = None):
         """
-        
-        :param respuesta: 
-        :param uuid: 
+
+        :param respuesta: "Rechazo" o "Aceptacion"
+        :param uuid: El UUID del documento que se desea aceptar o rechazar
         """
-        
-        super().__init__({
-            'Respuesta': respuesta,
-            'UUID': uuid,
-        })
-        
+        if respuesta not in ["Aceptacion", "Rechazo"]:
+            msg = f'respuesta must be "Aceptacion" or "Rechazo", found {respuesta} instead'
+            raise ValueError(msg)
+
+        super().__init__(
+            {
+                "Respuesta": respuesta,
+                "UUID": uuid,
+            }
+        )
+
 
 class SolicitudAceptacionRechazo(XElement):
     """
@@ -70,8 +72,3 @@ class SolicitudAceptacionRechazo(XElement):
             }
         )
         self['Signature'] = sig
-
-
-
-
-
