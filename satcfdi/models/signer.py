@@ -77,13 +77,13 @@ class Signer(Certificate):
         )
 
     def key_bytes(
-        self, password: str | bytes = None, encoding: Literal["DER", "PEM"] = "DER"
+        self, password: str | bytes = None, encoding: Encoding = Encoding.DER
     ) -> bytes:
         """Returns the private key in bytes
 
         Args:
             password (str | bytes, optional): The password to decrypt the private key. Defaults to None.
-            encoding (Literal["DER";, "PEM"], optional): The encoding format of the private key. Defaults to "DER".
+            encoding (cryptography.hazmat.primitives.serialization.Encoding, optional): The encoding format of the private key. Defaults to "DER".
 
         Raises:
             ValueError: If the encoding is not "DER" or "PEM"
@@ -93,14 +93,6 @@ class Signer(Certificate):
         """
         if isinstance(password, str):
             password = password.encode()
-
-        match encoding:
-            case "DER":
-                encoding = Encoding.DER
-            case "PEM":
-                encoding = Encoding.PEM
-            case _:
-                raise ValueError("Encoding must be 'DER' or 'PEM'")
 
         return self.key.private_bytes(
             encoding=encoding,
