@@ -444,3 +444,20 @@ class Finkok(PAC):
             ResponseError: If there is an error in the response.
         """
         return self._perform_cancel_operation(request, "accept_reject")
+
+    def pending(self, rfc: str) -> list[str]:
+        namespace = self.namespaces["cancel"]
+        operation_element = etree.Element(etree.QName(namespace, "get_pending"))
+
+        rtaxpayer_id = etree.SubElement(
+            operation_element, etree.QName(namespace, "rtaxpayer_id")
+        )
+        rtaxpayer_id.text = rfc
+
+        operation_element = self._add_auth(operation_element, namespace)
+        envelope = self._build_envelope(operation_element)
+
+        url = self.get_service_url("cancel")
+        root = self._perform_request(url, envelope)
+
+        return [uuid.text for uuid in root.find(".//apps:uuids", self.namespaces)]

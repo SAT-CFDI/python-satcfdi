@@ -230,3 +230,14 @@ def test_finkok_accept_reject():
         assert mk.called
         assert mk.call_args.kwargs["url"] == url_maping["cancel"]
         assert isinstance(res, AcceptRejectAcknowledgment)
+
+
+def test_finkok_pending():
+    with mock.patch("requests.post") as mk:
+        mk.return_value.ok = True
+        mk.return_value.content = b'<?xml version=\'1.0\' encoding=\'UTF-8\'?>\n<senv:Envelope xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:tns="http://facturacion.finkok.com/cancel" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s1="http://facturacion.finkok.com/cancellation" xmlns:s0="apps.services.soap.core.views" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"><senv:Body><tns:get_pendingResponse><tns:get_pendingResult><s0:uuids><tns:string>2D0E7634-886F-4119-B58F-2DCA228D510F</tns:string></s0:uuids></tns:get_pendingResult></tns:get_pendingResponse></senv:Body></senv:Envelope>'
+
+        res = finkok.pending("MAG041126GT8")
+        assert mk.called
+        assert mk.call_args.kwargs["url"] == url_maping["cancel"]
+        assert "2D0E7634-886F-4119-B58F-2DCA228D510F" in res
