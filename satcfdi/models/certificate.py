@@ -7,6 +7,8 @@ from OpenSSL import crypto
 from OpenSSL.crypto import X509
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.serialization import PublicFormat, Encoding
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 
 from .curp import CURP
@@ -48,34 +50,32 @@ class Certificate:
         self.certificate = certificate
 
     @classmethod
-    def load_certificate(cls, certificate: bytes, type: int = crypto.FILETYPE_ASN1) -> 'Certificate':
-        return cls(crypto.load_certificate(type, certificate))
+    def load_certificate(cls, certificate: bytes, encoding: Encoding = Encoding.DER) -> 'Certificate':
+        if encoding == Encoding.PEM:
+            t = crypto.FILETYPE_PEM
+        elif encoding == Encoding.DER:
+            t = crypto.FILETYPE_ASN1
+        else:
+            raise CFDIError(f"Invalid encoding {encoding}")
+        return cls(crypto.load_certificate(t, certificate))
 
     def fingerprint(self, algorithm=hashes.SHA1()) -> bytes:
         return self.certificate.to_cryptography().fingerprint(algorithm=algorithm)
 
-    def certificate_bytes(self, type: int = crypto.FILETYPE_ASN1) -> bytes:
-        return crypto.dump_certificate(type, self.certificate)
+    def certificate_bytes(self, encoding: Encoding = Encoding.DER) -> bytes:
+        return self.certificate.to_cryptography().public_bytes(
+            encoding=encoding
+        )
 
-    def certificate_base64(self, type: int = crypto.FILETYPE_ASN1) -> str:
+    def certificate_base64(self) -> str:
         """Returns the certificate in base64 encoding
-
-        Args:
-            type (Literal["ASN1";, "PEM"], optional): The format of the certificate. Defaults to `ASN1`.
-            - `ASN1`: Returns the certificate in ASN.1 format
-            - `PEM`: Returns the certificate in PEM format
-
-        Raises:
-            ValueError: If the format is not "ASN1" or "PEM"
-
         Returns:
             str: The certificate in base64 encoding
         """
-        cert = self.certificate_bytes(type)
+        cert = self.certificate_bytes()
         return base64.b64encode(cert).decode()
 
     def issuer(self) -> str:
-        # return self.certificate.to_cryptography().issuer.rfc4514_string()
         d = self.certificate.get_issuer().get_components()
         return ','.join(f'{k.decode()}={v.decode()}' for k, v in reversed(d))
 
@@ -174,9 +174,11 @@ class Certificate:
     def public_key(self) -> rsa.RSAPublicKey:
         return self.certificate.get_pubkey().to_cryptography_key()
 
-    # @property Fill fix later
-    # def public_key(self) -> str:
-    #     return crypto.dump_publickey(crypto.FILETYPE_PEM, self.certificate.get_pubkey())
+    def public_key_bytes(self, encoding: serialization.Encoding = serialization.Encoding.DER) -> bytes:
+        return self.public_key().public_bytes(
+            encoding=encoding,
+            format=PublicFormat.SubjectPublicKeyInfo
+        )
 
     def _verify(self, data, signature, algorithm) -> bool:
         try:
