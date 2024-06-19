@@ -6,9 +6,10 @@ from utils import get_signer, verify_result
 
 from satcfdi.cfdi import CFDI
 from satcfdi.create.cancela import cancelacion
+from satcfdi.create.cancela.aceptacionrechazo import Folios, SolicitudAceptacionRechazo
 from satcfdi.create.cfd import cfdi40
 from satcfdi.create.cfd.catalogos import Impuesto, RegimenFiscal, TipoFactor, UsoCFDI
-from satcfdi.pacs import CancelReason, Environment
+from satcfdi.pacs import AcceptRejectAcknowledgment, CancelReason, Environment
 from satcfdi.pacs.finkok import DocumentStatus, Finkok, PendingDocument
 
 finkok = Finkok(
@@ -209,3 +210,23 @@ def test_finkok_cancel_comprobante():
         assert mk.called
         assert mk.call_args.kwargs["url"] == url_maping["cancel"]
         assert res.code == "201"
+
+
+def test_finkok_accept_reject():
+    request = SolicitudAceptacionRechazo(
+        rfc_receptor=signer,
+        rfc_pac_envia_solicitud="CVD110412TF6",
+        folios=[
+            Folios("Aceptacion", "E5B5DB3F-6FF8-42E0-AAE5-645FECFF96DC"),
+            Folios("Rechazo", "2D0E7634-886F-4119-B58F-2DCA228D510F"),
+        ],
+    )
+
+    with mock.patch("requests.post") as mk:
+        mk.return_value.ok = True
+        mk.return_value.content = b'<?xml version=\'1.0\' encoding=\'UTF-8\'?>\n<senv:Envelope xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:tns="http://facturacion.finkok.com/cancel" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s1="http://facturacion.finkok.com/cancellation" xmlns:s0="apps.services.soap.core.views" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"><senv:Body><tns:accept_reject_signatureResponse><tns:accept_reject_signatureResult><s0:rechazo><s0:Rechaza><s0:status>1000</s0:status><s0:uuid>2D0E7634-886F-4119-B58F-2DCA228D510F</s0:uuid></s0:Rechaza></s0:rechazo><s0:aceptacion><s0:Acepta><s0:status>1001</s0:status><s0:uuid>E5B5DB3F-6FF8-42E0-AAE5-645FECFF96DC</s0:uuid></s0:Acepta></s0:aceptacion></tns:accept_reject_signatureResult></tns:accept_reject_signatureResponse></senv:Body></senv:Envelope>'
+
+        res = finkok.accept_reject(request)
+        assert mk.called
+        assert mk.call_args.kwargs["url"] == url_maping["cancel"]
+        assert isinstance(res, AcceptRejectAcknowledgment)

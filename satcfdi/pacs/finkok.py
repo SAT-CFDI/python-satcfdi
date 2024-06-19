@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 from html import unescape
 from logging import getLogger
-from typing import Literal
+from typing import Literal, Sequence
 from warnings import warn
 
 import requests
@@ -11,12 +11,19 @@ from lxml import etree
 
 from satcfdi.cfdi import CFDI
 from satcfdi.create.cancela import cancelacion
+from satcfdi.create.cancela.aceptacionrechazo import SolicitudAceptacionRechazo
 from satcfdi.models.signer import Signer
 from satcfdi.pacs import Accept, Document
 from satcfdi.xelement import XElement
 
 from ..exceptions import DocumentNotFoundError, ResponseError
-from . import PAC, CancelationAcknowledgment, CancelReason, Environment
+from . import (
+    PAC,
+    AcceptRejectAcknowledgment,
+    CancelationAcknowledgment,
+    CancelReason,
+    Environment,
+)
 
 
 class DocumentStatus(Enum):
@@ -90,6 +97,9 @@ class Finkok(PAC):
             case "cancel":
                 namespace = self.namespaces["cancel"]
                 tag = "cancel_signature"
+            case "accept_reject":
+                namespace = self.namespaces["cancel"]
+                tag = "accept_reject_signature"
             case _:
                 raise NotImplementedError("Operation not supported")
 
@@ -173,6 +183,10 @@ class Finkok(PAC):
                 raise DocumentNotFoundError(ws_status.text)
             raise ResponseError(ws_status.text)
 
+        error = root.find(".//apps:error", self.namespaces)
+        if error is not None and error.text:
+            raise ResponseError(error.text)
+
     def _perform_stamp_operation(self, cfdi: CFDI, accept: Accept, operation: str):
         if not isinstance(cfdi, CFDI):
             raise TypeError("cfdi must be a CFDI object")
@@ -190,18 +204,37 @@ class Finkok(PAC):
         uuid = root.find(".//apps:UUID", self.namespaces).text
         return Document(document_id=uuid, xml=xml.encode())
 
-    def _perform_cancel_operation(self, cancellation: XElement):
-        envelope = self._build_xml_envelope(cancellation, "cancel")
+    def _perform_cancel_operation(self, cancellation: XElement, operation: str):
+        envelope = self._build_xml_envelope(cancellation, operation)
         url = self.get_service_url("cancel")
         root = self._perform_request(url, envelope)
 
         self._validate_cancel_response(root)
 
-        cancellation_status = root.find(".//apps:EstatusUUID", self.namespaces).text
         ack = root.find(".//apps:Acuse", self.namespaces)
 
+        if operation == "accept_reject":
+            acceptances = root.find(".//apps:aceptacion", self.namespaces)
+            rejections = root.find(".//apps:rechazo", self.namespaces)
+            folios = {}
+            for a in acceptances:
+                uuid = a.find(".//apps:uuid", self.namespaces).text
+                status = a.find(".//apps:status", self.namespaces).text
+                folios.update({uuid: {"status": status, "response": "Aceptacion"}})
+
+            for r in rejections:
+                uuid = r.find(".//apps:uuid", self.namespaces).text
+                status = r.find(".//apps:status", self.namespaces).text
+                folios.update({uuid: {"status": status, "response": "Rechazo"}})
+
+            return AcceptRejectAcknowledgment(
+                folios=folios,
+                acuse=unescape(ack.text).encode() if ack is not None else None,
+            )
+
         return CancelationAcknowledgment(
-            code=cancellation_status, acuse=unescape(ack.text).encode()
+            code=root.find(".//apps:EstatusUUID", self.namespaces).text,
+            acuse=unescape(ack.text).encode(),
         )
 
     def issue(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
@@ -394,4 +427,20 @@ class Finkok(PAC):
             DocumentNotFoundError: If the document is not found.
             ResponseError: If there is an error in the response.
         """
-        return self._perform_cancel_operation(cancelation, False)
+        return self._perform_cancel_operation(cancelation, "cancel")
+
+    def accept_reject(
+        self, request: SolicitudAceptacionRechazo
+    ) -> AcceptRejectAcknowledgment:
+        """Operation to Accept Reject a Cancellation Request
+
+        Args:
+            request (SolicitudAceptacionRechazo): The cancellation request.
+
+        Returns:
+            AcceptRejectAcknowledgment: The acknowledgment of the cancellation.
+
+        Raises:
+            ResponseError: If there is an error in the response.
+        """
+        return self._perform_cancel_operation(request, "accept_reject")
