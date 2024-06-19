@@ -69,6 +69,7 @@ ____________________
 
   * Comercio Digital
   * Diverza
+  * Finkok
   * Prodigia
   * SW Sapien
 * Descarga Masiva
