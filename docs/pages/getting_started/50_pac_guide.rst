@@ -21,6 +21,9 @@ Pick your PAC
     
     # from satcfdi.pacs.swsapien import SWSapien
     # pac = SWSapien(token="$1234%", environment=Environment.TEST)
+
+    # from satcfdi.pacs.finkok import Finkok
+    # pac = Finkok(username="user@email.com", password="password_or_token", environment=Environment.TEST)
     
 
 Stamp
