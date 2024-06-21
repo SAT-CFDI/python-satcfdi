@@ -80,14 +80,9 @@ class Signer(Certificate):
         self, password: str | bytes = None, encoding: Encoding = Encoding.DER
     ) -> bytes:
         """Returns the private key in bytes
-
         Args:
             password (str | bytes, optional): The password to decrypt the private key. Defaults to None.
             encoding (cryptography.hazmat.primitives.serialization.Encoding, optional): The encoding format of the private key. Defaults to "DER".
-
-        Raises:
-            ValueError: If the encoding is not "DER" or "PEM"
-
         Returns:
             bytes: The private key in bytes
         """
