@@ -151,15 +151,6 @@ class Traslado(ScalarMap):
             'Importe': importe,
         })
 
-    @classmethod  # obsolete
-    def parse(cls, impuesto: str):
-        parts = impuesto.split("|")
-        return cls(
-            impuesto=parts[0],
-            tipo_factor=parts[1],
-            tasa_o_cuota=Decimal(parts[2]) if len(parts) > 2 else None,
-        )
-
 
 class Retencion(ScalarMap):
     """
@@ -187,15 +178,6 @@ class Retencion(ScalarMap):
             'TasaOCuota': tasa_o_cuota,
             'Importe': importe,
         })
-
-    @classmethod  # obsolete
-    def parse(cls, impuesto: str):
-        parts = impuesto.split("|")
-        return cls(
-            impuesto=parts[0],
-            tipo_factor=parts[1],
-            tasa_o_cuota=Decimal(parts[2]) if len(parts) > 2 else None,
-        )
 
 
 class Impuestos(ScalarMap):

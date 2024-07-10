@@ -142,7 +142,7 @@ class Environment(Enum):
 class PAC:
     RFC = None
 
-    def __init__(self, environment):
+    def __init__(self, environment: Environment):
         self.environment = environment
 
     def status(self, cfdi: CFDI) -> dict:
