@@ -1,13 +1,16 @@
+import warnings
 from datetime import datetime
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, XMLParsedAsHTMLWarning
 
 from .. import __version__
 from ..catalogs import select_all
 from ..exceptions import ResponseError
 from ..models import Code
 from ..sat_requests_utils import SSLAdapter
+
+warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
 
 
 def retrieve(rfc: str, id_cif: str):
