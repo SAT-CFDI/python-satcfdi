@@ -1,8 +1,5 @@
 <table class="nb" style="margin-top: 4px">
 	<tr>
-		<td rowspan="4">
-			<img src="data:image/png;base64, {{ parent.verifica_url | qr_image }}" alt="QR Code" style="max-width: 120px;"/>
-		</td>
 		<td style="white-space: nowrap;"><b>Folio Fiscal:</b></td>
 		<td style="white-space: nowrap;">{{ c.UUID }}</td>
 		<td style="white-space: nowrap;"><b>Fecha de Certificación:</b></td>
@@ -20,7 +17,10 @@
 		{% endif %}
 	</tr>
 	<tr>
-		<td colspan="4">
+		<td>
+			<img src="data:image/png;base64, {{ parent.verifica_url | qr_image }}" alt="QR Code" style="max-width: 120px;"/>
+		</td>
+		<td colspan="3">
 			<div class="ciii">
 				<b>Sello del CFDI: </b> {{ c.SelloCFD | baa }}<br>
 				<b>Sello del SAT: </b> {{ c.SelloSAT | baa }}<br>
