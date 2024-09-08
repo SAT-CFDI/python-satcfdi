@@ -1,5 +1,14 @@
 import os
 import setuptools
+import subprocess
+
+def get_latest_git_tag():
+    try:
+        # Get the latest tag
+        latest_tag = subprocess.check_output(['git', 'describe', '--tags', '--abbrev=0']).strip().decode('utf-8')
+        return latest_tag
+    except subprocess.CalledProcessError:
+        return "No tags found"
 
 about = {}
 current_dir = os.path.abspath(os.path.dirname(__file__))
@@ -14,7 +23,7 @@ packages = setuptools.find_packages(
     exclude=["contrib", "docs", "tests"],
 )
 
-version = os.environ.get('RELEASE_VERSION', about["__version__"])
+version = os.environ.get('RELEASE_VERSION', get_latest_git_tag())
 
 setuptools.setup(
     name=package,  # installation
