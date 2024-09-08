@@ -8,7 +8,7 @@ def get_latest_git_tag():
         latest_tag = subprocess.check_output(['git', 'describe', '--tags', '--abbrev=0']).strip().decode('utf-8')
         return latest_tag
     except subprocess.CalledProcessError:
-        return "No tags found"
+        return "1.0.0"
 
 about = {}
 current_dir = os.path.abspath(os.path.dirname(__file__))
