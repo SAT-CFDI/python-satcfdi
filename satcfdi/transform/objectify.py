@@ -9585,7 +9585,7 @@ def impuestos_trasladadosdel_servicio0(cls, node):
     self['Base'] = Decimal(node.attrib['Base'])
     self['Impuesto'] = catalog_code('Ccb0_c_TipoImpuesto', node.attrib['Impuesto'])
     self['TipoFactor'] = node.attrib['TipoFactor']
-    self['TasaCuota'] = catalog_code('Cfc6_c_TasaCuota', node.attrib['TasaCuota'])
+    self['TasaCuota'] = Decimal(node.attrib['TasaCuota'])
     self['Importe'] = Decimal(node.attrib['Importe'])
     return self
 def contribucion_gubernamental0(cls, node):
@@ -11379,7 +11379,7 @@ def carta_porte2(cls, node):
     self['IdCCP'] = node.attrib['IdCCP']
     self['TranspInternac'] = node.attrib['TranspInternac']
     if (a := node.attrib.get('RegimenAduanero')) is not None:
-        self['RegimenAduanero'] = a
+        self['RegimenAduanero'] = catalog_code('C592_c_RegimenAduanero', a)
     if (a := node.attrib.get('EntradaSalidaMerc')) is not None:
         self['EntradaSalidaMerc'] = a
     if (a := node.attrib.get('PaisOrigenDestino')) is not None:
@@ -11391,9 +11391,9 @@ def carta_porte2(cls, node):
     if (a := node.attrib.get('RegistroISTMO')) is not None:
         self['RegistroISTMO'] = a
     if (a := node.attrib.get('UbicacionPoloOrigen')) is not None:
-        self['UbicacionPoloOrigen'] = a
+        self['UbicacionPoloOrigen'] = catalog_code('C592_c_RegistroISTMO', a)
     if (a := node.attrib.get('UbicacionPoloDestino')) is not None:
-        self['UbicacionPoloDestino'] = a
+        self['UbicacionPoloDestino'] = catalog_code('C592_c_RegistroISTMO', a)
     return self
 def ubicacion3(cls, node):
     self = ScalarMap()
@@ -11500,7 +11500,7 @@ def mercancia2(cls, node):
     if (a := node.attrib.get('DescripEmbalaje')) is not None:
         self['DescripEmbalaje'] = a
     if (a := node.attrib.get('SectorCOFEPRIS')) is not None:
-        self['SectorCOFEPRIS'] = a
+        self['SectorCOFEPRIS'] = catalog_code('C592_c_SectorCOFEPRIS', a)
     if (a := node.attrib.get('NombreIngredienteActivo')) is not None:
         self['NombreIngredienteActivo'] = a
     if (a := node.attrib.get('NomQuimico')) is not None:
@@ -11516,9 +11516,9 @@ def mercancia2(cls, node):
     if (a := node.attrib.get('LoteMedicamento')) is not None:
         self['LoteMedicamento'] = a
     if (a := node.attrib.get('FormaFarmaceutica')) is not None:
-        self['FormaFarmaceutica'] = a
+        self['FormaFarmaceutica'] = catalog_code('C592_c_FormaFarmaceutica', a)
     if (a := node.attrib.get('CondicionesEspTransp')) is not None:
-        self['CondicionesEspTransp'] = a
+        self['CondicionesEspTransp'] = catalog_code('C592_c_CondicionesEspeciales', a)
     if (a := node.attrib.get('RegistroSanitarioFolioAutorizacion')) is not None:
         self['RegistroSanitarioFolioAutorizacion'] = a
     if (a := node.attrib.get('PermisoImportacion')) is not None:
@@ -11549,13 +11549,13 @@ def mercancia2(cls, node):
     if (a := node.attrib.get('UUIDComercioExt')) is not None:
         self['UUIDComercioExt'] = a
     if (a := node.attrib.get('TipoMateria')) is not None:
-        self['TipoMateria'] = a
+        self['TipoMateria'] = catalog_code('C592_c_TipoMateria', a)
     if (a := node.attrib.get('DescripcionMateria')) is not None:
         self['DescripcionMateria'] = a
     return self
 def documentacion_aduanera0(cls, node):
     self = ScalarMap()
-    self['TipoDocumento'] = node.attrib['TipoDocumento']
+    self['TipoDocumento'] = catalog_code('C592_c_DocumentoAduanero', node.attrib['TipoDocumento'])
     if (a := node.attrib.get('NumPedimento')) is not None:
         self['NumPedimento'] = a
     if (a := node.attrib.get('IdentDocAduanero')) is not None:
@@ -11814,12 +11814,12 @@ def carta_porte3(cls, node):
     if (a := node.attrib.get('RegistroISTMO')) is not None:
         self['RegistroISTMO'] = a
     if (a := node.attrib.get('UbicacionPoloOrigen')) is not None:
-        self['UbicacionPoloOrigen'] = a
+        self['UbicacionPoloOrigen'] = catalog_code('C592_c_RegistroISTMO', a)
     if (a := node.attrib.get('UbicacionPoloDestino')) is not None:
-        self['UbicacionPoloDestino'] = a
+        self['UbicacionPoloDestino'] = catalog_code('C592_c_RegistroISTMO', a)
     return self
 def regimen_aduanero_ccp0(cls, node):
-    return node.attrib['RegimenAduanero']
+    return catalog_code('C592_c_RegimenAduanero', node.attrib['RegimenAduanero'])
 def ubicacion4(cls, node):
     self = ScalarMap()
     el = node.find('{http://www.sat.gob.mx/CartaPorte31}Domicilio')
@@ -11925,7 +11925,7 @@ def mercancia3(cls, node):
     if (a := node.attrib.get('DescripEmbalaje')) is not None:
         self['DescripEmbalaje'] = a
     if (a := node.attrib.get('SectorCOFEPRIS')) is not None:
-        self['SectorCOFEPRIS'] = a
+        self['SectorCOFEPRIS'] = catalog_code('C592_c_SectorCOFEPRIS', a)
     if (a := node.attrib.get('NombreIngredienteActivo')) is not None:
         self['NombreIngredienteActivo'] = a
     if (a := node.attrib.get('NomQuimico')) is not None:
@@ -11941,9 +11941,9 @@ def mercancia3(cls, node):
     if (a := node.attrib.get('LoteMedicamento')) is not None:
         self['LoteMedicamento'] = a
     if (a := node.attrib.get('FormaFarmaceutica')) is not None:
-        self['FormaFarmaceutica'] = a
+        self['FormaFarmaceutica'] = catalog_code('C592_c_FormaFarmaceutica', a)
     if (a := node.attrib.get('CondicionesEspTransp')) is not None:
-        self['CondicionesEspTransp'] = a
+        self['CondicionesEspTransp'] = catalog_code('C592_c_CondicionesEspeciales', a)
     if (a := node.attrib.get('RegistroSanitarioFolioAutorizacion')) is not None:
         self['RegistroSanitarioFolioAutorizacion'] = a
     if (a := node.attrib.get('PermisoImportacion')) is not None:
@@ -11974,13 +11974,13 @@ def mercancia3(cls, node):
     if (a := node.attrib.get('UUIDComercioExt')) is not None:
         self['UUIDComercioExt'] = a
     if (a := node.attrib.get('TipoMateria')) is not None:
-        self['TipoMateria'] = a
+        self['TipoMateria'] = catalog_code('C592_c_TipoMateria', a)
     if (a := node.attrib.get('DescripcionMateria')) is not None:
         self['DescripcionMateria'] = a
     return self
 def documentacion_aduanera1(cls, node):
     self = ScalarMap()
-    self['TipoDocumento'] = node.attrib['TipoDocumento']
+    self['TipoDocumento'] = catalog_code('C592_c_DocumentoAduanero', node.attrib['TipoDocumento'])
     if (a := node.attrib.get('NumPedimento')) is not None:
         self['NumPedimento'] = a
     if (a := node.attrib.get('IdentDocAduanero')) is not None:
@@ -13824,9 +13824,9 @@ def ine0(cls, node):
     if el is not None:
         self['Entidad'] = [entidad0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ine}Entidad')]
     self['Version'] = node.attrib['Version']
-    self['TipoProceso'] = catalog_code('Ca37_t_TipoProc', node.attrib['TipoProceso'])
+    self['TipoProceso'] = node.attrib['TipoProceso']
     if (a := node.attrib.get('TipoComite')) is not None:
-        self['TipoComite'] = catalog_code('Ca37_t_TipoComite', a)
+        self['TipoComite'] = a
     if (a := node.attrib.get('IdContabilidad')) is not None:
         self['IdContabilidad'] = Xint(a)
     return self
@@ -13837,7 +13837,7 @@ def entidad0(cls, node):
         self['Contabilidad'] = [contabilidad0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ine}Contabilidad')]
     self['ClaveEntidad'] = catalog_code('Ca37_t_ClaveEntidad', node.attrib['ClaveEntidad'])
     if (a := node.attrib.get('Ambito')) is not None:
-        self['Ambito'] = catalog_code('Ca37_t_Ambito', a)
+        self['Ambito'] = a
     return self
 def contabilidad0(cls, node):
     return Xint(node.attrib['IdContabilidad'])
@@ -13848,9 +13848,9 @@ def ine1(cls, node):
     if el is not None:
         self['Entidad'] = [entidad1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ine}Entidad')]
     self['Version'] = node.attrib['Version']
-    self['TipoProceso'] = catalog_code('Ca37_t_TipoProc', node.attrib['TipoProceso'])
+    self['TipoProceso'] = node.attrib['TipoProceso']
     if (a := node.attrib.get('TipoComite')) is not None:
-        self['TipoComite'] = catalog_code('Ca37_t_TipoComite', a)
+        self['TipoComite'] = a
     if (a := node.attrib.get('IdContabilidad')) is not None:
         self['IdContabilidad'] = Xint(a)
     return self
@@ -13861,7 +13861,7 @@ def entidad1(cls, node):
         self['Contabilidad'] = [contabilidad1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ine}Contabilidad')]
     self['ClaveEntidad'] = catalog_code('Ca37_t_ClaveEntidad', node.attrib['ClaveEntidad'])
     if (a := node.attrib.get('Ambito')) is not None:
-        self['Ambito'] = catalog_code('Ca37_t_Ambito', a)
+        self['Ambito'] = a
     return self
 def contabilidad1(cls, node):
     return Xint(node.attrib['IdContabilidad'])

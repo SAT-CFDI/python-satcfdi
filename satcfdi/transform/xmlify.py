@@ -9998,7 +9998,7 @@ def impuestos_trasladadosdel_servicio0(name, data):
     self.attrib['Base'] = fmt_decimal(data['Base'])
     self.attrib['Impuesto'] = strcode(data['Impuesto'])
     self.attrib['TipoFactor'] = data['TipoFactor']
-    self.attrib['TasaCuota'] = strcode(data['TasaCuota'])
+    self.attrib['TasaCuota'] = fmt_decimal(data['TasaCuota'])
     self.attrib['Importe'] = fmt_decimal(data['Importe'])
     return self
 def contribucion_gubernamental0(name, data):
@@ -11966,7 +11966,7 @@ def carta_porte2(name, data):
     self.attrib['IdCCP'] = data['IdCCP']
     self.attrib['TranspInternac'] = data['TranspInternac']
     if (a := data.get('RegimenAduanero')) is not None:
-        self.attrib['RegimenAduanero'] = a
+        self.attrib['RegimenAduanero'] = strcode(a)
     if (a := data.get('EntradaSalidaMerc')) is not None:
         self.attrib['EntradaSalidaMerc'] = a
     if (a := data.get('PaisOrigenDestino')) is not None:
@@ -11978,9 +11978,9 @@ def carta_porte2(name, data):
     if (a := data.get('RegistroISTMO')) is not None:
         self.attrib['RegistroISTMO'] = a
     if (a := data.get('UbicacionPoloOrigen')) is not None:
-        self.attrib['UbicacionPoloOrigen'] = a
+        self.attrib['UbicacionPoloOrigen'] = strcode(a)
     if (a := data.get('UbicacionPoloDestino')) is not None:
-        self.attrib['UbicacionPoloDestino'] = a
+        self.attrib['UbicacionPoloDestino'] = strcode(a)
     return self
 def ubicacion3(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
@@ -12092,7 +12092,7 @@ def mercancia2(name, data):
     if (a := data.get('DescripEmbalaje')) is not None:
         self.attrib['DescripEmbalaje'] = a
     if (a := data.get('SectorCOFEPRIS')) is not None:
-        self.attrib['SectorCOFEPRIS'] = a
+        self.attrib['SectorCOFEPRIS'] = strcode(a)
     if (a := data.get('NombreIngredienteActivo')) is not None:
         self.attrib['NombreIngredienteActivo'] = a
     if (a := data.get('NomQuimico')) is not None:
@@ -12108,9 +12108,9 @@ def mercancia2(name, data):
     if (a := data.get('LoteMedicamento')) is not None:
         self.attrib['LoteMedicamento'] = a
     if (a := data.get('FormaFarmaceutica')) is not None:
-        self.attrib['FormaFarmaceutica'] = a
+        self.attrib['FormaFarmaceutica'] = strcode(a)
     if (a := data.get('CondicionesEspTransp')) is not None:
-        self.attrib['CondicionesEspTransp'] = a
+        self.attrib['CondicionesEspTransp'] = strcode(a)
     if (a := data.get('RegistroSanitarioFolioAutorizacion')) is not None:
         self.attrib['RegistroSanitarioFolioAutorizacion'] = a
     if (a := data.get('PermisoImportacion')) is not None:
@@ -12141,13 +12141,13 @@ def mercancia2(name, data):
     if (a := data.get('UUIDComercioExt')) is not None:
         self.attrib['UUIDComercioExt'] = str(a)
     if (a := data.get('TipoMateria')) is not None:
-        self.attrib['TipoMateria'] = a
+        self.attrib['TipoMateria'] = strcode(a)
     if (a := data.get('DescripcionMateria')) is not None:
         self.attrib['DescripcionMateria'] = a
     return self
 def documentacion_aduanera0(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte30', name), nsmap=data.get('_nsmap') or {'cartaporte30': 'http://www.sat.gob.mx/CartaPorte30'})
-    self.attrib['TipoDocumento'] = data['TipoDocumento']
+    self.attrib['TipoDocumento'] = strcode(data['TipoDocumento'])
     if (a := data.get('NumPedimento')) is not None:
         self.attrib['NumPedimento'] = a
     if (a := data.get('IdentDocAduanero')) is not None:
@@ -12425,13 +12425,13 @@ def carta_porte3(name, data):
     if (a := data.get('RegistroISTMO')) is not None:
         self.attrib['RegistroISTMO'] = a
     if (a := data.get('UbicacionPoloOrigen')) is not None:
-        self.attrib['UbicacionPoloOrigen'] = a
+        self.attrib['UbicacionPoloOrigen'] = strcode(a)
     if (a := data.get('UbicacionPoloDestino')) is not None:
-        self.attrib['UbicacionPoloDestino'] = a
+        self.attrib['UbicacionPoloDestino'] = strcode(a)
     return self
 def regimen_aduanero_ccp0(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte31', name), nsmap={'cartaporte31': 'http://www.sat.gob.mx/CartaPorte31'})
-    self.attrib['RegimenAduanero'] = data
+    self.attrib['RegimenAduanero'] = strcode(data)
     return self
 def ubicacion4(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte31', name), nsmap=data.get('_nsmap') or {'cartaporte31': 'http://www.sat.gob.mx/CartaPorte31'})
@@ -12543,7 +12543,7 @@ def mercancia3(name, data):
     if (a := data.get('DescripEmbalaje')) is not None:
         self.attrib['DescripEmbalaje'] = a
     if (a := data.get('SectorCOFEPRIS')) is not None:
-        self.attrib['SectorCOFEPRIS'] = a
+        self.attrib['SectorCOFEPRIS'] = strcode(a)
     if (a := data.get('NombreIngredienteActivo')) is not None:
         self.attrib['NombreIngredienteActivo'] = a
     if (a := data.get('NomQuimico')) is not None:
@@ -12559,9 +12559,9 @@ def mercancia3(name, data):
     if (a := data.get('LoteMedicamento')) is not None:
         self.attrib['LoteMedicamento'] = a
     if (a := data.get('FormaFarmaceutica')) is not None:
-        self.attrib['FormaFarmaceutica'] = a
+        self.attrib['FormaFarmaceutica'] = strcode(a)
     if (a := data.get('CondicionesEspTransp')) is not None:
-        self.attrib['CondicionesEspTransp'] = a
+        self.attrib['CondicionesEspTransp'] = strcode(a)
     if (a := data.get('RegistroSanitarioFolioAutorizacion')) is not None:
         self.attrib['RegistroSanitarioFolioAutorizacion'] = a
     if (a := data.get('PermisoImportacion')) is not None:
@@ -12592,13 +12592,13 @@ def mercancia3(name, data):
     if (a := data.get('UUIDComercioExt')) is not None:
         self.attrib['UUIDComercioExt'] = str(a)
     if (a := data.get('TipoMateria')) is not None:
-        self.attrib['TipoMateria'] = a
+        self.attrib['TipoMateria'] = strcode(a)
     if (a := data.get('DescripcionMateria')) is not None:
         self.attrib['DescripcionMateria'] = a
     return self
 def documentacion_aduanera1(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/CartaPorte31', name), nsmap=data.get('_nsmap') or {'cartaporte31': 'http://www.sat.gob.mx/CartaPorte31'})
-    self.attrib['TipoDocumento'] = data['TipoDocumento']
+    self.attrib['TipoDocumento'] = strcode(data['TipoDocumento'])
     if (a := data.get('NumPedimento')) is not None:
         self.attrib['NumPedimento'] = a
     if (a := data.get('IdentDocAduanero')) is not None:
@@ -14577,9 +14577,9 @@ def ine0(name, data):
         for r in iterate(el):
             self.append(entidad0('Entidad', r))
     self.attrib['Version'] = data['Version']
-    self.attrib['TipoProceso'] = strcode(data['TipoProceso'])
+    self.attrib['TipoProceso'] = data['TipoProceso']
     if (a := data.get('TipoComite')) is not None:
-        self.attrib['TipoComite'] = strcode(a)
+        self.attrib['TipoComite'] = a
     if (a := data.get('IdContabilidad')) is not None:
         self.attrib['IdContabilidad'] = str(a)
     return self
@@ -14591,7 +14591,7 @@ def entidad0(name, data):
             self.append(contabilidad0('Contabilidad', r))
     self.attrib['ClaveEntidad'] = strcode(data['ClaveEntidad'])
     if (a := data.get('Ambito')) is not None:
-        self.attrib['Ambito'] = strcode(a)
+        self.attrib['Ambito'] = a
     return self
 def contabilidad0(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ine', name), nsmap={'ine': 'http://www.sat.gob.mx/ine'})
@@ -14606,9 +14606,9 @@ def ine1(name, data):
         for r in iterate(el):
             self.append(entidad1('Entidad', r))
     self.attrib['Version'] = data['Version']
-    self.attrib['TipoProceso'] = strcode(data['TipoProceso'])
+    self.attrib['TipoProceso'] = data['TipoProceso']
     if (a := data.get('TipoComite')) is not None:
-        self.attrib['TipoComite'] = strcode(a)
+        self.attrib['TipoComite'] = a
     if (a := data.get('IdContabilidad')) is not None:
         self.attrib['IdContabilidad'] = str(a)
     return self
@@ -14620,7 +14620,7 @@ def entidad1(name, data):
             self.append(contabilidad1('Contabilidad', r))
     self.attrib['ClaveEntidad'] = strcode(data['ClaveEntidad'])
     if (a := data.get('Ambito')) is not None:
-        self.attrib['Ambito'] = strcode(a)
+        self.attrib['Ambito'] = a
     return self
 def contabilidad1(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ine', name), nsmap={'ine': 'http://www.sat.gob.mx/ine'})
