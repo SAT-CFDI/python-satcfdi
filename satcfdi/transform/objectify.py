@@ -9983,7 +9983,7 @@ def periodo1(cls, node):
     self = ScalarMap()
     self['MesIni'] = catalog_code('Ccb0_c_Periodo', node.attrib['MesIni'])
     self['MesFin'] = catalog_code('Ccb0_c_Periodo', node.attrib['MesFin'])
-    self['Ejercicio'] = catalog_code('Ccb0_c_Ejercicio', node.attrib['Ejercicio'])
+    self['Ejercicio'] = node.attrib['Ejercicio']
     return self
 def totales1(cls, node):
     self = ScalarMap()

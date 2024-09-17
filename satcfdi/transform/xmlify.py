@@ -10422,7 +10422,7 @@ def periodo1(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
     self.attrib['MesIni'] = strcode(data['MesIni'])
     self.attrib['MesFin'] = strcode(data['MesFin'])
-    self.attrib['Ejercicio'] = strcode(data['Ejercicio'])
+    self.attrib['Ejercicio'] = data['Ejercicio']
     return self
 def totales1(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/2', name), nsmap=data.get('_nsmap') or {'retenciones': 'http://www.sat.gob.mx/esquemas/retencionpago/2'})
