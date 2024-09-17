@@ -10694,7 +10694,7 @@ def mercancia0(cls, node):
     if (a := node.attrib.get('BienesTransp')) is not None:
         self['BienesTransp'] = catalog_code('C592_c_ClaveProdServCP', a)
     if (a := node.attrib.get('ClaveSTCC')) is not None:
-        self['ClaveSTCC'] = catalog_code('C592_c_ClaveProdSTCC', a)
+        self['ClaveSTCC'] = a
     if (a := node.attrib.get('Descripcion')) is not None:
         self['Descripcion'] = a
     if (a := node.attrib.get('Cantidad')) is not None:
@@ -10794,7 +10794,7 @@ def transporte_maritimo0(cls, node):
     if (a := node.attrib.get('LineaNaviera')) is not None:
         self['LineaNaviera'] = a
     self['NombreAgenteNaviero'] = node.attrib['NombreAgenteNaviero']
-    self['NumAutorizacionNaviero'] = catalog_code('C592_c_NumAutorizacionNaviero', node.attrib['NumAutorizacionNaviero'])
+    self['NumAutorizacionNaviero'] = node.attrib['NumAutorizacionNaviero']
     if (a := node.attrib.get('NumViaje')) is not None:
         self['NumViaje'] = a
     if (a := node.attrib.get('NumConocEmbarc')) is not None:
@@ -11253,7 +11253,7 @@ def transporte_maritimo1(cls, node):
     if (a := node.attrib.get('LineaNaviera')) is not None:
         self['LineaNaviera'] = a
     self['NombreAgenteNaviero'] = node.attrib['NombreAgenteNaviero']
-    self['NumAutorizacionNaviero'] = catalog_code('C592_c_NumAutorizacionNaviero', node.attrib['NumAutorizacionNaviero'])
+    self['NumAutorizacionNaviero'] = node.attrib['NumAutorizacionNaviero']
     if (a := node.attrib.get('NumViaje')) is not None:
         self['NumViaje'] = a
     if (a := node.attrib.get('NumConocEmbarc')) is not None:
@@ -11662,7 +11662,7 @@ def transporte_maritimo2(cls, node):
     if (a := node.attrib.get('LineaNaviera')) is not None:
         self['LineaNaviera'] = a
     self['NombreAgenteNaviero'] = node.attrib['NombreAgenteNaviero']
-    self['NumAutorizacionNaviero'] = catalog_code('C592_c_NumAutorizacionNaviero', node.attrib['NumAutorizacionNaviero'])
+    self['NumAutorizacionNaviero'] = node.attrib['NumAutorizacionNaviero']
     if (a := node.attrib.get('NumViaje')) is not None:
         self['NumViaje'] = a
     if (a := node.attrib.get('NumConocEmbarc')) is not None:
@@ -12084,7 +12084,7 @@ def transporte_maritimo3(cls, node):
     if (a := node.attrib.get('LineaNaviera')) is not None:
         self['LineaNaviera'] = a
     self['NombreAgenteNaviero'] = node.attrib['NombreAgenteNaviero']
-    self['NumAutorizacionNaviero'] = catalog_code('C592_c_NumAutorizacionNaviero', node.attrib['NumAutorizacionNaviero'])
+    self['NumAutorizacionNaviero'] = node.attrib['NumAutorizacionNaviero']
     if (a := node.attrib.get('NumViaje')) is not None:
         self['NumViaje'] = a
     if (a := node.attrib.get('NumConocEmbarc')) is not None:

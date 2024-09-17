@@ -11239,7 +11239,7 @@ def mercancia0(name, data):
     if (a := data.get('BienesTransp')) is not None:
         self.attrib['BienesTransp'] = strcode(a)
     if (a := data.get('ClaveSTCC')) is not None:
-        self.attrib['ClaveSTCC'] = strcode(a)
+        self.attrib['ClaveSTCC'] = a
     if (a := data.get('Descripcion')) is not None:
         self.attrib['Descripcion'] = a
     if (a := data.get('Cantidad')) is not None:
@@ -11343,7 +11343,7 @@ def transporte_maritimo0(name, data):
     if (a := data.get('LineaNaviera')) is not None:
         self.attrib['LineaNaviera'] = a
     self.attrib['NombreAgenteNaviero'] = data['NombreAgenteNaviero']
-    self.attrib['NumAutorizacionNaviero'] = strcode(data['NumAutorizacionNaviero'])
+    self.attrib['NumAutorizacionNaviero'] = data['NumAutorizacionNaviero']
     if (a := data.get('NumViaje')) is not None:
         self.attrib['NumViaje'] = a
     if (a := data.get('NumConocEmbarc')) is not None:
@@ -11828,7 +11828,7 @@ def transporte_maritimo1(name, data):
     if (a := data.get('LineaNaviera')) is not None:
         self.attrib['LineaNaviera'] = a
     self.attrib['NombreAgenteNaviero'] = data['NombreAgenteNaviero']
-    self.attrib['NumAutorizacionNaviero'] = strcode(data['NumAutorizacionNaviero'])
+    self.attrib['NumAutorizacionNaviero'] = data['NumAutorizacionNaviero']
     if (a := data.get('NumViaje')) is not None:
         self.attrib['NumViaje'] = a
     if (a := data.get('NumConocEmbarc')) is not None:
@@ -12259,7 +12259,7 @@ def transporte_maritimo2(name, data):
     if (a := data.get('LineaNaviera')) is not None:
         self.attrib['LineaNaviera'] = a
     self.attrib['NombreAgenteNaviero'] = data['NombreAgenteNaviero']
-    self.attrib['NumAutorizacionNaviero'] = strcode(data['NumAutorizacionNaviero'])
+    self.attrib['NumAutorizacionNaviero'] = data['NumAutorizacionNaviero']
     if (a := data.get('NumViaje')) is not None:
         self.attrib['NumViaje'] = a
     if (a := data.get('NumConocEmbarc')) is not None:
@@ -12705,7 +12705,7 @@ def transporte_maritimo3(name, data):
     if (a := data.get('LineaNaviera')) is not None:
         self.attrib['LineaNaviera'] = a
     self.attrib['NombreAgenteNaviero'] = data['NombreAgenteNaviero']
-    self.attrib['NumAutorizacionNaviero'] = strcode(data['NumAutorizacionNaviero'])
+    self.attrib['NumAutorizacionNaviero'] = data['NumAutorizacionNaviero']
     if (a := data.get('NumViaje')) is not None:
         self.attrib['NumViaje'] = a
     if (a := data.get('NumConocEmbarc')) is not None:

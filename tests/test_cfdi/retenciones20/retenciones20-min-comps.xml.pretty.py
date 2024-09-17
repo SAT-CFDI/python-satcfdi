@@ -90,7 +90,7 @@
  'FechaExp': datetime.datetime(2021, 12, 12, 12, 45, 29),
  'LugarExpRetenc': '99999',
  'NoCertificado': '30001000000300023708',
- 'Periodo': {'Ejercicio': Code('2027', None),
+ 'Periodo': {'Ejercicio': '2027',
              'MesFin': Code('12', 'Diciembre'),
              'MesIni': Code('01', 'Enero')},
  'Receptor': {'Extranjero': {'NomDenRazSocR': 'PERSONA FISICA NACIONAL DE '

@@ -116,7 +116,7 @@
  'FolioInt': '1RETENCION',
  'LugarExpRetenc': '99999',
  'NoCertificado': '30001000000300023708',
- 'Periodo': {'Ejercicio': Code('2027', None),
+ 'Periodo': {'Ejercicio': '2027',
              'MesFin': Code('12', 'Diciembre'),
              'MesIni': Code('01', 'Enero')},
  'Receptor': {'Nacional': {'CurpR': 'XAXX010101HNTXXX00',
