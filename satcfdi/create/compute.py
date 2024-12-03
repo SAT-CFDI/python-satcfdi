@@ -178,7 +178,7 @@ def make_pago_totales(pagos):
             impuestos[RETENCIONES_MAP[retencion["ImpuestoP"]]] += retencion["ImporteP"] * tipo_cambio
 
         for traslado in iterate((p["ImpuestosP"] or {}).get("TrasladosP")):
-            match (traslado["ImpuestoP"], traslado["TipoFactorP"], str(traslado["TasaOCuotaP"])):
+            match (traslado["ImpuestoP"], traslado["TipoFactorP"], str(traslado["TasaOCuotaP"]).ljust(8, '0')):
                 case ("002", "Tasa", "0.160000"):
                     impuestos['TotalTrasladosBaseIVA16'] += traslado["BaseP"] * tipo_cambio
                     impuestos['TotalTrasladosImpuestoIVA16'] += traslado["ImporteP"] * tipo_cambio
