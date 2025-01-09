@@ -377,3 +377,50 @@ def test_nomina():
     invoice.sign(signer)
 
     verify_invoice(invoice, f"{xml_file}")
+
+
+def test_iva_exento():
+    rfc = 'xiqb891116qe4'
+    signer = get_signer(rfc)
+
+    invoice = cfdi40.Comprobante(
+        emisor=cfdi40.Emisor(
+            rfc=signer.rfc,
+            nombre=signer.legal_name,
+            regimen_fiscal="601"
+        ),
+        lugar_expedicion="56820",
+        fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
+        receptor=cfdi40.Receptor(
+            rfc='KIJ0906199R1',
+            nombre='KIJ, S.A DE C.V.',
+            uso_cfdi='G03',
+            domicilio_fiscal_receptor="59820",
+            regimen_fiscal_receptor="601"
+        ),
+        metodo_pago='PPD',
+        serie="A",
+        folio="123456",
+        conceptos=[
+            cfdi40.Concepto(
+                cuenta_predial='1234567890',
+                clave_prod_serv='10101702',
+                cantidad=Decimal('1.00'),
+                clave_unidad='E48',
+                descripcion='SERVICIOS DE FACTURACION',
+                valor_unitario=Decimal('15390.30'),
+                impuestos=cfdi40.Impuestos(
+                    traslados=cfdi40.Traslado(
+                        impuesto=Impuesto.IVA,
+                        tipo_factor=TipoFactor.EXENTO,
+                        importe=None,
+                        tasa_o_cuota=None
+                    )
+                ),
+            )
+        ]
+    )
+    invoice.sign(signer)
+
+    verify_invoice(invoice, "iva_exento")
+

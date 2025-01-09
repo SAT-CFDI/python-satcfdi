@@ -106,11 +106,15 @@ def make_impuestos(conceptos):
 
     if retenciones := impuestos.get('Retenciones'):
         impuestos['Retenciones'] = retenciones
-        impuestos['TotalImpuestosRetenidos'] = sum(i["Importe"] for i in retenciones if i["Importe"])
+        imp = list(i["Importe"] for i in retenciones if i["Importe"] is not None)
+        if imp:
+            impuestos['TotalImpuestosRetenidos'] = sum(imp)
 
     if traslados := impuestos.get('Traslados'):
         impuestos['Traslados'] = traslados
-        impuestos['TotalImpuestosTrasladados'] = sum(i["Importe"] for i in traslados if i["Importe"])
+        imp = list(i["Importe"] for i in traslados if i["Importe"] is not None)
+        if imp:
+            impuestos['TotalImpuestosTrasladados'] = sum(imp)
 
     return impuestos or None
 
