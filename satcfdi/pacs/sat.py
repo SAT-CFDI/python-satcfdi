@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import time
+from bs4 import BeautifulSoup
 from abc import abstractmethod
 from collections.abc import Sequence
 from datetime import date, datetime, timedelta, UTC
@@ -430,6 +431,28 @@ class SAT(PAC):
         return {
             QName(i.tag).localname: i.text
             for i in res
+        }
+
+    def status_retencion(self, cfdi: CFDI) -> dict:
+        rfc_emisor = cfdi["Emisor"]["RfcE"]
+        rfc_receptor = cfdi["Receptor"]["Nacional"]["RfcR"]
+        uuid = cfdi["Complemento"]["TimbreFiscalDigital"]["UUID"]
+        
+        params = {
+            'folio': uuid,
+            'rfcEmisor': rfc_emisor,
+            'rfcReceptor': rfc_receptor
+        }
+        
+        res = requests.get('https://prodretencionverificacion.clouda.sat.gob.mx/Home/ConsultaRetencion', params)   
+        
+        if res.status_code == 200:
+            soup = BeautifulSoup(res.text, 'html.parser')
+            status = soup.find('span', string='Cancelado').string
+            date = soup.find('td', id='tdFechaCancelacion').get_text(strip=True)   
+        
+        return {
+            "estado": status, "fecha": date
         }
 
     def validate(self, cfdi: CFDI):
