@@ -104,7 +104,7 @@ class PaymentsDetails(Payment):
     def __post_init__(self):
         if self.pago:
             self.impuestos = self.docto_relacionado.get('ImpuestosDR')
-            if self.impuestos is None:
+            if self.impuestos is None and self.comprobante['Version'] == '3.3':
                 self.impuestos = make_impuestos_dr_parcial(
                     conceptos=self.comprobante_pagado['Conceptos'],
                     imp_saldo_ant=self.docto_relacionado['ImpSaldoAnt'],

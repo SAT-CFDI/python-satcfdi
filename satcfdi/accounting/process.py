@@ -130,6 +130,7 @@ def invoice_def():
 
         'SubTotal': (12, True, lambda i: i["SubTotal"]),
         'Descuento': (12, True, lambda i: i.get("Descuento")),
+        'IVA16 Base': (12, True, lambda i: i.get("Impuestos", {}).get("Traslados", {}).get(IVA16, {}).get("Base")),
         'IVA16 Tras': (12, True, lambda i: i.get("Impuestos", {}).get("Traslados", {}).get(IVA16, {}).get("Importe")),
         'IVA Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(Impuesto.IVA, {}).get("Importe")),
         'ISR Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(Impuesto.ISR, {}).get("Importe")),
@@ -153,6 +154,7 @@ def invoice_confirm_def():
 
         'SubTotal': (12, True, lambda i: i["SubTotal"]),
         'Descuento': (12, True, lambda i: i.get("Descuento")),
+        'IVA16 Base': (12, True, lambda i: i.get("Impuestos", {}).get("Traslados", {}).get(IVA16, {}).get("Base")),
         'IVA16 Tras': (12, True, lambda i: i.get("Impuestos", {}).get("Traslados", {}).get(IVA16, {}).get("Importe")),
         'IVA Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(Impuesto.IVA, {}).get("Importe")),
         'ISR Ret': (12, True, lambda i: i.get("Impuestos", {}).get("Retenciones", {}).get(Impuesto.ISR, {}).get("Importe")),
@@ -180,6 +182,7 @@ def payment_def():
         'Parcialidad': (12, False, lambda i: i.docto_relacionado["NumParcialidad"] if i.pago else None),
         'Subtotal': (12, True, lambda i: i.sub_total),
         'Descuento': (12, True, lambda i: i.descuento),
+        'IVA16 Base': (12, True, lambda i: i.impuestos.get("Traslados", {}).get(IVA16, {}).get("Base")),
         'IVA16 Tras': (12, True, lambda i: i.impuestos.get("Traslados", {}).get(IVA16, {}).get("Importe")),
         'IVA Ret': (12, True, lambda i: i.impuestos.get("Retenciones", {}).get(Impuesto.IVA, {}).get("Importe")),
         'ISR Ret': (12, True, lambda i: i.impuestos.get("Retenciones", {}).get(Impuesto.ISR, {}).get("Importe")),
