@@ -109,13 +109,13 @@ def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_
                         yield PaymentsDetails(comprobante=r, comprobante_pagado=r)
 
 
-def filter_retenciones_iter(invoices, ejerc: int):
+def filter_retenciones_iter(invoices, ejerc: int, complemento):
     for a in invoices.values():
         if (a["Version"] == "1.0" and a["Periodo"]["Ejerc"] != ejerc) or \
                 (a["Version"] == "2.0" and a["Periodo"]["Ejercicio"] != str(ejerc)):
             continue
 
-        if "Intereses" in a["Complemento"]:
+        if complemento in a["Complemento"]:
             yield a
 
 
@@ -195,14 +195,46 @@ def retenciones_def():
     return {
         'RFC de la Institucion': (18, False, lambda i: i["Emisor"].get("RfcE") or i["Emisor"].get("RFCEmisor")),
         'Nombre': (36, False, lambda i: i["Emisor"].get('NomDenRazSocE')),
-        'Monto de los intereses nominales': (12, True, lambda i: i["Complemento"]["Intereses"]["MontIntNominal"]),
-        'Monto de los intereses reales': (12, True, lambda i: i["Complemento"]["Intereses"]["MontIntReal"]),
-        'Perdida': (12, True, lambda i: i["Complemento"]["Intereses"]["Perdida"]),
+        'Monto de los intereses nominales': (12, True, lambda i: round(i["Complemento"]["Intereses"]["MontIntNominal"])),
+        'Monto de los intereses reales': (12, True, lambda i: round(i["Complemento"]["Intereses"]["MontIntReal"])),
+        'Perdida': (12, True, lambda i: round(i["Complemento"]["Intereses"]["Perdida"])),
         'ISR Retenido': (
-            12, True, lambda i: sum(x["MontoRet"] for x in i["Totales"]['ImpRetenidos'] if x.get("Impuesto") == TipoImpuesto.ISR or x.get("ImpuestoRet") == '001') if 'ImpRetenidos' in i["Totales"] else None
+            12, True, lambda i: round(sum(x["MontoRet"] for x in i["Totales"]['ImpRetenidos'] if x.get("Impuesto") == TipoImpuesto.ISR or x.get("ImpuestoRet") == '001') if 'ImpRetenidos' in i["Totales"] else None)
         )
     }
 
+
+def dividendos_def_nac():
+    return {
+        'RFC de la Institucion': (18, False, lambda i: i["Emisor"].get("RfcE") or i["Emisor"].get("RFCEmisor")),
+        'Nombre': (36, False, lambda i: i["Emisor"].get('NomDenRazSocE')),
+
+        'TipoSocDistrDiv': (12, False, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["TipoSocDistrDiv"]),
+        'CveTipDivOUtil': (12, False, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["CveTipDivOUtil"]),
+
+        'MontISRAcredRetMexico': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["MontISRAcredRetMexico"] or 0),
+        # 'MontISRAcredRetExtranjero': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["MontISRAcredRetExtranjero"] or 0),
+        # 'MontRetExtDivExt': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"].get("MontRetExtDivExt") or 0),
+        'MontISRAcredNal': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"].get("MontISRAcredNal") or 0),
+        'MontDivAcumNal': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["MontDivAcumNal"] or 0),
+        # 'MontDivAcumExt': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["MontDivAcumExt"] or 0)
+    }
+
+def dividendos_def_ext():
+    return {
+        'RFC de la Institucion': (18, False, lambda i: i["Emisor"].get("RfcE") or i["Emisor"].get("RFCEmisor")),
+        'Nombre': (36, False, lambda i: i["Emisor"].get('NomDenRazSocE')),
+
+        'TipoSocDistrDiv': (12, False, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["TipoSocDistrDiv"]),
+        'CveTipDivOUtil': (12, False, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["CveTipDivOUtil"]),
+
+        #'MontISRAcredRetMexico': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["MontISRAcredRetMexico"] or 0),
+        'MontISRAcredRetExtranjero': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["MontISRAcredRetExtranjero"] or 0),
+        'MontRetExtDivExt': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"].get("MontRetExtDivExt") or 0),
+        # 'MontISRAcredNal': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"].get("MontISRAcredNal") or 0),
+        # 'MontDivAcumNal': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["MontDivAcumNal"] or 0),
+        'MontDivAcumExt': (12, True, lambda i: i["Complemento"]["Dividendos"]["DividOUtil"]["MontDivAcumExt"] or 0)
+    }
 
 def console_print(invoices, columns):
     headers = ['', *(c for c in columns.keys())]
@@ -213,11 +245,18 @@ def console_print(invoices, columns):
             *(f(i) for w, s, f in columns.values())
         ]
 
+    all_row =  [
+        row(n, i) for n, i in enumerate(invoices)
+    ]
+    total_row = [
+        paint("Total", COLOR_BACKGROUND_BRIGHT_BLACK if len(all_row) % 2 == 0 else COLOR_BACKGROUND_BLACK),
+        *(sum(f(i) for i in invoices) if s else None for w, s, f in columns.values())
+    ]
+    all_row.append(total_row)
+
     print(
         tabulate(
-            [
-                row(n, i) for n, i in enumerate(invoices)
-            ],
+           all_row,
             floatfmt=".2f",
             headers=headers
         )
@@ -330,7 +369,7 @@ def payments_groupby_receptor(payments: Sequence[PaymentsDetails]):
     return res
 
 
-def payments_retentions_export(file_name, grouped_payments: Sequence):
+def payments_retentions_export(file_name, grouped_payments: Sequence, decimals=2):
     with open(file_name, "w", encoding="utf-8") as f:
         def write(line):
             f.write(line)
@@ -340,6 +379,7 @@ def payments_retentions_export(file_name, grouped_payments: Sequence):
         for r in grouped_payments:
             write("{receptor}|{ingreso_recibido}|{isr_retenido}".format(
                 receptor=r["Receptor"],
-                ingreso_recibido=round(r["SubTotal"] - r["Descuento"], 2),
-                isr_retenido=round(r["ISR Ret"], 2)
+                ingreso_recibido=round(r["SubTotal"] - r["Descuento"], decimals),
+                isr_retenido=round(r["ISR Ret"], decimals)
             ))
+
