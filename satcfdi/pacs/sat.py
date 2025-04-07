@@ -574,16 +574,16 @@ class SAT(PAC):
 
     def recover_comprobante_request(
             self,
-            fecha_inicial: date = None,
-            fecha_final: date = None,
-            rfc_receptor: str | Sequence[str] = None,
-            rfc_emisor: str = None,
+            fecha_inicial: date | datetime | None = None,
+            fecha_final: date | datetime | None = None,
+            rfc_receptor: str | Sequence[str] | None = None,
+            rfc_emisor: str | None = None,
             tipo_solicitud: TipoDescargaMasivaTerceros | str = TipoDescargaMasivaTerceros.CFDI,
-            tipo_comprobante: TipoDeComprobante | str = None,
-            estado_comprobante: EstadoComprobante | str = None,
-            rfc_a_cuenta_terceros: str = None,
-            complemento: str = None,
-            uuid: str | UUID = None) -> dict:
+            tipo_comprobante: TipoDeComprobante | str | None = None,
+            estado_comprobante: EstadoComprobante | str | None = None,
+            rfc_a_cuenta_terceros: str | None = None,
+            complemento: str | None = None,
+            uuid: str | UUID | None = None) -> dict:
         """
         Esta operación permite solicitar la descarga de CFDIs o Metadata y como
         resultado devuelve un id de solicitud o estatus de la petición realizada.
