@@ -250,7 +250,7 @@ def console_print(invoices, columns):
     ]
     total_row = [
         paint("Total", COLOR_BACKGROUND_BRIGHT_BLACK if len(all_row) % 2 == 0 else COLOR_BACKGROUND_BLACK),
-        *(sum(f(i) for i in invoices) if s else None for w, s, f in columns.values())
+        *(sum(f(i) or 0 for i in invoices) if s else None for w, s, f in columns.values())
     ]
     all_row.append(total_row)
 

@@ -103,5 +103,5 @@ def test_retenciones():
         c = myCFDI.from_file(f)
         all_invoices[c.uuid] = c
 
-    retenciones = filter_retenciones_iter(all_invoices, ejerc=year)
+    retenciones = filter_retenciones_iter(all_invoices, ejerc=year, complemento="Intereses")
     retenciones_print(retenciones)
