@@ -180,8 +180,8 @@ def payment_def():
         'Saldo Ant': (12, False, lambda i: i.docto_relacionado["ImpSaldoAnt"] if i.pago else i.comprobante["Total"]),
         'Saldo Insoluto': (12, False, lambda i: i.docto_relacionado["ImpSaldoInsoluto"] if i.pago else 0),
         'Parcialidad': (12, False, lambda i: i.docto_relacionado["NumParcialidad"] if i.pago else None),
-        'Subtotal': (12, True, lambda i: i.sub_total),
-        'Descuento': (12, True, lambda i: i.descuento),
+        'SubtotalDesc': (12, True, lambda i: i.sub_total_desc),
+        #'Descuento': (12, True, lambda i: i.descuento),
         'IVA16 Base': (12, True, lambda i: i.impuestos.get("Traslados", {}).get(IVA16, {}).get("Base")),
         'IVA16 Tras': (12, True, lambda i: i.impuestos.get("Traslados", {}).get(IVA16, {}).get("Importe")),
         'IVA Ret': (12, True, lambda i: i.impuestos.get("Retenciones", {}).get(Impuesto.IVA, {}).get("Importe")),
@@ -362,8 +362,7 @@ def payments_groupby_receptor(payments: Sequence[PaymentsDetails]):
         p = list(group)
         res.append({
             "Receptor": receptor,
-            "SubTotal": sum(p.sub_total for p in p),
-            "Descuento": sum(p.descuento or 0 for p in p),
+            "SubTotalDesc": sum(p.sub_total_desc for p in p),
             "ISR Ret": sum(p.impuestos.get("Retenciones", {}).get(Impuesto.ISR, {}).get("Importe") or 0 for p in p)
         })
     return res
@@ -379,7 +378,7 @@ def payments_retentions_export(file_name, grouped_payments: Sequence, decimals=2
         for r in grouped_payments:
             write("{receptor}|{ingreso_recibido}|{isr_retenido}".format(
                 receptor=r["Receptor"],
-                ingreso_recibido=round(r["SubTotal"] - r["Descuento"], decimals),
+                ingreso_recibido=round(r["SubTotalDesc"], decimals),
                 isr_retenido=round(r["ISR Ret"], decimals)
             ))
 

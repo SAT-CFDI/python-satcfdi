@@ -127,21 +127,28 @@ class PaymentsDetails(Payment):
                     for v in imps
                 }
 
-            def calc_parcial(field):
-                return calculate_partial(
-                    value=self.comprobante_pagado.get(field),
-                    imp_saldo_ant=self.docto_relacionado['ImpSaldoAnt'],
-                    imp_pagado=self.docto_relacionado["ImpPagado"],
-                    total=self.comprobante_pagado["Total"],
-                    rnd_fn=rounder(self.comprobante_pagado['Moneda'])
-                )
+            # def calc_parcial(field):
+            #     return calculate_partial(
+            #         value=self.comprobante_pagado.get(field),
+            #         imp_saldo_ant=self.docto_relacionado['ImpSaldoAnt'],
+            #         imp_pagado=self.docto_relacionado["ImpPagado"],
+            #         total=self.comprobante_pagado["Total"],
+            #         rnd_fn=rounder(self.comprobante_pagado['Moneda'])
+            #     )
 
-            self.sub_total = calc_parcial("SubTotal")
-            self.descuento = calc_parcial("Descuento")
+            # self.sub_total = calc_parcial("SubTotal")
+            # self.descuento = calc_parcial("Descuento")
             self.total = self.docto_relacionado["ImpPagado"]
+            self.sub_total_desc = self.docto_relacionado["ImpPagado"]
+            for t in self.impuestos.get('Traslados', {}).values():
+                self.sub_total_desc -= t['Importe']
+            for t in self.impuestos.get('Retenciones', {}).values():
+                self.sub_total_desc += t['Importe']
 
         else:
             self.impuestos = self.comprobante.get("Impuestos", {})
-            self.sub_total = self.comprobante["SubTotal"]
-            self.descuento = self.comprobante.get("Descuento")
+            # self.sub_total = self.comprobante["SubTotal"]
+            # self.descuento = self.comprobante.get("Descuento")
             self.total = self.comprobante["Total"]
+            self.sub_total_desc = self.comprobante["SubTotal"] - self.comprobante.get("Descuento", 0)
+
