@@ -666,15 +666,22 @@ class Comprobante(CFDI):
         else:
             receptor["UsoCFDI"] = "CN01"
 
+        valor_unitario = (
+            complemento_nomina.get('TotalPercepciones') or Decimal(0)
+        ) + (
+            complemento_nomina.get('TotalOtrosPagos') or Decimal(0)
+        )
+        
         concepto = Concepto(
             clave_prod_serv='84111505',
             cantidad=1,
             clave_unidad='ACT',
             descripcion='Pago de nómina',
-            valor_unitario=complemento_nomina.get('TotalPercepciones', 0) + complemento_nomina.get('TotalOtrosPagos', 0),
+            valor_unitario=valor_unitario,
             descuento=complemento_nomina.get('TotalDeducciones'),
             objeto_imp="03"
         )
+        
         return cls(
             emisor=emisor,
             lugar_expedicion=lugar_expedicion,
