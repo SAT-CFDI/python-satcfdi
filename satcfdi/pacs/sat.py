@@ -28,7 +28,6 @@ from ..cfdi import CFDI
 from ..exceptions import ResponseError
 from ..models import Signer, Certificate
 from . import PAC, Environment, TaxpayerStatus
-from ..create.catalogos import EstadoComprobante
 from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes
 from ..transform import MEXICO_TZ, get_timezone, verify_certificate
 from ..utils import iterate, parser
@@ -47,6 +46,12 @@ class EstadoSolicitud(IntEnum):
     ERROR = 4
     RECHAZADA = 5
     VENCIDA = 6
+
+
+class EstadoComprobante(StrEnum):
+    CANCELADO = 'Cancelado'
+    VIGENTE = 'Vigente'
+    TODOS = 'Todos'
 
 
 class CodigoEstadoSolicitud(StrEnum):

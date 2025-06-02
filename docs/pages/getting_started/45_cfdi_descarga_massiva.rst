@@ -58,9 +58,8 @@ ___________________
     import base64
     from datetime import date
     
-    from satcfdi.create.catalogos import EstadoComprobante
     from satcfdi.models import Signer
-    from satcfdi.pacs.sat import SAT, TipoDescargaMasivaTerceros, EstadoSolicitud
+    from satcfdi.pacs.sat import SAT, TipoDescargaMasivaTerceros, EstadoSolicitud, EstadoComprobante
     
     # Load Fiel
     signer = Signer.load(
