@@ -247,17 +247,17 @@ class _CFDIAutenticacion(_SATRequest):
         }
 
 
-# class _CFDISolicitaDescarga(_SATRequest):
-#     xml_name = 'solicita.xml'
-#     soap_url = 'https://cfdidescargamasivasolicitud.clouda.sat.gob.mx/SolicitaDescargaService.svc'
-#     soap_action = 'http://DescargaMasivaTerceros.sat.gob.mx/ISolicitaDescargaService/SolicitaDescarga'
-#     solicitud_xpath = '{*}Body/{*}SolicitaDescarga/{*}solicitud'
-#
-#     def process_response(self, response: etree.Element):
-#         res = response.find('{*}Body/{*}SolicitaDescargaResponse/{*}SolicitaDescargaResult')
-#         return {
-#             **res.attrib
-#         }
+class _CFDISolicitaDescarga(_SATRequest):
+    xml_name = 'solicita.xml'
+    soap_url = 'https://cfdidescargamasivasolicitud.clouda.sat.gob.mx/SolicitaDescargaService.svc'
+    soap_action = 'http://DescargaMasivaTerceros.sat.gob.mx/ISolicitaDescargaService/SolicitaDescarga'
+    solicitud_xpath = '{*}Body/{*}SolicitaDescarga/{*}solicitud'
+
+    def process_response(self, response: etree.Element):
+        res = response.find('{*}Body/{*}SolicitaDescargaResponse/{*}SolicitaDescargaResult')
+        return {
+            **res.attrib
+        }
 
 class _CFDISolicitaDescargaEmitidos(_SATRequest):
     xml_name = 'solicitaEmitidos.xml'

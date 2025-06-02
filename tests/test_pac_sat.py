@@ -174,16 +174,15 @@ def test_pac_sat_uuid():
         "AutenticaResult": "token_comprobante"
     }
 
-    with open(os.path.join(current_dir, 'pac_sat_responses', 'response-with-id.xml'), 'rb') as f:
+    with open(os.path.join(current_dir, 'pac_sat_responses', 'response-folio-with-id.xml'), 'rb') as f:
         content = f.read()
 
     with mock.patch(f'requests.post') as mk:
         mk.return_value.ok = True
         mk.return_value.content = content
 
-        res = sat_service.recover_comprobante_request(
-            tipo_solicitud=TipoDescargaMasivaTerceros.CFDI,
-            uuid="6114cfd0-87d2-45b8-99b1-7c19475c9cda",
+        res = sat_service.recover_comprobante_uuid_request(
+            folio="6114cfd0-87d2-45b8-99b1-7c19475c9cda",
         )
 
         mk.assert_called_once()
@@ -202,14 +201,14 @@ def test_pac_sat_rfc():
         "AutenticaResult": "token_comprobante"
     }
 
-    with open(os.path.join(current_dir, 'pac_sat_responses', 'response-with-id.xml'), 'rb') as f:
+    with open(os.path.join(current_dir, 'pac_sat_responses', 'response-emited-with-id.xml'), 'rb') as f:
         content = f.read()
 
     with mock.patch(f'requests.post') as mk:
         mk.return_value.ok = True
         mk.return_value.content = content
 
-        res = sat_service.recover_comprobante_request(
+        res = sat_service.recover_comprobante_emited_request(
             tipo_solicitud=TipoDescargaMasivaTerceros.CFDI,
             rfc_emisor="ABC123456ABC",
             rfc_receptor="ABC123456ABC",
