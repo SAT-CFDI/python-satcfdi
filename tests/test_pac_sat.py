@@ -14,7 +14,7 @@ from satcfdi.cfdi import CFDI
 from satcfdi.models import Code
 from satcfdi.pacs import Environment
 from satcfdi.pacs import TaxpayerStatus
-from satcfdi.pacs.sat import _CFDISolicitaDescarga, _CFDIAutenticacion, EstadoSolicitud, TipoDescargaMasivaTerceros
+from satcfdi.pacs.sat import _CFDISolicitaDescargaEmitidos, _CFDIAutenticacion, EstadoSolicitud, TipoDescargaMasivaTerceros
 from satcfdi.pacs.sat import SAT
 from satcfdi.pacs.sat import _get_listado_69b
 
@@ -133,7 +133,7 @@ def test_sat_service_solicitud():
     with mock.patch(f'{module}.pacs.sat.datetime') as m:
         m.now = mock.Mock(return_value=datetime(2022, 1, 1))
 
-        req = _CFDISolicitaDescarga(
+        req = _CFDISolicitaDescargaEmitidos(
             signer=signer,
             arguments={
                 'FechaFinal': 'FechaFinal',

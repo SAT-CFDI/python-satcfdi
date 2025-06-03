@@ -248,18 +248,6 @@ class _CFDIAutenticacion(_SATRequest):
         }
 
 
-class _CFDISolicitaDescarga(_SATRequest):
-    xml_name = 'solicita.xml'
-    soap_url = 'https://cfdidescargamasivasolicitud.clouda.sat.gob.mx/SolicitaDescargaService.svc'
-    soap_action = 'http://DescargaMasivaTerceros.sat.gob.mx/ISolicitaDescargaService/SolicitaDescarga'
-    solicitud_xpath = '{*}Body/{*}SolicitaDescarga/{*}solicitud'
-
-    def process_response(self, response: etree.Element):
-        res = response.find('{*}Body/{*}SolicitaDescargaResponse/{*}SolicitaDescargaResult')
-        return {
-            **res.attrib
-        }
-
 class _CFDISolicitaDescargaEmitidos(_SATRequest):
     xml_name = 'solicitaEmitidos.xml'
     soap_url = 'https://cfdidescargamasivasolicitud.clouda.sat.gob.mx/SolicitaDescargaService.svc'
@@ -351,14 +339,17 @@ class _CFDIDescargaMasiva(_SATRequest):
 class _RetenAutenticacion(_CFDIAutenticacion):
     soap_url = 'https://retendescargamasivasolicitud.clouda.sat.gob.mx/Autenticacion/Autenticacion.svc'
 
-
-class _RetenSolicitaDescarga(_CFDISolicitaDescarga):
+class _RetenSolicitaDescargaEmitidos(_CFDISolicitaDescargaEmitidos):
     soap_url = 'https://retendescargamasivasolicitud.clouda.sat.gob.mx/SolicitaDescargaService.svc'
 
+class _RetenSolicitaDescargaRecibidos(_CFDISolicitaDescargaRecibidos):
+    soap_url = 'https://retendescargamasivasolicitud.clouda.sat.gob.mx/SolicitaDescargaService.svc'
+
+class _RetenSolicitaDescargaFolio(_CFDISolicitaDescargaFolio):
+    soap_url = 'https://retendescargamasivasolicitud.clouda.sat.gob.mx/SolicitaDescargaService.svc'
 
 class _RetenVerificaSolicitudDescarga(_CFDIVerificaSolicitudDescarga):
     soap_url = 'https://retendescargamasivasolicitud.clouda.sat.gob.mx/VerificaSolicitudDescargaService.svc'
-
 
 class _RetenDescargaMasiva(_CFDIDescargaMasiva):
     soap_url = 'https://retendescargamasiva.clouda.sat.gob.mx/DescargaMasivaService.svc'
@@ -760,18 +751,17 @@ class SAT(PAC):
             needs_token_fn=self._get_token_comprobante
         )
 
-    def recover_retencion_request(
+    def recover_retencion_emited_request(
             self,
-            fecha_inicial: date = None,
-            fecha_final: date = None,
-            rfc_receptor: str | Sequence[str] = None,
-            rfc_emisor: str = None,
+            fecha_inicial: date | datetime | None = None,
+            fecha_final: date | datetime | None = None,
+            rfc_receptor: str | Sequence[str] | None = None,
+            rfc_emisor: str | None = None,
             tipo_solicitud: TipoDescargaMasivaTerceros | str = TipoDescargaMasivaTerceros.CFDI,
-            tipo_comprobante: TipoDeComprobante | str = None,
-            estado_comprobante: EstadoComprobante | str = None,
-            rfc_a_cuenta_terceros: str = None,
-            complemento: str = None,
-            uuid: str | UUID = None) -> dict:
+            tipo_comprobante: TipoDeComprobante | str | None = None,
+            estado_comprobante: EstadoComprobante | str | None = None,
+            rfc_a_cuenta_terceros: str | None = None,
+            complemento: str | None = None) -> dict:
         """
         Esta operación permite solicitar la descarga de CFDIs o Metadata y como
         resultado devuelve un id de solicitud o estatus de la petición realizada.
@@ -803,16 +793,91 @@ class SAT(PAC):
             'EstadoComprobante': estado_comprobante,
             'RfcACuentaTerceros': rfc_a_cuenta_terceros,
             'Complemento': complemento,
-            'Folio': uuid,
         }
 
         return self._execute_req(
-            _RetenSolicitaDescarga(
+            _RetenSolicitaDescargaEmitidos(
                 signer=self.signer,
                 arguments=arguments
             ),
             needs_token_fn=self._get_token_retencion
         )
+
+    def recover_retencion_received_request(
+            self,
+            fecha_inicial: date | datetime | None = None,
+            fecha_final: date | datetime | None = None,
+            rfc_receptor: str | None = None,
+            rfc_emisor: str | None = None,
+            tipo_solicitud: TipoDescargaMasivaTerceros | str = TipoDescargaMasivaTerceros.CFDI,
+            tipo_comprobante: TipoDeComprobante | str | None = None,
+            estado_comprobante: EstadoComprobante | str | None = None,
+            rfc_a_cuenta_terceros: str | None = None,
+            complemento: str | None = None) -> dict:
+        """
+        Esta operación permite solicitar la descarga de CFDIs o Metadata y como
+        resultado devuelve un id de solicitud o estatus de la petición realizada.
+
+        :param fecha_inicial: Solo se buscarán CFDI, cuya fecha de emisión sea igual o mayor a la fecha inicial indicada en este parámetro.
+            Parámetro obligatorio. Este parámetro no debe declararse en caso de realizar una consulta por el folio fiscal (UUID).
+        :param fecha_final: Solo se buscarán CFDI, cuya fecha de emisión sea igual o menor a la fecha final indicada en este parámetro.
+            Parámetro obligatorio. Este parámetro no debe declararse en caso de realizar una consulta por el folio fiscal (UUID).
+        :param rfc_receptor: Contiene el/los RFCs receptores de los cuales se quiere consultar los CFDIs
+            Importante: El campo RfcReceptor, únicamente permite la captura de 5 registros como máximo
+        :param rfc_emisor: Contiene el RFC del emisor del cual se quiere consultar los CFDI.
+            Parámetro obligatorio. Este parámetro no debe declararse en caso de realizar una consulta por el folio fiscal (UUID).
+        :param tipo_solicitud: Define el tipo de descarga
+        :param tipo_comprobante: Define el tipo de comprobante
+        :param estado_comprobante: Define el estado del comprobante
+        :param rfc_a_cuenta_terceros: Contiene el RFC del a cuenta a tercero del cual se quiere consultar los CFDIs
+        :param complemento: Define el complemento de CFDI a descargar
+        :param uuid: Folio Fiscal
+        :return: respuesta de solicitud de descarga
+        """
+        arguments = {
+            'FechaFinal': fecha_final,
+            'FechaInicial': fecha_inicial,
+            'RfcEmisor': rfc_emisor,
+            'RfcReceptor': rfc_receptor,
+            'RfcSolicitante': self.signer.rfc,
+            'TipoSolicitud': tipo_solicitud,
+            'TipoComprobante': tipo_comprobante,
+            'EstadoComprobante': estado_comprobante,
+            'RfcACuentaTerceros': rfc_a_cuenta_terceros,
+            'Complemento': complemento,
+        }
+
+        return self._execute_req(
+            _RetenSolicitaDescargaRecibidos(
+                signer=self.signer,
+                arguments=arguments
+            ),
+            needs_token_fn=self._get_token_retencion
+        )
+
+    def recover_retencion_uuid_request(
+            self,
+            folio: str | UUID | None = None) -> dict:
+        """
+        Esta operación permite solicitar la descarga de CFDIs o Metadata y como
+        resultado devuelve un id de solicitud o estatus de la petición realizada.
+
+        :param folio: Folio Fiscal
+        :return: respuesta de solicitud de descarga
+        """
+        arguments = {
+            'RfcSolicitante': self.signer.rfc,
+            'Folio': folio,
+        }
+
+        return self._execute_req(
+            _RetenSolicitaDescargaFolio(
+                signer=self.signer,
+                arguments=arguments
+            ),
+            needs_token_fn=self._get_token_retencion
+        )
+
 
     def recover_retencion_status(self, id_solicitud: str) -> dict:
         return self._execute_req(
