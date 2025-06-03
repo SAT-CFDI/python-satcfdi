@@ -10,25 +10,21 @@ from datetime import date, datetime, timedelta, UTC
 from enum import IntEnum, Enum, StrEnum
 from functools import cache
 from itertools import islice
-from typing import Iterator
 from uuid import UUID
 
-from bs4 import BeautifulSoup
-from packaging import version
-
 import requests
+from bs4 import BeautifulSoup
 from lxml import etree
 from lxml.etree import QName
+from packaging import version
+
 from satcfdi.create.cfd.catalogos import TipoDeComprobante
-
-from ..models import Code
-
+from . import PAC, Environment, TaxpayerStatus
 from .. import __version__
 from ..cfdi import CFDI
+from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes
 from ..exceptions import ResponseError
 from ..models import Signer, Certificate
-from . import PAC, Environment, TaxpayerStatus
-from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes
 from ..transform import MEXICO_TZ, get_timezone, verify_certificate
 from ..utils import iterate, parser
 
