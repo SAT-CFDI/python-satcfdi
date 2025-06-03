@@ -90,6 +90,9 @@ class CodigoEstadoSolicitud(StrEnum):
 class TipoDescargaMasivaTerceros(StrEnum):
     CFDI = 'CFDI'
     METADATA = 'Metadata'
+    PDF = 'PDF'
+    PDFCOCEMA = 'PDFCOCEMA'
+    TXTUUIDMASIVA = 'TXTUUIDMASIVA'
 
 
 def _service_logger(response_type, response):
@@ -628,7 +631,6 @@ class SAT(PAC):
         :param estado_comprobante: Define el estado del comprobante
         :param rfc_a_cuenta_terceros: Contiene el RFC del a cuenta a tercero del cual se quiere consultar los CFDIs
         :param complemento: Define el complemento de CFDI a descargar
-        :param uuid: Folio Fiscal
         :return: respuesta de solicitud de descarga
         """
         arguments = {
@@ -680,7 +682,6 @@ class SAT(PAC):
         :param estado_comprobante: Define el estado del comprobante
         :param rfc_a_cuenta_terceros: Contiene el RFC del a cuenta a tercero del cual se quiere consultar los CFDIs
         :param complemento: Define el complemento de CFDI a descargar
-        :param uuid: Folio Fiscal
         :return: respuesta de solicitud de descarga
         """
         arguments = {
@@ -758,9 +759,7 @@ class SAT(PAC):
             rfc_receptor: str | Sequence[str] | None = None,
             rfc_emisor: str | None = None,
             tipo_solicitud: TipoDescargaMasivaTerceros | str = TipoDescargaMasivaTerceros.CFDI,
-            tipo_comprobante: TipoDeComprobante | str | None = None,
             estado_comprobante: EstadoComprobante | str | None = None,
-            rfc_a_cuenta_terceros: str | None = None,
             complemento: str | None = None) -> dict:
         """
         Esta operación permite solicitar la descarga de CFDIs o Metadata y como
@@ -775,11 +774,8 @@ class SAT(PAC):
         :param rfc_emisor: Contiene el RFC del emisor del cual se quiere consultar los CFDI.
             Parámetro obligatorio. Este parámetro no debe declararse en caso de realizar una consulta por el folio fiscal (UUID).
         :param tipo_solicitud: Define el tipo de descarga
-        :param tipo_comprobante: Define el tipo de comprobante
         :param estado_comprobante: Define el estado del comprobante
-        :param rfc_a_cuenta_terceros: Contiene el RFC del a cuenta a tercero del cual se quiere consultar los CFDIs
         :param complemento: Define el complemento de CFDI a descargar
-        :param uuid: Folio Fiscal
         :return: respuesta de solicitud de descarga
         """
         arguments = {
@@ -789,9 +785,7 @@ class SAT(PAC):
             'RfcReceptores': [('RfcReceptor', r) for r in iterate(rfc_receptor)] if rfc_receptor else None,
             'RfcSolicitante': self.signer.rfc,
             'TipoSolicitud': tipo_solicitud,
-            'TipoComprobante': tipo_comprobante,
             'EstadoComprobante': estado_comprobante,
-            'RfcACuentaTerceros': rfc_a_cuenta_terceros,
             'Complemento': complemento,
         }
 
@@ -810,9 +804,7 @@ class SAT(PAC):
             rfc_receptor: str | None = None,
             rfc_emisor: str | None = None,
             tipo_solicitud: TipoDescargaMasivaTerceros | str = TipoDescargaMasivaTerceros.CFDI,
-            tipo_comprobante: TipoDeComprobante | str | None = None,
             estado_comprobante: EstadoComprobante | str | None = None,
-            rfc_a_cuenta_terceros: str | None = None,
             complemento: str | None = None) -> dict:
         """
         Esta operación permite solicitar la descarga de CFDIs o Metadata y como
@@ -827,11 +819,8 @@ class SAT(PAC):
         :param rfc_emisor: Contiene el RFC del emisor del cual se quiere consultar los CFDI.
             Parámetro obligatorio. Este parámetro no debe declararse en caso de realizar una consulta por el folio fiscal (UUID).
         :param tipo_solicitud: Define el tipo de descarga
-        :param tipo_comprobante: Define el tipo de comprobante
         :param estado_comprobante: Define el estado del comprobante
-        :param rfc_a_cuenta_terceros: Contiene el RFC del a cuenta a tercero del cual se quiere consultar los CFDIs
         :param complemento: Define el complemento de CFDI a descargar
-        :param uuid: Folio Fiscal
         :return: respuesta de solicitud de descarga
         """
         arguments = {
@@ -841,9 +830,7 @@ class SAT(PAC):
             'RfcReceptor': rfc_receptor,
             'RfcSolicitante': self.signer.rfc,
             'TipoSolicitud': tipo_solicitud,
-            'TipoComprobante': tipo_comprobante,
             'EstadoComprobante': estado_comprobante,
-            'RfcACuentaTerceros': rfc_a_cuenta_terceros,
             'Complemento': complemento,
         }
 
