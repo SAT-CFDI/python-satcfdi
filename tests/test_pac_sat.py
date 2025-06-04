@@ -208,7 +208,7 @@ def test_pac_sat_rfc():
         mk.return_value.ok = True
         mk.return_value.content = content
 
-        res = sat_service.recover_comprobante_emited_request(
+        res = sat_service.recover_comprobante_emitted_request(
             tipo_solicitud=TipoDescargaMasivaTerceros.CFDI,
             rfc_emisor="ABC123456ABC",
             rfc_receptor="ABC123456ABC",
