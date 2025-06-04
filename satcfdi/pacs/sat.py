@@ -603,7 +603,7 @@ class SAT(PAC):
             return TaxpayerStatus(r)
         return None
 
-    def recover_comprobante_emited_request(
+    def recover_comprobante_emitted_request(
             self,
             fecha_inicial: date | datetime | None = None,
             fecha_final: date | datetime | None = None,
@@ -752,7 +752,7 @@ class SAT(PAC):
             needs_token_fn=self._get_token_comprobante
         )
 
-    def recover_retencion_emited_request(
+    def recover_retencion_emitted_request(
             self,
             fecha_inicial: date | datetime | None = None,
             fecha_final: date | datetime | None = None,

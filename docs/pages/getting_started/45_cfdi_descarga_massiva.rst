@@ -23,7 +23,7 @@ ___________________
     )
     
     # Facturas Recibidas
-    response = sat_service.recover_comprobante_emited_request(
+    response = sat_service.recover_comprobante_emitted_request(
         fecha_inicial=date(2020, 1, 1),
         fecha_final=date(2020, 12, 1),
         rfc_receptor=sat_service.signer.rfc,
