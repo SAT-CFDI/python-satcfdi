@@ -14620,16 +14620,6 @@ def parte4(cls, node):
     if (a := node.attrib.get('importe')) is not None:
         self['Importe'] = Decimal(a)
     return self
-def timbre_fiscal_digital2(cls, node):
-    self = cls()
-    self.tag = node.tag
-    self['Version'] = node.attrib['version']
-    self['UUID'] = node.attrib['UUID']
-    self['FechaTimbrado'] = datetime.fromisoformat(node.attrib['FechaTimbrado'])
-    self['SelloCFD'] = node.attrib['selloCFD']
-    self['NoCertificadoSAT'] = node.attrib['noCertificadoSAT']
-    self['SelloSAT'] = node.attrib['selloSAT']
-    return self
 def s_cancelacion0(cls, node):
     return cancelacion0(cls, node)
 def s_cancelacion1(cls, node):
@@ -14853,8 +14843,6 @@ def s_timbre_fiscal_digital0(cls, node):
         return timbre_fiscal_digital0(cls, node)
     if node.attrib.get('Version') == '1.1':
         return timbre_fiscal_digital1(cls, node)
-    if node.attrib.get('version') == '1.0':
-        return timbre_fiscal_digital2(cls, node)
     raise NamespaceMismatchError(node)
 def s_turista_pasajero_extranjero0(cls, node):
     if node.attrib.get('version') == '1.0':

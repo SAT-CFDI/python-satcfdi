@@ -15442,17 +15442,6 @@ def parte4(name, data):
     if (a := data.get('Importe')) is not None:
         self.attrib['importe'] = fmt_decimal(a)
     return self
-def timbre_fiscal_digital2(name, data):
-    col = SchemaCollector()
-    cfdi_schemas[data.tag](col, data)
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/TimbreFiscalDigital', name), nsmap=col.nsmap)
-    self.attrib['version'] = data['Version']
-    self.attrib['UUID'] = str(data['UUID'])
-    self.attrib['FechaTimbrado'] = data['FechaTimbrado'].isoformat(timespec='seconds')
-    self.attrib['selloCFD'] = data['SelloCFD']
-    self.attrib['noCertificadoSAT'] = data['NoCertificadoSAT']
-    self.attrib['selloSAT'] = data['SelloSAT']
-    return self
 def s_cancelacion0(data):
     return cancelacion0('Cancelacion', data)
 def s_cancelacion1(data):
@@ -15676,8 +15665,6 @@ def s_timbre_fiscal_digital0(data):
         return timbre_fiscal_digital0('TimbreFiscalDigital', data)
     if data.get('Version') == '1.1':
         return timbre_fiscal_digital1('TimbreFiscalDigital', data)
-    if data.get('Version') == '1.0':
-        return timbre_fiscal_digital2('TimbreFiscalDigital', data)
     raise NamespaceMismatchError(data)
 def s_turista_pasajero_extranjero0(data):
     if data.get('Version') == '1.0':

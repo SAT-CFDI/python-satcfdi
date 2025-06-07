@@ -4108,10 +4108,6 @@ def venta_vehiculos0(col, data):
     col.add_map('ventavehiculos', 'http://www.sat.gob.mx/ventavehiculos')
     col.add_schema('http://www.sat.gob.mx/ventavehiculos http://www.sat.gob.mx/sitio_internet/cfd/ventavehiculos/ventavehiculos11.xsd')
     col.add_base('www.sat.gob.mx/sitio_internet/cfd/ventavehiculos/ventavehiculos11.xsd')
-def timbre_fiscal_digital2(col, data):
-    col.add_map('tfd', 'http://www.sat.gob.mx/TimbreFiscalDigital')
-    col.add_schema('http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/timbrefiscaldigital/TimbreFiscalDigital.xsd')
-    col.add_base('www.sat.gob.mx/sitio_internet/timbrefiscaldigital/TimbreFiscalDigital.xsd')
 def s_cancelacion0(col, data):
     cancelacion0(col, data)
 def s_cancelacion1(col, data):
@@ -4293,8 +4289,6 @@ def s_timbre_fiscal_digital0(col, data):
         timbre_fiscal_digital0(col, data)
     if data.get('Version') == '1.1':
         timbre_fiscal_digital1(col, data)
-    if data.get('Version') == '1.0':
-        timbre_fiscal_digital2(col, data)
 def s_turista_pasajero_extranjero0(col, data):
     if data.get('Version') == '1.0':
         turista_pasajero_extranjero0(col, data)
