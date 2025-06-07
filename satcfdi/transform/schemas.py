@@ -3686,6 +3686,10 @@ def polizas0(col, data):
     col.add_map('PLZ', 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo')
     col.add_schema('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo http://www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo/PolizasPeriodo_1_1.xsd')
     col.add_base('www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo/PolizasPeriodo_1_1.xsd')
+def sello_digital_cont_elec0(col, data):
+    col.add_map('sellodigital', 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec')
+    col.add_schema('www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec http://www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec/SelloDigitalContElec.xsd')
+    col.add_base('www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec/SelloDigitalContElec.xsd')
 def auxiliar_ctas1(col, data):
     col.add_map('AuxiliarCtas', 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas')
     col.add_schema('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas/AuxiliarCtas_1_3.xsd')
@@ -3706,7 +3710,7 @@ def polizas1(col, data):
     col.add_map('PLZ', 'http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo')
     col.add_schema('http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo/PolizasPeriodo_1_3.xsd')
     col.add_base('www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo/PolizasPeriodo_1_3.xsd')
-def sello_digital_cont_elec0(col, data):
+def sello_digital_cont_elec1(col, data):
     col.add_map('sellodigital', 'www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec')
     col.add_schema('www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/SelloDigitalContElec/SelloDigitalContElec.xsd')
     col.add_base('www.sat.gob.mx/esquemas/ContabilidadE/1_3/SelloDigitalContElec/SelloDigitalContElec.xsd')
@@ -3747,13 +3751,13 @@ def pagosaextranjeros0(col, data):
     col.add_schema('http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros/pagosaextranjeros.xsd')
     col.add_base('www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros/pagosaextranjeros.xsd')
 def planesderetiro0(col, data):
-    col.add_map('planesderetiro11', 'http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11')
-    col.add_schema('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11 http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11/planesderetiro11.xsd')
-    col.add_base('www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11/planesderetiro11.xsd')
-def planesderetiro1(col, data):
     col.add_map('planesderetiro', 'http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro')
     col.add_schema('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro/planesderetiro.xsd')
     col.add_base('www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro/planesderetiro.xsd')
+def planesderetiro1(col, data):
+    col.add_map('planesderetiro11', 'http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11')
+    col.add_schema('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11 http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11/planesderetiro11.xsd')
+    col.add_base('www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11/planesderetiro11.xsd')
 def premios0(col, data):
     col.add_map('premios', 'http://www.sat.gob.mx/esquemas/retencionpago/1/premios')
     col.add_schema('http://www.sat.gob.mx/esquemas/retencionpago/1/premios http://www.sat.gob.mx/esquemas/retencionpago/1/premios/premios.xsd')
@@ -3937,17 +3941,17 @@ def carta_porte3(col, data):
     col.add_schema('http://www.sat.gob.mx/CartaPorte31 http://www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte31.xsd')
     col.add_base('www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte31.xsd')
 def comercio_exterior0(col, data):
-    col.add_map('cce11', 'http://www.sat.gob.mx/ComercioExterior11')
-    col.add_schema('http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd')
-    col.add_base('www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd')
-def comercio_exterior1(col, data):
-    col.add_map('cce20', 'http://www.sat.gob.mx/ComercioExterior20')
-    col.add_schema('http://www.sat.gob.mx/ComercioExterior20 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd')
-    col.add_base('www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd')
-def comercio_exterior2(col, data):
     col.add_map('cce', 'http://www.sat.gob.mx/ComercioExterior')
     col.add_schema('http://www.sat.gob.mx/ComercioExterior http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior/ComercioExterior10.xsd')
     col.add_base('www.sat.gob.mx/sitio_internet/cfd/ComercioExterior/ComercioExterior10.xsd')
+def comercio_exterior1(col, data):
+    col.add_map('cce11', 'http://www.sat.gob.mx/ComercioExterior11')
+    col.add_schema('http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd')
+    col.add_base('www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd')
+def comercio_exterior2(col, data):
+    col.add_map('cce20', 'http://www.sat.gob.mx/ComercioExterior20')
+    col.add_schema('http://www.sat.gob.mx/ComercioExterior20 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd')
+    col.add_base('www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd')
 def estado_de_cuenta_combustible0(col, data):
     col.add_map('ecc11', 'http://www.sat.gob.mx/EstadoDeCuentaCombustible')
     col.add_schema('http://www.sat.gob.mx/EstadoDeCuentaCombustible http://www.sat.gob.mx/sitio_internet/cfd/EstadoDeCuentaCombustible/ecc11.xsd')
@@ -4104,6 +4108,10 @@ def venta_vehiculos0(col, data):
     col.add_map('ventavehiculos', 'http://www.sat.gob.mx/ventavehiculos')
     col.add_schema('http://www.sat.gob.mx/ventavehiculos http://www.sat.gob.mx/sitio_internet/cfd/ventavehiculos/ventavehiculos11.xsd')
     col.add_base('www.sat.gob.mx/sitio_internet/cfd/ventavehiculos/ventavehiculos11.xsd')
+def timbre_fiscal_digital2(col, data):
+    col.add_map('tfd', 'http://www.sat.gob.mx/TimbreFiscalDigital')
+    col.add_schema('http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/timbrefiscaldigital/TimbreFiscalDigital.xsd')
+    col.add_base('www.sat.gob.mx/sitio_internet/timbrefiscaldigital/TimbreFiscalDigital.xsd')
 def s_cancelacion0(col, data):
     cancelacion0(col, data)
 def s_cancelacion1(col, data):
@@ -4168,6 +4176,11 @@ def s_catalogo0(col, data):
 def s_polizas0(col, data):
     if data.get('Version') == '1.1':
         polizas0(col, data)
+def s_sello_digital_cont_elec0(col, data):
+    if data.get('Version') == '1.1':
+        sello_digital_cont_elec0(col, data)
+    if data.get('Version') == '1.1':
+        sello_digital_cont_elec1(col, data)
 def s_auxiliar_ctas1(col, data):
     if data.get('Version') == '1.3':
         auxiliar_ctas1(col, data)
@@ -4183,9 +4196,6 @@ def s_catalogo1(col, data):
 def s_polizas1(col, data):
     if data.get('Version') == '1.3':
         polizas1(col, data)
-def s_sello_digital_cont_elec0(col, data):
-    if data.get('Version') == '1.1':
-        sello_digital_cont_elec0(col, data)
 def s_servicios_plataformas_tecnologicas0(col, data):
     if data.get('Version') == '1.0':
         servicios_plataformas_tecnologicas0(col, data)
@@ -4214,10 +4224,10 @@ def s_pagosaextranjeros0(col, data):
     if data.get('Version') == '1.0':
         pagosaextranjeros0(col, data)
 def s_planesderetiro0(col, data):
-    if data.get('Version') == '1.1':
+    if data.get('Version') == '1.0':
         planesderetiro0(col, data)
 def s_planesderetiro1(col, data):
-    if data.get('Version') == '1.0':
+    if data.get('Version') == '1.1':
         planesderetiro1(col, data)
 def s_premios0(col, data):
     if data.get('Version') == '1.0':
@@ -4252,13 +4262,13 @@ def s_carta_porte3(col, data):
     if data.get('Version') == '3.1':
         carta_porte3(col, data)
 def s_comercio_exterior0(col, data):
-    if data.get('Version') == '1.1':
+    if data.get('Version') == '1.0':
         comercio_exterior0(col, data)
 def s_comercio_exterior1(col, data):
-    if data.get('Version') == '2.0':
+    if data.get('Version') == '1.1':
         comercio_exterior1(col, data)
 def s_comercio_exterior2(col, data):
-    if data.get('Version') == '1.0':
+    if data.get('Version') == '2.0':
         comercio_exterior2(col, data)
 def s_estado_de_cuenta_combustible0(col, data):
     if data.get('Version') == '1.1' and data.get('TipoOperacion') == 'Tarjeta':
@@ -4283,6 +4293,8 @@ def s_timbre_fiscal_digital0(col, data):
         timbre_fiscal_digital0(col, data)
     if data.get('Version') == '1.1':
         timbre_fiscal_digital1(col, data)
+    if data.get('Version') == '1.0':
+        timbre_fiscal_digital2(col, data)
 def s_turista_pasajero_extranjero0(col, data):
     if data.get('Version') == '1.0':
         turista_pasajero_extranjero0(col, data)
@@ -4451,12 +4463,12 @@ cfdi_schemas = {
     '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/BalanzaComprobacion}Balanza': s_balanza0,
     '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas}Catalogo': s_catalogo0,
     '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo}Polizas': s_polizas0,
+    '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec}SelloDigitalContElec': s_sello_digital_cont_elec0,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas}AuxiliarCtas': s_auxiliar_ctas1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios}RepAuxFol': s_rep_aux_fol1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion}Balanza': s_balanza1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas}Catalogo': s_catalogo1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo}Polizas': s_polizas1,
-    '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec}SelloDigitalContElec': s_sello_digital_cont_elec0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10}ServiciosPlataformasTecnologicas': s_servicios_plataformas_tecnologicas0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/arrendamientoenfideicomiso}Arrendamientoenfideicomiso': s_arrendamientoenfideicomiso0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos}Dividendos': s_dividendos0,
@@ -4466,8 +4478,8 @@ cfdi_schemas = {
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/intereseshipotecarios}Intereseshipotecarios': s_intereseshipotecarios0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/operacionesconderivados}Operacionesconderivados': s_operacionesconderivados0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros}Pagosaextranjeros': s_pagosaextranjeros0,
-    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}Planesderetiro': s_planesderetiro0,
-    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro}Planesderetiro': s_planesderetiro1,
+    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro}Planesderetiro': s_planesderetiro0,
+    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}Planesderetiro': s_planesderetiro1,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/premios}Premios': s_premios0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1}Retenciones': s_retenciones0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/sectorfinanciero}SectorFinanciero': s_sector_financiero0,
@@ -4478,9 +4490,9 @@ cfdi_schemas = {
     '{http://www.sat.gob.mx/CartaPorte20}CartaPorte': s_carta_porte1,
     '{http://www.sat.gob.mx/CartaPorte30}CartaPorte': s_carta_porte2,
     '{http://www.sat.gob.mx/CartaPorte31}CartaPorte': s_carta_porte3,
-    '{http://www.sat.gob.mx/ComercioExterior11}ComercioExterior': s_comercio_exterior0,
-    '{http://www.sat.gob.mx/ComercioExterior20}ComercioExterior': s_comercio_exterior1,
-    '{http://www.sat.gob.mx/ComercioExterior}ComercioExterior': s_comercio_exterior2,
+    '{http://www.sat.gob.mx/ComercioExterior}ComercioExterior': s_comercio_exterior0,
+    '{http://www.sat.gob.mx/ComercioExterior11}ComercioExterior': s_comercio_exterior1,
+    '{http://www.sat.gob.mx/ComercioExterior20}ComercioExterior': s_comercio_exterior2,
     '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible0,
     '{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible1,
     '{http://www.sat.gob.mx/GastosHidrocarburos10}GastosHidrocarburos': s_gastos_hidrocarburos0,

@@ -9617,6 +9617,19 @@ def otr_metodo_pago0(name, data):
     if (a := data.get('TipCamb')) is not None:
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
+def sello_digital_cont_elec0(name, data):
+    col = SchemaCollector()
+    cfdi_schemas[data.tag](col, data)
+    self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec', name), nsmap=col.nsmap)
+    self.attrib['Version'] = data['Version']
+    self.attrib['Folio'] = data['Folio']
+    self.attrib['RFC'] = data['RFC']
+    self.attrib['FechadeSello'] = data['FechadeSello'].isoformat(timespec='seconds')
+    if (a := data.get('Sello')) is not None:
+        self.attrib['sello'] = a
+    self.attrib['noCertificadoSAT'] = data['NoCertificadoSAT']
+    self.attrib['selloSAT'] = data['SelloSAT']
+    return self
 def auxiliar_ctas1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
@@ -9940,7 +9953,7 @@ def otr_metodo_pago1(name, data):
     if (a := data.get('TipCamb')) is not None:
         self.attrib['TipCamb'] = fmt_decimal(a)
     return self
-def sello_digital_cont_elec0(name, data):
+def sello_digital_cont_elec1(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
     self = Element('{%s}%s' % ('www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec', name), nsmap=col.nsmap)
@@ -10181,6 +10194,26 @@ def beneficiario1(name, data):
 def planesderetiro0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro', name), nsmap=col.nsmap)
+    self.attrib['Version'] = data['Version']
+    self.attrib['SistemaFinanc'] = data['SistemaFinanc']
+    if (a := data.get('MontTotAportAnioInmAnterior')) is not None:
+        self.attrib['MontTotAportAnioInmAnterior'] = fmt_decimal(a)
+    self.attrib['MontIntRealesDevengAniooInmAnt'] = fmt_decimal(data['MontIntRealesDevengAniooInmAnt'])
+    self.attrib['HuboRetirosAnioInmAntPer'] = data['HuboRetirosAnioInmAntPer']
+    if (a := data.get('MontTotRetiradoAnioInmAntPer')) is not None:
+        self.attrib['MontTotRetiradoAnioInmAntPer'] = fmt_decimal(a)
+    if (a := data.get('MontTotExentRetiradoAnioInmAnt')) is not None:
+        self.attrib['MontTotExentRetiradoAnioInmAnt'] = fmt_decimal(a)
+    if (a := data.get('MontTotExedenteAnioInmAnt')) is not None:
+        self.attrib['MontTotExedenteAnioInmAnt'] = fmt_decimal(a)
+    self.attrib['HuboRetirosAnioInmAnt'] = data['HuboRetirosAnioInmAnt']
+    if (a := data.get('MontTotRetiradoAnioInmAnt')) is not None:
+        self.attrib['MontTotRetiradoAnioInmAnt'] = fmt_decimal(a)
+    return self
+def planesderetiro1(name, data):
+    col = SchemaCollector()
+    cfdi_schemas[data.tag](col, data)
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11', name), nsmap=col.nsmap)
     el = data.get('AportacionesODepositos')
     if el is not None:
@@ -10210,26 +10243,6 @@ def aportaciones_odepositos0(name, data):
     self.attrib['MontAportODep'] = fmt_decimal(data['MontAportODep'])
     if (a := data.get('RFCFiduciaria')) is not None:
         self.attrib['RFCFiduciaria'] = str(a)
-    return self
-def planesderetiro1(name, data):
-    col = SchemaCollector()
-    cfdi_schemas[data.tag](col, data)
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro', name), nsmap=col.nsmap)
-    self.attrib['Version'] = data['Version']
-    self.attrib['SistemaFinanc'] = data['SistemaFinanc']
-    if (a := data.get('MontTotAportAnioInmAnterior')) is not None:
-        self.attrib['MontTotAportAnioInmAnterior'] = fmt_decimal(a)
-    self.attrib['MontIntRealesDevengAniooInmAnt'] = fmt_decimal(data['MontIntRealesDevengAniooInmAnt'])
-    self.attrib['HuboRetirosAnioInmAntPer'] = data['HuboRetirosAnioInmAntPer']
-    if (a := data.get('MontTotRetiradoAnioInmAntPer')) is not None:
-        self.attrib['MontTotRetiradoAnioInmAntPer'] = fmt_decimal(a)
-    if (a := data.get('MontTotExentRetiradoAnioInmAnt')) is not None:
-        self.attrib['MontTotExentRetiradoAnioInmAnt'] = fmt_decimal(a)
-    if (a := data.get('MontTotExedenteAnioInmAnt')) is not None:
-        self.attrib['MontTotExedenteAnioInmAnt'] = fmt_decimal(a)
-    self.attrib['HuboRetirosAnioInmAnt'] = data['HuboRetirosAnioInmAnt']
-    if (a := data.get('MontTotRetiradoAnioInmAnt')) is not None:
-        self.attrib['MontTotRetiradoAnioInmAnt'] = fmt_decimal(a)
     return self
 def premios0(name, data):
     col = SchemaCollector()
@@ -12845,26 +12858,134 @@ def domicilioa(name, data):
 def comercio_exterior0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=col.nsmap)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=col.nsmap)
     el = data.get('Emisor')
     if el is not None:
         self.append(emisor6('Emisor', el))
+    el = data['Receptor']
+    self.append(receptor6('Receptor', el))
+    el = data.get('Destinatario')
+    if el is not None:
+        self.append(destinatario1('Destinatario', el))
+    el = data.get('Mercancias')
+    if el is not None:
+        st = SubElement(self, '{http://www.sat.gob.mx/ComercioExterior}Mercancias')
+        for r in iterate(el):
+            st.append(mercancia4('Mercancia', r))
+    self.attrib['Version'] = data['Version']
+    self.attrib['TipoOperacion'] = strcode(data['TipoOperacion'])
+    if (a := data.get('ClaveDePedimento')) is not None:
+        self.attrib['ClaveDePedimento'] = strcode(a)
+    if (a := data.get('CertificadoOrigen')) is not None:
+        self.attrib['CertificadoOrigen'] = str(a)
+    if (a := data.get('NumCertificadoOrigen')) is not None:
+        self.attrib['NumCertificadoOrigen'] = a
+    if (a := data.get('NumeroExportadorConfiable')) is not None:
+        self.attrib['NumeroExportadorConfiable'] = a
+    if (a := data.get('Incoterm')) is not None:
+        self.attrib['Incoterm'] = strcode(a)
+    if (a := data.get('Subdivision')) is not None:
+        self.attrib['Subdivision'] = str(a)
+    if (a := data.get('Observaciones')) is not None:
+        self.attrib['Observaciones'] = a
+    if (a := data.get('TipoCambioUSD')) is not None:
+        self.attrib['TipoCambioUSD'] = fmt_decimal(a)
+    if (a := data.get('TotalUSD')) is not None:
+        self.attrib['TotalUSD'] = fmt_decimal(a)
+    return self
+def emisor6(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    if (a := data.get('Curp')) is not None:
+        self.attrib['Curp'] = a
+    return self
+def receptor6(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    if (a := data.get('Curp')) is not None:
+        self.attrib['Curp'] = a
+    self.attrib['NumRegIdTrib'] = data['NumRegIdTrib']
+    return self
+def destinatario1(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    el = data['Domicilio']
+    self.append(domiciliob('Domicilio', el))
+    if (a := data.get('NumRegIdTrib')) is not None:
+        self.attrib['NumRegIdTrib'] = a
+    if (a := data.get('Rfc')) is not None:
+        self.attrib['Rfc'] = str(a)
+    if (a := data.get('Curp')) is not None:
+        self.attrib['Curp'] = a
+    if (a := data.get('Nombre')) is not None:
+        self.attrib['Nombre'] = a
+    return self
+def domiciliob(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self.attrib['Calle'] = data['Calle']
+    if (a := data.get('NumeroExterior')) is not None:
+        self.attrib['NumeroExterior'] = a
+    if (a := data.get('NumeroInterior')) is not None:
+        self.attrib['NumeroInterior'] = a
+    if (a := data.get('Colonia')) is not None:
+        self.attrib['Colonia'] = a
+    if (a := data.get('Localidad')) is not None:
+        self.attrib['Localidad'] = a
+    if (a := data.get('Referencia')) is not None:
+        self.attrib['Referencia'] = a
+    if (a := data.get('Municipio')) is not None:
+        self.attrib['Municipio'] = a
+    self.attrib['Estado'] = data['Estado']
+    self.attrib['Pais'] = strcode(data['Pais'])
+    self.attrib['CodigoPostal'] = data['CodigoPostal']
+    return self
+def mercancia4(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    el = data.get('DescripcionesEspecificas')
+    if el is not None:
+        for r in iterate(el):
+            self.append(descripciones_especificas0('DescripcionesEspecificas', r))
+    self.attrib['NoIdentificacion'] = data['NoIdentificacion']
+    if (a := data.get('FraccionArancelaria')) is not None:
+        self.attrib['FraccionArancelaria'] = strcode(a)
+    if (a := data.get('CantidadAduana')) is not None:
+        self.attrib['CantidadAduana'] = fmt_decimal(a)
+    if (a := data.get('UnidadAduana')) is not None:
+        self.attrib['UnidadAduana'] = strcode(a)
+    if (a := data.get('ValorUnitarioAduana')) is not None:
+        self.attrib['ValorUnitarioAduana'] = fmt_decimal(a)
+    self.attrib['ValorDolares'] = fmt_decimal(data['ValorDolares'])
+    return self
+def descripciones_especificas0(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self.attrib['Marca'] = data['Marca']
+    if (a := data.get('Modelo')) is not None:
+        self.attrib['Modelo'] = a
+    if (a := data.get('SubModelo')) is not None:
+        self.attrib['SubModelo'] = a
+    if (a := data.get('NumeroSerie')) is not None:
+        self.attrib['NumeroSerie'] = a
+    return self
+def comercio_exterior1(name, data):
+    col = SchemaCollector()
+    cfdi_schemas[data.tag](col, data)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=col.nsmap)
+    el = data.get('Emisor')
+    if el is not None:
+        self.append(emisor7('Emisor', el))
     el = data.get('Propietario')
     if el is not None:
         for r in iterate(el):
             self.append(propietario1('Propietario', r))
     el = data.get('Receptor')
     if el is not None:
-        self.append(receptor6('Receptor', el))
+        self.append(receptor7('Receptor', el))
     el = data.get('Destinatario')
     if el is not None:
         for r in iterate(el):
-            self.append(destinatario1('Destinatario', r))
+            self.append(destinatario2('Destinatario', r))
     el = data.get('Mercancias')
     if el is not None:
         st = SubElement(self, '{http://www.sat.gob.mx/ComercioExterior11}Mercancias')
         for r in iterate(el):
-            st.append(mercancia4('Mercancia', r))
+            st.append(mercancia5('Mercancia', r))
     self.attrib['Version'] = data['Version']
     if (a := data.get('MotivoTraslado')) is not None:
         self.attrib['MotivoTraslado'] = strcode(a)
@@ -12888,15 +13009,15 @@ def comercio_exterior0(name, data):
     if (a := data.get('TotalUSD')) is not None:
         self.attrib['TotalUSD'] = fmt_decimal(a)
     return self
-def emisor6(name, data):
+def emisor7(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data.get('Domicilio')
     if el is not None:
-        self.append(domiciliob('Domicilio', el))
+        self.append(domicilioc('Domicilio', el))
     if (a := data.get('Curp')) is not None:
         self.attrib['Curp'] = a
     return self
-def domiciliob(name, data):
+def domicilioc(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
@@ -12920,42 +13041,13 @@ def propietario1(name, data):
     self.attrib['NumRegIdTrib'] = data['NumRegIdTrib']
     self.attrib['ResidenciaFiscal'] = strcode(data['ResidenciaFiscal'])
     return self
-def receptor6(name, data):
+def receptor7(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data.get('Domicilio')
     if el is not None:
-        self.append(domicilioc('Domicilio', el))
+        self.append(domiciliod('Domicilio', el))
     if (a := data.get('NumRegIdTrib')) is not None:
         self.attrib['NumRegIdTrib'] = a
-    return self
-def domicilioc(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
-    self.attrib['Calle'] = data['Calle']
-    if (a := data.get('NumeroExterior')) is not None:
-        self.attrib['NumeroExterior'] = a
-    if (a := data.get('NumeroInterior')) is not None:
-        self.attrib['NumeroInterior'] = a
-    if (a := data.get('Colonia')) is not None:
-        self.attrib['Colonia'] = a
-    if (a := data.get('Localidad')) is not None:
-        self.attrib['Localidad'] = a
-    if (a := data.get('Referencia')) is not None:
-        self.attrib['Referencia'] = a
-    if (a := data.get('Municipio')) is not None:
-        self.attrib['Municipio'] = a
-    self.attrib['Estado'] = data['Estado']
-    self.attrib['Pais'] = strcode(data['Pais'])
-    self.attrib['CodigoPostal'] = data['CodigoPostal']
-    return self
-def destinatario1(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
-    el = data['Domicilio']
-    for r in iterate(el):
-        self.append(domiciliod('Domicilio', r))
-    if (a := data.get('NumRegIdTrib')) is not None:
-        self.attrib['NumRegIdTrib'] = a
-    if (a := data.get('Nombre')) is not None:
-        self.attrib['Nombre'] = a
     return self
 def domiciliod(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
@@ -12976,12 +13068,41 @@ def domiciliod(name, data):
     self.attrib['Pais'] = strcode(data['Pais'])
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
-def mercancia4(name, data):
+def destinatario2(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    el = data['Domicilio']
+    for r in iterate(el):
+        self.append(domicilioe('Domicilio', r))
+    if (a := data.get('NumRegIdTrib')) is not None:
+        self.attrib['NumRegIdTrib'] = a
+    if (a := data.get('Nombre')) is not None:
+        self.attrib['Nombre'] = a
+    return self
+def domicilioe(name, data):
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
+    self.attrib['Calle'] = data['Calle']
+    if (a := data.get('NumeroExterior')) is not None:
+        self.attrib['NumeroExterior'] = a
+    if (a := data.get('NumeroInterior')) is not None:
+        self.attrib['NumeroInterior'] = a
+    if (a := data.get('Colonia')) is not None:
+        self.attrib['Colonia'] = a
+    if (a := data.get('Localidad')) is not None:
+        self.attrib['Localidad'] = a
+    if (a := data.get('Referencia')) is not None:
+        self.attrib['Referencia'] = a
+    if (a := data.get('Municipio')) is not None:
+        self.attrib['Municipio'] = a
+    self.attrib['Estado'] = data['Estado']
+    self.attrib['Pais'] = strcode(data['Pais'])
+    self.attrib['CodigoPostal'] = data['CodigoPostal']
+    return self
+def mercancia5(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     el = data.get('DescripcionesEspecificas')
     if el is not None:
         for r in iterate(el):
-            self.append(descripciones_especificas0('DescripcionesEspecificas', r))
+            self.append(descripciones_especificas1('DescripcionesEspecificas', r))
     self.attrib['NoIdentificacion'] = data['NoIdentificacion']
     if (a := data.get('FraccionArancelaria')) is not None:
         self.attrib['FraccionArancelaria'] = strcode(a)
@@ -12993,7 +13114,7 @@ def mercancia4(name, data):
         self.attrib['ValorUnitarioAduana'] = fmt_decimal(a)
     self.attrib['ValorDolares'] = fmt_decimal(data['ValorDolares'])
     return self
-def descripciones_especificas0(name, data):
+def descripciones_especificas1(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior11', name), nsmap=data.get('_nsmap') or {'cce11': 'http://www.sat.gob.mx/ComercioExterior11'})
     self.attrib['Marca'] = data['Marca']
     if (a := data.get('Modelo')) is not None:
@@ -13003,28 +13124,28 @@ def descripciones_especificas0(name, data):
     if (a := data.get('NumeroSerie')) is not None:
         self.attrib['NumeroSerie'] = a
     return self
-def comercio_exterior1(name, data):
+def comercio_exterior2(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=col.nsmap)
     el = data.get('Emisor')
     if el is not None:
-        self.append(emisor7('Emisor', el))
+        self.append(emisor8('Emisor', el))
     el = data.get('Propietario')
     if el is not None:
         for r in iterate(el):
             self.append(propietario2('Propietario', r))
     el = data.get('Receptor')
     if el is not None:
-        self.append(receptor7('Receptor', el))
+        self.append(receptor8('Receptor', el))
     el = data.get('Destinatario')
     if el is not None:
         for r in iterate(el):
-            self.append(destinatario2('Destinatario', r))
+            self.append(destinatario3('Destinatario', r))
     el = data['Mercancias']
     st = SubElement(self, '{http://www.sat.gob.mx/ComercioExterior20}Mercancias')
     for r in iterate(el):
-        st.append(mercancia5('Mercancia', r))
+        st.append(mercancia6('Mercancia', r))
     self.attrib['Version'] = data['Version']
     if (a := data.get('MotivoTraslado')) is not None:
         self.attrib['MotivoTraslado'] = strcode(a)
@@ -13041,14 +13162,14 @@ def comercio_exterior1(name, data):
     self.attrib['TipoCambioUSD'] = fmt_decimal(data['TipoCambioUSD'])
     self.attrib['TotalUSD'] = fmt_decimal(data['TotalUSD'])
     return self
-def emisor7(name, data):
+def emisor8(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
     el = data['Domicilio']
-    self.append(domicilioe('Domicilio', el))
+    self.append(domiciliof('Domicilio', el))
     if (a := data.get('Curp')) is not None:
         self.attrib['Curp'] = a
     return self
-def domicilioe(name, data):
+def domiciliof(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
@@ -13072,42 +13193,13 @@ def propietario2(name, data):
     self.attrib['NumRegIdTrib'] = data['NumRegIdTrib']
     self.attrib['ResidenciaFiscal'] = strcode(data['ResidenciaFiscal'])
     return self
-def receptor7(name, data):
+def receptor8(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
     el = data.get('Domicilio')
     if el is not None:
-        self.append(domiciliof('Domicilio', el))
+        self.append(domicilio10('Domicilio', el))
     if (a := data.get('NumRegIdTrib')) is not None:
         self.attrib['NumRegIdTrib'] = a
-    return self
-def domiciliof(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
-    self.attrib['Calle'] = data['Calle']
-    if (a := data.get('NumeroExterior')) is not None:
-        self.attrib['NumeroExterior'] = a
-    if (a := data.get('NumeroInterior')) is not None:
-        self.attrib['NumeroInterior'] = a
-    if (a := data.get('Colonia')) is not None:
-        self.attrib['Colonia'] = a
-    if (a := data.get('Localidad')) is not None:
-        self.attrib['Localidad'] = a
-    if (a := data.get('Referencia')) is not None:
-        self.attrib['Referencia'] = a
-    if (a := data.get('Municipio')) is not None:
-        self.attrib['Municipio'] = a
-    self.attrib['Estado'] = data['Estado']
-    self.attrib['Pais'] = strcode(data['Pais'])
-    self.attrib['CodigoPostal'] = data['CodigoPostal']
-    return self
-def destinatario2(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
-    el = data['Domicilio']
-    for r in iterate(el):
-        self.append(domicilio10('Domicilio', r))
-    if (a := data.get('NumRegIdTrib')) is not None:
-        self.attrib['NumRegIdTrib'] = a
-    if (a := data.get('Nombre')) is not None:
-        self.attrib['Nombre'] = a
     return self
 def domicilio10(name, data):
     self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
@@ -13128,97 +13220,18 @@ def domicilio10(name, data):
     self.attrib['Pais'] = strcode(data['Pais'])
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
-def mercancia5(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
-    el = data.get('DescripcionesEspecificas')
-    if el is not None:
-        for r in iterate(el):
-            self.append(descripciones_especificas1('DescripcionesEspecificas', r))
-    self.attrib['NoIdentificacion'] = data['NoIdentificacion']
-    if (a := data.get('FraccionArancelaria')) is not None:
-        self.attrib['FraccionArancelaria'] = strcode(a)
-    if (a := data.get('CantidadAduana')) is not None:
-        self.attrib['CantidadAduana'] = fmt_decimal(a)
-    if (a := data.get('UnidadAduana')) is not None:
-        self.attrib['UnidadAduana'] = strcode(a)
-    if (a := data.get('ValorUnitarioAduana')) is not None:
-        self.attrib['ValorUnitarioAduana'] = fmt_decimal(a)
-    self.attrib['ValorDolares'] = fmt_decimal(data['ValorDolares'])
-    return self
-def descripciones_especificas1(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
-    self.attrib['Marca'] = data['Marca']
-    if (a := data.get('Modelo')) is not None:
-        self.attrib['Modelo'] = a
-    if (a := data.get('SubModelo')) is not None:
-        self.attrib['SubModelo'] = a
-    if (a := data.get('NumeroSerie')) is not None:
-        self.attrib['NumeroSerie'] = a
-    return self
-def comercio_exterior2(name, data):
-    col = SchemaCollector()
-    cfdi_schemas[data.tag](col, data)
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=col.nsmap)
-    el = data.get('Emisor')
-    if el is not None:
-        self.append(emisor8('Emisor', el))
-    el = data['Receptor']
-    self.append(receptor8('Receptor', el))
-    el = data.get('Destinatario')
-    if el is not None:
-        self.append(destinatario3('Destinatario', el))
-    el = data.get('Mercancias')
-    if el is not None:
-        st = SubElement(self, '{http://www.sat.gob.mx/ComercioExterior}Mercancias')
-        for r in iterate(el):
-            st.append(mercancia6('Mercancia', r))
-    self.attrib['Version'] = data['Version']
-    self.attrib['TipoOperacion'] = strcode(data['TipoOperacion'])
-    if (a := data.get('ClaveDePedimento')) is not None:
-        self.attrib['ClaveDePedimento'] = strcode(a)
-    if (a := data.get('CertificadoOrigen')) is not None:
-        self.attrib['CertificadoOrigen'] = str(a)
-    if (a := data.get('NumCertificadoOrigen')) is not None:
-        self.attrib['NumCertificadoOrigen'] = a
-    if (a := data.get('NumeroExportadorConfiable')) is not None:
-        self.attrib['NumeroExportadorConfiable'] = a
-    if (a := data.get('Incoterm')) is not None:
-        self.attrib['Incoterm'] = strcode(a)
-    if (a := data.get('Subdivision')) is not None:
-        self.attrib['Subdivision'] = str(a)
-    if (a := data.get('Observaciones')) is not None:
-        self.attrib['Observaciones'] = a
-    if (a := data.get('TipoCambioUSD')) is not None:
-        self.attrib['TipoCambioUSD'] = fmt_decimal(a)
-    if (a := data.get('TotalUSD')) is not None:
-        self.attrib['TotalUSD'] = fmt_decimal(a)
-    return self
-def emisor8(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
-    if (a := data.get('Curp')) is not None:
-        self.attrib['Curp'] = a
-    return self
-def receptor8(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
-    if (a := data.get('Curp')) is not None:
-        self.attrib['Curp'] = a
-    self.attrib['NumRegIdTrib'] = data['NumRegIdTrib']
-    return self
 def destinatario3(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
     el = data['Domicilio']
-    self.append(domicilio11('Domicilio', el))
+    for r in iterate(el):
+        self.append(domicilio11('Domicilio', r))
     if (a := data.get('NumRegIdTrib')) is not None:
         self.attrib['NumRegIdTrib'] = a
-    if (a := data.get('Rfc')) is not None:
-        self.attrib['Rfc'] = str(a)
-    if (a := data.get('Curp')) is not None:
-        self.attrib['Curp'] = a
     if (a := data.get('Nombre')) is not None:
         self.attrib['Nombre'] = a
     return self
 def domicilio11(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
     self.attrib['Calle'] = data['Calle']
     if (a := data.get('NumeroExterior')) is not None:
         self.attrib['NumeroExterior'] = a
@@ -13237,7 +13250,7 @@ def domicilio11(name, data):
     self.attrib['CodigoPostal'] = data['CodigoPostal']
     return self
 def mercancia6(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
     el = data.get('DescripcionesEspecificas')
     if el is not None:
         for r in iterate(el):
@@ -13254,7 +13267,7 @@ def mercancia6(name, data):
     self.attrib['ValorDolares'] = fmt_decimal(data['ValorDolares'])
     return self
 def descripciones_especificas2(name, data):
-    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior', name), nsmap=data.get('_nsmap') or {'cce': 'http://www.sat.gob.mx/ComercioExterior'})
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/ComercioExterior20', name), nsmap=data.get('_nsmap') or {'cce20': 'http://www.sat.gob.mx/ComercioExterior20'})
     self.attrib['Marca'] = data['Marca']
     if (a := data.get('Modelo')) is not None:
         self.attrib['Modelo'] = a
@@ -15429,6 +15442,17 @@ def parte4(name, data):
     if (a := data.get('Importe')) is not None:
         self.attrib['importe'] = fmt_decimal(a)
     return self
+def timbre_fiscal_digital2(name, data):
+    col = SchemaCollector()
+    cfdi_schemas[data.tag](col, data)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/TimbreFiscalDigital', name), nsmap=col.nsmap)
+    self.attrib['version'] = data['Version']
+    self.attrib['UUID'] = str(data['UUID'])
+    self.attrib['FechaTimbrado'] = data['FechaTimbrado'].isoformat(timespec='seconds')
+    self.attrib['selloCFD'] = data['SelloCFD']
+    self.attrib['noCertificadoSAT'] = data['NoCertificadoSAT']
+    self.attrib['selloSAT'] = data['SelloSAT']
+    return self
 def s_cancelacion0(data):
     return cancelacion0('Cancelacion', data)
 def s_cancelacion1(data):
@@ -15499,6 +15523,12 @@ def s_polizas0(data):
     if data.get('Version') == '1.1':
         return polizas0('Polizas', data)
     raise NamespaceMismatchError(data)
+def s_sello_digital_cont_elec0(data):
+    if data.get('Version') == '1.1':
+        return sello_digital_cont_elec0('SelloDigitalContElec', data)
+    if data.get('Version') == '1.1':
+        return sello_digital_cont_elec1('SelloDigitalContElec', data)
+    raise NamespaceMismatchError(data)
 def s_auxiliar_ctas1(data):
     if data.get('Version') == '1.3':
         return auxiliar_ctas1('AuxiliarCtas', data)
@@ -15518,10 +15548,6 @@ def s_catalogo1(data):
 def s_polizas1(data):
     if data.get('Version') == '1.3':
         return polizas1('Polizas', data)
-    raise NamespaceMismatchError(data)
-def s_sello_digital_cont_elec0(data):
-    if data.get('Version') == '1.1':
-        return sello_digital_cont_elec0('SelloDigitalContElec', data)
     raise NamespaceMismatchError(data)
 def s_servicios_plataformas_tecnologicas0(data):
     if data.get('Version') == '1.0':
@@ -15560,11 +15586,11 @@ def s_pagosaextranjeros0(data):
         return pagosaextranjeros0('Pagosaextranjeros', data)
     raise NamespaceMismatchError(data)
 def s_planesderetiro0(data):
-    if data.get('Version') == '1.1':
+    if data.get('Version') == '1.0':
         return planesderetiro0('Planesderetiro', data)
     raise NamespaceMismatchError(data)
 def s_planesderetiro1(data):
-    if data.get('Version') == '1.0':
+    if data.get('Version') == '1.1':
         return planesderetiro1('Planesderetiro', data)
     raise NamespaceMismatchError(data)
 def s_premios0(data):
@@ -15610,15 +15636,15 @@ def s_carta_porte3(data):
         return carta_porte3('CartaPorte', data)
     raise NamespaceMismatchError(data)
 def s_comercio_exterior0(data):
-    if data.get('Version') == '1.1':
+    if data.get('Version') == '1.0':
         return comercio_exterior0('ComercioExterior', data)
     raise NamespaceMismatchError(data)
 def s_comercio_exterior1(data):
-    if data.get('Version') == '2.0':
+    if data.get('Version') == '1.1':
         return comercio_exterior1('ComercioExterior', data)
     raise NamespaceMismatchError(data)
 def s_comercio_exterior2(data):
-    if data.get('Version') == '1.0':
+    if data.get('Version') == '2.0':
         return comercio_exterior2('ComercioExterior', data)
     raise NamespaceMismatchError(data)
 def s_estado_de_cuenta_combustible0(data):
@@ -15650,6 +15676,8 @@ def s_timbre_fiscal_digital0(data):
         return timbre_fiscal_digital0('TimbreFiscalDigital', data)
     if data.get('Version') == '1.1':
         return timbre_fiscal_digital1('TimbreFiscalDigital', data)
+    if data.get('Version') == '1.0':
+        return timbre_fiscal_digital2('TimbreFiscalDigital', data)
     raise NamespaceMismatchError(data)
 def s_turista_pasajero_extranjero0(data):
     if data.get('Version') == '1.0':
@@ -15847,12 +15875,12 @@ cfdi_xmlify = {
     '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/BalanzaComprobacion}Balanza': s_balanza0,
     '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas}Catalogo': s_catalogo0,
     '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo}Polizas': s_polizas0,
+    '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec}SelloDigitalContElec': s_sello_digital_cont_elec0,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas}AuxiliarCtas': s_auxiliar_ctas1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios}RepAuxFol': s_rep_aux_fol1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion}Balanza': s_balanza1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas}Catalogo': s_catalogo1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo}Polizas': s_polizas1,
-    '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec}SelloDigitalContElec': s_sello_digital_cont_elec0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10}ServiciosPlataformasTecnologicas': s_servicios_plataformas_tecnologicas0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/arrendamientoenfideicomiso}Arrendamientoenfideicomiso': s_arrendamientoenfideicomiso0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos}Dividendos': s_dividendos0,
@@ -15862,8 +15890,8 @@ cfdi_xmlify = {
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/intereseshipotecarios}Intereseshipotecarios': s_intereseshipotecarios0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/operacionesconderivados}Operacionesconderivados': s_operacionesconderivados0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros}Pagosaextranjeros': s_pagosaextranjeros0,
-    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}Planesderetiro': s_planesderetiro0,
-    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro}Planesderetiro': s_planesderetiro1,
+    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro}Planesderetiro': s_planesderetiro0,
+    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}Planesderetiro': s_planesderetiro1,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/premios}Premios': s_premios0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1}Retenciones': s_retenciones0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/sectorfinanciero}SectorFinanciero': s_sector_financiero0,
@@ -15874,9 +15902,9 @@ cfdi_xmlify = {
     '{http://www.sat.gob.mx/CartaPorte20}CartaPorte': s_carta_porte1,
     '{http://www.sat.gob.mx/CartaPorte30}CartaPorte': s_carta_porte2,
     '{http://www.sat.gob.mx/CartaPorte31}CartaPorte': s_carta_porte3,
-    '{http://www.sat.gob.mx/ComercioExterior11}ComercioExterior': s_comercio_exterior0,
-    '{http://www.sat.gob.mx/ComercioExterior20}ComercioExterior': s_comercio_exterior1,
-    '{http://www.sat.gob.mx/ComercioExterior}ComercioExterior': s_comercio_exterior2,
+    '{http://www.sat.gob.mx/ComercioExterior}ComercioExterior': s_comercio_exterior0,
+    '{http://www.sat.gob.mx/ComercioExterior11}ComercioExterior': s_comercio_exterior1,
+    '{http://www.sat.gob.mx/ComercioExterior20}ComercioExterior': s_comercio_exterior2,
     '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible0,
     '{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible1,
     '{http://www.sat.gob.mx/GastosHidrocarburos10}GastosHidrocarburos': s_gastos_hidrocarburos0,

@@ -9235,6 +9235,18 @@ def otr_metodo_pago0(cls, node):
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
+def sello_digital_cont_elec0(cls, node):
+    self = cls()
+    self.tag = node.tag
+    self['Version'] = node.attrib['Version']
+    self['Folio'] = node.attrib['Folio']
+    self['RFC'] = node.attrib['RFC']
+    self['FechadeSello'] = datetime.fromisoformat(node.attrib['FechadeSello'])
+    if (a := node.attrib.get('sello')) is not None:
+        self['Sello'] = a
+    self['NoCertificadoSAT'] = node.attrib['noCertificadoSAT']
+    self['SelloSAT'] = node.attrib['selloSAT']
+    return self
 def auxiliar_ctas1(cls, node):
     self = cls()
     self.tag = node.tag
@@ -9531,7 +9543,7 @@ def otr_metodo_pago1(cls, node):
     if (a := node.attrib.get('TipCamb')) is not None:
         self['TipCamb'] = Decimal(a)
     return self
-def sello_digital_cont_elec0(cls, node):
+def sello_digital_cont_elec1(cls, node):
     self = cls()
     self.tag = node.tag
     self['Version'] = node.attrib['Version']
@@ -9756,6 +9768,25 @@ def beneficiario1(cls, node):
 def planesderetiro0(cls, node):
     self = cls()
     self.tag = node.tag
+    self['Version'] = node.attrib['Version']
+    self['SistemaFinanc'] = node.attrib['SistemaFinanc']
+    if (a := node.attrib.get('MontTotAportAnioInmAnterior')) is not None:
+        self['MontTotAportAnioInmAnterior'] = Decimal(a)
+    self['MontIntRealesDevengAniooInmAnt'] = Decimal(node.attrib['MontIntRealesDevengAniooInmAnt'])
+    self['HuboRetirosAnioInmAntPer'] = node.attrib['HuboRetirosAnioInmAntPer']
+    if (a := node.attrib.get('MontTotRetiradoAnioInmAntPer')) is not None:
+        self['MontTotRetiradoAnioInmAntPer'] = Decimal(a)
+    if (a := node.attrib.get('MontTotExentRetiradoAnioInmAnt')) is not None:
+        self['MontTotExentRetiradoAnioInmAnt'] = Decimal(a)
+    if (a := node.attrib.get('MontTotExedenteAnioInmAnt')) is not None:
+        self['MontTotExedenteAnioInmAnt'] = Decimal(a)
+    self['HuboRetirosAnioInmAnt'] = node.attrib['HuboRetirosAnioInmAnt']
+    if (a := node.attrib.get('MontTotRetiradoAnioInmAnt')) is not None:
+        self['MontTotRetiradoAnioInmAnt'] = Decimal(a)
+    return self
+def planesderetiro1(cls, node):
+    self = cls()
+    self.tag = node.tag
     el = node.find('{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}AportacionesODepositos')
     if el is not None:
         self['AportacionesODepositos'] = [aportaciones_odepositos0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}AportacionesODepositos')]
@@ -9783,25 +9814,6 @@ def aportaciones_odepositos0(cls, node):
     self['MontAportODep'] = Decimal(node.attrib['MontAportODep'])
     if (a := node.attrib.get('RFCFiduciaria')) is not None:
         self['RFCFiduciaria'] = a
-    return self
-def planesderetiro1(cls, node):
-    self = cls()
-    self.tag = node.tag
-    self['Version'] = node.attrib['Version']
-    self['SistemaFinanc'] = node.attrib['SistemaFinanc']
-    if (a := node.attrib.get('MontTotAportAnioInmAnterior')) is not None:
-        self['MontTotAportAnioInmAnterior'] = Decimal(a)
-    self['MontIntRealesDevengAniooInmAnt'] = Decimal(node.attrib['MontIntRealesDevengAniooInmAnt'])
-    self['HuboRetirosAnioInmAntPer'] = node.attrib['HuboRetirosAnioInmAntPer']
-    if (a := node.attrib.get('MontTotRetiradoAnioInmAntPer')) is not None:
-        self['MontTotRetiradoAnioInmAntPer'] = Decimal(a)
-    if (a := node.attrib.get('MontTotExentRetiradoAnioInmAnt')) is not None:
-        self['MontTotExentRetiradoAnioInmAnt'] = Decimal(a)
-    if (a := node.attrib.get('MontTotExedenteAnioInmAnt')) is not None:
-        self['MontTotExedenteAnioInmAnt'] = Decimal(a)
-    self['HuboRetirosAnioInmAnt'] = node.attrib['HuboRetirosAnioInmAnt']
-    if (a := node.attrib.get('MontTotRetiradoAnioInmAnt')) is not None:
-        self['MontTotRetiradoAnioInmAnt'] = Decimal(a)
     return self
 def premios0(cls, node):
     self = cls()
@@ -12215,24 +12227,18 @@ def domicilioa(cls, node):
 def comercio_exterior0(cls, node):
     self = cls()
     self.tag = node.tag
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Emisor')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior}Emisor')
     if el is not None:
         self['Emisor'] = emisor6(cls, el)
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Propietario')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior}Receptor')
+    self['Receptor'] = receptor6(cls, el)
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior}Destinatario')
     if el is not None:
-        self['Propietario'] = [propietario1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior11}Propietario')]
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Receptor')
+        self['Destinatario'] = destinatario1(cls, el)
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior}Mercancias')
     if el is not None:
-        self['Receptor'] = receptor6(cls, el)
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Destinatario')
-    if el is not None:
-        self['Destinatario'] = [destinatario1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior11}Destinatario')]
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Mercancias')
-    if el is not None:
-        self['Mercancias'] = [mercancia4(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/ComercioExterior11}Mercancia')]
+        self['Mercancias'] = [mercancia4(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/ComercioExterior}Mercancia')]
     self['Version'] = node.attrib['Version']
-    if (a := node.attrib.get('MotivoTraslado')) is not None:
-        self['MotivoTraslado'] = catalog_code('C5bc_c_MotivoTraslado', a)
     self['TipoOperacion'] = catalog_code('C5bc_c_TipoOperacion', node.attrib['TipoOperacion'])
     if (a := node.attrib.get('ClaveDePedimento')) is not None:
         self['ClaveDePedimento'] = catalog_code('C5bc_c_ClavePedimento', a)
@@ -12255,72 +12261,29 @@ def comercio_exterior0(cls, node):
     return self
 def emisor6(cls, node):
     self = ScalarMap()
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Domicilio')
-    if el is not None:
-        self['Domicilio'] = domiciliob(cls, el)
     if (a := node.attrib.get('Curp')) is not None:
         self['Curp'] = a
     return self
-def domiciliob(cls, node):
-    self = ScalarMap()
-    self['Calle'] = node.attrib['Calle']
-    if (a := node.attrib.get('NumeroExterior')) is not None:
-        self['NumeroExterior'] = a
-    if (a := node.attrib.get('NumeroInterior')) is not None:
-        self['NumeroInterior'] = a
-    if (a := node.attrib.get('Colonia')) is not None:
-        self['Colonia'] = catalog_code('C756_c_Colonia', (a, node.attrib['CodigoPostal']))
-    if (a := node.attrib.get('Localidad')) is not None:
-        self['Localidad'] = catalog_code('C756_c_Localidad', (a, node.attrib['Estado']))
-    if (a := node.attrib.get('Referencia')) is not None:
-        self['Referencia'] = a
-    if (a := node.attrib.get('Municipio')) is not None:
-        self['Municipio'] = catalog_code('C756_c_Municipio', (a, node.attrib['Estado']))
-    self['Estado'] = catalog_code('C756_c_Estado', node.attrib['Estado'], 1)
-    self['Pais'] = catalog_code('C756_c_Pais', node.attrib['Pais'])
-    self['CodigoPostal'] = node.attrib['CodigoPostal']
-    return self
-def propietario1(cls, node):
-    self = ScalarMap()
-    self['NumRegIdTrib'] = node.attrib['NumRegIdTrib']
-    self['ResidenciaFiscal'] = catalog_code('C756_c_Pais', node.attrib['ResidenciaFiscal'])
-    return self
 def receptor6(cls, node):
     self = ScalarMap()
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Domicilio')
-    if el is not None:
-        self['Domicilio'] = domicilioc(cls, el)
-    if (a := node.attrib.get('NumRegIdTrib')) is not None:
-        self['NumRegIdTrib'] = a
-    return self
-def domicilioc(cls, node):
-    self = ScalarMap()
-    self['Calle'] = node.attrib['Calle']
-    if (a := node.attrib.get('NumeroExterior')) is not None:
-        self['NumeroExterior'] = a
-    if (a := node.attrib.get('NumeroInterior')) is not None:
-        self['NumeroInterior'] = a
-    if (a := node.attrib.get('Colonia')) is not None:
-        self['Colonia'] = a
-    if (a := node.attrib.get('Localidad')) is not None:
-        self['Localidad'] = a
-    if (a := node.attrib.get('Referencia')) is not None:
-        self['Referencia'] = a
-    if (a := node.attrib.get('Municipio')) is not None:
-        self['Municipio'] = a
-    self['Estado'] = node.attrib['Estado']
-    self['Pais'] = catalog_code('C756_c_Pais', node.attrib['Pais'])
-    self['CodigoPostal'] = node.attrib['CodigoPostal']
+    if (a := node.attrib.get('Curp')) is not None:
+        self['Curp'] = a
+    self['NumRegIdTrib'] = node.attrib['NumRegIdTrib']
     return self
 def destinatario1(cls, node):
     self = ScalarMap()
-    self['Domicilio'] = [domiciliod(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior11}Domicilio')]
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior}Domicilio')
+    self['Domicilio'] = domiciliob(cls, el)
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
+    if (a := node.attrib.get('Rfc')) is not None:
+        self['Rfc'] = a
+    if (a := node.attrib.get('Curp')) is not None:
+        self['Curp'] = a
     if (a := node.attrib.get('Nombre')) is not None:
         self['Nombre'] = a
     return self
-def domiciliod(cls, node):
+def domiciliob(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
     if (a := node.attrib.get('NumeroExterior')) is not None:
@@ -12341,9 +12304,9 @@ def domiciliod(cls, node):
     return self
 def mercancia4(cls, node):
     self = ScalarMap()
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}DescripcionesEspecificas')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior}DescripcionesEspecificas')
     if el is not None:
-        self['DescripcionesEspecificas'] = [descripciones_especificas0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior11}DescripcionesEspecificas')]
+        self['DescripcionesEspecificas'] = [descripciones_especificas0(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior}DescripcionesEspecificas')]
     self['NoIdentificacion'] = node.attrib['NoIdentificacion']
     if (a := node.attrib.get('FraccionArancelaria')) is not None:
         self['FraccionArancelaria'] = catalog_code('C5bc_c_FraccionArancelaria', a)
@@ -12368,44 +12331,53 @@ def descripciones_especificas0(cls, node):
 def comercio_exterior1(cls, node):
     self = cls()
     self.tag = node.tag
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Emisor')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Emisor')
     if el is not None:
         self['Emisor'] = emisor7(cls, el)
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Propietario')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Propietario')
     if el is not None:
-        self['Propietario'] = [propietario2(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior20}Propietario')]
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Receptor')
+        self['Propietario'] = [propietario1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior11}Propietario')]
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Receptor')
     if el is not None:
         self['Receptor'] = receptor7(cls, el)
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Destinatario')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Destinatario')
     if el is not None:
-        self['Destinatario'] = [destinatario2(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior20}Destinatario')]
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Mercancias')
-    self['Mercancias'] = [mercancia5(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/ComercioExterior20}Mercancia')]
+        self['Destinatario'] = [destinatario2(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior11}Destinatario')]
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Mercancias')
+    if el is not None:
+        self['Mercancias'] = [mercancia5(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/ComercioExterior11}Mercancia')]
     self['Version'] = node.attrib['Version']
     if (a := node.attrib.get('MotivoTraslado')) is not None:
         self['MotivoTraslado'] = catalog_code('C5bc_c_MotivoTraslado', a)
-    self['ClaveDePedimento'] = catalog_code('C5bc_c_ClavePedimento', node.attrib['ClaveDePedimento'])
-    self['CertificadoOrigen'] = Xint(node.attrib['CertificadoOrigen'])
+    self['TipoOperacion'] = catalog_code('C5bc_c_TipoOperacion', node.attrib['TipoOperacion'])
+    if (a := node.attrib.get('ClaveDePedimento')) is not None:
+        self['ClaveDePedimento'] = catalog_code('C5bc_c_ClavePedimento', a)
+    if (a := node.attrib.get('CertificadoOrigen')) is not None:
+        self['CertificadoOrigen'] = Xint(a)
     if (a := node.attrib.get('NumCertificadoOrigen')) is not None:
         self['NumCertificadoOrigen'] = a
     if (a := node.attrib.get('NumeroExportadorConfiable')) is not None:
         self['NumeroExportadorConfiable'] = a
     if (a := node.attrib.get('Incoterm')) is not None:
         self['Incoterm'] = catalog_code('C5bc_c_INCOTERM', a)
+    if (a := node.attrib.get('Subdivision')) is not None:
+        self['Subdivision'] = Xint(a)
     if (a := node.attrib.get('Observaciones')) is not None:
         self['Observaciones'] = a
-    self['TipoCambioUSD'] = Decimal(node.attrib['TipoCambioUSD'])
-    self['TotalUSD'] = Decimal(node.attrib['TotalUSD'])
+    if (a := node.attrib.get('TipoCambioUSD')) is not None:
+        self['TipoCambioUSD'] = Decimal(a)
+    if (a := node.attrib.get('TotalUSD')) is not None:
+        self['TotalUSD'] = Decimal(a)
     return self
 def emisor7(cls, node):
     self = ScalarMap()
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Domicilio')
-    self['Domicilio'] = domicilioe(cls, el)
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Domicilio')
+    if el is not None:
+        self['Domicilio'] = domicilioc(cls, el)
     if (a := node.attrib.get('Curp')) is not None:
         self['Curp'] = a
     return self
-def domicilioe(cls, node):
+def domicilioc(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
     if (a := node.attrib.get('NumeroExterior')) is not None:
@@ -12424,20 +12396,20 @@ def domicilioe(cls, node):
     self['Pais'] = catalog_code('C756_c_Pais', node.attrib['Pais'])
     self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
-def propietario2(cls, node):
+def propietario1(cls, node):
     self = ScalarMap()
     self['NumRegIdTrib'] = node.attrib['NumRegIdTrib']
     self['ResidenciaFiscal'] = catalog_code('C756_c_Pais', node.attrib['ResidenciaFiscal'])
     return self
 def receptor7(cls, node):
     self = ScalarMap()
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Domicilio')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}Domicilio')
     if el is not None:
-        self['Domicilio'] = domiciliof(cls, el)
+        self['Domicilio'] = domiciliod(cls, el)
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
     return self
-def domiciliof(cls, node):
+def domiciliod(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
     if (a := node.attrib.get('NumeroExterior')) is not None:
@@ -12458,13 +12430,13 @@ def domiciliof(cls, node):
     return self
 def destinatario2(cls, node):
     self = ScalarMap()
-    self['Domicilio'] = [domicilio10(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior20}Domicilio')]
+    self['Domicilio'] = [domicilioe(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior11}Domicilio')]
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
     if (a := node.attrib.get('Nombre')) is not None:
         self['Nombre'] = a
     return self
-def domicilio10(cls, node):
+def domicilioe(cls, node):
     self = ScalarMap()
     self['Calle'] = node.attrib['Calle']
     if (a := node.attrib.get('NumeroExterior')) is not None:
@@ -12485,9 +12457,9 @@ def domicilio10(cls, node):
     return self
 def mercancia5(cls, node):
     self = ScalarMap()
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}DescripcionesEspecificas')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior11}DescripcionesEspecificas')
     if el is not None:
-        self['DescripcionesEspecificas'] = [descripciones_especificas1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior20}DescripcionesEspecificas')]
+        self['DescripcionesEspecificas'] = [descripciones_especificas1(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior11}DescripcionesEspecificas')]
     self['NoIdentificacion'] = node.attrib['NoIdentificacion']
     if (a := node.attrib.get('FraccionArancelaria')) is not None:
         self['FraccionArancelaria'] = catalog_code('C5bc_c_FraccionArancelaria', a)
@@ -12512,59 +12484,99 @@ def descripciones_especificas1(cls, node):
 def comercio_exterior2(cls, node):
     self = cls()
     self.tag = node.tag
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior}Emisor')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Emisor')
     if el is not None:
         self['Emisor'] = emisor8(cls, el)
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior}Receptor')
-    self['Receptor'] = receptor8(cls, el)
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior}Destinatario')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Propietario')
     if el is not None:
-        self['Destinatario'] = destinatario3(cls, el)
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior}Mercancias')
+        self['Propietario'] = [propietario2(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior20}Propietario')]
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Receptor')
     if el is not None:
-        self['Mercancias'] = [mercancia6(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/ComercioExterior}Mercancia')]
+        self['Receptor'] = receptor8(cls, el)
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Destinatario')
+    if el is not None:
+        self['Destinatario'] = [destinatario3(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior20}Destinatario')]
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Mercancias')
+    self['Mercancias'] = [mercancia6(cls, n) for n in el.iterfind('{http://www.sat.gob.mx/ComercioExterior20}Mercancia')]
     self['Version'] = node.attrib['Version']
-    self['TipoOperacion'] = catalog_code('C5bc_c_TipoOperacion', node.attrib['TipoOperacion'])
-    if (a := node.attrib.get('ClaveDePedimento')) is not None:
-        self['ClaveDePedimento'] = catalog_code('C5bc_c_ClavePedimento', a)
-    if (a := node.attrib.get('CertificadoOrigen')) is not None:
-        self['CertificadoOrigen'] = Xint(a)
+    if (a := node.attrib.get('MotivoTraslado')) is not None:
+        self['MotivoTraslado'] = catalog_code('C5bc_c_MotivoTraslado', a)
+    self['ClaveDePedimento'] = catalog_code('C5bc_c_ClavePedimento', node.attrib['ClaveDePedimento'])
+    self['CertificadoOrigen'] = Xint(node.attrib['CertificadoOrigen'])
     if (a := node.attrib.get('NumCertificadoOrigen')) is not None:
         self['NumCertificadoOrigen'] = a
     if (a := node.attrib.get('NumeroExportadorConfiable')) is not None:
         self['NumeroExportadorConfiable'] = a
     if (a := node.attrib.get('Incoterm')) is not None:
         self['Incoterm'] = catalog_code('C5bc_c_INCOTERM', a)
-    if (a := node.attrib.get('Subdivision')) is not None:
-        self['Subdivision'] = Xint(a)
     if (a := node.attrib.get('Observaciones')) is not None:
         self['Observaciones'] = a
-    if (a := node.attrib.get('TipoCambioUSD')) is not None:
-        self['TipoCambioUSD'] = Decimal(a)
-    if (a := node.attrib.get('TotalUSD')) is not None:
-        self['TotalUSD'] = Decimal(a)
+    self['TipoCambioUSD'] = Decimal(node.attrib['TipoCambioUSD'])
+    self['TotalUSD'] = Decimal(node.attrib['TotalUSD'])
     return self
 def emisor8(cls, node):
     self = ScalarMap()
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Domicilio')
+    self['Domicilio'] = domiciliof(cls, el)
     if (a := node.attrib.get('Curp')) is not None:
         self['Curp'] = a
+    return self
+def domiciliof(cls, node):
+    self = ScalarMap()
+    self['Calle'] = node.attrib['Calle']
+    if (a := node.attrib.get('NumeroExterior')) is not None:
+        self['NumeroExterior'] = a
+    if (a := node.attrib.get('NumeroInterior')) is not None:
+        self['NumeroInterior'] = a
+    if (a := node.attrib.get('Colonia')) is not None:
+        self['Colonia'] = catalog_code('C756_c_Colonia', (a, node.attrib['CodigoPostal']))
+    if (a := node.attrib.get('Localidad')) is not None:
+        self['Localidad'] = catalog_code('C756_c_Localidad', (a, node.attrib['Estado']))
+    if (a := node.attrib.get('Referencia')) is not None:
+        self['Referencia'] = a
+    if (a := node.attrib.get('Municipio')) is not None:
+        self['Municipio'] = catalog_code('C756_c_Municipio', (a, node.attrib['Estado']))
+    self['Estado'] = catalog_code('C756_c_Estado', node.attrib['Estado'], 1)
+    self['Pais'] = catalog_code('C756_c_Pais', node.attrib['Pais'])
+    self['CodigoPostal'] = node.attrib['CodigoPostal']
+    return self
+def propietario2(cls, node):
+    self = ScalarMap()
+    self['NumRegIdTrib'] = node.attrib['NumRegIdTrib']
+    self['ResidenciaFiscal'] = catalog_code('C756_c_Pais', node.attrib['ResidenciaFiscal'])
     return self
 def receptor8(cls, node):
     self = ScalarMap()
-    if (a := node.attrib.get('Curp')) is not None:
-        self['Curp'] = a
-    self['NumRegIdTrib'] = node.attrib['NumRegIdTrib']
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}Domicilio')
+    if el is not None:
+        self['Domicilio'] = domicilio10(cls, el)
+    if (a := node.attrib.get('NumRegIdTrib')) is not None:
+        self['NumRegIdTrib'] = a
+    return self
+def domicilio10(cls, node):
+    self = ScalarMap()
+    self['Calle'] = node.attrib['Calle']
+    if (a := node.attrib.get('NumeroExterior')) is not None:
+        self['NumeroExterior'] = a
+    if (a := node.attrib.get('NumeroInterior')) is not None:
+        self['NumeroInterior'] = a
+    if (a := node.attrib.get('Colonia')) is not None:
+        self['Colonia'] = a
+    if (a := node.attrib.get('Localidad')) is not None:
+        self['Localidad'] = a
+    if (a := node.attrib.get('Referencia')) is not None:
+        self['Referencia'] = a
+    if (a := node.attrib.get('Municipio')) is not None:
+        self['Municipio'] = a
+    self['Estado'] = node.attrib['Estado']
+    self['Pais'] = catalog_code('C756_c_Pais', node.attrib['Pais'])
+    self['CodigoPostal'] = node.attrib['CodigoPostal']
     return self
 def destinatario3(cls, node):
     self = ScalarMap()
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior}Domicilio')
-    self['Domicilio'] = domicilio11(cls, el)
+    self['Domicilio'] = [domicilio11(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior20}Domicilio')]
     if (a := node.attrib.get('NumRegIdTrib')) is not None:
         self['NumRegIdTrib'] = a
-    if (a := node.attrib.get('Rfc')) is not None:
-        self['Rfc'] = a
-    if (a := node.attrib.get('Curp')) is not None:
-        self['Curp'] = a
     if (a := node.attrib.get('Nombre')) is not None:
         self['Nombre'] = a
     return self
@@ -12589,9 +12601,9 @@ def domicilio11(cls, node):
     return self
 def mercancia6(cls, node):
     self = ScalarMap()
-    el = node.find('{http://www.sat.gob.mx/ComercioExterior}DescripcionesEspecificas')
+    el = node.find('{http://www.sat.gob.mx/ComercioExterior20}DescripcionesEspecificas')
     if el is not None:
-        self['DescripcionesEspecificas'] = [descripciones_especificas2(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior}DescripcionesEspecificas')]
+        self['DescripcionesEspecificas'] = [descripciones_especificas2(cls, n) for n in node.iterfind('{http://www.sat.gob.mx/ComercioExterior20}DescripcionesEspecificas')]
     self['NoIdentificacion'] = node.attrib['NoIdentificacion']
     if (a := node.attrib.get('FraccionArancelaria')) is not None:
         self['FraccionArancelaria'] = catalog_code('C5bc_c_FraccionArancelaria', a)
@@ -14608,6 +14620,16 @@ def parte4(cls, node):
     if (a := node.attrib.get('importe')) is not None:
         self['Importe'] = Decimal(a)
     return self
+def timbre_fiscal_digital2(cls, node):
+    self = cls()
+    self.tag = node.tag
+    self['Version'] = node.attrib['version']
+    self['UUID'] = node.attrib['UUID']
+    self['FechaTimbrado'] = datetime.fromisoformat(node.attrib['FechaTimbrado'])
+    self['SelloCFD'] = node.attrib['selloCFD']
+    self['NoCertificadoSAT'] = node.attrib['noCertificadoSAT']
+    self['SelloSAT'] = node.attrib['selloSAT']
+    return self
 def s_cancelacion0(cls, node):
     return cancelacion0(cls, node)
 def s_cancelacion1(cls, node):
@@ -14678,6 +14700,12 @@ def s_polizas0(cls, node):
     if node.attrib.get('Version') == '1.1':
         return polizas0(cls, node)
     raise NamespaceMismatchError(node)
+def s_sello_digital_cont_elec0(cls, node):
+    if node.attrib.get('Version') == '1.1':
+        return sello_digital_cont_elec0(cls, node)
+    if node.attrib.get('Version') == '1.1':
+        return sello_digital_cont_elec1(cls, node)
+    raise NamespaceMismatchError(node)
 def s_auxiliar_ctas1(cls, node):
     if node.attrib.get('Version') == '1.3':
         return auxiliar_ctas1(cls, node)
@@ -14697,10 +14725,6 @@ def s_catalogo1(cls, node):
 def s_polizas1(cls, node):
     if node.attrib.get('Version') == '1.3':
         return polizas1(cls, node)
-    raise NamespaceMismatchError(node)
-def s_sello_digital_cont_elec0(cls, node):
-    if node.attrib.get('Version') == '1.1':
-        return sello_digital_cont_elec0(cls, node)
     raise NamespaceMismatchError(node)
 def s_servicios_plataformas_tecnologicas0(cls, node):
     if node.attrib.get('Version') == '1.0':
@@ -14739,11 +14763,11 @@ def s_pagosaextranjeros0(cls, node):
         return pagosaextranjeros0(cls, node)
     raise NamespaceMismatchError(node)
 def s_planesderetiro0(cls, node):
-    if node.attrib.get('Version') == '1.1':
+    if node.attrib.get('Version') == '1.0':
         return planesderetiro0(cls, node)
     raise NamespaceMismatchError(node)
 def s_planesderetiro1(cls, node):
-    if node.attrib.get('Version') == '1.0':
+    if node.attrib.get('Version') == '1.1':
         return planesderetiro1(cls, node)
     raise NamespaceMismatchError(node)
 def s_premios0(cls, node):
@@ -14789,15 +14813,15 @@ def s_carta_porte3(cls, node):
         return carta_porte3(cls, node)
     raise NamespaceMismatchError(node)
 def s_comercio_exterior0(cls, node):
-    if node.attrib.get('Version') == '1.1':
+    if node.attrib.get('Version') == '1.0':
         return comercio_exterior0(cls, node)
     raise NamespaceMismatchError(node)
 def s_comercio_exterior1(cls, node):
-    if node.attrib.get('Version') == '2.0':
+    if node.attrib.get('Version') == '1.1':
         return comercio_exterior1(cls, node)
     raise NamespaceMismatchError(node)
 def s_comercio_exterior2(cls, node):
-    if node.attrib.get('Version') == '1.0':
+    if node.attrib.get('Version') == '2.0':
         return comercio_exterior2(cls, node)
     raise NamespaceMismatchError(node)
 def s_estado_de_cuenta_combustible0(cls, node):
@@ -14829,6 +14853,8 @@ def s_timbre_fiscal_digital0(cls, node):
         return timbre_fiscal_digital0(cls, node)
     if node.attrib.get('Version') == '1.1':
         return timbre_fiscal_digital1(cls, node)
+    if node.attrib.get('version') == '1.0':
+        return timbre_fiscal_digital2(cls, node)
     raise NamespaceMismatchError(node)
 def s_turista_pasajero_extranjero0(cls, node):
     if node.attrib.get('version') == '1.0':
@@ -15026,12 +15052,12 @@ cfdi_objectify = {
     '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/BalanzaComprobacion}Balanza': s_balanza0,
     '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/CatalogoCuentas}Catalogo': s_catalogo0,
     '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/PolizasPeriodo}Polizas': s_polizas0,
+    '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec}SelloDigitalContElec': s_sello_digital_cont_elec0,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas}AuxiliarCtas': s_auxiliar_ctas1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarFolios}RepAuxFol': s_rep_aux_fol1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion}Balanza': s_balanza1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas}Catalogo': s_catalogo1,
     '{http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo}Polizas': s_polizas1,
-    '{www.sat.gob.mx/esquemas/ContabilidadE/1_1/SelloDigitalContElec}SelloDigitalContElec': s_sello_digital_cont_elec0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/PlataformasTecnologicas10}ServiciosPlataformasTecnologicas': s_servicios_plataformas_tecnologicas0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/arrendamientoenfideicomiso}Arrendamientoenfideicomiso': s_arrendamientoenfideicomiso0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/dividendos}Dividendos': s_dividendos0,
@@ -15041,8 +15067,8 @@ cfdi_objectify = {
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/intereseshipotecarios}Intereseshipotecarios': s_intereseshipotecarios0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/operacionesconderivados}Operacionesconderivados': s_operacionesconderivados0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/pagosaextranjeros}Pagosaextranjeros': s_pagosaextranjeros0,
-    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}Planesderetiro': s_planesderetiro0,
-    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro}Planesderetiro': s_planesderetiro1,
+    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro}Planesderetiro': s_planesderetiro0,
+    '{http://www.sat.gob.mx/esquemas/retencionpago/1/planesderetiro11}Planesderetiro': s_planesderetiro1,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/premios}Premios': s_premios0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1}Retenciones': s_retenciones0,
     '{http://www.sat.gob.mx/esquemas/retencionpago/1/sectorfinanciero}SectorFinanciero': s_sector_financiero0,
@@ -15053,9 +15079,9 @@ cfdi_objectify = {
     '{http://www.sat.gob.mx/CartaPorte20}CartaPorte': s_carta_porte1,
     '{http://www.sat.gob.mx/CartaPorte30}CartaPorte': s_carta_porte2,
     '{http://www.sat.gob.mx/CartaPorte31}CartaPorte': s_carta_porte3,
-    '{http://www.sat.gob.mx/ComercioExterior11}ComercioExterior': s_comercio_exterior0,
-    '{http://www.sat.gob.mx/ComercioExterior20}ComercioExterior': s_comercio_exterior1,
-    '{http://www.sat.gob.mx/ComercioExterior}ComercioExterior': s_comercio_exterior2,
+    '{http://www.sat.gob.mx/ComercioExterior}ComercioExterior': s_comercio_exterior0,
+    '{http://www.sat.gob.mx/ComercioExterior11}ComercioExterior': s_comercio_exterior1,
+    '{http://www.sat.gob.mx/ComercioExterior20}ComercioExterior': s_comercio_exterior2,
     '{http://www.sat.gob.mx/EstadoDeCuentaCombustible}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible0,
     '{http://www.sat.gob.mx/EstadoDeCuentaCombustible12}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible1,
     '{http://www.sat.gob.mx/GastosHidrocarburos10}GastosHidrocarburos': s_gastos_hidrocarburos0,
