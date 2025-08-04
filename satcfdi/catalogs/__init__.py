@@ -8,18 +8,21 @@ current_dir = os.path.dirname(__file__)
 
 db_file = os.path.join(current_dir, "catalogs.db")
 conn = sqlite3.connect(db_file, check_same_thread=False)
-c = conn.cursor()
 
 
 def select(catalog_name, key):
-    c.execute(f"SELECT value FROM {catalog_name} WHERE key = ?", (pickle.dumps(key),))
-    if ds := c.fetchone():
-        return pickle.loads(ds[0])
+    with conn: 
+        c = conn.cursor()
+        c.execute(f"SELECT value FROM {catalog_name} WHERE key = ?", (pickle.dumps(key),))
+        if ds := c.fetchone():
+            return pickle.loads(ds[0])
 
 
 def select_all(catalog_name):
-    c.execute(f"SELECT key, value FROM {catalog_name}")
-    return {pickle.loads(k): pickle.loads(v) for k, v in c.fetchall()}
+    with conn: 
+        c = conn.cursor()
+        c.execute(f"SELECT key, value FROM {catalog_name}")
+        return {pickle.loads(k): pickle.loads(v) for k, v in c.fetchall()}
 
 
 def catalog_code(catalog_name, key, index=None):
@@ -60,8 +63,10 @@ def split_at_upper(word: str):
 
 
 def trans(k):
-    c.execute(f"SELECT value FROM Translations WHERE key = ?", (k,))
-    if res := c.fetchone():
-        return res[0]
+    with conn: 
+        c = conn.cursor()
+        c.execute(f"SELECT value FROM Translations WHERE key = ?", (k,))
+        if res := c.fetchone():
+            return res[0]
 
-    return split_at_upper(k)
+        return split_at_upper(k)
