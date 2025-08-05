@@ -11,18 +11,22 @@ conn = sqlite3.connect(db_file, check_same_thread=False)
 
 
 def select(catalog_name, key):
-    with conn: 
-        c = conn.cursor()
+    c = conn.cursor()
+    try:
         c.execute(f"SELECT value FROM {catalog_name} WHERE key = ?", (pickle.dumps(key),))
         if ds := c.fetchone():
             return pickle.loads(ds[0])
+    finally:
+        c.close()
 
 
 def select_all(catalog_name):
-    with conn: 
-        c = conn.cursor()
+    c = conn.cursor()
+    try:
         c.execute(f"SELECT key, value FROM {catalog_name}")
         return {pickle.loads(k): pickle.loads(v) for k, v in c.fetchall()}
+    finally:
+        c.close()
 
 
 def catalog_code(catalog_name, key, index=None):
@@ -63,10 +67,13 @@ def split_at_upper(word: str):
 
 
 def trans(k):
-    with conn: 
-        c = conn.cursor()
+    c = conn.cursor()
+    try:
         c.execute(f"SELECT value FROM Translations WHERE key = ?", (k,))
         if res := c.fetchone():
             return res[0]
-
         return split_at_upper(k)
+    finally:
+        c.close()
+
+
