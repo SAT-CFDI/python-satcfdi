@@ -424,3 +424,61 @@ def test_iva_exento():
 
     verify_invoice(invoice, "iva_exento")
 
+
+def test_suma_conceptos_iva():
+    rfc = 'xiqb891116qe4'
+    signer = get_signer(rfc)
+
+    invoice = cfdi40.Comprobante(
+        emisor=cfdi40.Emisor(
+            rfc=signer.rfc,
+            nombre=signer.legal_name,
+            regimen_fiscal="601"
+        ),
+        lugar_expedicion="56820",
+        fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
+        receptor=cfdi40.Receptor(
+            rfc='KIJ0906199R1',
+            nombre='KIJ, S.A DE C.V.',
+            uso_cfdi='G03',
+            domicilio_fiscal_receptor="59820",
+            regimen_fiscal_receptor="601"
+        ),
+        metodo_pago='PPD',
+        serie="A",
+        folio="123456",
+        conceptos=[
+            cfdi40.Concepto(
+                clave_prod_serv='10101702',
+                cantidad=1,
+                clave_unidad='E48',
+                descripcion='SERVICIOS DE FACTURACION',
+                valor_unitario=Decimal('100.03'),
+                impuestos=cfdi40.Impuestos(
+                    traslados=cfdi40.Traslado(
+                        impuesto=Impuesto.IVA,
+                        tipo_factor=TipoFactor.TASA,
+                        tasa_o_cuota=Decimal('0.160000'),
+                    )
+                ),
+            ),
+            cfdi40.Concepto(
+                clave_prod_serv='10101702',
+                cantidad=1,
+                clave_unidad='E48',
+                descripcion='SERVICIOS DE FACTURACION',
+                valor_unitario=Decimal('100.03'),
+                impuestos=cfdi40.Impuestos(
+                    traslados=cfdi40.Traslado(
+                        impuesto=Impuesto.IVA,
+                        tipo_factor=TipoFactor.TASA,
+                        tasa_o_cuota=Decimal('0.160000'),
+                    )
+                ),
+            )
+        ],
+        _traslados_sobre_totales=True
+    )
+    invoice.sign(signer)
+
+    verify_invoice(invoice, "iva_concepto_suma")
