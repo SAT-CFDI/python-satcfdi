@@ -458,7 +458,7 @@ class Comprobante(CFDI):
         })
         self.compute(traslados_sobre_totales=_traslados_sobre_totales)
 
-    def compute(self, traslados_sobre_totales):
+    def compute(self, traslados_sobre_totales=False):
         self["Conceptos"] = conceptos = _make_conceptos(self["Conceptos"], rnd_fn=rounder(self["Moneda"]))
         self["SubTotal"] = sub_total = sum(c['Importe'] for c in conceptos)
         descuento = sum(c.get('Descuento') or 0 for c in conceptos)
