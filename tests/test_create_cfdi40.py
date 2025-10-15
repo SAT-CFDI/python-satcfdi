@@ -476,8 +476,7 @@ def test_suma_conceptos_iva():
                     )
                 ),
             )
-        ],
-        _traslados_sobre_totales=True
+        ]
     )
     invoice.sign(signer)
 

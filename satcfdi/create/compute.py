@@ -101,7 +101,7 @@ def group_impuestos(elements, pfx="", ofx=""):
     return impuestos
 
 
-def make_impuestos(conceptos, rnd_fn, traslados_sobre_totales):
+def make_impuestos(conceptos):
     impuestos = group_impuestos(conceptos)
 
     if retenciones := impuestos.get('Retenciones'):
@@ -111,10 +111,6 @@ def make_impuestos(conceptos, rnd_fn, traslados_sobre_totales):
             impuestos['TotalImpuestosRetenidos'] = sum(imp)
 
     if traslados := impuestos.get('Traslados'):
-        if traslados_sobre_totales:
-            for i in traslados:
-                if i["TipoFactor"] == 'Tasa':
-                    i["Importe"] = rnd_fn(i["Base"] * i["TasaOCuota"])
         impuestos['Traslados'] = traslados
         imp = list(i["Importe"] for i in traslados if i["Importe"] is not None)
         if imp:

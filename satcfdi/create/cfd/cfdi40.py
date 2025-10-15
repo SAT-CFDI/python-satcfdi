@@ -424,8 +424,7 @@ class Comprobante(CFDI):
             cfdi_relacionados: CfdiRelacionados | Sequence[CfdiRelacionados | dict] = None,
             complemento: CFDI | Sequence[CFDI] = None,
             addenda: CFDI | Sequence[CFDI] = None,
-            fecha: datetime = None,
-            _traslados_sobre_totales: bool = False
+            fecha: datetime = None
     ):
         super().__init__({
             'Version': self.version,
@@ -456,14 +455,14 @@ class Comprobante(CFDI):
             'NoCertificado': '',
             'Certificado': '',
         })
-        self.compute(traslados_sobre_totales=_traslados_sobre_totales)
+        self.compute()
 
-    def compute(self, traslados_sobre_totales=False):
+    def compute(self):
         self["Conceptos"] = conceptos = _make_conceptos(self["Conceptos"], rnd_fn=rounder(self["Moneda"]))
         self["SubTotal"] = sub_total = sum(c['Importe'] for c in conceptos)
         descuento = sum(c.get('Descuento') or 0 for c in conceptos)
         self['Descuento'] = descuento or None
-        self['Impuestos'] = impuestos = make_impuestos(conceptos, rnd_fn=rounder(self["Moneda"]), traslados_sobre_totales=traslados_sobre_totales)
+        self['Impuestos'] = impuestos = make_impuestos(conceptos)
         total = sub_total - descuento
         if impuestos:
             total += impuestos.get('TotalImpuestosTrasladados') or 0
