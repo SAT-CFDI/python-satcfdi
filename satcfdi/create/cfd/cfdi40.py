@@ -335,7 +335,6 @@ class PagoComprobante:
 def _make_conceptos(conceptos, decimals):
     rnd_fn = lambda v: round(v, decimals)
     rnd_traslados_tracker = RoundTracker(decimals)
-    rnd_retenciones_tracker = RoundTracker(decimals)
 
     def make_concepto(concepto):
         impuestos = concepto.get("Impuestos") or {}
@@ -353,9 +352,9 @@ def _make_conceptos(conceptos, decimals):
         else:
             impuestos = {
                 imp_t: [
-                    make_impuesto(i, base=base, rnd_tracker=rnd_tracker) for i in imp
+                    make_impuesto(i, base=base, rnd_fn=rnd_tracker) for i in imp
                 ]
-                for imp_t, imp, rnd_tracker in [('Traslados', trasladados, rnd_traslados_tracker), ('Retenciones', retenciones, rnd_retenciones_tracker)] if imp
+                for imp_t, imp, rnd_tracker in [('Traslados', trasladados, rnd_traslados_tracker), ('Retenciones', retenciones, rnd_fn)] if imp
             }
             concepto['Impuestos'] = impuestos or None
             concepto["ObjetoImp"] = "02" if impuestos else "01"

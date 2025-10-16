@@ -50,7 +50,7 @@ def encode_impuesto(impuesto, tipo_factor, tasa_cuota: Decimal = None):
     return impuesto
 
 
-def make_impuesto(impuesto: dict, base, rnd_tracker):
+def make_impuesto(impuesto: dict, base, rnd_fn):
     _impuesto = impuesto["Impuesto"]
     tipo_factor = impuesto['TipoFactor']
     tasa_cuota = impuesto['TasaOCuota']
@@ -62,7 +62,7 @@ def make_impuesto(impuesto: dict, base, rnd_tracker):
     else:
         match tipo_factor:
             case "Tasa":
-                importe = rnd_tracker.round(base * tasa_cuota)
+                importe = rnd_fn(base * tasa_cuota)
             case "Cuota":
                 importe = tasa_cuota
             case "Exento":
@@ -101,6 +101,9 @@ class RoundTracker:
         else:
             rounded = round(value, self.decimals)
         return rounded
+
+    def __call__(self, value):
+        return self.round(value)
 
 
 def group_impuestos(elements, pfx="", ofx=""):
