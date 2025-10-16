@@ -64,8 +64,7 @@ def test_comercio_digital_test():
                         tasa_o_cuota=Decimal('0.106667'),
                     )
                 ],
-            ),
-            _traslados_incluidos=True
+            )
         )
     )
     invoice.sign(signer)

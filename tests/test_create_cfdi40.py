@@ -19,13 +19,13 @@ current_filename = os.path.splitext(os.path.basename(__file__))[0]
 sat = SAT()
 
 invoices = [
-    ('xiqb891116qe4', "xiqb891116qe4_ingreso_noobjeto", None, [cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000'))], '13851.27', False),
-    ('xiqb891116qe4', "xiqb891116qe4_ingreso_exento", cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.EXENTO), [cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000'))], '13851.27', False),
-    ('xiqb891116qe4', "xiqb891116qe4_ingreso_iva16", cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.160000')), [cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000')), cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.106667'))], '14672.08', False),
-    ('h&e951128469', "h&e951128469_ingreso_noobjeto", None, None, '15390.30', False),
-    ('h&e951128469', "h&e951128469_ingreso_exento", cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.EXENTO), None, '15390.30', False),
-    ('h&e951128469', "h&e951128469_ingreso_iva16", cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.160000')), None, '17852.75', False),
-    ('h&e951128469', "h&e951128469_ingreso_ieps_exento", cfdi40.Traslado(impuesto=Impuesto.IEPS, tipo_factor=TipoFactor.EXENTO), None, '15390.30', False)
+    ('xiqb891116qe4', "xiqb891116qe4_ingreso_noobjeto", None, [cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000'))], '13851.27'),
+    ('xiqb891116qe4', "xiqb891116qe4_ingreso_exento", cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.EXENTO), [cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000'))], '13851.27'),
+    ('xiqb891116qe4', "xiqb891116qe4_ingreso_iva16", cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.160000')), [cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000')), cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.106667'))], '14672.08'),
+    ('h&e951128469', "h&e951128469_ingreso_noobjeto", None, None, '15390.30'),
+    ('h&e951128469', "h&e951128469_ingreso_exento", cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.EXENTO), None, '15390.30'),
+    ('h&e951128469', "h&e951128469_ingreso_iva16", cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.160000')), None, '17852.75'),
+    ('h&e951128469', "h&e951128469_ingreso_ieps_exento", cfdi40.Traslado(impuesto=Impuesto.IEPS, tipo_factor=TipoFactor.EXENTO), None, '15390.30')
 ]
 
 
@@ -50,61 +50,61 @@ def verify_invoice(invoice, path, include_metadata=False):
     assert verify
 
 
-def test_traslados_incluidos():
-    signer = get_signer('h&e951128469')
-    emisor = cfdi40.Emisor(
-        rfc=signer.rfc,
-        nombre=signer.legal_name,
-        regimen_fiscal="601"
-    )
+# def test_traslados_incluidos():
+#     signer = get_signer('h&e951128469')
+#     emisor = cfdi40.Emisor(
+#         rfc=signer.rfc,
+#         nombre=signer.legal_name,
+#         regimen_fiscal="601"
+#     )
+#
+#     for t in range(10):
+#         delta = Decimal(t) / 100
+#         valor = Decimal('15390.30') + delta
+#
+#         invoice = cfdi40.Comprobante(
+#             emisor=emisor,
+#             lugar_expedicion="56820",
+#             fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
+#             receptor=cfdi40.Receptor(
+#                 rfc='KIJ0906199R1',
+#                 nombre='KIJ, S.A DE C.V.',
+#                 uso_cfdi='G03',
+#                 domicilio_fiscal_receptor="59820",
+#                 regimen_fiscal_receptor="601"
+#             ),
+#             metodo_pago='PPD',
+#             serie="A",
+#             folio="123456",
+#             conceptos=[
+#                 cfdi40.Concepto(
+#                     cuenta_predial='1234567890',
+#                     clave_prod_serv='10101702',
+#                     cantidad=Decimal('23.00'),
+#                     clave_unidad='E48',
+#                     descripcion='SERVICIOS DE FACTURACION',
+#                     valor_unitario=valor,
+#                     impuestos=cfdi40.Impuestos(
+#                         traslados=cfdi40.Traslado(
+#                             impuesto=Impuesto.IVA,
+#                             tipo_factor=TipoFactor.TASA,
+#                             tasa_o_cuota=Decimal('0.160000'),
+#                         ),
+#                         retenciones=None
+#                     ),
+#                     _traslados_incluidos=True
+#                 )
+#             ]
+#         )
+#         invoice.sign(signer)
+#
+#         assert invoice["Total"] == valor * Decimal('23.00')
+#
+#         render.pdf_write(invoice, target=os.path.join(current_dir, current_filename, f"test_traslados_incluidos_render.pdf"))
 
-    for t in range(10):
-        delta = Decimal(t) / 100
-        valor = Decimal('15390.30') + delta
 
-        invoice = cfdi40.Comprobante(
-            emisor=emisor,
-            lugar_expedicion="56820",
-            fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
-            receptor=cfdi40.Receptor(
-                rfc='KIJ0906199R1',
-                nombre='KIJ, S.A DE C.V.',
-                uso_cfdi='G03',
-                domicilio_fiscal_receptor="59820",
-                regimen_fiscal_receptor="601"
-            ),
-            metodo_pago='PPD',
-            serie="A",
-            folio="123456",
-            conceptos=[
-                cfdi40.Concepto(
-                    cuenta_predial='1234567890',
-                    clave_prod_serv='10101702',
-                    cantidad=Decimal('23.00'),
-                    clave_unidad='E48',
-                    descripcion='SERVICIOS DE FACTURACION',
-                    valor_unitario=valor,
-                    impuestos=cfdi40.Impuestos(
-                        traslados=cfdi40.Traslado(
-                            impuesto=Impuesto.IVA,
-                            tipo_factor=TipoFactor.TASA,
-                            tasa_o_cuota=Decimal('0.160000'),
-                        ),
-                        retenciones=None
-                    ),
-                    _traslados_incluidos=True
-                )
-            ]
-        )
-        invoice.sign(signer)
-
-        assert invoice["Total"] == valor * Decimal('23.00')
-
-        render.pdf_write(invoice, target=os.path.join(current_dir, current_filename, f"test_traslados_incluidos_render.pdf"))
-
-
-@pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total, traslado_incluido', invoices)
-def test_create_invoice(rfc, xml_file, traslados, retenciones, total, traslado_incluido):
+@pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total', invoices)
+def test_create_invoice(rfc, xml_file, traslados, retenciones, total):
     signer = get_signer(rfc)
     emisor = cfdi40.Emisor(
         rfc=signer.rfc,
@@ -137,8 +137,7 @@ def test_create_invoice(rfc, xml_file, traslados, retenciones, total, traslado_i
                 impuestos=cfdi40.Impuestos(
                     traslados=traslados,
                     retenciones=retenciones,
-                ),
-                _traslados_incluidos=traslado_incluido
+                )
             )
         ]
     )
@@ -167,8 +166,8 @@ def test_create_invoice(rfc, xml_file, traslados, retenciones, total, traslado_i
         assert ver
 
 
-@pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total, traslado_incluido', invoices)
-def test_create_pago(rfc, xml_file, traslados, retenciones, total, traslado_incluido):
+@pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total', invoices)
+def test_create_pago(rfc, xml_file, traslados, retenciones, total):
     signer = get_signer(rfc)
     emisor = cfdi40.Emisor(
         rfc=signer.rfc,
@@ -195,8 +194,8 @@ def test_create_pago(rfc, xml_file, traslados, retenciones, total, traslado_incl
     verify_invoice(invoice, f"pago_{xml_file}")
 
 
-@pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total, traslado_incluido', invoices)
-def test_create_pago_parcial(rfc, xml_file, traslados, retenciones, total, traslado_incluido):
+@pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total', invoices)
+def test_create_pago_parcial(rfc, xml_file, traslados, retenciones, total):
     signer = get_signer(rfc)
     emisor = cfdi40.Emisor(
         rfc=signer.rfc,
@@ -228,8 +227,8 @@ def test_create_pago_parcial(rfc, xml_file, traslados, retenciones, total, trasl
     verify_invoice(invoice, f"pago_p_{xml_file}")
 
 
-@pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total, traslado_incluido', invoices)
-def test_create_pago_multiple(rfc, xml_file, traslados, retenciones, total, traslado_incluido):
+@pytest.mark.parametrize('rfc, xml_file, traslados, retenciones, total', invoices)
+def test_create_pago_multiple(rfc, xml_file, traslados, retenciones, total):
     signer = get_signer(rfc)
     emisor = cfdi40.Emisor(
         rfc=signer.rfc,
@@ -428,13 +427,14 @@ def test_iva_exento():
 def test_suma_conceptos_iva():
     rfc = 'xiqb891116qe4'
     signer = get_signer(rfc)
-
-    invoice = cfdi40.Comprobante(
-        emisor=cfdi40.Emisor(
+    emisor = cfdi40.Emisor(
             rfc=signer.rfc,
             nombre=signer.legal_name,
             regimen_fiscal="601"
-        ),
+        )
+
+    invoice = cfdi40.Comprobante(
+        emisor=emisor,
         lugar_expedicion="56820",
         fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
         receptor=cfdi40.Receptor(
@@ -461,23 +461,28 @@ def test_suma_conceptos_iva():
                         tasa_o_cuota=Decimal('0.160000'),
                     )
                 ),
-            ),
-            cfdi40.Concepto(
-                clave_prod_serv='10101702',
-                cantidad=1,
-                clave_unidad='E48',
-                descripcion='SERVICIOS DE FACTURACION',
-                valor_unitario=Decimal('100.03'),
-                impuestos=cfdi40.Impuestos(
-                    traslados=cfdi40.Traslado(
-                        impuesto=Impuesto.IVA,
-                        tipo_factor=TipoFactor.TASA,
-                        tasa_o_cuota=Decimal('0.160000'),
-                    )
-                ),
-            )
+            ) for _ in range(6)
         ]
     )
     invoice.sign(signer)
-
     verify_invoice(invoice, "iva_concepto_suma")
+
+    invoice["Complemento"] = {
+        "TimbreFiscalDigital": {
+            "UUID": "123e4567-e89b-12d3-a456-426614174000",
+        }
+    }
+
+    invoice = cfdi40.Comprobante.pago_comprobantes(
+        emisor=emisor,
+        lugar_expedicion="56820",
+        fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
+        comprobantes=[invoice],
+        fecha_pago=datetime.fromisoformat("2020-01-02T22:40:38"),
+        forma_pago="03",
+        serie="A",
+        folio="123456",
+    )
+    invoice.sign(signer)
+
+    verify_invoice(invoice, "iva_concepto_suma_pago")

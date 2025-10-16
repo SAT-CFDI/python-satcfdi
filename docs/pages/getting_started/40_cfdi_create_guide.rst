@@ -61,8 +61,7 @@ ______________________
                             tasa_o_cuota=Decimal('0.106667'),
                         )
                     ],
-                ),
-                _traslados_incluidos=False  # indica si el valor unitario incluye los traslados
+                )
             )
         ]
     )
@@ -302,8 +301,7 @@ _______________________
                             tasa_o_cuota=Decimal('0.106667'),
                         )
                     ],
-                ),
-                _traslados_incluidos=False
+                )
             )
         ],
         addenda=dvz11.Diverza(

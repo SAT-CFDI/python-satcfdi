@@ -80,8 +80,7 @@ def test_create_addenda():
                             tasa_o_cuota=Decimal('0.106667'),
                         )
                     ],
-                ),
-                _traslados_incluidos=False
+                )
             )
         ],
         addenda=dvz11.Diverza(
@@ -146,8 +145,7 @@ def test_copy_cfdi():
                             tasa_o_cuota=Decimal('0.106667'),
                         )
                     ],
-                ),
-                _traslados_incluidos=False
+                )
             )
         ]
     )

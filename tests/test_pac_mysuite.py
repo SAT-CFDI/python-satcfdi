@@ -58,8 +58,7 @@ def test_mysuite_test():
             impuestos=cfdi40.Impuestos(
                 traslados=cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.160000')),
                 retenciones=[cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000')), cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.106667'))],
-            ),
-            _traslados_incluidos=True
+            )
         )
     )
     invoice.sign(signer)

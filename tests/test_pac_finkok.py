@@ -62,8 +62,7 @@ def build_invoice():
                     tasa_o_cuota=Decimal("0.106667"),
                 ),
             ],
-        ),
-        _traslados_incluidos=False,  # indica si el valor unitario incluye los traslados
+        )
     )
 
     return cfdi40.Comprobante(

@@ -1,10 +1,12 @@
 from collections import defaultdict
-from decimal import Decimal
+from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR, ROUND_HALF_UP
 
 from ..catalogs import moneda_decimales
 from ..transform.helpers import strcode
 from ..utils import iterate
 
+def m_decimals(moneda):
+    return moneda_decimales(strcode(moneda))
 
 def rounder(moneda):
     decimals = moneda_decimales(strcode(moneda))
@@ -48,7 +50,7 @@ def encode_impuesto(impuesto, tipo_factor, tasa_cuota: Decimal = None):
     return impuesto
 
 
-def make_impuesto(impuesto: dict, base, rnd_fn):
+def make_impuesto(impuesto: dict, base, rnd_tracker):
     _impuesto = impuesto["Impuesto"]
     tipo_factor = impuesto['TipoFactor']
     tasa_cuota = impuesto['TasaOCuota']
@@ -60,7 +62,7 @@ def make_impuesto(impuesto: dict, base, rnd_fn):
     else:
         match tipo_factor:
             case "Tasa":
-                importe = rnd_fn(base * tasa_cuota)
+                importe = rnd_tracker.round(base * tasa_cuota)
             case "Cuota":
                 importe = tasa_cuota
             case "Exento":
@@ -69,12 +71,36 @@ def make_impuesto(impuesto: dict, base, rnd_fn):
                 raise ValueError("Invalid TipoFactor", tipo_factor)
 
     return {
-        'Base': rnd_fn(base),
+        'Base': base,
         'Impuesto': _impuesto,
         'TipoFactor': tipo_factor,
         'TasaOCuota': tasa_cuota,
         'Importe': importe
     }
+
+class RoundTracker:
+    def __init__(self, decimals):
+        self.decimals = decimals
+        self.offset = Decimal('0.0')
+        if decimals is 0:
+            self.exp = Decimal('1')
+        else:
+            self.exp = Decimal('0.' + '0' * (decimals - 1) + '1')
+        self.offset_margin = Decimal('0.' + '0' * decimals + '5')
+
+    def round(self, value):
+        rounded = self.peak(value)
+        self.offset += value - rounded
+        return rounded
+
+    def peak(self, value):
+        if self.offset >= self.offset_margin:
+            rounded = value.quantize(self.exp, rounding=ROUND_CEILING)
+        elif self.offset <= -self.offset_margin:
+            rounded = value.quantize(self.exp, rounding=ROUND_FLOOR)
+        else:
+            rounded = round(value, self.decimals)
+        return rounded
 
 
 def group_impuestos(elements, pfx="", ofx=""):

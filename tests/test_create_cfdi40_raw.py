@@ -71,8 +71,7 @@ def test_create_raw():
                         )
                     ]
                 },
-                "CuentaPredial": "1234567890",
-                "_traslados_incluidos": False
+                "CuentaPredial": "1234567890"
             }
         ],
         "LugarExpedicion": "56820",
@@ -132,8 +131,7 @@ def test_create_raw_no_signature():
                         )
                     ]
                 },
-                "CuentaPredial": "1234567890",
-                "_traslados_incluidos": False
+                "CuentaPredial": "1234567890"
             }
         ],
         "LugarExpedicion": "56820",
@@ -190,8 +188,7 @@ def test_create_no_signature():
                         cfdi40.Traslado(impuesto=Impuesto.ISR, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.100000')),
                         cfdi40.Traslado(impuesto=Impuesto.IVA, tipo_factor=TipoFactor.TASA, tasa_o_cuota=Decimal('0.106667')),
                     ],
-                ),
-                _traslados_incluidos=False
+                )
             )
         ]
     )
