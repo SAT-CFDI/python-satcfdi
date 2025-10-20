@@ -87,11 +87,6 @@ class RoundTracker:
         self.exp = Decimal('0.' + '0' * decimals)
         self.offset_margin = Decimal('0.' + '0' * decimals + '5')
 
-    def round(self, value):
-        rounded = self.peak(value)
-        self.offset += value - rounded
-        return rounded
-
     def peak(self, value):
         if self.offset >= self.offset_margin:
             return value.quantize(self.exp, rounding=ROUND_CEILING)
@@ -100,7 +95,9 @@ class RoundTracker:
         return round(value, self.decimals)
 
     def __call__(self, value):
-        return self.round(value)
+        rounded = self.peak(value)
+        self.offset += value - rounded
+        return rounded
 
 
 def group_impuestos(elements, pfx="", ofx=""):
