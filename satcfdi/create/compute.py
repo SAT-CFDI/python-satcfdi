@@ -80,12 +80,11 @@ def make_impuesto(impuesto: dict, base, rnd_fn):
 
 class RoundTracker:
     def __init__(self, decimals):
+        if decimals < 0:
+            raise NotImplementedError("decimals must be non-negative")
         self.decimals = decimals
         self.offset = Decimal('0.0')
-        if decimals is 0:
-            self.exp = Decimal('1')
-        else:
-            self.exp = Decimal('0.' + '0' * (decimals - 1) + '1')
+        self.exp = Decimal('0.' + '0' * decimals)
         self.offset_margin = Decimal('0.' + '0' * decimals + '5')
 
     def round(self, value):
@@ -95,12 +94,10 @@ class RoundTracker:
 
     def peak(self, value):
         if self.offset >= self.offset_margin:
-            rounded = value.quantize(self.exp, rounding=ROUND_CEILING)
-        elif self.offset <= -self.offset_margin:
-            rounded = value.quantize(self.exp, rounding=ROUND_FLOOR)
-        else:
-            rounded = round(value, self.decimals)
-        return rounded
+            return value.quantize(self.exp, rounding=ROUND_CEILING)
+        if self.offset <= -self.offset_margin:
+            return value.quantize(self.exp, rounding=ROUND_FLOOR)
+        return round(value, self.decimals)
 
     def __call__(self, value):
         return self.round(value)
