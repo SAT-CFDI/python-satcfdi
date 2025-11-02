@@ -144,7 +144,7 @@ class SWSapien(PAC):
         )
 
     def cancel(self, cfdi: CFDI, reason: CancelReason, substitution_id: str = None, signer: Signer = None) -> CancelationAcknowledgment:
-        document_id = cfdi["Complemento"]["TimbreFiscalDigital"]["UUID"]
+        document_id = cfdi["Complemento"]["TimbreFiscalDigital"]["UUID"].upper()
         rfc = cfdi["Emisor"]["Rfc"]
         path = f"cfdi33/cancel/{rfc}/{document_id}/{reason.value}"
         if substitution_id:
