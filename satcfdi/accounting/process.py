@@ -1,4 +1,4 @@
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping, Sequence, Iterator
 from datetime import date
 from itertools import groupby
 from typing import Iterable
@@ -77,7 +77,7 @@ def filter_invoices_iter(
             yield r
 
 
-def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, fecha=None, invoice_type=None) -> Sequence[PaymentsDetails]:
+def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, fecha=None, invoice_type=None) -> Iterator[PaymentsDetails]:
     for r in filter_invoices_iter(invoices.values(), rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor, estatus='1', fecha=None, invoice_type=invoice_type):
         match r['TipoDeComprobante']:
             case "I":

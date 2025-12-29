@@ -13,7 +13,7 @@ conn = sqlite3.connect(db_file, check_same_thread=False)
 def select(catalog_name, key):
     c = conn.cursor()
     try:
-        c.execute(f"SELECT value FROM {catalog_name} WHERE key = ?", (pickle.dumps(key),))
+        c.execute(f"SELECT value FROM {catalog_name} WHERE key = ?", (pickle.dumps(key, protocol=4),))
         if ds := c.fetchone():
             return pickle.loads(ds[0])
     finally:
