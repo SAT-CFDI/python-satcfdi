@@ -7,7 +7,7 @@ from satcfdi.create.cfd import cfdi40
 from satcfdi.create.cfd.catalogos import Impuesto, TipoFactor
 from satcfdi.pacs import Environment
 from satcfdi.pacs.comerciodigital import ComercioDigital
-from utils import get_signer, verify_result
+from .utils import get_signer, verify_result
 
 
 def test_comercio_digital_test():

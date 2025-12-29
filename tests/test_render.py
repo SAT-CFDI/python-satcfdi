@@ -5,7 +5,7 @@ from satcfdi import render
 from satcfdi.cfdi import CFDI
 from satcfdi.render import BODY_TEMPLATE
 from satcfdi.render.environment import CFDIEnvironment
-from tests.utils import verify_result
+from .utils import verify_result
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
 

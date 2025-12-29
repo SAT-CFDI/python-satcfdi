@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from satcfdi.create.cancela import cancelacion, cancelacionretencion
-from tests.utils import verify_result, get_signer, XElementPrettyPrinter
+from .utils import verify_result, get_signer, XElementPrettyPrinter
 
 
 def verify_invoice(invoice, path):

@@ -9,7 +9,7 @@ from satcfdi.models import Signer
 from satcfdi.create.cfd import cfdi40
 from satcfdi.pacs import Environment
 from satcfdi.pacs.mysuite import MYSuite
-from utils import get_signer, verify_result
+from .utils import get_signer, verify_result
 
 current_dir = os.path.dirname(__file__)
 

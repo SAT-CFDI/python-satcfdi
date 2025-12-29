@@ -11,7 +11,7 @@ from cryptography.hazmat.primitives.serialization import load_der_private_key
 from satcfdi.certifica import _create_certificate_signing_request, _create_certificate_signing_request_zip, Certifica, _calculate_code, \
     _create_renovation_certificate_signing_request, _calculate_code_random, _create_generacion_certificate_signing_request, _create_renovation_moral_certificate_signing_request
 from satcfdi.certifica.pkcs7 import create_pkcs7
-from tests.utils import get_signer
+from .utils import get_signer
 
 current_dir = os.path.dirname(__file__)
 current_filename = os.path.splitext(os.path.basename(__file__))[0]

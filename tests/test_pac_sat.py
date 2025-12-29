@@ -18,7 +18,7 @@ from satcfdi.pacs.sat import _CFDISolicitaDescargaEmitidos, _CFDIAutenticacion, 
 from satcfdi.pacs.sat import SAT
 from satcfdi.pacs.sat import _get_listado_69b
 
-from tests.utils import get_signer, verify_result
+from .utils import get_signer, verify_result
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)

@@ -14,7 +14,7 @@ from satcfdi import render
 from satcfdi.accounting.contabilidad import generar_contabilidad
 from satcfdi.cfdi import CFDI
 from tests.constants import CFDI_FILES, CONTABILIDAD_FILES, SPEI_FILES
-from tests.utils import verify_result, XElementPrettyPrinter, compare_directories
+from .utils import verify_result, XElementPrettyPrinter, compare_directories
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)

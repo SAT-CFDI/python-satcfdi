@@ -7,7 +7,7 @@ from satcfdi.create.addendas import dvz11
 from satcfdi.create.cfd import cfdi40
 from satcfdi.create.cfd.catalogos import Impuesto, TipoFactor
 from satcfdi.pacs.sat import SAT
-from tests.utils import get_signer, verify_result, XElementPrettyPrinter
+from .utils import get_signer, verify_result, XElementPrettyPrinter
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)

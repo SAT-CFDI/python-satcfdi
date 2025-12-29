@@ -20,7 +20,7 @@ from satcfdi.models.signer import Signer
 from satcfdi.pacs.sat import SAT
 from satcfdi.transform import verify_certificate
 from tests.constants import PERSONAS_FISICAS, PERSONAS_MORALES
-from tests.utils import get_signer, SAT_Certificate_Store_Pruebas
+from .utils import get_signer, SAT_Certificate_Store_Pruebas
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)

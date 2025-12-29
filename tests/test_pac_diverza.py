@@ -8,7 +8,7 @@ from satcfdi.create.cfd.catalogos import Impuesto, TipoFactor
 from satcfdi.pacs import Environment
 from satcfdi.pacs.diverza import Diverza
 from satcfdi.create.cfd import cfdi33, cfdi40, pago20
-from tests.utils import get_signer, verify_result
+from .utils import get_signer, verify_result
 
 current_dir = os.path.dirname(__file__)
 module = 'satcfdi'

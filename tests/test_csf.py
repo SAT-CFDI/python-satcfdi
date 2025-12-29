@@ -7,7 +7,7 @@ from unittest import mock
 import pytest
 
 from satcfdi.csf import retrieve, _parse_response, _find_regimen
-from tests.utils import verify_result
+from .utils import verify_result
 
 current_dir = os.path.dirname(__file__)
 current_filename = os.path.splitext(os.path.basename(__file__))[0]

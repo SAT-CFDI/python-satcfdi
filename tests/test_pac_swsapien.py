@@ -11,7 +11,7 @@ from satcfdi.create.cfd import cfdi40
 from satcfdi.create.cfd.catalogos import Impuesto, TipoFactor
 from satcfdi.pacs import Environment, Accept, CancelReason
 from satcfdi.pacs.swsapien import SWSapien
-from utils import get_signer, verify_result
+from .utils import get_signer, verify_result
 
 current_dir = os.path.dirname(__file__)
 

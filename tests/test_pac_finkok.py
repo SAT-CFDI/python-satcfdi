@@ -2,7 +2,7 @@ import os
 from decimal import Decimal
 from unittest import mock
 
-from utils import get_signer, verify_result
+from .utils import get_signer, verify_result
 
 from satcfdi.cfdi import CFDI
 from satcfdi.create.cancela import cancelacion

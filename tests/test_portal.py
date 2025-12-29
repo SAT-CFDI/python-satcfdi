@@ -2,7 +2,7 @@ import os
 
 from satcfdi.portal.utils import generate_token, verify_token, action_url
 from satcfdi.portal import SATPortal
-from tests.utils import get_signer
+from .utils import get_signer
 
 current_dir = os.path.dirname(__file__)
 test_dir = os.path.join(current_dir, 'test_portal')

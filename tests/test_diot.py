@@ -8,7 +8,7 @@ from zipfile import ZipInfo
 from satcfdi import render
 from satcfdi.diot.code import Periodo, TipoOperacion, TipoTercero, Pais
 from satcfdi.diot import DatosIdentificacion, DatosComplementaria, ProveedorTercero, DIOT
-from tests.utils import get_signer, verify_result
+from .utils import get_signer, verify_result
 
 current_dir = os.path.dirname(__file__)
 module = 'satcfdi'

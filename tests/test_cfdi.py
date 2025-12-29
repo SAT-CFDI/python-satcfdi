@@ -6,7 +6,7 @@ import pytest
 from satcfdi import render
 from satcfdi.cfdi import CFDI
 from tests.constants import CFDI_FILES
-from tests.utils import verify_result, XElementPrettyPrinter
+from .utils import verify_result, XElementPrettyPrinter
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)

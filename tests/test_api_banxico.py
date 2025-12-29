@@ -3,7 +3,7 @@ import json
 from unittest import mock
 
 from satcfdi.apis.banxico import SieAPIRest
-from tests.utils import verify_result
+from .utils import verify_result
 
 
 def test_banxico():

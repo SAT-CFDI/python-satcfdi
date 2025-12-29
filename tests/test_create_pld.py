@@ -8,7 +8,7 @@ from satcfdi.xelement import XElement
 from satcfdi import render
 from satcfdi.exceptions import SchemaValidationError
 from satcfdi.create.pld import ari
-from tests.utils import verify_result, XElementPrettyPrinter
+from .utils import verify_result, XElementPrettyPrinter
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)

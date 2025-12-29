@@ -11,7 +11,7 @@ from satcfdi.create.cfd import cfdi40, nomina12
 from satcfdi.create.cfd.catalogos import Impuesto, TipoFactor
 from satcfdi.create.cfd.cfdi40 import PagoComprobante
 from satcfdi.pacs.sat import SAT
-from tests.utils import get_signer, verify_result, _uuid, stamp_v11, SAT_Certificate_Store_Pruebas, XElementPrettyPrinter
+from .utils import get_signer, verify_result, _uuid, stamp_v11, SAT_Certificate_Store_Pruebas, XElementPrettyPrinter
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)
