@@ -346,12 +346,12 @@ def _make_conceptos(conceptos, decimals):
         base = importe - (concepto.get("Descuento") or 0)
 
         impuestos = concepto['Impuestos'] = {
-            imp_t: [
+            imp_k: [
                 make_impuesto(i, base=base,
-                              rnd_fn=rnd_tracker_instance[imp_t + strcode(i["Impuesto"])]) for i
-                in iterate(impuestos.get(imp_t))
+                              rnd_fn=rnd_tracker_instance[imp_k + strcode(i["Impuesto"])]) for i
+                in iterate(imp_v)
             ]
-            for imp_t in ['Traslados', 'Retenciones'] if impuestos.get(imp_t)
+            for imp_k, imp_v in impuestos.items() if imp_v
         } or None
 
         if not concepto.get("ObjetoImp"):
