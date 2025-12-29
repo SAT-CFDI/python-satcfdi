@@ -6,7 +6,7 @@ from decimal import Decimal
 
 from ...transform.helpers import strcode
 
-from ...create.cfd.catalogos import Impuesto as CatImpuesto
+from ...create.cfd.catalogos import Impuesto as CatImpuesto, ObjetoImp
 from . import pago20
 from ..compute import make_impuestos, rounder, make_impuesto, \
     make_impuestos_dr_parcial, m_decimals, RoundTracker, RoundTrackerManager
@@ -340,25 +340,22 @@ def _make_conceptos(conceptos, decimals):
 
     def make_concepto(concepto):
         impuestos = concepto.get("Impuestos") or {}
-        trasladados = [x if isinstance(x, dict) else Traslado.parse(x) for x in iterate(impuestos.get("Traslados"))]
-        retenciones = [x if isinstance(x, dict) else Retencion.parse(x) for x in iterate(impuestos.get("Retenciones"))]
-
         valor_unitario = concepto['ValorUnitario']
 
         importe = rnd_fn(concepto["Cantidad"] * valor_unitario)
         concepto["Importe"] = importe
         base = importe - (concepto.get("Descuento") or 0)
 
-        if concepto.get("ObjetoImp") in ("01", "03"):
-            concepto['Impuestos'] = None
-        else:
-            impuestos = {
-                imp_t: [
-                    make_impuesto(i, base=base, rnd_fn=rnd_tracker_instance[imp_t + strcode(i["Impuesto"])]) for i in imp
-                ]
-                for imp_t, imp in [('Traslados', trasladados), ('Retenciones', retenciones)] if imp
-            }
-            concepto['Impuestos'] = impuestos or None
+        impuestos = concepto['Impuestos'] = {
+            imp_t: [
+                make_impuesto(i, base=base,
+                              rnd_fn=rnd_tracker_instance[imp_t + strcode(i["Impuesto"])]) for i
+                in iterate(impuestos.get(imp_t))
+            ]
+            for imp_t in ['Traslados', 'Retenciones'] if impuestos.get(imp_t)
+        } or None
+
+        if not concepto.get("ObjetoImp"):
             concepto["ObjetoImp"] = "02" if impuestos else "01"
 
         return concepto
