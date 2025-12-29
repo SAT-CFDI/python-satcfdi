@@ -4,14 +4,13 @@ from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 
-from ...transform.helpers import strcode
-
-from ...create.cfd.catalogos import Impuesto as CatImpuesto, ObjetoImp
 from . import pago20
 from ..compute import make_impuestos, rounder, make_impuesto, \
-    make_impuestos_dr_parcial, m_decimals, RoundTracker, RoundTrackerManager
+    make_impuestos_dr_parcial, m_decimals, RoundTrackerManager
 from ...cfdi import CFDI
+from ...create.cfd.catalogos import Impuesto as CatImpuesto
 from ...transform import get_timezone
+from ...transform.helpers import strcode
 from ...utils import ScalarMap
 from ...utils import iterate
 
