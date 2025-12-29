@@ -4,10 +4,12 @@ from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 
-from satcfdi.create.cfd.catalogos import Impuesto as CatImpuesto
+from ...transform.helpers import strcode
+
+from ...create.cfd.catalogos import Impuesto as CatImpuesto
 from . import pago20
 from ..compute import make_impuestos, rounder, make_impuesto, \
-    make_impuestos_dr_parcial, m_decimals, RoundTracker
+    make_impuestos_dr_parcial, m_decimals, RoundTracker, RoundTrackerManager
 from ...cfdi import CFDI
 from ...transform import get_timezone
 from ...utils import ScalarMap
@@ -334,7 +336,7 @@ class PagoComprobante:
 
 def _make_conceptos(conceptos, decimals):
     rnd_fn = lambda v: round(v, decimals)
-    rnd_traslados_tracker = RoundTracker(decimals)
+    rnd_tracker_instance = RoundTrackerManager(decimals)
 
     def make_concepto(concepto):
         impuestos = concepto.get("Impuestos") or {}
@@ -352,9 +354,9 @@ def _make_conceptos(conceptos, decimals):
         else:
             impuestos = {
                 imp_t: [
-                    make_impuesto(i, base=base, rnd_fn=rnd_tracker) for i in imp
+                    make_impuesto(i, base=base, rnd_fn=rnd_tracker_instance[imp_t + strcode(i["Impuesto"])]) for i in imp
                 ]
-                for imp_t, imp, rnd_tracker in [('Traslados', trasladados, rnd_traslados_tracker), ('Retenciones', retenciones, rnd_fn)] if imp
+                for imp_t, imp in [('Traslados', trasladados), ('Retenciones', retenciones)] if imp
             }
             concepto['Impuestos'] = impuestos or None
             concepto["ObjetoImp"] = "02" if impuestos else "01"

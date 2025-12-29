@@ -100,6 +100,15 @@ class RoundTracker:
         return rounded
 
 
+class RoundTrackerManager(dict):
+    def __init__(self, decimals):
+        super().__init__()
+        self.decimals = decimals
+
+    def __missing__(self, key):
+        self[key] = RoundTracker(self.decimals)
+        return self[key]
+
 def group_impuestos(elements, pfx="", ofx=""):
     retenciones = aggregate(
         (t for c in iterate(elements) for t in iterate((c[f"Impuestos{pfx}"] or {}).get(f"Retenciones{pfx}"))),

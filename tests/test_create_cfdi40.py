@@ -490,3 +490,89 @@ def test_suma_conceptos_iva(valor_unitario):
     invoice.sign(signer)
 
     verify_invoice(invoice, f"iva_concepto_suma_pago_{valor_unitario}")
+
+@pytest.mark.parametrize('valor_unitario', [Decimal('100.03'), Decimal('100.04'), Decimal('100.05'), Decimal('100.06'), Decimal('100.07')])
+def test_suma_conceptos_retenciones(valor_unitario):
+    rfc = 'xiqb891116qe4'
+    signer = get_signer(rfc)
+    emisor = cfdi40.Emisor(
+            rfc=signer.rfc,
+            nombre=signer.legal_name,
+            regimen_fiscal="601"
+        )
+
+    invoice = cfdi40.Comprobante(
+        emisor=emisor,
+        lugar_expedicion="56820",
+        fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
+        receptor=cfdi40.Receptor(
+            rfc='KIJ0906199R1',
+            nombre='KIJ, S.A DE C.V.',
+            uso_cfdi='G03',
+            domicilio_fiscal_receptor="59820",
+            regimen_fiscal_receptor="601"
+        ),
+        metodo_pago='PPD',
+        serie="A",
+        folio="123456",
+        conceptos=[
+            cfdi40.Concepto(
+                clave_prod_serv='10101702',
+                cantidad=1,
+                clave_unidad='E48',
+                descripcion='SERVICIOS DE FACTURACION',
+                valor_unitario=valor_unitario,
+                impuestos=cfdi40.Impuestos(
+                    traslados=cfdi40.Traslado(
+                        impuesto=Impuesto.IVA,
+                        tipo_factor=TipoFactor.TASA,
+                        tasa_o_cuota=Decimal('0.160000'),
+                    ),
+                    retenciones=[
+                        cfdi40.Retencion(
+                            impuesto=Impuesto.ISR,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.100000')
+                        ),
+                        cfdi40.Retencion(
+                            impuesto=Impuesto.IVA,
+                            tipo_factor=TipoFactor.TASA,
+                            tasa_o_cuota=Decimal('0.106667')
+                        )
+                    ]
+                ),
+            ) for _ in range(6)
+        ]
+    )
+    invoice.sign(signer)
+    verify_invoice(invoice, f"rentenciones_concepto_suma_{valor_unitario}")
+
+    invoice["Complemento"] = {
+        "TimbreFiscalDigital": {
+            "UUID": "123e4567-e89b-12d3-a456-426614174000",
+        }
+    }
+
+    total_retencion_isr = valor_unitario * 6 * Decimal('0.100000')
+    retencion_isr = invoice["Impuestos"]['Retenciones'][0]['Importe']
+    assert retencion_isr <= total_retencion_isr.quantize(Decimal('0.01'), rounding=ROUND_CEILING)
+    assert retencion_isr>= total_retencion_isr.quantize(Decimal('0.01'), rounding=ROUND_FLOOR)
+
+    total_retencion_iva = valor_unitario * 6 * Decimal('0.106667')
+    retencion_iva = invoice["Impuestos"]['Retenciones'][1]['Importe']
+    assert retencion_iva <= total_retencion_iva.quantize(Decimal('0.01'), rounding=ROUND_CEILING)
+    assert retencion_iva >= total_retencion_iva.quantize(Decimal('0.01'), rounding=ROUND_FLOOR)
+
+    invoice = cfdi40.Comprobante.pago_comprobantes(
+        emisor=emisor,
+        lugar_expedicion="56820",
+        fecha=datetime.fromisoformat("2020-01-01T22:40:38"),
+        comprobantes=[invoice],
+        fecha_pago=datetime.fromisoformat("2020-01-02T22:40:38"),
+        forma_pago="03",
+        serie="A",
+        folio="123456",
+    )
+    invoice.sign(signer)
+
+    verify_invoice(invoice, f"rentenciones_concepto_suma_pago_{valor_unitario}")
