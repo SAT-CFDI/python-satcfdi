@@ -338,7 +338,6 @@ def _make_conceptos(conceptos, decimals):
     rnd_tracker_instance = RoundTrackerManager(decimals)
 
     def make_concepto(concepto):
-        impuestos = concepto.get("Impuestos") or {}
         valor_unitario = concepto['ValorUnitario']
 
         importe = rnd_fn(concepto["Cantidad"] * valor_unitario)
@@ -351,7 +350,7 @@ def _make_conceptos(conceptos, decimals):
                               rnd_fn=rnd_tracker_instance[imp_k + strcode(i["Impuesto"])]) for i
                 in iterate(imp_v)
             ]
-            for imp_k, imp_v in impuestos.items() if imp_v
+            for imp_k, imp_v in (concepto.get("Impuestos") or {}).items() if imp_v
         } or None
 
         if not concepto.get("ObjetoImp"):
