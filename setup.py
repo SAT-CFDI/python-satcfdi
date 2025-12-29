@@ -90,6 +90,7 @@ setuptools.setup(
         'cryptography >= 43.0.1',
         'pytz >= 2022.5',
         'xlsxwriter >= 3.0.0',
+        'pyOpenSSL >= 22.0.0',
         'qrcode >= 7.3.0',
         'tabulate >= 0.9.0',
         'packaging >= 21.0',
