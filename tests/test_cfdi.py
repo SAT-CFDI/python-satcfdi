@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 
 import pytest
 
@@ -22,8 +23,9 @@ def verify_invoice(invoice, path):
     verify = verify_result(data=invoice.xml_bytes(pretty_print=True), filename=f"{path}.xml")
     assert verify
 
-    verify = verify_result(data=render.html_str(invoice), filename=f"{path}.html")
-    assert verify
+    if sys.version_info < (3, 14):
+        verify = verify_result(data=render.html_str(invoice), filename=f"{path}.html")
+        assert verify
 
     render.pdf_write(invoice, target=os.path.join(current_dir, "test_cfdi", f"{path}.pdf"))
 

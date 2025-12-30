@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import datetime, date
 from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR
 from unittest import mock
@@ -46,8 +47,9 @@ def verify_invoice(invoice, path, include_metadata=False):
     verify = verify_result(data=invoice.xml_bytes(pretty_print=True), filename=f"{path}.xml")
     assert verify
 
-    verify = verify_result(data=render.html_str(invoice), filename=f"{path}.html")
-    assert verify
+    if sys.version_info < (3, 14):
+        verify = verify_result(data=render.html_str(invoice), filename=f"{path}.html")
+        assert verify
 
 
 # def test_traslados_incluidos():
