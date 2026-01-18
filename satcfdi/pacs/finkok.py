@@ -212,6 +212,9 @@ class Finkok(PAC):
         self._validate_cancel_response(root)
 
         ack = root.find(".//apps:Acuse", self.namespaces)
+        acuse_bytes = None
+        if ack is not None and ack.text:
+            acuse_bytes = unescape(ack.text).encode()
 
         if operation == "accept_reject":
             acceptances = root.find(".//apps:aceptacion", self.namespaces)
@@ -229,12 +232,28 @@ class Finkok(PAC):
 
             return AcceptRejectAcknowledgment(
                 folios=folios,
-                acuse=unescape(ack.text).encode() if ack is not None else None,
+                acuse=acuse_bytes,
             )
 
+        estatus_uuid_elem = root.find(".//apps:EstatusUUID", self.namespaces)
+        if estatus_uuid_elem is not None:
+            code = estatus_uuid_elem.text
+        else:
+            cod_estatus_elem = root.find(".//apps:CodEstatus", self.namespaces)
+            code = cod_estatus_elem.text if cod_estatus_elem is not None else None
+
+        if code is None and acuse_bytes:
+            try:
+                acuse_root = etree.fromstring(acuse_bytes)
+                estatus_in_acuse = acuse_root.find(".//*[local-name()='EstatusUUID']")
+                if estatus_in_acuse is not None and estatus_in_acuse.text:
+                    code = estatus_in_acuse.text
+            except Exception:
+                pass
+
         return CancelationAcknowledgment(
-            code=root.find(".//apps:EstatusUUID", self.namespaces).text,
-            acuse=unescape(ack.text).encode(),
+            code=code,
+            acuse=acuse_bytes,
         )
 
     def issue(self, cfdi: CFDI, accept: Accept = Accept.XML) -> Document:
