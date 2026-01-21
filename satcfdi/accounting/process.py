@@ -78,11 +78,11 @@ def filter_invoices_iter(
 
 
 def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, fecha=None, invoice_type=None) -> Iterator[PaymentsDetails]:
-    for r in filter_invoices_iter(invoices.values(), rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor, estatus='1', fecha=None, invoice_type=invoice_type):
+    for r in filter_invoices_iter(invoices.values(), rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor, estatus=EstadoComprobante.VIGENTE, fecha=None, invoice_type=invoice_type):
         match r['TipoDeComprobante']:
             case "I":
                 if r['MetodoPago'] == MetodoPago.PAGO_EN_UNA_SOLA_EXHIBICION:
-                    if not r.payments:
+                    if not any(p.comprobante.estatus() == EstadoComprobante.VIGENTE for p in r.payments):
                         if _compare(r["Fecha"], fecha):
                             yield PaymentsDetails(
                                 comprobante=r,
