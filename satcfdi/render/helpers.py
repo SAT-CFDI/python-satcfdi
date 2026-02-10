@@ -37,7 +37,7 @@ def format_address_raw(calle, num_exterior, num_interior, referencia, colonia, m
 
 def format_address(k):
     return format_address_raw(
-        calle=k["Calle"],
+        calle=k.get("Calle"),
         num_exterior=k.get("NumeroExterior"),
         num_interior=k.get("NumeroInterior"),
         referencia=desc(k.get("Referencia")),
