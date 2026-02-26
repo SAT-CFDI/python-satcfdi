@@ -9,7 +9,7 @@ ___________________
     import base64
     from datetime import date
     from satcfdi.models import Signer
-    from satcfdi.pacs.sat import SAT, TipoDescargaMasivaTerceros, EstadoSolicitud
+    from satcfdi.pacs.sat import SAT, TipoDescargaMasivaTerceros, EstadoSolicitud, EstadoComprobante
     
     # Load Fiel
     signer = Signer.load(
@@ -22,12 +22,13 @@ ___________________
         signer=signer
     )
     
-    # Facturas Recibidas
+    # Facturas Emitidas
     response = sat_service.recover_comprobante_emitted_request(
         fecha_inicial=date(2020, 1, 1),
         fecha_final=date(2020, 12, 1),
         rfc_receptor=sat_service.signer.rfc,
-        tipo_solicitud=TipoDescargaMasivaTerceros.CFDI
+        tipo_solicitud=TipoDescargaMasivaTerceros.CFDI,
+        estado_comprobante=EstadoComprobante.VIGENTE,  # VIGENTE es obligatorio para descarga de CFDI
     )
     
     # Almacenar el id_solicitud en algún lugar
@@ -78,7 +79,7 @@ ___________________
         fecha_final=date(2020, 12, 1),
         rfc_receptor=sat_service.signer.rfc,
         tipo_solicitud=TipoDescargaMasivaTerceros.CFDI,
-        estado_comprobante=EstadoComprobante.VIGENTE,  # Puedes especificar un estado si es necesario
+        estado_comprobante=EstadoComprobante.VIGENTE,  # VIGENTE es obligatorio para descarga de CFDI
     )
     
     # Almacenar el id_solicitud en algún lugar
