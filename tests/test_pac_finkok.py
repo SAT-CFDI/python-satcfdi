@@ -231,12 +231,22 @@ def test_finkok_accept_reject():
         assert isinstance(res, AcceptRejectAcknowledgment)
 
 
-def test_finkok_pending():
-    with mock.patch("requests.post") as mk:
-        mk.return_value.ok = True
-        mk.return_value.content = b'<?xml version=\'1.0\' encoding=\'UTF-8\'?>\n<senv:Envelope xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:tns="http://facturacion.finkok.com/cancel" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s1="http://facturacion.finkok.com/cancellation" xmlns:s0="apps.services.soap.core.views" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"><senv:Body><tns:get_pendingResponse><tns:get_pendingResult><s0:uuids><tns:string>2D0E7634-886F-4119-B58F-2DCA228D510F</tns:string></s0:uuids></tns:get_pendingResult></tns:get_pendingResponse></senv:Body></senv:Envelope>'
+    def test_finkok_pending():
+        with mock.patch("requests.post") as mk:
+            mk.return_value.ok = True
+            mk.return_value.content = b'<?xml version=\'1.0\' encoding=\'UTF-8\'?>\n<senv:Envelope xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:tns="http://facturacion.finkok.com/cancel" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s1="http://facturacion.finkok.com/cancellation" xmlns:s0="apps.services.soap.core.views" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"><senv:Body><tns:get_pendingResponse><tns:get_pendingResult><s0:uuids><tns:string>2D0E7634-886F-4119-B58F-2DCA228D510F</tns:string></s0:uuids></tns:get_pendingResult></tns:get_pendingResponse></senv:Body></senv:Envelope>'
 
-        res = finkok.pending("MAG041126GT8")
-        assert mk.called
-        assert mk.call_args.kwargs["url"] == url_maping["cancel"]
-        assert "2D0E7634-886F-4119-B58F-2DCA228D510F" in res
+            res = finkok.pending("MAG041126GT8")
+            assert mk.called
+            assert mk.call_args.kwargs["url"] == url_maping["cancel"]
+            assert "2D0E7634-886F-4119-B58F-2DCA228D510F" in res
+
+    def test_finkok_get_receipt():
+        with mock.patch("requests.post") as mk:
+            mk.return_value.ok = True
+            mk.return_value.content = b'<?xml version=\'1.0\' encoding=\'UTF-8\'?>\n<senv:Envelope xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:tns="http://facturacion.finkok.com/cancel" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s1="http://facturacion.finkok.com/cancellation" xmlns:s0="apps.services.soap.core.views" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"><senv:Body><tns:get_receiptResponse><tns:get_receiptResult><s0:uuid>E174F807-BEFA-4CF6-9B11-2A013B12F398</s0:uuid><s0:success>true</s0:success><s0:receipt><![CDATA[<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><CancelaCFDResponse xmlns="http://cancelacfd.sat.gob.mx"><CancelaCFDResult Fecha="2019-04-05T15:23:01.5995341" RfcEmisor="LAN7008173R5"><Folios><UUID>E174F807-BEFA-4CF6-9B11-2A013B12F398</UUID><EstatusUUID>201</EstatusUUID></Folios></CancelaCFDResult></CancelaCFDResponse></s:Body></s:Envelope>]]></s0:receipt><s0:taxpayer_id>LAN7008173R5</s0:taxpayer_id><s0:date>2019-04-05T15:23:01</s0:date></tns:get_receiptResult></tns:get_receiptResponse></senv:Body></senv:Envelope>'
+
+            res = finkok.get_receipt("LAN7008173R5", "E174F807-BEFA-4CF6-9B11-2A013B12F398", "C")
+            assert mk.called
+            assert mk.call_args.kwargs["url"] == url_maping["cancel"]
+            assert b"CancelaCFDResponse" in res.acuse
