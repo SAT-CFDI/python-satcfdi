@@ -480,3 +480,57 @@ class Finkok(PAC):
         root = self._perform_request(url, envelope)
 
         return [uuid.text for uuid in root.find(".//apps:uuids", self.namespaces)]
+
+    def get_receipt(self, taxpayer_id: str, uuid: str, receipt_type: Literal["C", "R"] = "C") -> CancelationAcknowledgment:
+        """Operation to get the cancellation or reception receipt of an invoice.
+
+        Args:
+            taxpayer_id (str): The RFC of the issuer.
+            uuid (str): The UUID of the invoice.
+            receipt_type (Literal["C", "R"], optional): The type of receipt to get ("C" for cancelation, "R" for reception). Defaults to "C".
+
+        Returns:
+            CancelationAcknowledgment: The acknowledgment of the receipt.
+                - acuse: The receipt XML.
+
+        Raises:
+            ResponseError: If there is an error in the response.
+        """
+        namespace = self.namespaces["cancel"]
+        operation_element = etree.Element(etree.QName(namespace, "get_receipt"))
+
+        rtaxpayer_id = etree.SubElement(
+            operation_element, etree.QName(namespace, "taxpayer_id")
+        )
+        rtaxpayer_id.text = taxpayer_id
+
+        ruuid_elem = etree.SubElement(
+            operation_element, etree.QName(namespace, "uuid")
+        )
+        ruuid_elem.text = uuid
+
+        rtype = etree.SubElement(
+            operation_element, etree.QName(namespace, "type")
+        )
+        rtype.text = receipt_type
+
+        operation_element = self._add_auth(operation_element, namespace)
+        envelope = self._build_envelope(operation_element)
+
+        url = self.get_service_url("cancel")
+        root = self._perform_request(url, envelope)
+
+        error = root.find(".//apps:error", self.namespaces)
+        if error is not None and error.text:
+            raise ResponseError(error.text)
+
+        success = root.find(".//apps:success", self.namespaces)
+        if success is not None and success.text == "true":
+            receipt = root.find(".//apps:receipt", self.namespaces)
+            if receipt is not None and receipt.text:
+                return CancelationAcknowledgment(
+                    code=None,
+                    acuse=unescape(receipt.text).encode()
+                )
+
+        raise ResponseError("Unknown error getting receipt")
