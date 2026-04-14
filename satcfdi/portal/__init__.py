@@ -290,7 +290,7 @@ class SATPortalConstancia(PortalManager):
 class SATPortalOpinionCumplimiento(PortalManager):
     BASE_URL = 'https://login.mat.sat.gob.mx'
 
-    def descargar_opinion_cumplimiento(self) -> bytes:
+    def generar_opinion_cumplimiento(self) -> bytes:
         """Download Opinión de Cumplimiento (32-D) from SAT portal.
 
         Returns:
