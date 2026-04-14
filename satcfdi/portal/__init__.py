@@ -98,8 +98,7 @@ class SATPortal(PortalManager):
         assert res.status_code == 200
 
         action, data = get_form(res)
-        res = self.form(action, res.url, data)
-        return res
+        return self.form(action, res.url, data)
 
 
 class SATFacturaElectronica(PortalManager):
@@ -116,10 +115,7 @@ class SATFacturaElectronica(PortalManager):
             url=self.BASE_URL
         )
         assert res.status_code == 200
-        try:
-            action, data = get_form(res)
-        except IndexError as ex:
-            raise ValueError("Login form not found, please try again") from ex
+        action, data = get_form(res)
 
         if action.startswith('https://cfdiau.sat.gob.mx/'):
             assert 'nidp/wsfed/ep?id=SATUPCFDiCon' in action
@@ -234,12 +230,9 @@ class SATPortalConstancia(PortalManager):
         )
         assert res.status_code == 200
         action, data = get_form(res)
-        if action is None:
-            return res
+        res = self.form(action, res.url, data)
 
-        return self.fiel_login(
-            login_response=self.form(action, res.url, data)
-        )
+        return self.fiel_login(res)
 
     def generar_constancia(self):
         self.login()
@@ -253,13 +246,11 @@ class SATPortalConstancia(PortalManager):
         action, data = get_form(res)
         if action == "https://login.siat.sat.gob.mx/nidp/saml2/sso":
             res = self.form(action, res.url, data)
-            assert res.status_code == 200
 
             # Execute Authentication Response
             action, data = get_form(res)
             assert action == "https://rfcampc.siat.sat.gob.mx/saml2/sp/acs/post"
             res = self.form(action, res.url, data)
-            assert res.status_code == 200
 
         # Execute formReimpAcuse
         action, data = get_form(res)
@@ -277,8 +268,7 @@ class SATPortalConstancia(PortalManager):
                 'formReimpAcuse:folio': '',
                 'javax.faces.ViewState': data['javax.faces.ViewState']
             }
-            res = self.form(action, res.url, data)
-            assert res.status_code == 200
+            self.form(action, res.url, data)
 
         res = self.get(
             url='https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/IdcGeneraConstancia.jsf'
@@ -309,11 +299,10 @@ class SATPortalOpinionCumplimiento(PortalManager):
         if action.startswith("https://loginda.siat.sat.gob.mx/nidp/app/login"):
             fiel_action = action.replace("id=ciec", "id=fiel")
             res = self.form(fiel_action, res.url, data)
-            assert res.status_code == 200 and len(res.text) > 0, "FIEL login page empty"
+            assert len(res.text) > 0, "FIEL login page empty"
 
             # Step 3: FIEL authentication
             res = self.fiel_login(res)
-            assert res.status_code == 200
 
         # Step 4: Follow JS redirect (top.location.href = OAuth2 authz URL)
         for location in re.finditer(r"location\.href=['\"]([^'\"]+)['\"]", res.text):
@@ -323,13 +312,10 @@ class SATPortalOpinionCumplimiento(PortalManager):
 
         # Step 5: Follow remaining SAML/OAuth form redirects
         for _ in range(10):
-            try:
-                action, data = get_form(res)
-                if not action:
-                    break
-                res = self.form(action, res.url, data)
-            except Exception as ex:
+            action, data = get_form(res)
+            if not action:
                 break
+            res = self.form(action, res.url, data)
 
         # Step 6: Download the PDF via POST
         rfc = self.signer.rfc
