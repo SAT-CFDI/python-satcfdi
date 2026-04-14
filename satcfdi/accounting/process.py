@@ -200,7 +200,9 @@ def retenciones_def():
         'Perdida': (12, True, lambda i: round(i["Complemento"]["Intereses"]["Perdida"])),
         'ISR Retenido': (
             12, True, lambda i: round(sum(x["MontoRet"] for x in i["Totales"]['ImpRetenidos'] if x.get("Impuesto") == TipoImpuesto.ISR or x.get("ImpuestoRet") == '001') if 'ImpRetenidos' in i["Totales"] else None)
-        )
+        ),
+        'Monto Total Gravado': (12, True, lambda i: round(i["Totales"]["MontoTotGrav"])),
+        'Monto Total Exento': (12, True, lambda i: round(i["Totales"]["MontoTotExent"])),
     }
 
 
