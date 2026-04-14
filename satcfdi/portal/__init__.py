@@ -317,7 +317,7 @@ class SATPortalOpinionCumplimiento(PortalManager):
 
         # Step 4: Follow JS redirect (top.location.href = OAuth2 authz URL)
         for location in re.finditer(r"location\.href=['\"]([^'\"]+)['\"]", res.text):
-            res = self.get(location, allow_redirects=True)
+            res = self.get(location.group(1), allow_redirects=True)
             assert res.status_code == 200
             break
 
