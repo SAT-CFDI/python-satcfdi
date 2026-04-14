@@ -61,8 +61,8 @@ def get_form(res: Response, id=None):
         form = html.select('form')[0]
 
     data = {
-        i.attrs['name']: i.attrs.get('value')
-        for i in form.findChildren('input')
+        str(i.attrs['name']): i.attrs.get('value')
+        for i in form.find_all('input')
         if 'name' in i.attrs
     }
 
