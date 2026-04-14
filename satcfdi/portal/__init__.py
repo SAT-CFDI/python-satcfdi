@@ -1,3 +1,9 @@
+import re
+
+import uuid
+
+import base64
+
 import json
 import pickle
 from time import time
@@ -283,38 +289,80 @@ class SATPortalConstancia(PortalManager):
 class SATPortalOpinionCumplimiento(PortalManager):
     BASE_URL = 'https://login.mat.sat.gob.mx'
 
-    def login(self):
+    def descargar_opinion_cumplimiento(self) -> bytes:
+        """Download Opinión de Cumplimiento (32-D) from SAT portal.
+
+        Args:
+            signer: satcfdi.models.Signer with loaded FIEL certificate
+
+        Returns:
+            bytes: PDF content of the Opinión de Cumplimiento
+        """
+        self.headers.update({
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        })
+
+        # Step 1: Navigate to portal → redirects to CIEC login
         res = self.get(
-            url=f'{self.BASE_URL}/nidp/app/login?id=contr-dual-eFirma-totp'
-        )
-        assert res.status_code == 200
-        action, data = get_form(res)
-
-        res = self.form(action, res.request.url, data)
-        assert res.status_code == 200
-
-        res = self.form(action, res.request.url, data)
-        assert res.status_code == 200
-
-        res = self.form(action, res.request.url, data)
-        assert res.status_code == 200
-
-        return res
-
-    def generar_opinion_cumplimiento_login(self):
-        res = self.get(
-            url="https://ptsc32d.clouda.sat.gob.mx/?/reporteOpinion32DContribuyente",
-            allow_redirects=True
+            "https://ptsc32d.clouda.sat.gob.mx/?/reporteOpinion32DContribuyente",
+            allow_redirects=True,
         )
         assert res.status_code == 200
 
-        # Execute Authentication Request
+        # Step 2: Switch to FIEL login (Referer required for non-empty response)
         action, data = get_form(res)
-        if action.startswith("https://login.mat.sat.gob.mx/nidp//app/login"):
-            res = self.form(action, res.request.url, data)
+        fiel_action = action.replace("id=ciec", "id=fiel")
+        res = self.get(fiel_action, headers={"Referer": res.url}, allow_redirects=True)
+        assert res.status_code == 200 and len(res.text) > 0, "FIEL login page empty"
+
+        # Step 3: FIEL authentication
+        res = self.fiel_login(res)
+        assert res.status_code == 200
+
+        # Step 4: Follow JS redirect (top.location.href = OAuth2 authz URL)
+        locations = re.findall(r"location\.href=['\"]([^'\"]+)['\"]", res.text)
+        if locations:
+            res = self.get(locations[0], allow_redirects=True)
             assert res.status_code == 200
 
-            # Execute Authentication Response
-            action, data = get_form(res)
-            res = self.form(action, res.request.url, data)
-            assert res.status_code == 200
+        # Step 5: Follow remaining SAML/OAuth form redirects
+        for _ in range(10):
+            try:
+                action, data = get_form(res)
+                if not action:
+                    break
+                res = self.form(action, res.request.url, data)
+            except (IndexError, Exception):
+                break
+
+        # Step 6: Download the PDF via POST
+        rfc = self.signer.rfc
+        pdf_res = self.post(
+            "https://ptsc32d.clouda.sat.gob.mx/RespuestaCompleta/ObtenerRespuestaCompletaPdf",
+            json={
+                "canal": "G",
+                "curp": "",
+                "idCorrelacion": str(uuid.uuid4()),
+                "ip": "127.0.0.1",
+                "rfc": rfc,
+                "tipoConsulta": "COMPLETA",
+                "tipoReporte": "32D",
+                "usuario": rfc,
+                "rfcCorto": rfc,
+            },
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Origin": "https://ptsc32d.clouda.sat.gob.mx",
+                "Referer": "https://ptsc32d.clouda.sat.gob.mx/",
+            },
+        )
+        assert pdf_res.status_code == 200, f"ObtenerPdf returned {pdf_res.status_code}"
+
+        json_data = pdf_res.json()
+        b64_content = json_data.get("ContenidoBase64", "")
+        if not b64_content:
+            raise RuntimeError("SAT no retornó el PDF de la opinión 32-D")
+
+        return base64.b64decode(b64_content)
