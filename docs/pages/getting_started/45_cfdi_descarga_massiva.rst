@@ -100,6 +100,7 @@ ___________________
     else:
         # volver a intentar más tarde
         pass
+    
 
 Descarga CFDI por UUID
 ___________________
@@ -107,32 +108,32 @@ ___________________
 .. code-block:: python
 
     import base64
-
+    
     from satcfdi.models import Signer
     from satcfdi.pacs.sat import SAT, EstadoSolicitud
-
+    
     # Load Fiel
     signer = Signer.load(
         certificate=open('csd/xiqb891116qe4.cer', 'rb').read(),
         key=open('csd/xiqb891116qe4.key', 'rb').read(),
         password=open('csd/xiqb891116qe4.txt', 'r').read()
     )
-
+    
     sat_service = SAT(
         signer=signer
     )
-
+    
     # Facturas por UUID
     response = sat_service.recover_retencion_uuid_request(
         folio="31764278-d091-417f-83aa-063239e7773b"
     )
-
+    
     # Almacenar el id_solicitud en algún lugar
     id_solicitud = response['IdSolicitud']
-
+    
     # Revisar estado de descarga
     response = sat_service.recover_comprobante_status(id_solicitud)
-
+    
     est = response["EstadoSolicitud"]
     if est == EstadoSolicitud.TERMINADA:
         for id_paquete in response['IdsPaquetes']:
@@ -145,4 +146,4 @@ ___________________
     else:
         # volver a intentar más tarde
         pass
-
+    
