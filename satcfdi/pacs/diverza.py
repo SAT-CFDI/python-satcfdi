@@ -18,14 +18,14 @@ def _process_content(response, fmt):
     pdf = None
     xml = None
     if content := response.get("content"):
+        data = base64.b64decode(content)
         match fmt:
             case "xml":
-                xml = base64.b64decode(content)
+                xml = data
             case "pdf":
-                pdf = base64.b64decode(content)
+                pdf = data
             case "zip":
-                zip_data = base64.b64decode(content)
-                with io.BytesIO(zip_data) as b:
+                with io.BytesIO(data) as b:
                     with ZipFile(b, "r") as zf:
                         xml = zf.read('invoice.xml')
                         pdf = zf.read('invoice.pdf') if 'invoice.pdf' in zf.namelist() else None
