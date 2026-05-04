@@ -15,18 +15,26 @@ from ..models import Signer
 
 
 def _process_content(response, fmt):
+    pdf = None
+    xml = None
     if content := response.get("content"):
         match fmt:
             case "xml":
-                response["xml"] = base64.b64decode(content)
+                xml = base64.b64decode(content)
             case "pdf":
-                response["pdf"] = base64.b64decode(content)
+                pdf = base64.b64decode(content)
             case "zip":
                 zip_data = base64.b64decode(content)
                 with io.BytesIO(zip_data) as b:
                     with ZipFile(b, "r") as zf:
-                        response["xml"] = zf.read('invoice.xml')
-                        response["pdf"] = zf.read('invoice.pdf')
+                        xml = zf.read('invoice.xml')
+                        pdf = zf.read('invoice.pdf') if 'invoice.pdf' in zf.namelist() else None
+
+    return Document(
+        document_id=response['uuid'],
+        xml=xml,
+        pdf=pdf,
+    )
 
 
 def _process_format(accept: Accept):
@@ -132,12 +140,7 @@ class Diverza(PAC):
             json=json
         ).json()
 
-        _process_content(res, fmt)
-        return Document(
-            document_id=res['uuid'],
-            xml=res.get('xml'),
-            pdf=res.get('pdf'),
-        )
+        return _process_content(res, fmt)
 
     def issue(self, cfdi: CFDI, accept: Accept = Accept.XML, ref_id: str = None) -> Document:
         return self._issue_stamp(cfdi=cfdi, accept=accept, ref_id=ref_id, operation="issue")
@@ -198,12 +201,7 @@ class Diverza(PAC):
             except ResponseError:
                 raise DocumentNotFoundError(ex_v2.response)
 
-        _process_content(res, fmt)
-        return Document(
-            document_id=res['uuid'],
-            xml=res.get('xml'),
-            pdf=res.get('pdf'),
-        )
+        return _process_content(res, fmt)
 
     def rfc_valid(self, rfc: str | list[str]) -> bool | list[bool]:
         r = self._request(
