@@ -31,11 +31,8 @@ class CertificateStore:
             :param issued_cert: issued certificate to validate
             :param at: date at witch to do the validation
         """
-        if at.tzinfo:
-            at = at.astimezone(tz=utc).replace(tzinfo=None)
-
         def validate_date(cert):
-            if not cert.not_valid_before <= at <= cert.not_valid_after:
+            if not cert.not_valid_before_utc <= at <= cert.not_valid_after_utc:
                 raise ValueError("Date Not Valid")
 
         try:

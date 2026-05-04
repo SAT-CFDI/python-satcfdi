@@ -7,6 +7,7 @@ from itertools import chain
 from unittest import mock
 
 import pytest
+import pytz
 from OpenSSL import crypto
 
 from satcfdi.models import Code
@@ -134,11 +135,11 @@ def test_verify_certificates():
         with mock.patch(f'{module}.transform.SAT_Certificate_Store', SAT_Certificate_Store_Pruebas):
             try:
                 signer = get_signer(rfc)
-                verify_certificate(signer, at=datetime(2021, 6, 12))
+                verify_certificate(signer, at=datetime(2021, 6, 12, tzinfo=pytz.utc))
                 assert signer.type == CertificateType.Fiel
 
                 signer_csd = get_signer(rfc, get_csd=True)
-                verify_certificate(signer_csd, at=datetime(2021, 6, 12))
+                verify_certificate(signer_csd, at=datetime(2021, 6, 12, tzinfo=pytz.utc))
                 assert signer_csd.type == CertificateType.CSD
 
             except FileNotFoundError as ex:
