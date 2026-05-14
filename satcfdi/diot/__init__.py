@@ -211,6 +211,7 @@ class ProveedorTercero:
             w(302261, 1, 1, self.devoluciones)
 
     def to_list(self):
+        """Formato legacy (25 campos, windows-1252). Usado por DIOT.export(version=1)."""
         return [
             self.tipo_tercero,
             self.tipo_operacion,
@@ -236,6 +237,45 @@ class ProveedorTercero:
             self.iva_exento,
             self.retenido,
             self.devoluciones
+        ]
+
+    def to_list_v2(self):
+        """
+        Formato nuevo plataforma DIOT (pstcdi.clouda.sat.gob.mx), vigente desde febrero 2025.
+        Genera una lista de 24 campos separados por '|', codificado en UTF-8.
+
+        Referencia: Instructivo para el armado del archivo de carga masiva - SAT 2025.
+        Los campos sin equivalente en el modelo actual se dejan vacíos para
+        compatibilidad con el layout oficial.
+        """
+        rfc_str = str(self.rfc) if self.rfc else ""
+        pais_str = str(self.pais) if self.pais else ""
+
+        return [
+            int(self.tipo_tercero),           # 1.  Tipo Tercero
+            int(self.tipo_operacion),          # 2.  Tipo Operación
+            rfc_str,                           # 3.  RFC del proveedor nacional
+            self.id_fiscal or "",             # 4.  Número de ID Fiscal (extranjero)
+            self.nombre_extranjero or "",     # 5.  Nombre del extranjero
+            pais_str,                          # 6.  País de residencia
+            self.nacionalidad or "",          # 7.  Nacionalidad
+            self.iva16 or "",                 # 8.  Actos/actividades IVA 16%
+            "",                                # 9.  IVA 16% pagado (desglose nuevo)
+            self.iva16_na or "",              # 10. IVA 16% no acreditable
+            "",                                # 11. IVA 16% NA (bienes tangibles)
+            "",                                # 12. IVA 16% NA (servicios/intangibles)
+            self.iva_rfn or "",               # 13. Actos región fronteriza norte (8%)
+            "",                                # 14. IVA RFN calculado
+            self.iva_rfn_na or "",            # 15. IVA RFN no acreditable
+            self.iva_import16 or "",          # 16. Actos importación IVA 16%
+            self.iva_import16_na or "",       # 17. IVA importación no acreditable
+            "",                                # 18. IVA importación NA (tangibles)
+            "",                                # 19. IVA importación NA (intangibles)
+            self.iva_import_exento or "",     # 20. Importación exenta
+            self.iva0 or "",                  # 21. Actos tasa 0%
+            self.iva_exento or "",            # 22. Actos exentos nacionales
+            self.retenido or "",              # 23. IVA retenido por el contribuyente
+            self.devoluciones or "",          # 24. Devoluciones/descuentos/bonificaciones
         ]
 
 
@@ -426,10 +466,36 @@ class DIOT:
 
         return f"{rfc}{v_dem}{n_formulario}{ver_clte}{ver_form}{period}{mes_inicial}{period}{mes_final}{anio}{mes}{dia}{hora}{suffix}"
 
-    def export(self, target):
-        for p in self.proveedores:
-            target.write("|".join(str(v or "") for v in p.to_list()).encode('windows-1252'))
-            target.write(b"|\r\n")
+    def export(self, target, version: int = 2):
+        """
+        Exporta el archivo TXT para carga batch en la plataforma DIOT del SAT.
+
+        :param target: Objeto tipo file abierto en modo binario ('wb').
+        :param version: Versión del formato de exportación.
+            - 1: Formato legacy (24 campos, encoding windows-1252).
+              Compatible con la plataforma anterior (pre-febrero 2025).
+            - 2: Nuevo formato (24 campos, encoding UTF-8).
+              Requerido por la nueva plataforma pstcdi.clouda.sat.gob.mx
+              vigente desde febrero 2025. (Default)
+
+        Ejemplo de uso (nueva plataforma)::
+
+            with open('diot_batch.txt', 'wb') as f:
+                diot.export(f)  # version=2 por defecto
+
+        Ejemplo de uso (plataforma legacy)::
+
+            with open('diot_batch.txt', 'wb') as f:
+                diot.export(f, version=1)
+        """
+        if version == 2:
+            for p in self.proveedores:
+                line = "|".join(str(v) for v in p.to_list_v2())
+                target.write((line + "|\r\n").encode('utf-8'))
+        else:
+            for p in self.proveedores:
+                target.write("|".join(str(v or "") for v in p.to_list()).encode('windows-1252'))
+                target.write(b"|\r\n")
 
     def plain_bytes(self) -> bytes:
         with BytesIO() as b:
