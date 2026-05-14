@@ -75,5 +75,3 @@ def trans(k):
         return split_at_upper(k)
     finally:
         c.close()
-
-
