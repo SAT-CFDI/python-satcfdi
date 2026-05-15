@@ -240,7 +240,7 @@ class ProveedorTercero:
 
         ]
 
-class DIOTV2:
+class DIOT:
     def __init__(
             self,
             proveedores: Sequence[ProveedorTercero] = None
