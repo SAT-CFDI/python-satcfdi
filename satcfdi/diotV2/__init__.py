@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from decimal import Decimal
 from enum import StrEnum
-from typing import Optional
+from typing import Optional, Sequence
 from satcfdi.models import RFC
 
 class TipoOperacion(StrEnum):
@@ -239,3 +239,15 @@ class ProveedorTercero:
             "01"
 
         ]
+
+class DIOTV2:
+    def __init__(
+            self,
+            proveedores: Sequence[ProveedorTercero] = None
+    ):
+        self.proveedores = proveedores
+
+    def export(self, target):
+        for p in self.proveedores.values():
+            target.write("|".join(str(v or "") for v in p.to_list()).encode('utf-8'))
+            target.write(b"\r\n")
