@@ -51,13 +51,8 @@
 						<td>{% if loop.first %}<b>+&nbsp;Traslados</b>{% endif %}</td>
 						<td>{{ v.Base }}</td>
 						<td>{{ v.Impuesto | desc }}</td>
-						{% if v.TipoFactor == 'Exento' %}
-						<td>Exento</td>
-						<td></td>
-						{% else %}
 						<td>{{ tasa_cuota( v.TipoFactor, v.TasaOCuota) }}</td>
 						<td>{{ v.Importe }}</td>
-						{% endif %}
 					</tr>
 					{% endfor %}
 					{% endif %}
@@ -105,13 +100,8 @@
 			{% endif %}
 		</td>
 		<td>{{ v.Impuesto | desc }}</td>
-		{% if v.TipoFactor == 'Exento' %}
-		<td>Exento</td>
-		<td></td>
-		{% else %}
 		<td>{{ tasa_cuota( v.TipoFactor, v.TasaOCuota) }}</td>
 		<td>{{ v.Importe }}</td>
-		{% endif %}
 	</tr>
 	{% endfor %}
 	{% endif %}

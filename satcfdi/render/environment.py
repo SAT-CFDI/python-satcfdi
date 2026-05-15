@@ -25,6 +25,9 @@ complement_order = {
 
 
 def finalize(s):
+    if s is None:
+        return do_mark_safe("&nbsp;")
+
     if isinstance(s, Decimal):
         return s.__format__(",f")
 
@@ -107,6 +110,8 @@ class CFDIEnvironment(Environment):
 
         @self.glob
         def tasa_cuota(factor, s):
+            if factor == "Exento":
+                return "Exento"
             if factor == "Tasa":
                 return "{:%}".format(s)
             return s
