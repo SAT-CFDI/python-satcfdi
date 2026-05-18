@@ -77,13 +77,15 @@ def filter_invoices_iter(
             yield r
 
 
-def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, fecha=None, invoice_type=None) -> Iterator[PaymentsDetails]:
-    for r in filter_invoices_iter(invoices.values(), rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor, estatus=EstadoComprobante.VIGENTE, fecha=None, invoice_type=invoice_type):
+def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_receptor=None, fecha=None,
+                         invoice_type=None) -> Iterator[PaymentsDetails]:
+    for r in filter_invoices_iter(invoices.values(), rfc_emisor=rfc_emisor, rfc_receptor=rfc_receptor,
+                                  estatus=EstadoComprobante.VIGENTE, fecha=None, invoice_type=invoice_type):
         match r['TipoDeComprobante']:
             case "I":
-                if r['MetodoPago'] == MetodoPago.PAGO_EN_UNA_SOLA_EXHIBICION:
-                    if not any(p.comprobante.estatus() == EstadoComprobante.VIGENTE for p in r.payments):
-                        if _compare(r["Fecha"], fecha):
+                if _compare(r["Fecha"], fecha):
+                    if r['MetodoPago'] == MetodoPago.PAGO_EN_UNA_SOLA_EXHIBICION:
+                        if not any(p.comprobante.estatus() == EstadoComprobante.VIGENTE for p in r.payments):
                             yield PaymentsDetails(
                                 comprobante=r,
                                 comprobante_pagado=r
@@ -100,13 +102,23 @@ def filter_payments_iter(invoices: Mapping[UUID, SatCFDI], rfc_emisor=None, rfc_
                             )
             case "E":
                 if _compare(r["Fecha"], fecha):
-                    rel = list(cfdi_rel for cfdi_rel in r.cfdi_relacionados(TipoRelacion.NOTA_DE_CREDITO_DE_LOS_DOCUMENTOS_RELACIONADOS))
+                    rel = list(cfdi_rel for cfdi_rel in
+                               r.cfdi_relacionados(TipoRelacion.NOTA_DE_CREDITO_DE_LOS_DOCUMENTOS_RELACIONADOS))
                     assert len(rel) <= 1
-                    if len(rel) == 1:
-                        cp = invoices[rel[0]]
-                        yield PaymentsDetails(comprobante=r, comprobante_pagado=cp)
+
+                    if r['MetodoPago'] == MetodoPago.PAGO_EN_UNA_SOLA_EXHIBICION:
+                        if len(rel) == 1:
+                            cp = invoices[rel[0]]
+                            yield PaymentsDetails(comprobante=r, comprobante_pagado=cp)
+                        else:
+                            yield PaymentsDetails(comprobante=r, comprobante_pagado=r)
                     else:
-                        yield PaymentsDetails(comprobante=r, comprobante_pagado=r)
+                        if len(rel) == 1:
+                            cp = invoices[rel[0]]
+                            if cp['MetodoPago'] == MetodoPago.PAGO_EN_PARCIALIDADES_O_DIFERIDO:
+                                continue
+                        raise NotImplementedError(
+                            f"Tipo de comprobante {r['TipoDeComprobante']} {r.uuid} con método de pago {r['MetodoPago']} no implementado")
 
 
 def filter_retenciones_iter(invoices, ejerc: int, complemento):
