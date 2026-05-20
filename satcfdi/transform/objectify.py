@@ -13793,6 +13793,15 @@ def traslado8(cls, node):
     self['Tasa'] = Decimal(node.attrib['tasa'])
     self['Importe'] = Decimal(node.attrib['importe'])
     return self
+def hidro_ypetro0(cls, node):
+    self = cls()
+    self.tag = node.tag
+    self['Version'] = node.attrib['Version']
+    self['TipoPermiso'] = node.attrib['TipoPermiso']
+    self['NumeroPermiso'] = node.attrib['NumeroPermiso']
+    self['ClaveHYP'] = node.attrib['ClaveHYP']
+    self['SubProductoHYP'] = node.attrib['SubProductoHYP']
+    return self
 def inst_educativas0(cls, node):
     self = cls()
     self.tag = node.tag
@@ -14896,6 +14905,10 @@ def s_estado_de_cuenta_combustible2(cls, node):
     if node.attrib.get('tipoOperacion') == 'Tarjeta':
         return estado_de_cuenta_combustible2(cls, node)
     raise NamespaceMismatchError(node)
+def s_hidro_ypetro0(cls, node):
+    if node.attrib.get('Version') == '1.0':
+        return hidro_ypetro0(cls, node)
+    raise NamespaceMismatchError(node)
 def s_inst_educativas0(cls, node):
     if node.attrib.get('version') == '1.0':
         return inst_educativas0(cls, node)
@@ -15090,6 +15103,7 @@ cfdi_objectify = {
     '{http://www.sat.gob.mx/donat}Donatarias': s_donatarias0,
     '{http://www.sat.gob.mx/ecb}EstadoDeCuentaBancario': s_estado_de_cuenta_bancario0,
     '{http://www.sat.gob.mx/ecc}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible2,
+    '{http://www.sat.gob.mx/hidrocarburospetroliferos}HidroYPetro': s_hidro_ypetro0,
     '{http://www.sat.gob.mx/iedu}instEducativas': s_inst_educativas0,
     '{http://www.sat.gob.mx/implocal}ImpuestosLocales': s_impuestos_locales0,
     '{http://www.sat.gob.mx/ine}INE': s_ine0,
