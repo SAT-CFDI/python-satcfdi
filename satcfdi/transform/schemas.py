@@ -4036,10 +4036,6 @@ def estado_de_cuenta_combustible2(col, data):
     col.add_map('ecc', 'http://www.sat.gob.mx/ecc')
     col.add_schema('http://www.sat.gob.mx/ecc http://www.sat.gob.mx/sitio_internet/cfd/ecc/ecc.xsd')
     col.add_base('www.sat.gob.mx/sitio_internet/cfd/ecc/ecc.xsd')
-def hidro_y_petro0(col, data):
-    col.add_map('hidroypetro', 'http://www.sat.gob.mx/hidrocarburospetroliferos')
-    col.add_schema('http://www.sat.gob.mx/hidrocarburospetroliferos http://www.sat.gob.mx/sitio_internet/cfd/hidrocarburospetroliferos/hidrocarburospetroliferos.xsd')
-    col.add_base('www.sat.gob.mx/sitio_internet/cfd/hidrocarburospetroliferos/hidrocarburospetroliferos.xsd')
 def inst_educativas0(col, data):
     col.add_map('iedu', 'http://www.sat.gob.mx/iedu')
     col.add_schema('http://www.sat.gob.mx/iedu http://www.sat.gob.mx/sitio_internet/cfd/iedu/iedu.xsd')
@@ -4332,9 +4328,6 @@ def s_estado_de_cuenta_bancario0(col, data):
 def s_estado_de_cuenta_combustible2(col, data):
     if data.get('TipoOperacion') == 'Tarjeta':
         estado_de_cuenta_combustible2(col, data)
-def s_hidro_y_petro0(col, data):
-    if data.get('Version') == '1.0':
-        hidro_y_petro0(col, data)
 def s_inst_educativas0(col, data):
     if data.get('Version') == '1.0':
         inst_educativas0(col, data)
@@ -4514,7 +4507,6 @@ cfdi_schemas = {
     '{http://www.sat.gob.mx/donat}Donatarias': s_donatarias0,
     '{http://www.sat.gob.mx/ecb}EstadoDeCuentaBancario': s_estado_de_cuenta_bancario0,
     '{http://www.sat.gob.mx/ecc}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible2,
-    '{http://www.sat.gob.mx/hidrocarburospetroliferos}HidroYPetro': s_hidro_y_petro0,
     '{http://www.sat.gob.mx/iedu}instEducativas': s_inst_educativas0,
     '{http://www.sat.gob.mx/implocal}ImpuestosLocales': s_impuestos_locales0,
     '{http://www.sat.gob.mx/ine}INE': s_ine0,

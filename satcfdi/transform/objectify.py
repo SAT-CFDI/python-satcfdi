@@ -14896,10 +14896,6 @@ def s_estado_de_cuenta_combustible2(cls, node):
     if node.attrib.get('tipoOperacion') == 'Tarjeta':
         return estado_de_cuenta_combustible2(cls, node)
     raise NamespaceMismatchError(node)
-def s_hidro_y_petro0(cls, node):
-    if node.attrib.get('Version') == '1.0':
-        return default_objectify(cls, node)
-    raise NamespaceMismatchError(node)
 def s_inst_educativas0(cls, node):
     if node.attrib.get('version') == '1.0':
         return inst_educativas0(cls, node)
@@ -15094,7 +15090,6 @@ cfdi_objectify = {
     '{http://www.sat.gob.mx/donat}Donatarias': s_donatarias0,
     '{http://www.sat.gob.mx/ecb}EstadoDeCuentaBancario': s_estado_de_cuenta_bancario0,
     '{http://www.sat.gob.mx/ecc}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible2,
-    '{http://www.sat.gob.mx/hidrocarburospetroliferos}HidroYPetro': s_hidro_y_petro0,
     '{http://www.sat.gob.mx/iedu}instEducativas': s_inst_educativas0,
     '{http://www.sat.gob.mx/implocal}ImpuestosLocales': s_impuestos_locales0,
     '{http://www.sat.gob.mx/ine}INE': s_ine0,
