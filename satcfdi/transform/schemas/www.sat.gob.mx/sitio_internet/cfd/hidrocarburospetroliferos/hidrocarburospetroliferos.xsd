@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:hidrocarburospetroliferos="http://www.sat.gob.mx/hidrocarburospetroliferos" xmlns:catHidroYPetro="http://www.sat.gob.mx/sitio_internet/cfd/catalogos/HidrocarburosPetro" targetNamespace="http://www.sat.gob.mx/hidrocarburospetroliferos" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.sat.gob.mx/sitio_internet/cfd/catalogos/HidrocarburosPetro" schemaLocation="http://www.sat.gob.mx/sitio_internet/cfd/catalogos/HidrocarburosPetro/catHidroYPetro.xsd"/>
+	<xs:element name="HidroYPetro">
+		<xs:annotation>
+			<xs:documentation>Complemento concepto para incorporar al Comprobante Fiscal Digital por Internet (CFDI) la información sobre los permisos otorgados por la autoridad competente referentes a operaciones de hidrocarburos y petrolíferos.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="Version" use="required" fixed="1.0">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido con valor prefijado a 1.0 que indica la versión del complemento concepto para la facturación de Hidrocarburos y Petrolíferos.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="TipoPermiso" type="catHidroYPetro:c_TipoPermiso" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para registrar el tipo de permiso cuando éste haya sido otorgado por la autoridad competente.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="NumeroPermiso" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para registrar el número de permiso otorgado por la autoridad competente, de acuerdo con la nomenclatura de la columna “Nomenclatura del número de permiso” del catálogo c_TipoPermiso.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="15"/>
+						<xs:maxLength value="35"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ClaveHYP" type="catHidroYPetro:c_ClaveHYP" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para registrar la clave correspondiente a  hidrocarburos y petrolíferos.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="SubProductoHYP" type="catHidroYPetro:c_SubProductoHYP" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para registrar el subtipo del hidrocarburo y petrolífero.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

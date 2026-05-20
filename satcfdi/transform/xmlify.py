@@ -14543,6 +14543,18 @@ def traslado8(name, data):
     self.attrib['tasa'] = fmt_decimal(data['Tasa'])
     self.attrib['importe'] = fmt_decimal(data['Importe'])
     return self
+def hidro_y_petro0(name, data):
+    col = SchemaCollector()
+    cfdi_schemas[data.tag](col, data)
+    self = Element('{%s}%s' % ('http://www.sat.gob.mx/hidrocarburospetroliferos', name), nsmap=col.nsmap)
+    self.attrib['Version'] = data['Version']
+    self.attrib['TipoPermiso'] = data['TipoPermiso']
+    self.attrib['NumeroPermiso'] = data['NumeroPermiso']
+    if (a := data.get('ClaveHYP')) is not None:
+        self.attrib['ClaveHYP'] = a
+    if (a := data.get('SubProductoHYP')) is not None:
+        self.attrib['SubProductoHYP'] = a
+    return self
 def inst_educativas0(name, data):
     col = SchemaCollector()
     cfdi_schemas[data.tag](col, data)
@@ -15718,6 +15730,10 @@ def s_estado_de_cuenta_combustible2(data):
     if data.get('TipoOperacion') == 'Tarjeta':
         return estado_de_cuenta_combustible2('EstadoDeCuentaCombustible', data)
     raise NamespaceMismatchError(data)
+def s_hidro_y_petro0(data):
+    if data.get('Version') == '1.0':
+        return hidro_y_petro0('HidroYPetro', data)
+    raise NamespaceMismatchError(data)
 def s_inst_educativas0(data):
     if data.get('Version') == '1.0':
         return inst_educativas0('instEducativas', data)
@@ -15912,6 +15928,7 @@ cfdi_xmlify = {
     '{http://www.sat.gob.mx/donat}Donatarias': s_donatarias0,
     '{http://www.sat.gob.mx/ecb}EstadoDeCuentaBancario': s_estado_de_cuenta_bancario0,
     '{http://www.sat.gob.mx/ecc}EstadoDeCuentaCombustible': s_estado_de_cuenta_combustible2,
+    '{http://www.sat.gob.mx/hidrocarburospetroliferos}HidroYPetro': s_hidro_y_petro0,
     '{http://www.sat.gob.mx/iedu}instEducativas': s_inst_educativas0,
     '{http://www.sat.gob.mx/implocal}ImpuestosLocales': s_impuestos_locales0,
     '{http://www.sat.gob.mx/ine}INE': s_ine0,
