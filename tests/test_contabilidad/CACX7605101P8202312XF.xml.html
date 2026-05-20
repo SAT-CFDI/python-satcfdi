@@ -18,79 +18,53 @@
 	}
 }
 @media print {
-    .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+	.pagebreak { page-break-before: always; }
 }
 body {
 	font-family: Arial;
 	font-size: 9pt;
 }
-h3 {
-	margin-top:-10px;
-	margin-bottom:0px;
-	font-size: 9.89pt;
-	background-color:#333;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	text-align: center;
+h3, h4, h5, h6 {
+	margin: 0;
 	color: white;
-	letter-spacing: 4px;
 	font-weight: bold;
+}
+h3 {
+	font-size: 9.89pt;
+	background-color: #333;
+	padding: 3px 0;
+	text-align: center;
+	letter-spacing: 4px;
 }
 h4 {
-	margin-top:0px;
-	margin-bottom:0px;
 	font-size: 9.89pt;
-	background-color:#555;
-	padding-top: 3px;
-	padding-bottom: 3px;
+	background-color: #555;
+	padding: 3px 0;
 	text-align: center;
-	color: white;
 	letter-spacing: 4px;
-	font-weight: bold;
 }
 h5 {
-	margin-top:0px;
-	margin-bottom:0px;
 	font-size: 8.6pt;
-	background-color:#777;
-	padding-top: 2.5px;
-	padding-bottom: 2.5px;
-	padding-left: 10px;
+	background-color: #777;
+	padding: 2.5px 0 2.5px 10px;
 	text-align: left;
-	color: white;
 	letter-spacing: 2px;
-	font-weight: bold;
 }
 h6 {
-	margin-top:0px;
-	margin-bottom:0px;
 	font-size: 7.47pt;
-	background-color:#999;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	padding-left: 15px;
+	background-color: #999;
+	padding: 2px 0 2px 15px;
 	text-align: left;
-	color: white;
 	letter-spacing: 1px;
-	font-weight: bold;
 }
 .h {
 	font-size: 9.89pt;
-	padding-top: 2px;
-	padding-bottom: 2px;
+	padding: 2px 0;
 }
-.c {
-	font-size: 8.6pt;
-}
-.ci {
-	font-size: 7.47pt;
-}
-.cii {
-	font-size: 6.5pt;
-}
-.ciii {
-	font-size: 5.65pt;
-}
+.c { font-size: 8.6pt; }
+.ci { font-size: 7.47pt; }
+.cii { font-size: 6.5pt; }
+.ciii { font-size: 5.65pt; }
 table {
 	font-size: 8.6pt;
 	width: 100%;
@@ -98,54 +72,23 @@ table {
 	border: none;
 	border-spacing: 0;
 }
-table table {
-	font-size: 7.47pt;
-}
-table table table {
-	font-size: 6.5pt;
-}
-table table table table {
-	font-size: 5.65pt;
-}
-table th {
-	background-color:#e0e0e0;
-}
-table table th {
-	background-color:#e8e8e8;
-}
-table table table th {
-	background-color:#f0f0f0;
-}
-table table table table th {
-	background-color:#f8f8f8;
-}
-table td {
-	background-color:#f0f0f0;
-}
-table td {
-	background-color:#f8f8f8;
-}
-table td {
-	background-color:#ffffff;
-}
-table td {
-	background-color:#ffffff;
-}
+table table { font-size: 7.47pt; }
+table table table { font-size: 6.5pt; }
+table table table table { font-size: 5.65pt; }
+table th { background-color: #e0e0e0; }
+table table th { background-color: #e8e8e8; }
+table table table th { background-color: #f0f0f0; }
+table table table table th { background-color: #f8f8f8; }
+table td { background-color: #fff; }
 .htd {
 	text-align: right;
 	width: 1px;
 	white-space: nowrap;
 	font-weight: bold;
 }
-.nb {
-	break-inside: avoid;
-}
-.cen {
-	text-align: center;
-}
-.r {
-	text-align: right;
-}
+.nb { break-inside: avoid; }
+.cen { text-align: center; }
+.r { text-align: right; }
 .rbt {
 	text-align: right;
 	border-top: 1px solid black;
@@ -156,24 +99,14 @@ th {
 	text-align: center;
 	border-right: 2px solid white;
 }
-th:last-child {
-	border-right: 0px solid white;
-}
+th:last-child { border-right: none; }
 td {
 	vertical-align: top;
-	padding-right: 2px;
-	padding-top: 1px;
-	padding-bottom: 1px;
+	padding: 1px 2px 1px 0;
 }
-tr:last-child td {
-	padding-bottom: none;
-}
-td:last-child {
-	padding-right: none;
-}
-tr {
-	break-inside: avoid;
-}
+tr:last-child td { padding-bottom: 0; }
+td:last-child { padding-right: 0; }
+tr { break-inside: avoid; }
 .tot {
 	margin-left: 50%;
 	width: 50%;
@@ -182,18 +115,14 @@ table.tot {
 	margin-top: 1px;
 	break-inside: avoid;
 }
-table.tot tr:first-child {
-	border-top: 1px solid;
-}
+table.tot tr:first-child { border-top: 1px solid; }
 hr {
 	border: none;
 	height: 1px;
 	background-color: black;
 	break-after: avoid;
 }
-ul {
-	margin: 0;
-}	</style>
+ul { margin: 0; }	</style>
 </head>
 <body>
 <h3>Auxiliar de Folios</h3>
