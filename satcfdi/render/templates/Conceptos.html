@@ -16,7 +16,7 @@
 				{{ c.Descripcion }}
 				<div class="ci">
 					{{ c | simple('ClaveProdServ', 'NoIdentificacion', 'InformacionAduanera', 'CuentaPredial', 'Parte', 'instEducativas', 'ObjetoImp') }}
-					{{ complements(c.ComplementoConcepto) }}
+					{{ complements(c, c.ComplementoConcepto, level="h6") }}
 				</div>
 			</td>
 			<td class="r">
