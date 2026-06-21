@@ -4,13 +4,19 @@ from zipfile import ZipFile, ZipInfo
 
 ZipData = namedtuple("ZipFile", "filename data")
 
+_MASK_UTF_FILENAME = 1 << 11
+
+
+class _ZipInfo(ZipInfo):
+    def _encodeFilenameFlags(self):
+        return self.filename.encode('utf-8'), self.flag_bits | _MASK_UTF_FILENAME
 
 def zip_create(target: io.BytesIO, files: list[ZipData]):
     p = target.tell()
 
     with ZipFile(target, "w") as myzip:
         for f in files:
-            zinfo = ZipInfo(
+            zinfo = _ZipInfo(
                 filename=f.filename
             )
             zinfo.filename = f.filename

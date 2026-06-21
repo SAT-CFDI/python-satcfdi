@@ -8,6 +8,7 @@ from zipfile import ZipInfo
 from satcfdi import render
 from satcfdi.diot.code import Periodo, TipoOperacion, TipoTercero, Pais
 from satcfdi.diot import DatosIdentificacion, DatosComplementaria, ProveedorTercero, DIOT
+from satcfdi.zip import _ZipInfo
 from .utils import get_signer, verify_result
 
 current_dir = os.path.dirname(__file__)
@@ -110,12 +111,12 @@ def test_create_declaracion_diot():
 
     # Verify ZIP
     def zi(filename):
-        return ZipInfo(
+        return _ZipInfo(
             filename=filename,
             date_time=(2022, 11, 8, 11, 41, 8)  # time.localtime(time.time())[:6]
         )
 
-    with mock.patch(f'{module}.zip.ZipInfo', zi) as m:
+    with mock.patch(f'{module}.zip._ZipInfo', zi) as m:
         my_zip = diot._zip_bytes(tmp_filename)
 
         original_zip_data = open(os.path.join(current_dir, 'diot', f'{text_file}.zpi'), 'rb').read()
