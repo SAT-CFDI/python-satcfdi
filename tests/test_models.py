@@ -148,11 +148,11 @@ def test_verify_certificates():
 
 def test_requirement():
     for rfc in PERSONAS_FISICAS:
-        res = CertificateSigningRequest.load2(
+        res = CertificateSigningRequest.load(
             request=open(os.path.join(current_dir, "csd", "Personas Fisicas", f'{rfc.lower()}.req'), 'rb').read()
         )
     for rfc in PERSONAS_MORALES:
-        res = CertificateSigningRequest.load2(
+        res = CertificateSigningRequest.load(
             request=open(os.path.join(current_dir, "csd", "Personas Morales", f'{rfc.lower()}.req'), 'rb').read()
         )
 
