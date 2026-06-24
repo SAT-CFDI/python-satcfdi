@@ -12,24 +12,19 @@ class _ZipInfo(ZipInfo):
         return self.filename.encode('utf-8'), self.flag_bits | _MASK_UTF_FILENAME
 
 def zip_create(target: io.BytesIO, files: list[ZipData]):
-    p = target.tell()
-
     with ZipFile(target, "w") as myzip:
+        myzip._seekable = False
+
         for f in files:
             zinfo = _ZipInfo(
                 filename=f.filename
             )
-            zinfo.filename = f.filename
             zinfo.compress_type = 8
             zinfo.create_system = 0
 
             with myzip.open(zinfo, 'w') as stream:
-                zinfo.flag_bits = 2056
                 zinfo.external_attr = 0
                 f.data(stream)
-
-    with target.getbuffer() as view:  # change zip flag bytes
-        view[p + 6:p + 8] = b"\x08\x08"
 
 
 def zip_file(zipfile, files: list[ZipData]):
