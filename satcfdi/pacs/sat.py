@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import time
+import warnings
 from abc import abstractmethod
 from collections.abc import Sequence
 from datetime import date, datetime, timedelta, timezone
@@ -603,6 +604,56 @@ class SAT(PAC):
             return TaxpayerStatus(r)
         return None
 
+    def recover_comprobante_request(
+            self,
+            fecha_inicial: date | datetime | None = None,
+            fecha_final: date | datetime | None = None,
+            rfc_receptor: str | Sequence[str] | None = None,
+            rfc_emisor: str | None = None,
+            tipo_solicitud: TipoDescargaMasivaTerceros | str = TipoDescargaMasivaTerceros.CFDI,
+            tipo_comprobante: TipoDeComprobante | str | None = None,
+            estado_comprobante: EstadoComprobante | str | None = None,
+            rfc_a_cuenta_terceros: str | None = None,
+            complemento: str | None = None,
+            folio: str | UUID | None = None) -> dict:
+        """
+        .. deprecated::
+            Use :meth:`recover_comprobante_emitted_request`, :meth:`recover_comprobante_received_request`,
+            or :meth:`recover_comprobante_uuid_request` instead.
+        """
+        warnings.warn(
+            "recover_comprobante_request is deprecated, use recover_comprobante_emitted_request, "
+            "recover_comprobante_received_request, or recover_comprobante_uuid_request instead.",
+            DeprecationWarning,
+            stacklevel=2
+        )
+        if folio:
+            return self.recover_comprobante_uuid_request(folio=folio)
+        elif rfc_emisor == self.signer.rfc:
+            return self.recover_comprobante_emitted_request(
+                fecha_inicial=fecha_inicial,
+                fecha_final=fecha_final,
+                rfc_receptor=rfc_receptor,
+                rfc_emisor=rfc_emisor,
+                tipo_solicitud=tipo_solicitud,
+                tipo_comprobante=tipo_comprobante,
+                estado_comprobante=estado_comprobante,
+                rfc_a_cuenta_terceros=rfc_a_cuenta_terceros,
+                complemento=complemento,
+            )
+        else:
+            return self.recover_comprobante_received_request(
+                fecha_inicial=fecha_inicial,
+                fecha_final=fecha_final,
+                rfc_receptor=rfc_receptor[0] if isinstance(rfc_receptor, Sequence) and not isinstance(rfc_receptor, str) else rfc_receptor,
+                rfc_emisor=rfc_emisor,
+                tipo_solicitud=tipo_solicitud,
+                tipo_comprobante=tipo_comprobante,
+                estado_comprobante=estado_comprobante,
+                rfc_a_cuenta_terceros=rfc_a_cuenta_terceros,
+                complemento=complemento,
+            )
+
     def recover_comprobante_emitted_request(
             self,
             fecha_inicial: date | datetime | None = None,
@@ -636,7 +687,7 @@ class SAT(PAC):
         arguments = {
             'FechaFinal': fecha_final,
             'FechaInicial': fecha_inicial,
-            'RfcEmisor': rfc_emisor,
+            'RfcEmisor': rfc_emisor or self.signer.rfc,
             'RfcReceptores': [('RfcReceptor', r) for r in iterate(rfc_receptor)] if rfc_receptor else None,
             'RfcSolicitante': self.signer.rfc,
             'TipoSolicitud': tipo_solicitud,
@@ -688,7 +739,7 @@ class SAT(PAC):
             'FechaFinal': fecha_final,
             'FechaInicial': fecha_inicial,
             'RfcEmisor': rfc_emisor,
-            'RfcReceptor': rfc_receptor,
+            'RfcReceptor': rfc_receptor or self.signer.rfc,
             'RfcSolicitante': self.signer.rfc,
             'TipoSolicitud': tipo_solicitud,
             'TipoComprobante': tipo_comprobante,
@@ -752,6 +803,50 @@ class SAT(PAC):
             needs_token_fn=self._get_token_comprobante
         )
 
+    def recover_retencion_request(
+            self,
+            fecha_inicial: date | datetime | None = None,
+            fecha_final: date | datetime | None = None,
+            rfc_receptor: str | Sequence[str] | None = None,
+            rfc_emisor: str | None = None,
+            tipo_solicitud: TipoDescargaMasivaTerceros | str = TipoDescargaMasivaTerceros.CFDI,
+            estado_comprobante: EstadoComprobante | str | None = None,
+            complemento: str | None = None,
+            folio: str | UUID | None = None) -> dict:
+        """
+        .. deprecated::
+            Use :meth:`recover_retencion_emitted_request`, :meth:`recover_retencion_received_request`,
+            or :meth:`recover_retencion_uuid_request` instead.
+        """
+        warnings.warn(
+            "recover_retencion_request is deprecated, use recover_retencion_emitted_request, "
+            "recover_retencion_received_request, or recover_retencion_uuid_request instead.",
+            DeprecationWarning,
+            stacklevel=2
+        )
+        if folio:
+            return self.recover_retencion_uuid_request(folio=folio)
+        elif rfc_emisor == self.signer.rfc:
+            return self.recover_retencion_emitted_request(
+                fecha_inicial=fecha_inicial,
+                fecha_final=fecha_final,
+                rfc_receptor=rfc_receptor,
+                rfc_emisor=rfc_emisor,
+                tipo_solicitud=tipo_solicitud,
+                estado_comprobante=estado_comprobante,
+                complemento=complemento,
+            )
+        else:
+            return self.recover_retencion_received_request(
+                fecha_inicial=fecha_inicial,
+                fecha_final=fecha_final,
+                rfc_receptor=rfc_receptor,
+                rfc_emisor=rfc_emisor,
+                tipo_solicitud=tipo_solicitud,
+                estado_comprobante=estado_comprobante,
+                complemento=complemento,
+            )
+
     def recover_retencion_emitted_request(
             self,
             fecha_inicial: date | datetime | None = None,
@@ -781,7 +876,7 @@ class SAT(PAC):
         arguments = {
             'FechaFinal': fecha_final,
             'FechaInicial': fecha_inicial,
-            'RfcEmisor': rfc_emisor,
+            'RfcEmisor': rfc_emisor or self.signer.rfc,
             'RfcReceptores': [('RfcReceptor', r) for r in iterate(rfc_receptor)] if rfc_receptor else None,
             'RfcSolicitante': self.signer.rfc,
             'TipoSolicitud': tipo_solicitud,
@@ -827,7 +922,7 @@ class SAT(PAC):
             'FechaFinal': fecha_final,
             'FechaInicial': fecha_inicial,
             'RfcEmisor': rfc_emisor,
-            'RfcReceptor': rfc_receptor,
+            'RfcReceptor': rfc_receptor or self.signer.rfc,
             'RfcSolicitante': self.signer.rfc,
             'TipoSolicitud': tipo_solicitud,
             'EstadoComprobante': estado_comprobante,
