@@ -1,4 +1,4 @@
-from enum import StrEnum
+from ..utils import StrEnum
 
 
 class EstadoComprobante(StrEnum):

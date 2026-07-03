@@ -7,7 +7,7 @@ import time
 from abc import abstractmethod
 from collections.abc import Sequence
 from datetime import date, datetime, timedelta, UTC
-from enum import IntEnum, Enum, StrEnum
+from enum import IntEnum, Enum
 from functools import cache
 from itertools import islice
 from uuid import UUID
@@ -26,7 +26,7 @@ from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes
 from ..exceptions import ResponseError
 from ..models import Signer, Certificate
 from ..transform import MEXICO_TZ, get_timezone, verify_certificate
-from ..utils import iterate, parser
+from ..utils import iterate, StrEnum, parser
 
 logger = logging.getLogger(__name__)
 current_dir = os.path.dirname(__file__)

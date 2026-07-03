@@ -2,7 +2,6 @@ import logging
 import os
 import types
 from datetime import date, datetime
-from enum import StrEnum
 from itertools import chain
 from unittest import mock
 
@@ -20,6 +19,7 @@ from satcfdi.models.rfc import RFC, RFCType, RFC_Generico_Nacional, RFC_Generico
 from satcfdi.models.signer import Signer
 from satcfdi.pacs.sat import SAT
 from satcfdi.transform import verify_certificate
+from satcfdi.utils import StrEnum
 from tests.constants import PERSONAS_FISICAS, PERSONAS_MORALES
 from .utils import get_signer, SAT_Certificate_Store_Pruebas
 

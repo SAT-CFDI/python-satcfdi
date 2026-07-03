@@ -34,7 +34,7 @@ invoices = [
 
 
 def test_catalog():
-    v = Impuesto["IVA"]
+    v = Impuesto.get("IVA", "IVA")
     assert v == "002"
 
 
