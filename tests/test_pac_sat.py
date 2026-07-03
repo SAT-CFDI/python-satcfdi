@@ -1,6 +1,6 @@
 import os.path
 import types
-from datetime import datetime, timedelta, UTC
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from pprint import PrettyPrinter
 from unittest import mock
@@ -19,6 +19,8 @@ from satcfdi.pacs.sat import SAT
 from satcfdi.pacs.sat import _get_listado_69b
 
 from .utils import get_signer, verify_result
+
+UTC = timezone.utc
 
 module = 'satcfdi'
 current_dir = os.path.dirname(__file__)

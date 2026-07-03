@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 from ..ans1e import Ans1Encoder, Numbers, Classes, to_utc_time
 from ..models import Signer
@@ -9,6 +9,7 @@ current_dir = os.path.dirname(__file__)
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
+UTC = timezone.utc
 
 def create_pkcs7(data, signer: Signer, hash_algorithm):
     cert_bytes = signer.certificate_bytes()

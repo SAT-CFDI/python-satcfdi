@@ -6,7 +6,7 @@ import os
 import time
 from abc import abstractmethod
 from collections.abc import Sequence
-from datetime import date, datetime, timedelta, UTC
+from datetime import date, datetime, timedelta, timezone
 from enum import IntEnum, Enum
 from functools import cache
 from itertools import islice
@@ -33,7 +33,7 @@ current_dir = os.path.dirname(__file__)
 
 LISTADO_COMPLETO_69B_JSON = os.path.join(current_dir, 'Listado_Completo_69-B.json')
 REFRESH_TIME = (15 * 86400)  # 15 Days
-
+UTC = timezone.utc
 
 class EstadoSolicitud(IntEnum):
     ACEPTADA = 1
