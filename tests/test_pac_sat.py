@@ -1,7 +1,9 @@
 import os.path
 import types
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
+from enum import StrEnum
+from uuid import UUID
 from pprint import PrettyPrinter
 from unittest import mock
 
@@ -17,6 +19,7 @@ from satcfdi.pacs import TaxpayerStatus
 from satcfdi.pacs.sat import _CFDISolicitaDescargaEmitidos, _CFDIAutenticacion, EstadoSolicitud, TipoDescargaMasivaTerceros
 from satcfdi.pacs.sat import SAT
 from satcfdi.pacs.sat import _get_listado_69b
+from satcfdi.pacs.sat import _set_arguments
 
 from .utils import get_signer, verify_result
 
@@ -218,7 +221,6 @@ def test_pac_sat_rfc():
             fecha_final=datetime(2021, 1, 1),
             tipo_comprobante=TipoDeComprobante.INGRESO,
             estado_comprobante=EstadoComprobante.VIGENTE,
-
         )
 
         mk.assert_called_once()
@@ -226,3 +228,43 @@ def test_pac_sat_rfc():
 
         verify = verify_result(data=pp.pformat(mk.call_args.kwargs), filename=f"pac_sat_rfc.pretty.py")
         assert verify
+
+
+def test_set_arguments():
+    from lxml import etree
+
+    nsmap = {'des': 'http://example.com/test'}
+    element = etree.Element(etree.QName(nsmap['des'], 'Root'), nsmap=nsmap)
+    element.prefix  # force prefix resolution
+
+    class MyEnum(StrEnum):
+        VALUE_A = "enum_value_a"
+
+    arguments = {
+        'StringArg': 'hello',
+        'EnumArg': MyEnum.VALUE_A,
+        'UUIDArg': UUID('6114cfd0-87d2-45b8-99b1-7c19475c9cda'),
+        'DateTimeArg': datetime(2022, 6, 15, 10, 30, 0),
+        'DateArg': date(2022, 6, 15),
+        'NoneArg': None,
+        'ListArg': [('ItemA', 'val1'), ('ItemB', 'val2')],
+    }
+
+    _set_arguments(element, arguments)
+
+    assert etree.tostring(element).decode() == (
+        '<des:Root xmlns:des="http://example.com/test" StringArg="hello" EnumArg="enum_value_a" '
+        'UUIDArg="6114cfd0-87d2-45b8-99b1-7c19475c9cda" DateTimeArg="2022-06-15T10:30:00" DateArg="2022-06-15">'
+        '<des:ListArg><des:ItemA>val1</des:ItemA><des:ItemB>val2</des:ItemB></des:ListArg></des:Root>'
+    )
+
+
+def test_set_arguments_invalid_type():
+    from lxml import etree
+    import pytest
+
+    nsmap = {'des': 'http://example.com/test'}
+    element = etree.Element(etree.QName(nsmap['des'], 'Root'), nsmap=nsmap)
+
+    with pytest.raises(ValueError, match="Invalid Arguments"):
+        _set_arguments(element, {'BadArg': 12345})
