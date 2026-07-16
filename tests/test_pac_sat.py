@@ -2,10 +2,11 @@ import os.path
 import types
 from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
-from enum import StrEnum
 from uuid import UUID
 from pprint import PrettyPrinter
 from unittest import mock
+
+from satcfdi.utils import StrEnum
 
 from satcfdi.create.catalogos import EstadoComprobante
 
