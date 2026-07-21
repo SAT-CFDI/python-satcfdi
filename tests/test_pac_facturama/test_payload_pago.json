@@ -1,0 +1,45 @@
+{
+  "CfdiType": "P",
+  "Complemento": {
+    "Payments": [
+      {
+        "Amount": 1500.0,
+        "Currency": "MXN",
+        "Date": "2022-04-10 12:00:00",
+        "ExchangeRate": 1.0,
+        "PaymentForm": "03",
+        "RelatedDocuments": [
+          {
+            "AmountPaid": 1500.0,
+            "Currency": "MXN",
+            "Folio": "2205",
+            "ImpSaldoInsoluto": 500.0,
+            "PartialityNumber": "1",
+            "PaymentMethod": "PPD",
+            "PreviousBalanceAmount": 2000.0,
+            "Serie": "BQ",
+            "TaxObject": "01",
+            "Uuid": "C94C8AF3-C774-4D4C-802E-781411934A6E"
+          }
+        ]
+      }
+    ]
+  },
+  "Date": "2022-09-28 22:40:38",
+  "ExpeditionPlace": "27200",
+  "Exportation": "01",
+  "Folio": "10",
+  "Issuer": {
+    "FiscalRegime": "601",
+    "Name": "BERENICE XIMO QUEZADA",
+    "Rfc": "XIQB891116QE4"
+  },
+  "Receiver": {
+    "CfdiUse": "CP01",
+    "FiscalRegime": "601",
+    "Name": "UNIVERSIDAD ROBOTICA ESPAÑOLA",
+    "Rfc": "URE180429TM6",
+    "TaxZipCode": "65000"
+  },
+  "Serie": "P"
+}

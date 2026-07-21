@@ -69,6 +69,7 @@ ____________________
 
   * Comercio Digital
   * Diverza
+  * Facturama (Multiemisor)
   * Finkok
   * Prodigia
   * SW Sapien
