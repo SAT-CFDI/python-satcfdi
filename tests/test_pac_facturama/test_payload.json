@@ -1,0 +1,53 @@
+{
+  "CfdiType": "I",
+  "Currency": "MXN",
+  "Date": "2022-09-28 22:40:38",
+  "ExpeditionPlace": "27200",
+  "Exportation": "01",
+  "Folio": "1000",
+  "Issuer": {
+    "FiscalRegime": "601",
+    "Name": "BERENICE XIMO QUEZADA",
+    "Rfc": "XIQB891116QE4"
+  },
+  "Items": [
+    {
+      "Description": "SERVICIOS DE RENTA",
+      "ProductCode": "10101702",
+      "Quantity": 1.0,
+      "Subtotal": 100.0,
+      "TaxObject": "02",
+      "Taxes": [
+        {
+          "Base": 100.0,
+          "IsQuota": false,
+          "IsRetention": false,
+          "Name": "IVA",
+          "Rate": 0.16,
+          "Total": 16.0
+        },
+        {
+          "Base": 100.0,
+          "IsQuota": false,
+          "IsRetention": true,
+          "Name": "ISR",
+          "Rate": 0.1,
+          "Total": 10.0
+        }
+      ],
+      "Total": 106.0,
+      "UnitCode": "E48",
+      "UnitPrice": 100.0
+    }
+  ],
+  "PaymentForm": "99",
+  "PaymentMethod": "PPD",
+  "Receiver": {
+    "CfdiUse": "G03",
+    "FiscalRegime": "601",
+    "Name": "UNIVERSIDAD ROBOTICA ESPAÑOLA",
+    "Rfc": "URE180429TM6",
+    "TaxZipCode": "65000"
+  },
+  "Serie": "T"
+}

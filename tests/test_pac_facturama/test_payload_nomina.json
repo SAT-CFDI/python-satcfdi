@@ -1,0 +1,81 @@
+{
+  "CfdiType": "N",
+  "Complemento": {
+    "Payroll": {
+      "DaysPaid": 15.0,
+      "Deductions": {
+        "Details": [
+          {
+            "Amount": 272.6,
+            "Code": "002",
+            "DeduccionType": "002",
+            "Description": "ISR"
+          }
+        ]
+      },
+      "Employee": {
+        "ContractType": "01",
+        "Curp": "GAMA800912MSPRRD05",
+        "DailySalary": 50.0,
+        "EmployeeNumber": "006",
+        "FederalEntityKey": "SLP",
+        "FrequencyPayment": "04",
+        "PositionRisk": "1",
+        "RegimeType": "02",
+        "SocialSecurityNumber": "92919084431",
+        "StartDateLaborRelations": "2019-01-01",
+        "TypeOfJourney": "01",
+        "Unionized": false
+      },
+      "FinalPaymentDate": "2019-09-06",
+      "InitialPaymentDate": "2019-08-22",
+      "Issuer": {
+        "EmployerRegistration": "B5510768108"
+      },
+      "OtherPayments": [
+        {
+          "Amount": 10.0,
+          "Code": "000",
+          "Description": "Subsidio",
+          "EmploymentSubsidy": {
+            "Amount": 10.0
+          },
+          "OtherPaymentType": "002"
+        }
+      ],
+      "PaymentDate": "2019-09-06",
+      "Perceptions": {
+        "Details": [
+          {
+            "Code": "046",
+            "Description": "ASIMILIADOS A SALARIOS",
+            "ExemptAmount": 0.0,
+            "PerceptionType": "046",
+            "TaxedAmount": 3621.18
+          }
+        ]
+      },
+      "Type": "O"
+    }
+  },
+  "Date": "2022-09-28 22:40:38",
+  "ExpeditionPlace": "27200",
+  "Exportation": "01",
+  "Folio": "1",
+  "Issuer": {
+    "FiscalRegime": "601",
+    "Name": "BERENICE XIMO QUEZADA",
+    "Rfc": "XIQB891116QE4"
+  },
+  "NameId": "16",
+  "PaymentForm": "99",
+  "PaymentMethod": "PUE",
+  "Receiver": {
+    "CfdiUse": "CN01",
+    "FiscalRegime": "605",
+    "Name": "KARLA FUENTE NOLASCO",
+    "Rfc": "FUNK671228PH6",
+    "TaxZipCode": "83200"
+  },
+  "Serie": "N"
+}
