@@ -1,0 +1,127 @@
+{
+  "CfdiType": "T",
+  "Complemento": {
+    "CartaPorte31": {
+      "FiguraTransporte": [
+        {
+          "Domicilio": {
+            "Calle": "Calle1",
+            "CodigoPostal": "78000",
+            "Estado": "SLP",
+            "NumeroExterior": "100",
+            "Pais": "MEX"
+          },
+          "NombreFigura": "Operador Uno",
+          "NumLicencia": "NumLicencia1",
+          "RFCFigura": "EKU9003173C9",
+          "TipoFigura": "01"
+        }
+      ],
+      "IdCCP": "CCCBB0A0-A0A0-0A00-000A-0A0A000A000A",
+      "Mercancias": {
+        "Autotransporte": {
+          "IdentificacionVehicular": {
+            "AnioModeloVM": 2020,
+            "ConfigVehicular": "VL",
+            "PesoBrutoVehicular": 1.0,
+            "PlacaVM": "ABC1234"
+          },
+          "NumPermisoSCT": "NumPermisoSCT1",
+          "PermSCT": "TPAF01",
+          "Remolques": [
+            {
+              "Placa": "VL45K98",
+              "SubTipoRem": "CTR004"
+            }
+          ],
+          "Seguros": {
+            "AseguraRespCivil": "AseguraRespCivil",
+            "PolizaRespCivil": "123456789"
+          }
+        },
+        "Mercancia": [
+          {
+            "BienesTransp": "11121900",
+            "Cantidad": 1.0,
+            "CantidadTransporta": [
+              {
+                "Cantidad": 1.0,
+                "IDDestino": "DE000001",
+                "IDOrigen": "OR000001"
+              }
+            ],
+            "ClaveUnidad": "XBX",
+            "Descripcion": "Accesorios de equipo de telefonía",
+            "MaterialPeligroso": "No",
+            "PesoEnKg": 1.0
+          }
+        ],
+        "NumTotalMercancias": 1,
+        "PesoBrutoTotal": 1.0,
+        "UnidadPeso": "KGM"
+      },
+      "TotalDistRec": 120.5,
+      "TranspInternac": "No",
+      "Ubicaciones": [
+        {
+          "Domicilio": {
+            "CodigoPostal": "78000",
+            "Estado": "SLP",
+            "Localidad": "05",
+            "Municipio": "028",
+            "Pais": "MEX"
+          },
+          "FechaHoraSalidaLlegada": "2022-05-16 15:15:00",
+          "IDUbicacion": "OR000001",
+          "RFCRemitenteDestinatario": "XIQB891116QE4",
+          "TipoUbicacion": "Origen"
+        },
+        {
+          "DistanciaRecorrida": 120.5,
+          "Domicilio": {
+            "CodigoPostal": "78000",
+            "Estado": "SLP",
+            "Localidad": "05",
+            "Municipio": "028",
+            "Pais": "MEX"
+          },
+          "FechaHoraSalidaLlegada": "2022-05-16 18:15:00",
+          "IDUbicacion": "DE000001",
+          "RFCRemitenteDestinatario": "URE180429TM6",
+          "TipoUbicacion": "Destino"
+        }
+      ]
+    }
+  },
+  "Currency": "MXN",
+  "Date": "2022-05-16 15:00:00",
+  "ExpeditionPlace": "78000",
+  "Exportation": "01",
+  "Folio": "1",
+  "Issuer": {
+    "FiscalRegime": "601",
+    "Name": "BERENICE XIMO QUEZADA",
+    "Rfc": "XIQB891116QE4"
+  },
+  "Items": [
+    {
+      "Description": "MERCANCIA EN TRASLADO",
+      "ProductCode": "24111506",
+      "Quantity": 1.0,
+      "Subtotal": 0.0,
+      "TaxObject": "01",
+      "Total": 0.0,
+      "UnitCode": "H87",
+      "UnitPrice": 0.0
+    }
+  ],
+  "NameId": "36",
+  "Receiver": {
+    "CfdiUse": "S01",
+    "FiscalRegime": "601",
+    "Name": "UNIVERSIDAD ROBOTICA ESPAÑOLA",
+    "Rfc": "URE180429TM6",
+    "TaxZipCode": "65000"
+  },
+  "Serie": "CP"
+}
