@@ -5,12 +5,15 @@ Facturama seals and stamps from a JSON payload (CSD must already be uploaded).
 Pre-signed XML stamp is not supported by their public Multiemisor API.
 
 Supported TipoDeComprobante: I, E, T, P (Pagos 2.0), N (Nómina 1.2).
+Item CFDIs may include Complemento Carta Porte 3.1 (NameId ``36``).
 
 Docs: https://apisandbox.facturama.mx/guias
+Carta Porte 3.1: https://apisandbox.facturama.mx/guias/complementos/complemento-carta-porte-31
 """
 from __future__ import annotations
 
 import base64
+from collections.abc import Mapping
 from datetime import date, datetime
 from decimal import Decimal
 from enum import Enum
@@ -30,7 +33,7 @@ from . import (
 from .. import __version__
 from ..cfdi import CFDI
 from ..exceptions import DocumentNotFoundError, ResponseError
-from ..models import Signer
+from ..models import Code, Signer
 from ..utils import iterate
 
 _TAX_NAME = {
@@ -41,12 +44,32 @@ _TAX_NAME = {
 
 _ITEM_TIPOS = {"I", "E", "T"}
 _SUPPORTED_TIPOS = _ITEM_TIPOS | {"P", "N"}
+_ITEM_COMPLEMENT_KEYS = {
+    "TimbreFiscalDigital",
+    "Pagos",
+    "Nomina",
+    "Pago",
+    "CartaPorte",
+}
+_CARTA_PORTE_NAME_ID = "36"
 
 
 def _enum_value(val):
     if isinstance(val, Enum):
         return val.value
     return val
+
+
+def _code_str(val) -> str | None:
+    if val is None:
+        return None
+    if isinstance(val, Code):
+        return str(val.code)
+    if hasattr(val, "code") and not isinstance(val, type):
+        code = getattr(val, "code", None)
+        if code is not None and not callable(code):
+            return str(code)
+    return str(_enum_value(val))
 
 
 def _num(val) -> float | None:
@@ -87,6 +110,11 @@ def _as_bool(val) -> bool | None:
     if text in {"no", "false", "0"}:
         return False
     return bool(val)
+
+
+def _set_opt(target: dict, key: str, value) -> None:
+    if value is not None and value != "":
+        target[key] = value
 
 
 def _tax_entry(
@@ -147,7 +175,494 @@ def _complement_node(cfdi: CFDI, name: str):
         or "TipoNomina" in complemento
     ):
         return complemento
+    if name == "CartaPorte" and (
+        "CartaPorte" in tag
+        or (
+            "TranspInternac" in complemento
+            and ("Ubicaciones" in complemento or "Mercancias" in complemento)
+        )
+    ):
+        return complemento
     return None
+
+
+def _is_carta_porte_body(complemento) -> bool:
+    if not complemento or not isinstance(complemento, Mapping):
+        return False
+    tag = getattr(complemento, "tag", "") or ""
+    if "CartaPorte" in tag:
+        return True
+    return "TranspInternac" in complemento and (
+        "Ubicaciones" in complemento or "Mercancias" in complemento
+    )
+
+
+def _map_domicilio(domicilio) -> dict | None:
+    if not domicilio:
+        return None
+    mapped: dict[str, Any] = {}
+    _set_opt(mapped, "Calle", domicilio.get("Calle") and str(domicilio["Calle"]))
+    _set_opt(
+        mapped,
+        "NumeroExterior",
+        domicilio.get("NumeroExterior") and str(domicilio["NumeroExterior"]),
+    )
+    _set_opt(
+        mapped,
+        "NumeroInterior",
+        domicilio.get("NumeroInterior") and str(domicilio["NumeroInterior"]),
+    )
+    _set_opt(mapped, "Colonia", _code_str(domicilio.get("Colonia")))
+    _set_opt(mapped, "Localidad", _code_str(domicilio.get("Localidad")))
+    _set_opt(
+        mapped,
+        "Referencia",
+        domicilio.get("Referencia") and str(domicilio["Referencia"]),
+    )
+    _set_opt(mapped, "Municipio", _code_str(domicilio.get("Municipio")))
+    _set_opt(mapped, "Estado", _code_str(domicilio.get("Estado")))
+    _set_opt(mapped, "Pais", _code_str(domicilio.get("Pais")))
+    _set_opt(
+        mapped,
+        "CodigoPostal",
+        domicilio.get("CodigoPostal") and str(domicilio["CodigoPostal"]),
+    )
+    return mapped or None
+
+
+def _map_regimenes_aduaneros(regimenes) -> list[dict]:
+    result = []
+    for regimen in iterate(regimenes):
+        if isinstance(regimen, Mapping) and "RegimenAduanero" in regimen:
+            code = _code_str(regimen["RegimenAduanero"])
+        else:
+            code = _code_str(regimen)
+        if code:
+            result.append({"RegimenAduanero": code})
+    return result
+
+
+def _map_partes_transporte(partes) -> list[dict]:
+    result = []
+    for parte in iterate(partes):
+        if isinstance(parte, Mapping) and "ParteTransporte" in parte:
+            code = _code_str(parte["ParteTransporte"])
+        else:
+            code = _code_str(parte)
+        if code:
+            result.append({"ParteTransporte": code})
+    return result
+
+
+def _map_ubicacion(ubicacion) -> dict:
+    mapped: dict[str, Any] = {
+        "TipoUbicacion": str(ubicacion["TipoUbicacion"]),
+        "RFCRemitenteDestinatario": str(ubicacion["RFCRemitenteDestinatario"]),
+        "FechaHoraSalidaLlegada": _format_date(ubicacion["FechaHoraSalidaLlegada"]),
+    }
+    _set_opt(mapped, "IDUbicacion", ubicacion.get("IDUbicacion") and str(ubicacion["IDUbicacion"]))
+    _set_opt(
+        mapped,
+        "NombreRemitenteDestinatario",
+        ubicacion.get("NombreRemitenteDestinatario")
+        and str(ubicacion["NombreRemitenteDestinatario"]),
+    )
+    _set_opt(mapped, "NumRegIdTrib", ubicacion.get("NumRegIdTrib") and str(ubicacion["NumRegIdTrib"]))
+    _set_opt(mapped, "ResidenciaFiscal", _code_str(ubicacion.get("ResidenciaFiscal")))
+    _set_opt(mapped, "NumEstacion", _code_str(ubicacion.get("NumEstacion")))
+    _set_opt(
+        mapped,
+        "NombreEstacion",
+        ubicacion.get("NombreEstacion") and str(ubicacion["NombreEstacion"]),
+    )
+    _set_opt(mapped, "NavegacionTrafico", _code_str(ubicacion.get("NavegacionTrafico")))
+    _set_opt(mapped, "TipoEstacion", _code_str(ubicacion.get("TipoEstacion")))
+    if ubicacion.get("DistanciaRecorrida") is not None:
+        mapped["DistanciaRecorrida"] = _num(ubicacion["DistanciaRecorrida"])
+    if domicilio := _map_domicilio(ubicacion.get("Domicilio")):
+        mapped["Domicilio"] = domicilio
+    return mapped
+
+
+def _map_cantidad_transporta(items) -> list[dict]:
+    result = []
+    for item in iterate(items):
+        entry: dict[str, Any] = {
+            "Cantidad": _num(item["Cantidad"]),
+            "IDOrigen": str(item["IDOrigen"]),
+            "IDDestino": str(item["IDDestino"]),
+        }
+        _set_opt(entry, "CvesTransporte", _code_str(item.get("CvesTransporte")))
+        result.append(entry)
+    return result
+
+
+def _map_documentacion_aduanera(items) -> list[dict]:
+    result = []
+    for item in iterate(items):
+        entry: dict[str, Any] = {
+            "TipoDocumento": _code_str(item["TipoDocumento"]),
+        }
+        _set_opt(entry, "NumPedimento", item.get("NumPedimento") and str(item["NumPedimento"]))
+        _set_opt(
+            entry,
+            "IdentDocAduanero",
+            item.get("IdentDocAduanero") and str(item["IdentDocAduanero"]),
+        )
+        _set_opt(entry, "RFCImpo", item.get("RFCImpo") and str(item["RFCImpo"]))
+        result.append(entry)
+    return result
+
+
+def _map_guias_identificacion(items) -> list[dict]:
+    result = []
+    for item in iterate(items):
+        result.append(
+            {
+                "NumeroGuiaIdentificacion": str(item["NumeroGuiaIdentificacion"]),
+                "DescripGuiaIdentificacion": str(item["DescripGuiaIdentificacion"]),
+                "PesoGuiaIdentificacion": _num(item["PesoGuiaIdentificacion"]),
+            }
+        )
+    return result
+
+
+def _map_detalle_mercancia(detalle) -> dict | None:
+    if not detalle:
+        return None
+    mapped: dict[str, Any] = {
+        "UnidadPesoMerc": _code_str(detalle["UnidadPesoMerc"]),
+        "PesoBruto": _num(detalle["PesoBruto"]),
+        "PesoNeto": _num(detalle["PesoNeto"]),
+        "PesoTara": _num(detalle["PesoTara"]),
+    }
+    if detalle.get("NumPiezas") is not None:
+        mapped["NumPiezas"] = int(detalle["NumPiezas"])
+    return mapped
+
+
+def _map_mercancia(mercancia) -> dict:
+    mapped: dict[str, Any] = {
+        "BienesTransp": _code_str(mercancia["BienesTransp"]),
+        "Descripcion": str(mercancia["Descripcion"]),
+        "Cantidad": _num(mercancia["Cantidad"]),
+        "ClaveUnidad": _code_str(mercancia["ClaveUnidad"]),
+        "PesoEnKg": _num(mercancia["PesoEnKg"]),
+    }
+    optional_str = (
+        ("ClaveSTCC", "ClaveSTCC"),
+        ("Unidad", "Unidad"),
+        ("Dimensiones", "Dimensiones"),
+        ("DescripEmbalaje", "DescripEmbalaje"),
+        ("NombreIngredienteActivo", "NombreIngredienteActivo"),
+        ("NomQuimico", "NomQuimico"),
+        ("DenominacionGenericaProd", "DenominacionGenericaProd"),
+        ("DenominacionDistintivaProd", "DenominacionDistintivaProd"),
+        ("Fabricante", "Fabricante"),
+        ("LoteMedicamento", "LoteMedicamento"),
+        ("RegistroSanitarioFolioAutorizacion", "RegistroSanitarioFolioAutorizacion"),
+        ("PermisoImportacion", "PermisoImportacion"),
+        ("FolioImpoVUCEM", "FolioImpoVUCEM"),
+        ("NumCAS", "NumCAS"),
+        ("RazonSocialEmpImp", "RazonSocialEmpImp"),
+        ("NumRegSanPlagCOFEPRIS", "NumRegSanPlagCOFEPRIS"),
+        ("DatosFabricante", "DatosFabricante"),
+        ("DatosFormulador", "DatosFormulador"),
+        ("DatosMaquilador", "DatosMaquilador"),
+        ("UsoAutorizado", "UsoAutorizado"),
+        ("DescripcionMateria", "DescripcionMateria"),
+        ("UUIDComercioExt", "UUIDComercioExt"),
+    )
+    for src, dst in optional_str:
+        if mercancia.get(src) is not None:
+            mapped[dst] = str(mercancia[src])
+
+    optional_code = (
+        "MaterialPeligroso",
+        "CveMaterialPeligroso",
+        "Embalaje",
+        "SectorCOFEPRIS",
+        "FormaFarmaceutica",
+        "CondicionesEspTransp",
+        "Moneda",
+        "FraccionArancelaria",
+        "TipoMateria",
+    )
+    for key in optional_code:
+        _set_opt(mapped, key, _code_str(mercancia.get(key)))
+
+    if mercancia.get("FechaCaducidad") is not None:
+        mapped["FechaCaducidad"] = _format_date(mercancia["FechaCaducidad"], date_only=True)
+    if mercancia.get("ValorMercancia") is not None:
+        mapped["ValorMercancia"] = _num(mercancia["ValorMercancia"])
+    if docs := mercancia.get("DocumentacionAduanera"):
+        mapped["DocumentacionAduanera"] = _map_documentacion_aduanera(docs)
+    if guias := mercancia.get("GuiasIdentificacion"):
+        mapped["GuiasIdentificacion"] = _map_guias_identificacion(guias)
+    if cantidad := mercancia.get("CantidadTransporta"):
+        mapped["CantidadTransporta"] = _map_cantidad_transporta(cantidad)
+    if detalle := _map_detalle_mercancia(mercancia.get("DetalleMercancia")):
+        mapped["DetalleMercancia"] = detalle
+    return mapped
+
+
+def _map_remolques(remolques) -> list[dict]:
+    return [
+        {
+            "SubTipoRem": _code_str(remolque["SubTipoRem"]),
+            "Placa": str(remolque["Placa"]),
+        }
+        for remolque in iterate(remolques)
+    ]
+
+
+def _map_seguros(seguros) -> dict:
+    mapped: dict[str, Any] = {
+        "AseguraRespCivil": str(seguros["AseguraRespCivil"]),
+        "PolizaRespCivil": str(seguros["PolizaRespCivil"]),
+    }
+    _set_opt(
+        mapped,
+        "AseguraMedAmbiente",
+        seguros.get("AseguraMedAmbiente") and str(seguros["AseguraMedAmbiente"]),
+    )
+    _set_opt(
+        mapped,
+        "PolizaMedAmbiente",
+        seguros.get("PolizaMedAmbiente") and str(seguros["PolizaMedAmbiente"]),
+    )
+    _set_opt(
+        mapped,
+        "AseguraCarga",
+        seguros.get("AseguraCarga") and str(seguros["AseguraCarga"]),
+    )
+    _set_opt(
+        mapped,
+        "PolizaCarga",
+        seguros.get("PolizaCarga") and str(seguros["PolizaCarga"]),
+    )
+    if seguros.get("PrimaSeguro") is not None:
+        mapped["PrimaSeguro"] = _num(seguros["PrimaSeguro"])
+    return mapped
+
+
+def _map_identificacion_vehicular(ident) -> dict:
+    return {
+        "ConfigVehicular": _code_str(ident["ConfigVehicular"]),
+        "PesoBrutoVehicular": _num(ident["PesoBrutoVehicular"]),
+        "PlacaVM": str(ident["PlacaVM"]),
+        "AnioModeloVM": int(ident["AnioModeloVM"]),
+    }
+
+
+def _map_autotransporte(auto) -> dict:
+    mapped: dict[str, Any] = {
+        "PermSCT": _code_str(auto["PermSCT"]),
+        "NumPermisoSCT": str(auto["NumPermisoSCT"]),
+        "IdentificacionVehicular": _map_identificacion_vehicular(
+            auto["IdentificacionVehicular"]
+        ),
+        "Seguros": _map_seguros(auto["Seguros"]),
+    }
+    if remolques := auto.get("Remolques"):
+        mapped["Remolques"] = _map_remolques(remolques)
+    return mapped
+
+
+def _map_transporte_aereo(aereo) -> dict:
+    mapped: dict[str, Any] = {
+        "PermSCT": _code_str(aereo["PermSCT"]),
+        "NumPermisoSCT": str(aereo["NumPermisoSCT"]),
+        "NumeroGuia": str(aereo["NumeroGuia"]),
+        "CodigoTransportista": _code_str(aereo["CodigoTransportista"]),
+    }
+    for key in (
+        "MatriculaAeronave",
+        "NombreAseg",
+        "NumPolizaSeguro",
+        "LugarContrato",
+        "RFCEmbarcador",
+        "NumRegIdTribEmbarc",
+        "NombreEmbarcador",
+    ):
+        if aereo.get(key) is not None:
+            mapped[key] = str(aereo[key])
+    _set_opt(mapped, "ResidenciaFiscalEmbarc", _code_str(aereo.get("ResidenciaFiscalEmbarc")))
+    return mapped
+
+
+def _map_transporte_maritimo(maritimo) -> dict:
+    mapped: dict[str, Any] = {
+        "TipoEmbarcacion": _code_str(maritimo["TipoEmbarcacion"]),
+        "Matricula": str(maritimo["Matricula"]),
+        "NumeroOMI": str(maritimo["NumeroOMI"]),
+        "NacionalidadEmbarc": _code_str(maritimo["NacionalidadEmbarc"]),
+        "UnidadesDeArqBruto": _num(maritimo["UnidadesDeArqBruto"]),
+        "TipoCarga": _code_str(maritimo["TipoCarga"]),
+        "NombreAgenteNaviero": str(maritimo["NombreAgenteNaviero"]),
+        "NumAutorizacionNaviero": str(maritimo["NumAutorizacionNaviero"]),
+    }
+    for key in (
+        "PermSCT",
+        "NumPermisoSCT",
+        "NombreAseg",
+        "NumPolizaSeguro",
+        "NombreEmbarc",
+        "LineaNaviera",
+        "NumViaje",
+        "NumConocEmbarc",
+        "PermisoTempNavegacion",
+    ):
+        if maritimo.get(key) is not None:
+            if key == "PermSCT":
+                mapped[key] = _code_str(maritimo[key])
+            else:
+                mapped[key] = str(maritimo[key])
+    for key in ("AnioEmbarcacion",):
+        if maritimo.get(key) is not None:
+            mapped[key] = int(maritimo[key])
+    for key in ("Eslora", "Manga", "Calado", "Puntal"):
+        if maritimo.get(key) is not None:
+            mapped[key] = _num(maritimo[key])
+    if contenedores := maritimo.get("Contenedor"):
+        mapped["Contenedor"] = [
+            {
+                k: (_num(v) if k.startswith("Peso") else _code_str(v) if k == "TipoContenedor" else str(v))
+                for k, v in cont.items()
+                if v is not None
+            }
+            for cont in iterate(contenedores)
+        ]
+    return mapped
+
+
+def _map_transporte_ferroviario(ferro) -> dict:
+    mapped: dict[str, Any] = {
+        "TipoDeServicio": _code_str(ferro["TipoDeServicio"]),
+        "TipoDeTrafico": _code_str(ferro["TipoDeTrafico"]),
+        "Carro": [
+            {
+                "TipoCarro": _code_str(carro["TipoCarro"]),
+                "MatriculaCarro": str(carro["MatriculaCarro"]),
+                "GuiaCarro": str(carro["GuiaCarro"]),
+                "ToneladasNetasCarro": _num(carro["ToneladasNetasCarro"]),
+                **(
+                    {
+                        "Contenedor": [
+                            {
+                                "TipoContenedor": _code_str(c["TipoContenedor"]),
+                                "PesoContenedorVacio": _num(c["PesoContenedorVacio"]),
+                                "PesoNetoMercancia": _num(c["PesoNetoMercancia"]),
+                            }
+                            for c in iterate(carro["Contenedor"])
+                        ]
+                    }
+                    if carro.get("Contenedor")
+                    else {}
+                ),
+            }
+            for carro in iterate(ferro["Carro"])
+        ],
+    }
+    _set_opt(mapped, "NombreAseg", ferro.get("NombreAseg") and str(ferro["NombreAseg"]))
+    _set_opt(
+        mapped,
+        "NumPolizaSeguro",
+        ferro.get("NumPolizaSeguro") and str(ferro["NumPolizaSeguro"]),
+    )
+    if derechos := ferro.get("DerechosDePaso"):
+        mapped["DerechosDePaso"] = [
+            {
+                "TipoDerechoDePaso": _code_str(d["TipoDerechoDePaso"]),
+                "KilometrajePagado": _num(d["KilometrajePagado"]),
+            }
+            for d in iterate(derechos)
+        ]
+    return mapped
+
+
+def _map_mercancias(mercancias) -> dict:
+    mapped: dict[str, Any] = {
+        "PesoBrutoTotal": _num(mercancias["PesoBrutoTotal"]),
+        "UnidadPeso": _code_str(mercancias["UnidadPeso"]),
+        "NumTotalMercancias": int(mercancias["NumTotalMercancias"]),
+        "Mercancia": [_map_mercancia(m) for m in iterate(mercancias["Mercancia"])],
+    }
+    if mercancias.get("PesoNetoTotal") is not None:
+        mapped["PesoNetoTotal"] = _num(mercancias["PesoNetoTotal"])
+    if mercancias.get("CargoPorTasacion") is not None:
+        mapped["CargoPorTasacion"] = _num(mercancias["CargoPorTasacion"])
+    if mercancias.get("LogisticaInversaRecoleccionDevolucion") is not None:
+        mapped["LogisticaInversaRecoleccionDevolucion"] = str(
+            _enum_value(mercancias["LogisticaInversaRecoleccionDevolucion"])
+        )
+    if auto := mercancias.get("Autotransporte"):
+        mapped["Autotransporte"] = _map_autotransporte(auto)
+    if maritimo := mercancias.get("TransporteMaritimo"):
+        mapped["TransporteMaritimo"] = _map_transporte_maritimo(maritimo)
+    if aereo := mercancias.get("TransporteAereo"):
+        mapped["TransporteAereo"] = _map_transporte_aereo(aereo)
+    if ferro := mercancias.get("TransporteFerroviario"):
+        mapped["TransporteFerroviario"] = _map_transporte_ferroviario(ferro)
+    return mapped
+
+
+def _map_figura_transporte(figura) -> dict:
+    mapped: dict[str, Any] = {
+        "TipoFigura": _code_str(figura["TipoFigura"]),
+        "NombreFigura": str(figura["NombreFigura"]),
+    }
+    _set_opt(mapped, "RFCFigura", figura.get("RFCFigura") and str(figura["RFCFigura"]))
+    _set_opt(mapped, "NumLicencia", figura.get("NumLicencia") and str(figura["NumLicencia"]))
+    _set_opt(
+        mapped,
+        "NumRegIdTribFigura",
+        figura.get("NumRegIdTribFigura") and str(figura["NumRegIdTribFigura"]),
+    )
+    _set_opt(
+        mapped,
+        "ResidenciaFiscalFigura",
+        _code_str(figura.get("ResidenciaFiscalFigura")),
+    )
+    if partes := figura.get("PartesTransporte"):
+        mapped["PartesTransporte"] = _map_partes_transporte(partes)
+    if domicilio := _map_domicilio(figura.get("Domicilio")):
+        mapped["Domicilio"] = domicilio
+    return mapped
+
+
+def _map_carta_porte(carta) -> dict:
+    """Map satcfdi Carta Porte 3.1 to Facturama ``CartaPorte31`` JSON."""
+    version = str(carta.get("Version") or "3.1")
+    if version != "3.1":
+        raise NotImplementedError(
+            f"Facturama Multiemisor adapter supports Carta Porte 3.1 only, got {version!r}"
+        )
+
+    mapped: dict[str, Any] = {
+        "TranspInternac": str(_enum_value(carta["TranspInternac"])),
+        "Ubicaciones": [_map_ubicacion(u) for u in iterate(carta["Ubicaciones"])],
+        "Mercancias": _map_mercancias(carta["Mercancias"]),
+    }
+    if carta.get("IdCCP") is not None:
+        mapped["IdCCP"] = str(carta["IdCCP"])
+    if carta.get("EntradaSalidaMerc") is not None:
+        mapped["EntradaSalidaMerc"] = str(_enum_value(carta["EntradaSalidaMerc"]))
+    _set_opt(mapped, "PaisOrigenDestino", _code_str(carta.get("PaisOrigenDestino")))
+    _set_opt(mapped, "ViaEntradaSalida", _code_str(carta.get("ViaEntradaSalida")))
+    if carta.get("TotalDistRec") is not None:
+        mapped["TotalDistRec"] = _num(carta["TotalDistRec"])
+    if carta.get("RegistroISTMO") is not None:
+        mapped["RegistroISTMO"] = str(_enum_value(carta["RegistroISTMO"]))
+    _set_opt(mapped, "UbicacionPoloOrigen", _code_str(carta.get("UbicacionPoloOrigen")))
+    _set_opt(mapped, "UbicacionPoloDestino", _code_str(carta.get("UbicacionPoloDestino")))
+    if regimenes := carta.get("RegimenesAduaneros"):
+        mapped["RegimenesAduaneros"] = _map_regimenes_aduaneros(regimenes)
+    if figuras := carta.get("FiguraTransporte"):
+        mapped["FiguraTransporte"] = [
+            _map_figura_transporte(f) for f in iterate(figuras)
+        ]
+    return mapped
 
 
 def _uuid_from_relacionado(uuid_node) -> str:
@@ -496,17 +1011,21 @@ def cfdi_to_facturama_payload(cfdi: CFDI) -> dict:
             payload["PaymentConditions"] = str(condiciones)
         payload["Items"] = _map_items(cfdi)
 
-        unsupported = set()
+        carta = _complement_node(cfdi, "CartaPorte")
+        if carta:
+            payload["NameId"] = _CARTA_PORTE_NAME_ID
+            payload["Complemento"] = {"CartaPorte31": _map_carta_porte(carta)}
+
         complemento = cfdi.get("Complemento") or {}
-        if isinstance(complemento, dict):
+        if isinstance(complemento, Mapping) and not _is_carta_porte_body(complemento):
             unsupported = {
                 k for k in complemento
-                if k not in {"TimbreFiscalDigital", "Pagos", "Nomina", "Pago"}
+                if k not in _ITEM_COMPLEMENT_KEYS
             }
-        if unsupported:
-            raise NotImplementedError(
-                f"Unsupported Complemento nodes for item CFDI mapper: {sorted(unsupported)}"
-            )
+            if unsupported:
+                raise NotImplementedError(
+                    f"Unsupported Complemento nodes for item CFDI mapper: {sorted(unsupported)}"
+                )
         return payload
 
     if tipo == "P":

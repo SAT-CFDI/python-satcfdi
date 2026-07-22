@@ -372,6 +372,173 @@ def test_cfdi_to_facturama_payload_traslado():
     assert payload["Items"][0]["ProductCode"] == "24111506"
 
 
+def _sample_carta_porte_traslado():
+    from satcfdi.create.cfd import cartaporte31 as cp
+
+    signer = get_signer("xiqb891116qe4")
+    carta = cp.CartaPorte(
+        id_ccp="CCCBB0A0-A0A0-0A00-000A-0A0A000A000A",
+        transp_internac="No",
+        total_dist_rec=Decimal("120.5"),
+        ubicaciones=[
+            cp.Ubicacion(
+                tipo_ubicacion="Origen",
+                rfc_remitente_destinatario=signer.rfc,
+                fecha_hora_salida_llegada=datetime.fromisoformat("2022-05-16T15:15:00"),
+                id_ubicacion="OR000001",
+                domicilio=cp.Domicilio(
+                    estado="SLP",
+                    pais="MEX",
+                    codigo_postal="78000",
+                    municipio="028",
+                    localidad="05",
+                ),
+            ),
+            cp.Ubicacion(
+                tipo_ubicacion="Destino",
+                rfc_remitente_destinatario="URE180429TM6",
+                fecha_hora_salida_llegada=datetime.fromisoformat("2022-05-16T18:15:00"),
+                id_ubicacion="DE000001",
+                distancia_recorrida=Decimal("120.5"),
+                domicilio=cp.Domicilio(
+                    estado="SLP",
+                    pais="MEX",
+                    codigo_postal="78000",
+                    municipio="028",
+                    localidad="05",
+                ),
+            ),
+        ],
+        mercancias=cp.Mercancias(
+            peso_bruto_total=Decimal("1"),
+            unidad_peso="KGM",
+            num_total_mercancias=1,
+            mercancia=cp.Mercancia(
+                bienes_transp="11121900",
+                descripcion="Accesorios de equipo de telefonía",
+                cantidad=Decimal("1"),
+                clave_unidad="XBX",
+                peso_en_kg=Decimal("1"),
+                material_peligroso="No",
+                cantidad_transporta=cp.CantidadTransporta(
+                    cantidad=Decimal("1"),
+                    id_origen="OR000001",
+                    id_destino="DE000001",
+                ),
+            ),
+            autotransporte=cp.Autotransporte(
+                perm_sct="TPAF01",
+                num_permiso_sct="NumPermisoSCT1",
+                identificacion_vehicular=cp.IdentificacionVehicular(
+                    config_vehicular="VL",
+                    peso_bruto_vehicular=Decimal("1"),
+                    placa_vm="ABC1234",
+                    anio_modelo_vm=2020,
+                ),
+                seguros=cp.Seguros(
+                    asegura_resp_civil="AseguraRespCivil",
+                    poliza_resp_civil="123456789",
+                ),
+                remolques=cp.Remolque(sub_tipo_rem="CTR004", placa="VL45K98"),
+            ),
+        ),
+        figura_transporte=cp.TiposFigura(
+            tipo_figura="01",
+            nombre_figura="Operador Uno",
+            rfc_figura="EKU9003173C9",
+            num_licencia="NumLicencia1",
+            domicilio=cp.Domicilio(
+                estado="SLP",
+                pais="MEX",
+                codigo_postal="78000",
+                calle="Calle1",
+                numero_exterior="100",
+            ),
+        ),
+    )
+    return cfdi40.Comprobante(
+        emisor=cfdi40.Emisor(
+            rfc=signer.rfc,
+            nombre=signer.legal_name,
+            regimen_fiscal="601",
+        ),
+        lugar_expedicion="78000",
+        fecha=datetime.fromisoformat("2022-05-16T15:00:00"),
+        receptor=cfdi40.Receptor(
+            rfc="URE180429TM6",
+            nombre="UNIVERSIDAD ROBOTICA ESPAÑOLA",
+            uso_cfdi="S01",
+            domicilio_fiscal_receptor="65000",
+            regimen_fiscal_receptor="601",
+        ),
+        tipo_de_comprobante="T",
+        exportacion="01",
+        serie="CP",
+        folio="1",
+        conceptos=cfdi40.Concepto(
+            clave_prod_serv="24111506",
+            cantidad=Decimal("1"),
+            clave_unidad="H87",
+            descripcion="MERCANCIA EN TRASLADO",
+            valor_unitario=Decimal("0"),
+            objeto_imp="01",
+        ),
+        complemento=carta,
+    )
+
+
+def test_cfdi_to_facturama_payload_carta_porte():
+    payload = cfdi_to_facturama_payload(_sample_carta_porte_traslado())
+    verify = verify_result(
+        data=json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True),
+        filename="test_payload_carta_porte.json",
+    )
+    assert verify
+    assert payload["CfdiType"] == "T"
+    assert payload["NameId"] == "36"
+    cp = payload["Complemento"]["CartaPorte31"]
+    assert cp["TranspInternac"] == "No"
+    assert cp["IdCCP"] == "CCCBB0A0-A0A0-0A00-000A-0A0A000A000A"
+    assert len(cp["Ubicaciones"]) == 2
+    assert cp["Ubicaciones"][0]["FechaHoraSalidaLlegada"] == "2022-05-16 15:15:00"
+    assert cp["Mercancias"]["Autotransporte"]["PermSCT"] == "TPAF01"
+    assert cp["Mercancias"]["Autotransporte"]["Remolques"][0]["Placa"] == "VL45K98"
+    assert cp["Mercancias"]["Mercancia"][0]["CantidadTransporta"][0]["IDOrigen"] == (
+        "OR000001"
+    )
+    assert cp["FiguraTransporte"][0]["TipoFigura"] == "01"
+    assert cp["FiguraTransporte"][0]["NumLicencia"] == "NumLicencia1"
+
+
+def test_cfdi_to_facturama_payload_carta_porte_nested_key():
+    """Complemento as dict with CartaPorte key (XML-parsed shape)."""
+    invoice = _sample_carta_porte_traslado()
+    carta = invoice["Complemento"]
+    invoice["Complemento"] = {"CartaPorte": carta}
+    payload = cfdi_to_facturama_payload(invoice)
+    assert payload["NameId"] == "36"
+    assert payload["Complemento"]["CartaPorte31"]["TranspInternac"] == "No"
+    assert payload["Complemento"]["CartaPorte31"]["Mercancias"]["NumTotalMercancias"] == 1
+
+
+def test_cfdi_to_facturama_payload_carta_porte_partes_transporte():
+    from satcfdi.create.cfd import cartaporte31 as cp
+
+    invoice = _sample_carta_porte_traslado()
+    invoice["Complemento"]["FiguraTransporte"] = cp.TiposFigura(
+        tipo_figura="02",
+        nombre_figura="Propietario",
+        rfc_figura="EKU9003173C9",
+        partes_transporte=["PT01", "PT02"],
+    )
+    payload = cfdi_to_facturama_payload(invoice)
+    figura = payload["Complemento"]["CartaPorte31"]["FiguraTransporte"][0]
+    assert figura["PartesTransporte"] == [
+        {"ParteTransporte": "PT01"},
+        {"ParteTransporte": "PT02"},
+    ]
+
+
 def test_facturama_cancel_by_uuid():
     pac = Facturama("user", "password", Environment.TEST)
     from satcfdi.cfdi import CFDI
