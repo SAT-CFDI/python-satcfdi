@@ -20,6 +20,7 @@
       "Taxes": [
         {
           "Base": 100.0,
+          "IsFederalTax": true,
           "IsQuota": false,
           "IsRetention": false,
           "Name": "IVA",
@@ -28,6 +29,7 @@
         },
         {
           "Base": 100.0,
+          "IsFederalTax": true,
           "IsQuota": false,
           "IsRetention": true,
           "Name": "ISR",

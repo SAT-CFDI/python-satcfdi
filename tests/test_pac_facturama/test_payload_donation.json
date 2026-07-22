@@ -1,0 +1,43 @@
+{
+  "CfdiType": "I",
+  "Complemento": {
+    "Donation": {
+      "AuthorizationDate": "30/01/2019",
+      "AuthorizationNumber": "B400-05-08-2014-005",
+      "Legend": "El comprobante es un donativo"
+    }
+  },
+  "Currency": "MXN",
+  "Date": "2019-06-19 13:45:00",
+  "ExpeditionPlace": "51873",
+  "Exportation": "01",
+  "Folio": "94",
+  "Issuer": {
+    "FiscalRegime": "601",
+    "Name": "BERENICE XIMO QUEZADA",
+    "Rfc": "XIQB891116QE4"
+  },
+  "Items": [
+    {
+      "Description": "Cobija de lana y algodon",
+      "ProductCode": "20102000",
+      "Quantity": 3.0,
+      "Subtotal": 3000.0,
+      "TaxObject": "01",
+      "Total": 3000.0,
+      "UnitCode": "EA",
+      "UnitPrice": 1000.0
+    }
+  ],
+  "NameId": "9",
+  "PaymentForm": "12",
+  "PaymentMethod": "PUE",
+  "Receiver": {
+    "CfdiUse": "D04",
+    "FiscalRegime": "605",
+    "Name": "CECILIA MIRANDA SANCHEZ",
+    "Rfc": "MISC491214B86",
+    "TaxZipCode": "65010"
+  },
+  "Serie": "D"
+}

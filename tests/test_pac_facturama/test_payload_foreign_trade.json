@@ -1,0 +1,87 @@
+{
+  "CfdiType": "I",
+  "Complemento": {
+    "ForeignTrade": {
+      "Commodity": [
+        {
+          "CustomsQuantity": "1.0",
+          "CustomsUnit": "01",
+          "CustomsUnitValue": 100.0,
+          "IdentificationNumber": "CX-000988",
+          "TariffFraction": "94059102",
+          "ValueInDolar": 100.0
+        }
+      ],
+      "ExchangeRateUSD": 18.78,
+      "Incoterm": "CFR",
+      "Issuer": {
+        "Address": {
+          "Country": "MEX",
+          "ExteriorNumber": "110",
+          "Municipality": "028",
+          "State": "SLP",
+          "Street": "Canada de Gomez",
+          "ZipCode": "78216"
+        }
+      },
+      "OriginCertificate": false,
+      "Receiver": {
+        "Address": {
+          "Country": "USA",
+          "ExteriorNumber": "1",
+          "State": "TX",
+          "Street": "Main St",
+          "ZipCode": "75001"
+        },
+        "NumRegIdTrib": "123456789"
+      },
+      "RequestCode": "A1",
+      "TotalUSD": 100.0
+    }
+  },
+  "Currency": "MXN",
+  "Date": "2022-09-28 22:40:38",
+  "ExpeditionPlace": "78116",
+  "Exportation": "02",
+  "Issuer": {
+    "FiscalRegime": "601",
+    "Name": "BERENICE XIMO QUEZADA",
+    "Rfc": "XIQB891116QE4"
+  },
+  "Items": [
+    {
+      "Description": "ABACO",
+      "IdentificationNumber": "CX-000988",
+      "ProductCode": "41106300",
+      "Quantity": 1.0,
+      "Subtotal": 100.0,
+      "TaxObject": "02",
+      "Taxes": [
+        {
+          "Base": 100.0,
+          "IsFederalTax": true,
+          "IsQuota": false,
+          "IsRetention": false,
+          "Name": "IVA",
+          "Rate": 0.16,
+          "Total": 16.0
+        }
+      ],
+      "Total": 116.0,
+      "UnitCode": "EA",
+      "UnitPrice": 100.0
+    }
+  ],
+  "NameId": "26",
+  "PaymentForm": "01",
+  "PaymentMethod": "PUE",
+  "Receiver": {
+    "CfdiUse": "S01",
+    "FiscalRegime": "616",
+    "Name": "JOSE ALBERTO LOPEZ",
+    "Rfc": "XEXX010101000",
+    "TaxRegistrationNumber": "123456789",
+    "TaxResidence": "USA",
+    "TaxZipCode": "78116"
+  }
+}
