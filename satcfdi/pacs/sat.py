@@ -116,7 +116,7 @@ def _get_listado_69b(refresh_time=REFRESH_TIME):
 
     if time.time() > t + refresh_time:
         r = requests.get(
-            url="http://omawww.sat.gob.mx/cifras_sat/Documents/Listado_Completo_69-B.csv",
+            url="https://wu1agsprosta001.blob.core.windows.net/agsc-publicaciones/Datos_abiertos/Documents_AGAFF/Listado_completo_69-B.csv",
             headers={
                 "User-Agent": __version__.__user_agent__
             }
