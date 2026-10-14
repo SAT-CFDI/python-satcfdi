@@ -171,7 +171,7 @@ def _init_listado_69_db(connection: sqlite3.Connection):
         lista       TEXT NOT NULL,
         rfc         TEXT NOT NULL,
         supuesto    TEXT,
-        PRIMARY KEY(lista, rfc, supuesto)
+        PRIMARY KEY(lista, rfc)
         );
         CREATE INDEX IF NOT EXISTS ix_listado_69_rfc ON listado_69(rfc);
         CREATE TABLE IF NOT EXISTS listado_69_meta(
