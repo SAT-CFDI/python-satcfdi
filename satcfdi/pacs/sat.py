@@ -729,6 +729,16 @@ class SAT(PAC):
 
 
     def list_69(self, rfc: str) -> dict[TaxpayerStatusList69, str | None]:
+        """
+        Look up an RFC in the lists published by the SAT under Article 69 of the CFF.
+        The lists are downloaded on first use and cached locally for 15 days.
+
+        :param rfc: RFC to look up, case and surrounding spaces are ignored
+        :return: dict with each list where the RFC appears as key and its SUPUESTO text,
+            as published by the SAT, as value, or None if the list does not publish one.
+            Empty dict if the RFC is not in any list.
+        :raises ResponseError: if a list cannot be downloaded and there is no previous data
+        """
         connection = _get_listado_69()
 
         rows = connection.execute(
