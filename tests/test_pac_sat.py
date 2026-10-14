@@ -1,10 +1,13 @@
 import os.path
+import sqlite3
 import types
 from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
 from uuid import UUID
 from pprint import PrettyPrinter
 from unittest import mock
+
+import requests
 
 from satcfdi.utils import StrEnum
 
@@ -14,12 +17,15 @@ from satcfdi.create.cfd.catalogos import TipoDeComprobante
 
 from satcfdi import __version__
 from satcfdi.cfdi import CFDI
+from satcfdi.exceptions import ResponseError
 from satcfdi.models import Code
 from satcfdi.pacs import Environment
 from satcfdi.pacs import TaxpayerStatus
+from satcfdi.pacs import TaxpayerStatusList69
 from satcfdi.pacs.sat import _CFDISolicitaDescargaEmitidos, _CFDIAutenticacion, EstadoSolicitud, TipoDescargaMasivaTerceros
 from satcfdi.pacs.sat import SAT
 from satcfdi.pacs.sat import _get_listado_69b
+from satcfdi.pacs.sat import _get_listado_69, _refresh_listado_69, _init_listado_69_db, _parse_listado_69_csv
 from satcfdi.pacs.sat import _set_arguments
 
 from .utils import get_signer, verify_result
@@ -118,6 +124,102 @@ def test_sat_list_69b_notfound():
     sat_service = SAT(environment=Environment.TEST)
     res = sat_service.list_69b('xxxx')
     assert res is None
+
+
+def _listado_69_request(url, **kwargs):
+    path = os.path.join(current_dir, 'pac_sat_responses', 'listado_69', os.path.basename(url))
+    if not os.path.exists(path):
+        path = os.path.join(current_dir, 'pac_sat_responses', 'listado_69', 'default.csv')
+
+    with open(path, 'rb') as f:
+        data = f.read()
+
+    a = types.SimpleNamespace()
+    a.status_code = 200
+    a.content = data
+    return a
+
+
+def test_listado69():
+    with mock.patch(f'requests.get', _listado_69_request) as mk:
+        connection = _get_listado_69(refresh_time=-100000)
+
+        meta = dict(connection.execute("SELECT lista, updated_at FROM listado_69_meta"))
+        assert set(meta) == {e.value for e in TaxpayerStatusList69}
+
+        rows = connection.execute("SELECT lista, supuesto FROM listado_69 WHERE rfc = 'CCC030303CCC'").fetchall()
+        assert rows == [('cancelados', 'CANCELADOS')]
+
+        rows = connection.execute("SELECT lista, supuesto FROM listado_69 WHERE rfc = 'DDD040404DDD'").fetchall()
+        assert rows == [('csd_sin_efectos', 'SUPUESTO CSD')]
+
+        rows = connection.execute("SELECT count(*) FROM listado_69 WHERE rfc = ''").fetchone()
+        assert rows == (0,)
+
+
+def test_sat_list_69():
+    with mock.patch(f'requests.get', _listado_69_request) as mk:
+        sat_service = SAT(environment=Environment.TEST)
+
+        res = sat_service.list_69('AAA010101AAA')
+        assert res == {
+            TaxpayerStatusList69.FIRMES: 'FIRMES',
+            TaxpayerStatusList69.CANCELADOS: 'CANCELADOS POR INSOLVENCIA',
+            TaxpayerStatusList69.CONDONADOS_07_15: None,
+        }
+
+        res = sat_service.list_69(' bbb020202bbb ')
+        assert res == {TaxpayerStatusList69.FIRMES: 'FIRMES'}
+
+
+def test_sat_list_69_notfound():
+    with mock.patch(f'requests.get', _listado_69_request) as mk:
+        sat_service = SAT(environment=Environment.TEST)
+        res = sat_service.list_69('xxxx')
+        assert res == {}
+
+
+def test_listado69_csv_windows_1252():
+    data = 'RFC,Razón Social,Supuesto de Cancelación\r\nEEE050505EEE,CAMIÓN SA DE CV,ARTÍCULO 17-H\r\n'.encode('windows-1252')
+    data += b'FFF060606FFF,EMPRESA \x81 SA DE CV,X\r\n'
+
+    rows = list(_parse_listado_69_csv(data, 'RFC', 'SUPUESTO DE CANCELACION'))
+    assert rows == [('EEE050505EEE', 'ARTÍCULO 17-H'), ('FFF060606FFF', 'X')]
+
+
+def test_listado69_refresh_failure_keeps_data():
+    connection = sqlite3.connect(':memory:')
+    _init_listado_69_db(connection)
+
+    with mock.patch(f'requests.get', _listado_69_request) as mk:
+        assert _refresh_listado_69(connection, TaxpayerStatusList69.FIRMES)
+
+    failures = [
+        types.SimpleNamespace(status_code=500, content=b''),
+        types.SimpleNamespace(status_code=200, content=b''),
+        types.SimpleNamespace(status_code=200, content=b'<html></html>'),
+        types.SimpleNamespace(status_code=200, content=b'RFC,SUPUESTO\r\n'),
+    ]
+    for response in failures:
+        with mock.patch(f'requests.get', return_value=response) as mk:
+            assert not _refresh_listado_69(connection, TaxpayerStatusList69.FIRMES)
+
+    with mock.patch(f'requests.get', side_effect=requests.ConnectionError) as mk:
+        assert not _refresh_listado_69(connection, TaxpayerStatusList69.FIRMES)
+
+    rows = connection.execute("SELECT rfc FROM listado_69 WHERE lista = 'firmes' ORDER BY rfc").fetchall()
+    assert rows == [('AAA010101AAA',), ('BBB020202BBB',)]
+
+
+def test_listado69_never_loaded():
+    import pytest
+
+    _get_listado_69.cache_clear()
+    response = types.SimpleNamespace(status_code=500, content=b'')
+
+    with mock.patch(f'{module}.pacs.sat.LISTADO_69_DB', ':memory:'), mock.patch(f'requests.get', return_value=response):
+        with pytest.raises(ResponseError):
+            _get_listado_69(refresh_time=-100000)
 
 
 def test_sat_service_authentication():

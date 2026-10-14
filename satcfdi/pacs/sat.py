@@ -154,7 +154,7 @@ def _parse_listado_69_csv(content: bytes, rfc_col: str, supuesto_col: str | None
     rfc_key = headers[rfc_col]
     sup_key = headers.get(supuesto_col) if supuesto_col else None
 
-    if not sup_key:
+    if supuesto_col and not sup_key:
         logger.warning("Column '%s' not found in %s, supuesto will be None", supuesto_col, reader.fieldnames)
 
     for row in reader:
