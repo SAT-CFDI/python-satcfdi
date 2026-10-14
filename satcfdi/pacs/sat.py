@@ -1,37 +1,59 @@
-import base64
-import csv
-import json
-import logging
+import io
 import os
+import csv
+import sqlite3
 import time
+import json
+import base64
+import logging
+import requests
 import warnings
-from abc import abstractmethod
-from collections.abc import Sequence
-from datetime import date, datetime, timedelta, timezone
-from enum import IntEnum, Enum
+import unicodedata
+from uuid import UUID
+from lxml import etree
+from ..cfdi import CFDI
+from .. import __version__
 from functools import cache
 from itertools import islice
-from uuid import UUID
-
-import requests
-from bs4 import BeautifulSoup
-from lxml import etree
 from lxml.etree import QName
 from packaging import version
-
-from satcfdi.create.cfd.catalogos import TipoDeComprobante
-from . import PAC, Environment, TaxpayerStatus
-from .. import __version__
-from ..cfdi import CFDI
-from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes
+from bs4 import BeautifulSoup
+from abc import abstractmethod
+from enum import IntEnum, Enum
+from collections.abc import Sequence
 from ..exceptions import ResponseError
 from ..models import Signer, Certificate
-from ..transform import MEXICO_TZ, get_timezone, verify_certificate
 from ..utils import iterate, StrEnum, parser
+from datetime import date, datetime, timedelta, timezone
+from satcfdi.create.cfd.catalogos import TipoDeComprobante
+from ..transform import MEXICO_TZ, get_timezone, verify_certificate
+from . import PAC, Environment, TaxpayerStatus, TaxpayerStatusList69
+from ..create.w3.signature import signature_c14n_sha1, _digest, _tobytes
 
 logger = logging.getLogger(__name__)
 current_dir = os.path.dirname(__file__)
 
+# Listado 69
+LISTADO_69_DB = os.path.join(current_dir, 'Listado_69.db')
+LISTADO_69_BASE_URL = "https://wu1agsprosta001.blob.core.windows.net/agsc-publicaciones/Datos_abiertos/"
+LISTADO_69_SOURCES = {
+    TaxpayerStatusList69.FIRMES:              ('Documents_AGR/Firmes.csv',                          'RFC', 'SUPUESTO'),
+    TaxpayerStatusList69.EXIGIBLES:           ('Documents_AGR/Exigibles.csv',                       'RFC', 'SUPUESTO'),
+    TaxpayerStatusList69.NO_LOCALIZADOS:      ('Documents_AGR/No_localizados.csv',                  'RFC', 'SUPUESTO'),
+    TaxpayerStatusList69.SENTENCIAS:          ('Documents_AGR/Sentencias.csv',                      'RFC', 'SUPUESTO'),
+    TaxpayerStatusList69.CANCELADOS:          ('Documents_AGR/Cancelados.csv',                      'RFC', 'SUPUESTO'),
+    TaxpayerStatusList69.CSD_SIN_EFECTOS:     ('Documents_AGR/CSDsinefectos.csv',                   'RFC', 'SUPUESTO DE CANCELACION'),
+    TaxpayerStatusList69.REDUCCION_ART74:     ('Documents_AGR/ReduccionArt74CFF.csv',               'RFC', 'SUPUESTO'),
+    TaxpayerStatusList69.ENTES_OMISOS:        ('Documents_AGR/EntespublicosydeGobiernoomisos.csv',  'RFC', 'SUPUESTO'),
+    TaxpayerStatusList69.CONDONADOS_146B:     ('Cifras_SAT/Indef/Condonadosart146BCFF.csv',         'RFC', 'SUPUESTO'),
+    TaxpayerStatusList69.REDUCCION_ART21:     ('Cifras_SAT/Indef/Condonadosart21CFF.csv',           'RFC', 'SUPUESTO'),
+    TaxpayerStatusList69.CONDONADOS_DECRETO:  ('Cifras_SAT/Indef/CondonadosporDecreto.csv',         'RFC', 'SUPUESTO'),
+    TaxpayerStatusList69.CONDONADOS_07_15:    ('Cifras_SAT/Indef/Condonados_07_15.csv',             'RFC', None),
+    TaxpayerStatusList69.CANCELADOS_07_15:    ('Cifras_SAT/Indef/Cancelados_07_15.csv',             'RFC', None),
+    TaxpayerStatusList69.RETORNO_INVERSIONES: ('Cifras_SAT/Indef/Retornoinversiones.csv',           'RFC', 'SUPUESTO'),
+}
+
+# Listado 69B
 LISTADO_COMPLETO_69B_JSON = os.path.join(current_dir, 'Listado_Completo_69-B.json')
 REFRESH_TIME = (15 * 86400)  # 15 Days
 UTC = timezone.utc
@@ -105,6 +127,114 @@ def _service_logger(response_type, response):
 
 def _certificate_path(certificate_no):
     return f"{certificate_no[0:6]}/{certificate_no[6:12]}/{certificate_no[12:14]}/{certificate_no[14:16]}/{certificate_no[16:18]}/{certificate_no}"
+
+
+
+def _normalizar_header(value: str) -> str:
+    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode()
+    return ' '.join(value.upper().split())
+
+
+def _parse_listado_69_csv(content: bytes, rfc_col: str, supuesto_col: str | None):
+    text = content.decode('windows-1252', errors='replace')
+    reader = csv.DictReader(io.StringIO(text))
+
+    if not reader.fieldnames:
+        raise ValueError('Empty CSV')
+
+    headers = {}
+
+    for header in reader.fieldnames:
+        normalized = _normalizar_header(header)
+        headers[normalized] = header
+
+    if rfc_col not in headers:
+        raise ValueError(f"Column '{rfc_col}' not found in {reader.fieldnames}")
+
+    rfc_key = headers[rfc_col]
+    sup_key = headers.get(supuesto_col) if supuesto_col else None
+
+    if supuesto_col and not sup_key:
+        logger.warning("Column '%s' not found in %s, supuesto will be None", supuesto_col, reader.fieldnames)
+
+    for row in reader:
+        rfc = (row.get(rfc_key) or '').strip().upper()
+        if not rfc:
+            continue
+        supuesto = (row.get(sup_key) or '').strip() if sup_key else None
+        yield rfc, (supuesto or None)
+
+
+def _init_listado_69_db(connection: sqlite3.Connection):
+    connection.executescript("""
+        CREATE TABLE IF NOT EXISTS listado_69 (
+        lista       TEXT NOT NULL,
+        rfc         TEXT NOT NULL,
+        supuesto    TEXT,
+        PRIMARY KEY(lista, rfc)
+        );
+        CREATE INDEX IF NOT EXISTS ix_listado_69_rfc ON listado_69(rfc);
+        CREATE TABLE IF NOT EXISTS listado_69_meta(
+        lista       TEXT PRIMARY KEY,
+        updated_at  REAL NOT NULL
+        );
+    """)
+
+
+def _refresh_listado_69(connection: sqlite3.Connection, lista: TaxpayerStatusList69) -> bool:
+    path, rfc_col, supuesto_col = LISTADO_69_SOURCES[lista]
+
+    try:
+        request = requests.get(
+            url = LISTADO_69_BASE_URL + path,
+            headers = {"User-Agent": __version__.__user_agent__}
+        )
+
+        if request.status_code != 200:
+            logger.error("Unable to get Listado 69 '%s', status code: %s", lista, request.status_code)
+            return False
+
+        rows = list(_parse_listado_69_csv(request.content, rfc_col, supuesto_col))
+    except (requests.RequestException, ValueError, csv.Error) as ex:
+        logger.error("Unable to get Listado 69 '%s': %s", lista, ex)
+        return False
+
+    if not rows:
+        logger.error("Listado 69 '%s' came back empty, keeping previous data", lista)
+        return False
+
+    with connection:
+        connection.execute("DELETE FROM listado_69 WHERE lista = ?", (lista.value,))
+        connection.executemany(
+            "INSERT OR IGNORE INTO listado_69 (lista, rfc, supuesto) VALUES (?, ?, ?)",
+            ((lista.value, rfc, sup) for rfc, sup in rows)
+        )
+        connection.execute(
+            "INSERT OR REPLACE INTO listado_69_meta (lista, updated_at) VALUES (?, ?)",
+            (lista.value, time.time())
+        )
+    return True
+
+
+@cache
+def _get_listado_69(refresh_time=REFRESH_TIME):
+    """
+    Retrieve the csvs that, altogether, make the lista 69. Update the list if
+    enough time has happened between the first fetch. This data will be stored 
+    in sqlite
+    """
+    connection = sqlite3.connect(LISTADO_69_DB, check_same_thread = False)
+    _init_listado_69_db(connection)
+
+    meta = dict(connection.execute("SELECT lista, updated_at FROM listado_69_meta"))
+    for lista in TaxpayerStatusList69:
+        t = meta.get(lista.value, -refresh_time)
+        if time.time() > t + refresh_time:
+            ok = _refresh_listado_69(connection, lista)
+            if not ok and lista.value not in meta:
+                raise ResponseError(f"Unable to load Listado 69 '{lista}'")
+
+    return connection
 
 
 @cache
@@ -596,6 +726,33 @@ class SAT(PAC):
             return False
 
         return True
+
+
+    def list_69(self, rfc: str) -> dict[TaxpayerStatusList69, str | None]:
+        """
+        Look up an RFC in the lists published by the SAT under Article 69 of the CFF.
+        The lists are downloaded on first use and cached locally for 15 days.
+
+        :param rfc: RFC to look up, case and surrounding spaces are ignored
+        :return: dict with each list where the RFC appears as key and its SUPUESTO text,
+            as published by the SAT, as value, or None if the list does not publish one.
+            Empty dict if the RFC is not in any list.
+        :raises ResponseError: if a list cannot be downloaded and there is no previous data
+        """
+        connection = _get_listado_69()
+
+        rows = connection.execute(
+            "SELECT lista, supuesto FROM listado_69 WHERE rfc = ?",
+            (rfc.strip().upper(),)
+        ).fetchall()
+
+        response = {}
+
+        for lista, supuesto in rows:
+            response[TaxpayerStatusList69(lista)] = supuesto
+
+        return response
+
 
     def list_69b(self, rfc: str) -> TaxpayerStatus | None:
         listado = _get_listado_69b()

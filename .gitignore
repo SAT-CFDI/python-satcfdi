@@ -148,6 +148,7 @@ dmypy.json
 /examples/_*_.*
 
 
+/satcfdi/pacs/listado_69.db
 /examples/_OÑO120726RX30DOTAAL1LCMBB10371.dec
 /tests/test_portal/session
 /tests/test_certifica/test_csd/
