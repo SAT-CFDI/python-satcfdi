@@ -75,6 +75,7 @@ ____________________
   * SW Sapien
 * Descarga Masiva
 * Validación de Comprobantes
+* Listado 69
 * Listado 69B
 * Exportar Comprobantes a Excel
 * Descarga de Constancia de Situación Fiscal

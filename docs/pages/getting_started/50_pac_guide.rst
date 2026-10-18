@@ -91,6 +91,19 @@ ______________________
     print(res)
     
 
+Listado 69
+______________________
+
+.. code-block:: python
+
+    from satcfdi.pacs import TaxpayerStatusList69
+    from satcfdi.pacs.sat import SAT
+    
+    sat_service = SAT()
+    res = sat_service.list_69('AAL081211JP0')
+    assert res == { TaxpayerStatusList69.CANCELADOS: 'CANCELADOS POR INSOLVENCIA' }
+    
+
 Listado 69B
 ______________________
 

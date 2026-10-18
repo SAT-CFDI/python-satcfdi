@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Flag, auto, Enum
+from ..utils import StrEnum
 from ..cfdi import CFDI
 from ..models import Signer
 from ..create.cancela import cancelacion
@@ -132,6 +133,53 @@ class TaxpayerStatus(Enum):
     pertinentes para desvirtuar los hechos que llevaron a notificarlos con un plazo de quince días contados a partir de la
     última de las notificaciones que se hayan efectuado.
     """
+
+
+class TaxpayerStatusList69(StrEnum):
+    FIRMES = 'firmes'
+    """Contribuyentes con créditos fiscales firmes (ya no admiten medio de defensa o fueron consentidos)."""
+
+    EXIGIBLES = 'exigibles'
+    """Créditos fiscales determinados, exigibles, que no se encuentran pagados ni garantizados."""
+
+    NO_LOCALIZADOS = 'no_localizados'
+    """Contribuyentes inscritos en el RFC que se encuentran como no localizados en su domicilio fiscal."""
+
+    SENTENCIAS = 'sentencias'
+    """Contribuyentes con sentencia condenatoria ejecutoria por la comisión de un delito fiscal."""
+
+    CANCELADOS = 'cancelados'
+    """Créditos fiscales cancelados por incosteabilidad en el cobro o por insolvencia del deudor.
+    El SUPUESTO distingue "CANCELADOS" y "CANCELADOS POR INSOLVENCIA"."""
+
+    CONDONADOS_146B = 'condonados_146b'
+    """Contribuyentes a los que se les condonó algún crédito fiscal en concurso mercantil (Art. 146-B CFF)."""
+
+    REDUCCION_ART21 = 'reduccion_art21'
+    """Reducción de recargos conforme al Art. 21 CFF."""
+
+    REDUCCION_ART74 = 'reduccion_art74'
+    """Reducción de multas conforme al Art. 74 CFF."""
+
+    CONDONADOS_DECRETO = 'condonados_decreto'
+    """Condonados por decreto presidencial (22 de enero y 26 de marzo de 2015)."""
+
+    RETORNO_INVERSIONES = 'retorno_inversiones'
+    """Programa de retorno de inversiones (repatriación de capitales, 2016)."""
+
+    CSD_SIN_EFECTOS = 'csd_sin_efectos'
+    """Contribuyentes a los que se les dejó sin efectos el Certificado de Sello Digital (Arts. 17-H y 17-H Bis CFF)."""
+
+    ENTES_OMISOS = 'entes_omisos'
+    """Entes públicos y de gobierno omisos en la presentación de declaraciones. El SUPUESTO indica la fracción."""
+
+    CONDONADOS_07_15 = 'condonados_07_15'
+    """Histórico: créditos condonados del 1 de enero de 2007 al 4 de mayo de 2015.
+    El archivo no tiene columna SUPUESTO; tiene "Motivo de condonación"."""
+
+    CANCELADOS_07_15 = 'cancelados_07_15'
+    """Histórico: créditos cancelados conforme al Art. 146-A CFF del 1 de enero de 2007 al 4 de mayo de 2015.
+    El archivo no tiene columna SUPUESTO; tiene "MOTIVO"."""
 
 
 class Environment(Enum):
