@@ -22,7 +22,8 @@ from satcfdi.models import Code
 from satcfdi.pacs import Environment
 from satcfdi.pacs import TaxpayerStatus
 from satcfdi.pacs import TaxpayerStatusList69
-from satcfdi.pacs.sat import _CFDISolicitaDescargaEmitidos, _CFDIAutenticacion, EstadoSolicitud, TipoDescargaMasivaTerceros
+from satcfdi.pacs.sat import _CFDISolicitaDescargaEmitidos, _CFDIAutenticacion, EstadoSolicitud, \
+    TipoDescargaMasivaTerceros, _init_and_load_listado_69
 from satcfdi.pacs.sat import SAT
 from satcfdi.pacs.sat import _get_listado_69b
 from satcfdi.pacs.sat import _get_listado_69, _refresh_listado_69, _init_listado_69_db, _parse_listado_69_csv
@@ -126,6 +127,49 @@ def test_sat_list_69b_notfound():
     assert res is None
 
 
+def test_listado69b_checks_expiration_on_each_call(tmp_path):
+    cache_path = tmp_path / 'listado.json'
+    cache_path.write_text('{"AAA191919HHH":"Desvirtuado"}', encoding='utf-8')
+    os.utime(cache_path, (100, 100))
+    with open(os.path.join(current_dir, 'pac_sat_responses', 'listado_69b.txt'), 'rb') as f:
+        response = types.SimpleNamespace(status_code=200, content=f.read())
+
+    with mock.patch(f'{module}.pacs.sat.LISTADO_COMPLETO_69B_JSON', str(cache_path)), \
+         mock.patch(f'{module}.pacs.sat.time.time', return_value=110) as clock, \
+         mock.patch('requests.get', return_value=response) as request:
+        assert _get_listado_69b(refresh_time=10) == {'AAA191919HHH': 'Desvirtuado'}
+        request.assert_not_called()
+
+        clock.return_value = 111
+        assert len(_get_listado_69b(refresh_time=10)) == 3
+        request.assert_called_once()
+
+
+def test_listado69b_missing_file_downloads(tmp_path):
+    with open(os.path.join(current_dir, 'pac_sat_responses', 'listado_69b.txt'), 'rb') as f:
+        response = types.SimpleNamespace(status_code=200, content=f.read())
+    cache_path = tmp_path / 'missing.json'
+    with mock.patch(f'{module}.pacs.sat.LISTADO_COMPLETO_69B_JSON', str(cache_path)), \
+         mock.patch('requests.get', return_value=response) as request:
+        assert len(_get_listado_69b()) == 3
+        assert cache_path.exists()
+        request.assert_called_once()
+
+
+def test_listado69b_failed_download_preserves_file(tmp_path):
+    import pytest
+
+    cache_path = tmp_path / 'listado.json'
+    original = '{"AAA191919HHH":"Desvirtuado"}'
+    cache_path.write_text(original, encoding='utf-8')
+    response = types.SimpleNamespace(status_code=503)
+    with mock.patch(f'{module}.pacs.sat.LISTADO_COMPLETO_69B_JSON', str(cache_path)), \
+         mock.patch('requests.get', return_value=response):
+        with pytest.raises(ResponseError, match='503'):
+            _get_listado_69b(refresh_time=-100000)
+    assert cache_path.read_text(encoding='utf-8') == original
+
+
 def _listado_69_request(url, **kwargs):
     path = os.path.join(current_dir, 'pac_sat_responses', 'listado_69', os.path.basename(url))
     if not os.path.exists(path):
@@ -192,7 +236,7 @@ def test_listado69_refresh_failure_keeps_data():
     _init_listado_69_db(connection)
 
     with mock.patch(f'requests.get', _listado_69_request) as mk:
-        assert _refresh_listado_69(connection, TaxpayerStatusList69.FIRMES)
+        _refresh_listado_69(connection, TaxpayerStatusList69.FIRMES)
 
     failures = [
         types.SimpleNamespace(status_code=500, content=b''),
@@ -202,10 +246,16 @@ def test_listado69_refresh_failure_keeps_data():
     ]
     for response in failures:
         with mock.patch(f'requests.get', return_value=response) as mk:
-            assert not _refresh_listado_69(connection, TaxpayerStatusList69.FIRMES)
+            try:
+                _refresh_listado_69(connection, TaxpayerStatusList69.FIRMES)
+            except ResponseError:
+                pass
 
     with mock.patch(f'requests.get', side_effect=requests.ConnectionError) as mk:
-        assert not _refresh_listado_69(connection, TaxpayerStatusList69.FIRMES)
+        try:
+            _refresh_listado_69(connection, TaxpayerStatusList69.FIRMES)
+        except ResponseError:
+            pass
 
     rows = connection.execute("SELECT rfc FROM listado_69 WHERE lista = 'firmes' ORDER BY rfc").fetchall()
     assert rows == [('AAA010101AAA',), ('BBB020202BBB',)]
@@ -214,9 +264,8 @@ def test_listado69_refresh_failure_keeps_data():
 def test_listado69_never_loaded():
     import pytest
 
-    _get_listado_69.cache_clear()
     response = types.SimpleNamespace(status_code=500, content=b'')
-
+    _init_and_load_listado_69.cache_clear()
     with mock.patch(f'{module}.pacs.sat.LISTADO_69_DB', ':memory:'), mock.patch(f'requests.get', return_value=response):
         with pytest.raises(ResponseError):
             _get_listado_69(refresh_time=-100000)

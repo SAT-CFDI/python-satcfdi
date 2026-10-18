@@ -168,15 +168,15 @@ def _parse_listado_69_csv(content: bytes, rfc_col: str, supuesto_col: str | None
 def _init_listado_69_db(connection: sqlite3.Connection):
     connection.executescript("""
         CREATE TABLE IF NOT EXISTS listado_69 (
-        lista       TEXT NOT NULL,
-        rfc         TEXT NOT NULL,
-        supuesto    TEXT,
-        PRIMARY KEY(lista, rfc)
+            lista       TEXT NOT NULL,
+            rfc         TEXT NOT NULL,
+            supuesto    TEXT,
+            PRIMARY KEY(lista, rfc)
         );
         CREATE INDEX IF NOT EXISTS ix_listado_69_rfc ON listado_69(rfc);
         CREATE TABLE IF NOT EXISTS listado_69_meta(
-        lista       TEXT PRIMARY KEY,
-        updated_at  REAL NOT NULL
+            lista       TEXT PRIMARY KEY,
+            updated_at  REAL NOT NULL
         );
     """)
 
@@ -191,80 +191,76 @@ def _refresh_listado_69(connection: sqlite3.Connection, lista: TaxpayerStatusLis
         )
 
         if request.status_code != 200:
-            logger.error("Unable to get Listado 69 '%s', status code: %s", lista, request.status_code)
-            return False
+            raise ResponseError(f"Unable to get Listado 69 '{lista}', status code: {request.status_code}")
 
         rows = list(_parse_listado_69_csv(request.content, rfc_col, supuesto_col))
-    except (requests.RequestException, ValueError, csv.Error) as ex:
-        logger.error("Unable to get Listado 69 '%s': %s", lista, ex)
-        return False
+    except Exception as ex:
+        raise ResponseError(f"Unable to get Listado 69 '{lista}': {ex}") from ex
 
     if not rows:
-        logger.error("Listado 69 '%s' came back empty, keeping previous data", lista)
-        return False
+        raise ResponseError(f"Listado 69 '{lista}' came back empty, keeping previous data")
 
     with connection:
         connection.execute("DELETE FROM listado_69 WHERE lista = ?", (lista.value,))
         connection.executemany(
-            "INSERT OR IGNORE INTO listado_69 (lista, rfc, supuesto) VALUES (?, ?, ?)",
+            "INSERT INTO listado_69 (lista, rfc, supuesto) VALUES (?, ?, ?)",
             ((lista.value, rfc, sup) for rfc, sup in rows)
         )
         connection.execute(
             "INSERT OR REPLACE INTO listado_69_meta (lista, updated_at) VALUES (?, ?)",
             (lista.value, time.time())
         )
-    return True
-
 
 @cache
+def _init_and_load_listado_69(refresh_time):
+    connection = sqlite3.connect(LISTADO_69_DB, check_same_thread=False)
+    try:
+        _init_listado_69_db(connection)
+
+        meta = dict(connection.execute("SELECT lista, updated_at FROM listado_69_meta"))
+        now = time.time()
+        for lista in TaxpayerStatusList69:
+            t = meta.get(lista.value)
+            if t is None or now > t + refresh_time:
+                _refresh_listado_69(connection, lista)
+    finally:
+        connection.close()
+
 def _get_listado_69(refresh_time=REFRESH_TIME):
     """
     Retrieve the csvs that, altogether, make the lista 69. Update the list if
     enough time has happened between the first fetch. This data will be stored 
     in sqlite
+
+    The caller must close the returned connection. On failure, close it here.
     """
-    connection = sqlite3.connect(LISTADO_69_DB, check_same_thread = False)
-    _init_listado_69_db(connection)
-
-    meta = dict(connection.execute("SELECT lista, updated_at FROM listado_69_meta"))
-    for lista in TaxpayerStatusList69:
-        t = meta.get(lista.value, -refresh_time)
-        if time.time() > t + refresh_time:
-            ok = _refresh_listado_69(connection, lista)
-            if not ok and lista.value not in meta:
-                raise ResponseError(f"Unable to load Listado 69 '{lista}'")
-
-    return connection
+    _init_and_load_listado_69(refresh_time)
+    return sqlite3.connect(LISTADO_69_DB, check_same_thread = False)
 
 
-@cache
 def _get_listado_69b(refresh_time=REFRESH_TIME):
+    """Load fresh local data, or download and save an updated list."""
     try:
-        t = os.path.getmtime(LISTADO_COMPLETO_69B_JSON)
+        updated_at = os.path.getmtime(LISTADO_COMPLETO_69B_JSON)
     except FileNotFoundError:
-        t = -refresh_time
+        updated_at = None
 
-    if time.time() > t + refresh_time:
-        r = requests.get(
-            url="https://wu1agsprosta001.blob.core.windows.net/agsc-publicaciones/Datos_abiertos/Documents_AGAFF/Listado_completo_69-B.csv",
-            headers={
-                "User-Agent": __version__.__user_agent__
-            }
-        )
-
-        if r.status_code == 200:
-            lines = str(r.content, 'windows-1250').splitlines(keepends=True)
-            cvs_reader = csv.reader(islice(lines, 3, None), delimiter=',', quotechar='"')
-            res = {row[1]: row[3] for row in cvs_reader}
-            _save_listado_69b(res)
-            return res
-
-        logger.error("Unable to get latest Listado 69B, status code: %s", r.status_code)
-
-    if t > 0:
+    if updated_at is not None and time.time() <= updated_at + refresh_time:
         return _load_listado_69b()
-    else:
-        raise ResponseError("Unable to load Listado Completo 69B")
+
+    response = requests.get(
+        url="https://wu1agsprosta001.blob.core.windows.net/agsc-publicaciones/Datos_abiertos/Documents_AGAFF/Listado_completo_69-B.csv",
+        headers={"User-Agent": __version__.__user_agent__},
+        timeout=60,
+    )
+    if response.status_code != 200:
+        raise ResponseError(f"Unable to get latest Listado 69B, status code: {response.status_code}")
+
+    lines = response.content.decode('windows-1250').splitlines(keepends=True)
+    reader = csv.reader(islice(lines, 3, None), delimiter=',', quotechar='"')
+    listado = {row[1]: row[3] for row in reader}
+    _save_listado_69b(listado)
+    return listado
 
 
 def _save_listado_69b(data):
@@ -741,17 +737,18 @@ class SAT(PAC):
         """
         connection = _get_listado_69()
 
-        rows = connection.execute(
-            "SELECT lista, supuesto FROM listado_69 WHERE rfc = ?",
-            (rfc.strip().upper(),)
-        ).fetchall()
+        try:
+            rows = connection.execute(
+                "SELECT lista, supuesto FROM listado_69 WHERE rfc = ?",
+                (rfc.strip().upper(),)
+            ).fetchall()
+        finally:
+            connection.close()
 
-        response = {}
-
-        for lista, supuesto in rows:
-            response[TaxpayerStatusList69(lista)] = supuesto
-
-        return response
+        return {
+            TaxpayerStatusList69(lista): supuesto
+            for lista, supuesto in rows
+        }
 
 
     def list_69b(self, rfc: str) -> TaxpayerStatus | None:
