@@ -203,7 +203,7 @@ def _refresh_listado_69(connection: sqlite3.Connection, lista: TaxpayerStatusLis
     with connection:
         connection.execute("DELETE FROM listado_69 WHERE lista = ?", (lista.value,))
         connection.executemany(
-            "INSERT INTO listado_69 (lista, rfc, supuesto) VALUES (?, ?, ?)",
+            "INSERT OR IGNORE INTO listado_69 (lista, rfc, supuesto) VALUES (?, ?, ?)",
             ((lista.value, rfc, sup) for rfc, sup in rows)
         )
         connection.execute(
