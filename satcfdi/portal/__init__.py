@@ -11,7 +11,7 @@ from time import time
 import requests
 from requests.structures import CaseInsensitiveDict
 
-from .utils import get_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
+from .utils import get_form, get_form_fields, generate_token, request_ref_headers, request_verification_token, random_ajax_id
 from ..exceptions import ResponseError
 from ..models import Signer
 from ..sat_requests_utils import SSLAdapter
@@ -255,18 +255,15 @@ class SATPortalConstancia(PortalManager):
         # Execute formReimpAcuse
         action, data = get_form(res)
         if action == "https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/autc/ReimpresionTramite/ConsultaTramite.jsf":
-            data = {
+            # Submit the fields the page renders instead of a fixed list: the form
+            # changed (e.g. formReimpAcuse:tipoTramite_filter) and the fixed list made
+            # IdcGeneraConstancia.jsf answer "Faltan datos en la sesión" instead of the PDF.
+            data = get_form_fields(res) | {
                 'javax.faces.partial.ajax': "true",
                 'javax.faces.source': 'formReimpAcuse:j_idt50',
                 'javax.faces.partial.execute': '@all',
                 'formReimpAcuse:j_idt50': 'formReimpAcuse:j_idt50',
-                'formReimpAcuse': 'formReimpAcuse',
                 'formReimpAcuse:tipoTramite_input': '0',
-                'formReimpAcuse:tipoTramite_focus': '',
-                'formReimpAcuse:fechaInicio_input:': '',
-                'formReimpAcuse:fechaFin_input': '',
-                'formReimpAcuse:folio': '',
-                'javax.faces.ViewState': data['javax.faces.ViewState']
             }
             self.form(action, res.url, data)
 
