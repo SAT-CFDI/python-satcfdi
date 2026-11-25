@@ -60,47 +60,13 @@ def get_form(res: Response, **kwargs):
         return None, {}
 
     data = {
-        str(i.attrs['name']): i.attrs.get('value')
+        str(i.attrs['name']): i.attrs.get('value') or ''
         for i in form.find_all('input')
         if 'name' in i.attrs
     }
 
     assert form.attrs['method'].upper() == "POST"
     return action_url(form.attrs.get('action'), res.url), data
-
-
-_NON_FIELD_INPUTS = ('submit', 'button', 'image', 'reset', 'file')
-
-
-def get_form_fields(res: Response, **kwargs) -> dict[str, str]:
-    """
-    Fields a browser would submit from the form: its inputs, except buttons and
-    unchecked boxes, plus the selected option of each select.
-    """
-    html = BeautifulSoup(res.text, 'html.parser')
-    form = html.find('form', **kwargs)
-    if form is None:
-        return {}
-
-    data = {}
-    for i in form.find_all('input'):
-        name = i.attrs.get('name')
-        kind = i.attrs.get('type', 'text').lower()
-        if not name or kind in _NON_FIELD_INPUTS:
-            continue
-        if kind in ('checkbox', 'radio') and 'checked' not in i.attrs:
-            continue
-        data[str(name)] = i.attrs.get('value') or ''
-
-    for select in form.find_all('select'):
-        name = select.attrs.get('name')
-        if not name:
-            continue
-        option = select.find('option', selected=True) or select.find('option')
-        data[str(name)] = (option.attrs.get('value') or '') if option else ''
-
-    return data
-
 
 def request_ref_headers(url):
     parts = urlparse(url)

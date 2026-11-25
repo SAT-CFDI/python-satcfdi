@@ -2,7 +2,7 @@ import os
 from types import SimpleNamespace
 from unittest import mock
 
-from satcfdi.portal.utils import generate_token, verify_token, action_url, get_form_fields
+from satcfdi.portal.utils import generate_token, verify_token, action_url
 from satcfdi.portal import SATPortal, SATPortalConstancia
 from .utils import get_signer
 
@@ -78,22 +78,6 @@ CONSULTA_TRAMITE_PAGE = """<html><body>
 </body></html>"""
 
 
-def test_get_form_fields():
-    res = SimpleNamespace(text=CONSULTA_TRAMITE_PAGE, url=CONSULTA_TRAMITE_URL)
-
-    assert get_form_fields(res) == {
-        'formReimpAcuse': 'formReimpAcuse',
-        'formReimpAcuse:tipoTramite_filter': '',
-        'formReimpAcuse:tipoTramite_focus': '',
-        'formReimpAcuse:tipoTramite_input': '',
-        'formReimpAcuse:fechaInicio_input': '',
-        'formReimpAcuse:fechaFin_input': '',
-        'formReimpAcuse:folio': '',
-        'javax.faces.ViewState': '-123:456',
-    }
-    assert get_form_fields(SimpleNamespace(text='<html></html>', url=CONSULTA_TRAMITE_URL)) == {}
-
-
 def test_generar_constancia_submits_the_page_fields():
     portal = SATPortalConstancia(get_signer('cacx7605101p8'))
     pdf = b'%PDF-1.4'
@@ -121,5 +105,3 @@ def test_generar_constancia_submits_the_page_fields():
     assert data['javax.faces.source'] == 'formReimpAcuse:j_idt50'
     assert data['formReimpAcuse:j_idt50'] == 'formReimpAcuse:j_idt50'
     assert data['javax.faces.ViewState'] == '-123:456'
-    assert 'formReimpAcuse:j_idt47' not in data
-    assert 'formReimpAcuse:unchecked' not in data

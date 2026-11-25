@@ -11,7 +11,7 @@ from time import time
 import requests
 from requests.structures import CaseInsensitiveDict
 
-from .utils import get_form, get_form_fields, generate_token, request_ref_headers, request_verification_token, random_ajax_id
+from .utils import get_form, generate_token, request_ref_headers, request_verification_token, random_ajax_id
 from ..exceptions import ResponseError
 from ..models import Signer
 from ..sat_requests_utils import SSLAdapter
@@ -258,7 +258,7 @@ class SATPortalConstancia(PortalManager):
             # Submit the fields the page renders instead of a fixed list: the form
             # changed (e.g. formReimpAcuse:tipoTramite_filter) and the fixed list made
             # IdcGeneraConstancia.jsf answer "Faltan datos en la sesión" instead of the PDF.
-            data = get_form_fields(res) | {
+            data = data | {
                 'javax.faces.partial.ajax': "true",
                 'javax.faces.source': 'formReimpAcuse:j_idt50',
                 'javax.faces.partial.execute': '@all',
